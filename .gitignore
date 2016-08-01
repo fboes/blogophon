@@ -4,4 +4,4 @@ user/config.json
 user/posts/*
 !user/posts/.gitkeep
 htdocs/*
-!htdocs/.gitkeep
+!htdocs/robots.txt

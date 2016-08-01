@@ -12,6 +12,7 @@ var jshint     = require('gulp-jshint');
 var nodeunit   = require('gulp-nodeunit');
 var livereload = require('gulp-livereload');
 var plumber    = require('gulp-plumber');
+var shell      = require('gulp-shell');
 
 // Lint Task
 gulp.task('jshint', function() {
@@ -50,10 +51,10 @@ gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(['gulpfile.js','package.json'], process.exit);
   gulp.watch(['*.js',pkg.directories.lib+'/**/*.js',pkg.directories.test+'/**/*.js'], ['default']);
+  gulp.watch([pkg.directories.data+'/**/*'], ['compile']);
 });
 
 // Default Task
 gulp.task('default',     ['jshint']);
 gulp.task('test',        ['jshint','nodeunit']);
-
-// rsync -avz --exclude=node_modules --delete * 3960.org:/home/fboes/journal.3960.org/
+gulp.task('compile',     shell.task(['npm run compile']));

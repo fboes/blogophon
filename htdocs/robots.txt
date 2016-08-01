@@ -1,0 +1,4 @@
+# robots.txt zu http://www.example.org/
+
+User-agent: *
+Sitemap: http://journal.3960.org/sitemap.xml

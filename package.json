@@ -4,7 +4,8 @@
   "description": "Most-simple blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "./index.js"
   },
   "keywords": [
     "blog",
@@ -17,6 +18,7 @@
     "gulp-livereload": "^3.8.1",
     "gulp-nodeunit": "0.0.5",
     "gulp-plumber": "^1.1.0",
+    "gulp-shell": "^0.5.2",
     "jshint": "^2.9.2",
     "nodeunit": "^0.9.1"
   },
