@@ -1,0 +1,7 @@
+node_modules
+user/_import
+user/config.json
+user/posts/*
+!user/posts/.gitkeep
+htdocs/*
+!htdocs/.gitkeep

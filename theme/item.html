@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="{{config.language}}">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{meta.Title}} - {{config.name}}</title>
+  <meta property="og:type" content="page" />
+  <meta property="og:site_name" content="{{config.name}}" />
+  <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}{{meta.Url}}" />
+  <meta property="og:title" name="title" content="{{meta.Title}}" />
+  <meta property="og:description" name="description" content="{{meta.Description}}" />
+  {{#meta.Keywords}}
+    <meta name="keywords" content="{{meta.Keywords}}" />
+  {{/meta.Keywords}}
+  <link type="image/x-icon" href="http://cdn.3960.org/css/favicon.ico" rel="shortcut icon"/>
+  <link rel="apple-touch-icon" href="http://cdn.3960.org/css/iphone.png" type="image/png" />
+  <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
+  <meta name="viewport" content="width=device-width" />
+  <link title="fbo&euml;s" href="http://3960.org/" rel="me"/>
+  <link href="http://cdn.3960.org/css/styles.css" type="text/css" rel="stylesheet" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
+</head>
+<body class="">
+  <div id="container">
+    <header >
+      <h1 id="header"><a href="{{config.basePath}}">{{config.name}}</a></h1>
+    </header>
+    <div id="main">
+      <main>
+        <div id="content">
+          <article lang="{{meta.Language}}">
+            <span class="date">
+              <time datetime="{{meta.isoDate}}" pubdate="pubdate">{{meta.localeDate}}</time>
+            </span>
+            {{{content}}}
+            {{#meta.Tags.length}}
+              <p class="meta">
+              Andere Artikel zum Thema
+                {{#meta.Tags}}
+                  · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/">„{{title}}”</a>
+                {{/meta.Tags}}
+              </p>
+            {{/meta.Tags.length}}
+          </article>
+          <p style="margin-top:1em;text-align:right;" class="noprint">
+            <a href="../.." rel="up" id="up">Zurück zur Übersichtsseite</a>
+          </p>
+        </div>
+      </main>
+      <aside>
+        <div id="sidebar">
+          <h2 class="outline_only">Zusatzinfos</h2>
+          <h3>Links</h3>
+          <ul>
+            <li><a href="http://3960.org/" rel="me">Mehr über Frank Boës</a></li>
+            <li><a href="https://www.youtube.com/user/videofboes/" rel="me">Youtube-Videos</a></li>
+            <li><a href="http://blog.3960.org/" rel="me">Mein alter Blog</a></li>
+          </ul>
+
+          <h3>Über…</h3>
+          <p>Merkwürdige Erlebnisse, spontane Einfälle, interessante Entdeckungen und ein paar Meinungen aus dem Leben von <a href="http://3960.org/" rel="me" title="Frank Boes">Frank Boës</a>. <span class="none">Man kann mich auch gerne <a href="http://3960.org/" rel="me">Frank Boes</a> schreiben, aber die Aussprache bleibt bitte [bo:s].</span></p>
+        </div>
+      </aside>
+    </div>
+    <footer>
+      <div id="footer">
+        Layout und alle Inhalte stehen unter <a href="http://creativecommons.org/licenses/by/3.0/de/" rel="license">Creative Commons BY Lizenz</a>
+      </div>
+    </footer>
+  </div>
+  <script src="http://cdn.3960.org/js/main.min.js" type="text/javascript" ></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>{{config.name}}</title>
+    <link>{{{config.baseUrl}}{{config.basePath}}}</link>
+    <description>{{config.description}}</description>
+    <language>{{config.language}}</language>
+    <atom:link href="{{{config.baseUrl}}{{config.basePath}}}/posts.rss" rel="self" type="application/rss+xml"/>
+    {{#index}}
+      <item>
+        <title>{{meta.Title}}</title>
+        <description><![CDATA[{{htmlTeaser}}]]></description>
+        <link>{{{config.baseUrl}}{{config.basePath}}}{{{meta.Url}}}</link>
+        <pubDate>{{meta.isoDate}}</pubDate>
+        <guid isPermaLink="true">{{{config.baseUrl}}{{config.basePath}}}{{{meta.Url}}}</guid>
+      </item>
+    {{/index}}
+  </channel>
+</rss>

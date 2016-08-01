@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^(?!htdocs/)(.*)$ htdocs/$1 [L]
+
+AddType application/rss+xml rss
