@@ -57,4 +57,4 @@ gulp.task('watch', function() {
 // Default Task
 gulp.task('default',     ['jshint']);
 gulp.task('test',        ['jshint','nodeunit']);
-gulp.task('compile',     shell.task(['npm run compile']));
+gulp.task('compile',     shell.task(['npm run start']));

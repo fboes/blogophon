@@ -3,5 +3,6 @@
   "baseUrl": "http://example.com",
   "basePath": "/",
   "description": "Most-simple blog",
-  "language": "en"
+  "language": "en",
+  "deploy":""
 }

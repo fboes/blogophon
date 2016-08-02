@@ -6,7 +6,7 @@
   <meta property="og:type" content="page" />
   <meta property="og:site_name" content="{{config.name}}" />
   <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}" />
-  <meta property="og:title" name="title" content="Startseite" />
+  <meta property="og:title" name="title" content="{{title}}" />
   <meta property="og:description" name="description" content="{{config.description}}" />
   <link type="image/x-icon" href="http://cdn.3960.org/css/favicon.ico" rel="shortcut icon"/>
   <link rel="apple-touch-icon" href="http://cdn.3960.org/css/iphone.png" type="image/png" />
@@ -31,7 +31,7 @@
           {{#index}}
             <article lang="{{meta.Language}}">
               <span class="date">
-                <time datetime="{{meta.isoDate}}" pubdate="pubdate">{{meta.localeDate}}</time>
+                <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
               </span>
               <h4><a href="{{meta.Url}}">{{meta.Title}}</a></h4>
               {{{htmlTeaser}}}

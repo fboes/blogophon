@@ -6,12 +6,48 @@
 var fs = require('fs-extra');
 var pkg = JSON.parse(fs.readFileSync('./package.json'));
 
-var toolshed = require('./lib/js-toolshed/src/js-toolshed');
 
 var glob = require("glob");
 var readline = require("readline");
 var yamljs = require('yamljs');
 
+/**
+ * Convert given UTC string into Date object
+ * @param  {String} dateString like '2015-11-06 13:21:00+02:00'
+ * @return {Date}              [description]
+ */
+var DateSetFromIsoString = function (dateString) {
+  var dateValues = dateString.match(/^(\d+)\-(\d+)\-(\d+)(?:.(\d+):(\d+):(\d+)(?:(\+|\-)(\d+)\:(\d+))?)?/), i, that = new Date();
+  if (dateValues) {
+    for (i = 0; i <= 9; i++) {
+      if (!dateValues[i]) {
+        switch (i) {
+          case 7:
+            dateValues[i] = (that.getTimezoneOffset() >= 0) ? '+' : '-';
+            break;
+          case 8:
+            dateValues[i] = Math.abs(that.getTimezoneOffset()/60);
+            break;
+          default:
+            dateValues[i] = 0;
+            break;
+        }
+      } else if (i !== 7) {
+        dateValues[i] = parseInt(dateValues[i]);
+      }
+    }
+    that = new Date(Date.UTC(
+      (dateValues[3]),
+      (dateValues[2] - 1),
+      (dateValues[1]),
+      ((dateValues[7] === '+') ? dateValues[4] - dateValues[8] : dateValues[4] + dateValues[8]),
+      ((dateValues[7] === '+') ? dateValues[5] - dateValues[9] : dateValues[5] + dateValues[9]),
+      (dateValues[6])
+    ));
+    return that;
+  }
+  throw "No valid ISO time string";
+};
 
 var fileConvert = function(file, newFile) {
   var yaml = '',
@@ -59,9 +95,6 @@ var fileConvert = function(file, newFile) {
     if (yaml.taxonomy.tag !== undefined) {
       markdown = 'Keywords: '+yaml.taxonomy.tag.join(', ')+"  \n"+markdown;
     }
-    //markdown += "\n"+markdownConvert(markdown);
-    //markdown += "\n"+markdownConvert(markdown.replace(/\S+:[\s\S]+?\n\n/,''));
-    //console.log(yamljs.parse(markdown.match(/\S+:[\s\S]+?\n\n/)[0]));
     fs.writeFile(newFile, markdown);
     console.log("Wrote "+newFile);
   });
