@@ -3,10 +3,12 @@
 
 var Generator = require('./lib/generator');
 
-Generator.init();
-Generator.on('articlesBuild', function (post) {
-  Generator.buildOtherPages();
-  Generator.copyImages();
-});
-
-Generator.buildArticles();
+Generator
+  .buildArticles
+  .then(
+    function (post) {
+      Generator.buildOtherPages();
+      Generator.copyImages();
+    }
+  )
+;

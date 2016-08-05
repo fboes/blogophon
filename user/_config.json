@@ -4,6 +4,7 @@
   "basePath": "/",
   "description": "Most-simple blog",
   "language": "en",
+  "siteEmail": "",
   "deploy":"",
   "imageSizes": [
     [200,200],

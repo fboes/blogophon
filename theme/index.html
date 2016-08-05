@@ -15,8 +15,10 @@
   <link title="fbo&euml;s" href="http://3960.org/" rel="me"/>
   <link href="http://cdn.3960.org/css/styles.css" type="text/css" rel="stylesheet" />
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
+  <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
+  <link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
 </head>
-<body class="">
+<body class="index">
   <div id="container">
     <header >
       <h1 id="header"><a href="{{config.basePath}}">{{config.name}}</a></h1>
@@ -28,24 +30,26 @@
             <h2>{{title}}</h2>
           {{/title}}
 
-          {{#index}}
-            <article lang="{{meta.Language}}">
-              <span class="date">
-                <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
-              </span>
-              <h4><a href="{{meta.Url}}">{{meta.Title}}</a></h4>
-              {{{htmlTeaser}}}
-              <p><a href="{{meta.Url}}">Weiter lesen</a></p>
-              {{#meta.Tags.length}}
-                <p class="meta">
-                Andere Artikel zum Thema
-                  {{#meta.Tags}}
-                    · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/">„{{title}}”</a>
-                  {{/meta.Tags}}
-                </p>
-              {{/meta.Tags.length}}
-            </article>
-          {{/index}}
+          <div class="teasers">
+            {{#index}}
+              <article lang="{{meta.Language}}">
+                <span class="date">
+                  <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
+                </span>
+                <h4><a href="{{meta.Url}}">{{meta.Title}}</a></h4>
+                {{{htmlTeaser}}}
+                <p><a href="{{meta.Url}}">Weiter lesen</a></p>
+                {{#meta.Tags.length}}
+                  <p class="meta">
+                  Andere Artikel zum Thema
+                    {{#meta.Tags}}
+                      · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/">„{{title}}”</a>
+                    {{/meta.Tags}}
+                  </p>
+                {{/meta.Tags.length}}
+              </article>
+            {{/index}}
+          </div>
 
           {{#currentPage}}
             <div id="prevnext">
