@@ -1,15 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-/* global DateSetFromIsoString */
-
 var fs = require('fs-extra');
 var pkg = JSON.parse(fs.readFileSync('./package.json'));
 
-
-var glob = require("glob");
+var glob     = require("glob");
 var readline = require("readline");
-var yamljs = require('yamljs');
+var yamljs   = require('yamljs');
 
 /**
  * Convert given UTC string into Date object

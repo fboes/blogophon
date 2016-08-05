@@ -1,6 +1,6 @@
 {
   "name": "blogophon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Most-simple blog",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   ],
   "devDependencies": {
     "beepbeep": "^1.2.0",
+    "gm": "^1.23.0",
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.1",
     "gulp-livereload": "^3.8.1",

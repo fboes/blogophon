@@ -4,5 +4,10 @@
   "basePath": "/",
   "description": "Most-simple blog",
   "language": "en",
-  "deploy":""
+  "deploy":"",
+  "imageSizes": [
+    [200,200],
+    [320,640],
+    [800,600]
+  ]
 }
