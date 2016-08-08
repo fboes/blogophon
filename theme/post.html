@@ -2,15 +2,15 @@
 <html lang="{{config.language}}">
 <head>
   <meta charset="UTF-8" />
-  <title>{{meta.Title}} - {{config.name}}</title>
+  <title>{{post.meta.Title}} - {{config.name}}</title>
   <meta property="og:type" content="page" />
   <meta property="og:site_name" content="{{config.name}}" />
-  <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}{{meta.Url}}" />
-  <meta property="og:title" name="title" content="{{meta.Title}}" />
-  <meta property="og:description" name="description" content="{{meta.Description}}" />
-  {{#meta.Keywords}}
-    <meta name="keywords" content="{{meta.Keywords}}" />
-  {{/meta.Keywords}}
+  <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}{{post.meta.Url}}" />
+  <meta property="og:title" name="title" content="{{post.meta.Title}}" />
+  <meta property="og:description" name="description" content="{{post.meta.Description}}" />
+  {{#post.meta.Keywords}}
+    <meta name="keywords" content="{{post.meta.Keywords}}" />
+  {{/post.meta.Keywords}}
   <link type="image/x-icon" href="http://cdn.3960.org/css/favicon.ico" rel="shortcut icon"/>
   <link rel="apple-touch-icon" href="http://cdn.3960.org/css/iphone.png" type="image/png" />
   <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
@@ -20,6 +20,9 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
   <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
   <link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
+  {{#config.themeColor}}
+    <meta name="theme-color" content="{{config.themeColor}}">
+  {{/config.themeColor}}
 </head>
 <body class="post">
   <div id="container">
@@ -29,23 +32,29 @@
     <div id="main">
       <main>
         <div id="content">
-          <article lang="{{meta.Language}}">
+          <article class="{{post.meta.Classes}}" lang="{{post.meta.Language}}">
             <span class="date">
-              <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
+              <time datetime="{{post.meta.isoDate}}">{{post.meta.localeDate}}</time>
             </span>
-            {{{content}}}
-            {{#meta.Tags.length}}
+            {{{post.html}}}
+            {{#post.meta.Tags.length}}
               <p class="meta">
               Andere Artikel zum Thema
-                {{#meta.Tags}}
+                {{#post.meta.Tags}}
                   · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/">„{{title}}”</a>
-                {{/meta.Tags}}
+                {{/post.meta.Tags}}
               </p>
-            {{/meta.Tags.length}}
+            {{/post.meta.Tags.length}}
           </article>
-          <p style="margin-top:1em;text-align:right;" class="noprint">
-            <a href="../.." rel="up" id="up">Zurück zur Übersichtsseite</a>
-          </p>
+          <div id="prevnext">
+            <a href="../.." rel="up" id="up" style="font-size:1em;">Zurück zur Übersichtsseite</a>
+            {{#post.prev.Url}}
+              <a href="{{post.prev.Url}}" rel="prev" class="prev" title="{{post.prev.Title}}">&laquo;</a>
+            {{/post.prev.Url}}
+            {{#post.next.Url}}
+              <a href="{{post.next.Url}}" rel="next" class="next" title="{{post.next.Url}}">&raquo;</a>
+            {{/post.next.Url}}
+          </div>
         </div>
       </main>
       <aside>

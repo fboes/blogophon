@@ -4,10 +4,10 @@
 var Generator = require('./lib/generator');
 
 Generator
-  .buildArticles
+  .getArticles()
   .then(
     function (post) {
-      Generator.buildOtherPages();
+      Generator.buildAllPages();
       Generator.copyImages();
     }
   )

@@ -1,6 +1,6 @@
 {
   "name": "blogophon",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Most-simple blog",
   "main": "index.js",
   "scripts": {

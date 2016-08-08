@@ -17,6 +17,9 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
   <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
   <link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
+  {{#config.themeColor}}
+    <meta name="theme-color" content="{{config.themeColor}}">
+  {{/config.themeColor}}
 </head>
 <body class="index">
   <div id="container">
@@ -32,7 +35,7 @@
 
           <div class="teasers">
             {{#index}}
-              <article lang="{{meta.Language}}">
+              <article class="{{meta.Classes}}" lang="{{meta.Language}}">
                 <span class="date">
                   <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
                 </span>

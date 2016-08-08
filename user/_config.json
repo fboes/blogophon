@@ -5,6 +5,7 @@
   "description": "Most-simple blog",
   "language": "en",
   "siteEmail": "",
+  "themeColor": "#ffffff",
   "deploy":"",
   "imageSizes": [
     [200,200],
