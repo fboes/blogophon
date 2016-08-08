@@ -5,3 +5,4 @@ user/posts/*
 !user/posts/.gitkeep
 htdocs/*
 !htdocs/robots.txt
+!htdocs/.htaccess

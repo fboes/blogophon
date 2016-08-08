@@ -1,0 +1,5 @@
+AddType text/xml rss
+AddType text/xml xml
+AddType text/plain md
+AddType application/json .json
+AddCharset utf-8 .html .css .js .rss .xml .md .json

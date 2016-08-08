@@ -2,8 +2,8 @@
 <html lang="{{config.language}}">
 <head>
   <meta charset="UTF-8" />
-  <title>{{#title}}{{title}} - {{/title}}{{config.name}}</title>
-  <meta property="og:type" content="page" />
+  <title>{{#title}}{{title}} | {{/title}}{{config.name}}</title>
+  <meta property="og:type" content="website" />
   <meta property="og:site_name" content="{{config.name}}" />
   <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}" />
   <meta property="og:title" name="title" content="{{title}}" />
@@ -17,6 +17,11 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
   <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
   <link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
+  {{#config.twitterAccount}}
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="@{{config.twitterAccount}}" />
+    <meta property="twitter:creator" content="@{{config.twitterAccount}}" />
+  {{/config.twitterAccount}}
   {{#config.themeColor}}
     <meta name="theme-color" content="{{config.themeColor}}">
   {{/config.themeColor}}
@@ -39,9 +44,11 @@
                 <span class="date">
                   <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
                 </span>
-                <h4><a href="{{meta.Url}}">{{meta.Title}}</a></h4>
+                <h4><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
                 {{{htmlTeaser}}}
-                <p><a href="{{meta.Url}}">Weiter lesen</a></p>
+                {{^meta.noLinkNeeded}}
+                  <p><a href="{{meta.Url}}">Weiter lesen</a></p>
+                {{/meta.noLinkNeeded}}
                 {{#meta.Tags.length}}
                   <p class="meta">
                   Andere Artikel zum Thema
@@ -83,7 +90,22 @@
 
           <h3>Über…</h3>
           <p>Merkwürdige Erlebnisse, spontane Einfälle, interessante Entdeckungen und ein paar Meinungen aus dem Leben von <a href="http://3960.org/" rel="me" title="Frank Boes">Frank Boës</a>. <span class="none">Man kann mich auch gerne <a href="http://3960.org/" rel="me">Frank Boes</a> schreiben, aber die Aussprache bleibt bitte [bo:s].</span></p>
-        </div>
+
+          <h3>Suche</h3>
+          <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.baseUrl}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
+              <input type="text" value="" name="q">
+            <input type="submit" value="Suche">
+          </form>
+
+          <h3>Abonnement</h3>
+          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+          <ul>
+            <li><a type="application/rss+xml" href="{{config.baseUrl}}{{config.basePath}}posts.rss">RSS</a></li>
+            <li><a type="application/atom+xml" href="{{config.baseUrl}}{{config.basePath}}posts.atom">ATOM</a></li>
+            <li><a type="application/json" href="{{config.baseUrl}}{{config.basePath}}rss.json">RSS-JS</a></li>
+          </ul>
+
+       </div>
       </aside>
     </div>
     <footer>
@@ -92,6 +114,6 @@
       </div>
     </footer>
   </div>
-  <script src="http://cdn.3960.org/js/main.min.js" type="text/javascript" ></script>
+  <script src="http://cdn.3960.org/js/main.min.js" async="async"></script>
 </body>
 </html>

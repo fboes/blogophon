@@ -1,7 +1,7 @@
 {
   "name": "blogophon",
-  "version": "0.0.3",
-  "description": "Most-simple blog",
+  "version": "0.0.4",
+  "description": "A small and simple Static Site Generator for blogs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,9 @@
   },
   "keywords": [
     "blog",
-    "markdown"
+    "markdown",
+    "mustache",
+    "gulp"
   ],
   "devDependencies": {
     "beepbeep": "^1.2.0",
@@ -21,14 +23,12 @@
     "gulp-plumber": "^1.1.0",
     "gulp-shell": "^0.5.2",
     "jshint": "^2.9.2",
-    "nodeunit": "^0.9.1",
-    "promise": "^7.1.1"
+    "nodeunit": "^0.9.1"
   },
   "directories": {
     "doc": "docs",
     "lib": "lib",
     "test": "test",
-    "import": "user/_import",
     "data": "user/posts",
     "htdocs": "htdocs",
     "theme": "theme"
@@ -39,9 +39,10 @@
     "dateformat": "^1.0.12",
     "fs-extra": "^0.30.0",
     "glob": "^7.0.5",
-    "marked": "^0.3.5",
+    "marked": "^0.3.6",
     "moment": "^2.14.1",
     "mustache": "^2.2.1",
+    "promise": "^7.1.1",
     "shelljs": "^0.7.3",
     "yamljs": "^0.2.8"
   }

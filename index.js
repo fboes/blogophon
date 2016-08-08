@@ -9,6 +9,10 @@ Generator
     function (post) {
       Generator.buildAllPages();
       Generator.copyImages();
+      if(process.argv[2] !== undefined && process.argv[2] === '--deploy') {
+        Generator.deploy();
+      }
     }
   )
 ;
+
