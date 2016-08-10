@@ -2,7 +2,7 @@ Blogophon
 =========
 
 [![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
-[![devDependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon#info=devDependencies)
+[![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
 
 A small and simple Static Site Generator for blogs.
 

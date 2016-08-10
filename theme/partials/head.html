@@ -1,0 +1,18 @@
+<meta property="og:site_name" content="{{config.name}}" />
+{{#config.twitterAccount}}
+  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:site" content="@{{config.twitterAccount}}" />
+  <meta property="twitter:creator" content="@{{config.twitterAccount}}" />
+{{/config.twitterAccount}}
+{{#config.themeColor}}
+  <meta name="theme-color" content="{{config.themeColor}}">
+{{/config.themeColor}}
+<meta name="viewport" content="width=device-width" />
+<link title="fbo&euml;s" href="http://3960.org/" rel="me"/>
+<link href="http://cdn.3960.org/css/styles.css" type="text/css" rel="stylesheet" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
+<link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
+<link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
+<link type="image/x-icon" href="http://cdn.3960.org/css/favicon.ico" rel="shortcut icon"/>
+<link rel="apple-touch-icon" href="http://cdn.3960.org/css/iphone.png" type="image/png" />
+<link rel="publisher" href="https://plus.google.com/111597900565235858304" />

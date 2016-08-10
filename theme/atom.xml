@@ -3,9 +3,7 @@
   <title>{{config.name}}</title>
   <link href="{{config.baseUrl}}{{config.basePath}}" />
   <id>{{config.baseUrl}}{{config.basePath}}</id>
-  <!--description>{{config.description}}</description-->
   <updated>{{pubDate}}</updated>
-  <!--language>{{config.language}}</language-->
   <link href="{{config.baseUrl}}{{config.basePath}}posts.atom" rel="self" />
   <author>
     <name>{{config.name}}</name>

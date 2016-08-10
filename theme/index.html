@@ -4,27 +4,10 @@
   <meta charset="UTF-8" />
   <title>{{#title}}{{title}} | {{/title}}{{config.name}}</title>
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="{{config.name}}" />
   <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}" />
   <meta property="og:title" name="title" content="{{title}}" />
   <meta property="og:description" name="description" content="{{config.description}}" />
-  <link type="image/x-icon" href="http://cdn.3960.org/css/favicon.ico" rel="shortcut icon"/>
-  <link rel="apple-touch-icon" href="http://cdn.3960.org/css/iphone.png" type="image/png" />
-  <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
-  <meta name="viewport" content="width=device-width" />
-  <link title="fbo&euml;s" href="http://3960.org/" rel="me"/>
-  <link href="http://cdn.3960.org/css/styles.css" type="text/css" rel="stylesheet" />
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
-  <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
-  <link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
-  {{#config.twitterAccount}}
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:site" content="@{{config.twitterAccount}}" />
-    <meta property="twitter:creator" content="@{{config.twitterAccount}}" />
-  {{/config.twitterAccount}}
-  {{#config.themeColor}}
-    <meta name="theme-color" content="{{config.themeColor}}">
-  {{/config.themeColor}}
+  {{>head}}
 </head>
 <body class="index">
   <div id="container">
@@ -40,30 +23,43 @@
 
           <div class="teasers">
             {{#index}}
-              <article class="{{meta.Classes}}" lang="{{meta.Language}}">
+              <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
                 <span class="date">
-                  <time datetime="{{meta.isoDate}}">{{meta.localeDate}}</time>
+                  <time datetime="{{meta.isoDate}}" itemprop="datePublished">{{meta.localeDate}}</time>
                 </span>
-                <h4><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
-                {{{htmlTeaser}}}
+                <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
+                <div itemprop="description">
+                  {{{htmlTeaser}}}
+                </div>
                 {{^meta.noLinkNeeded}}
-                  <p><a href="{{meta.Url}}">Weiter lesen</a></p>
+                  <p><a href="{{meta.Url}}" itemprop="url" title="{{meta.Title}}">Weiter lesen…</a></p>
                 {{/meta.noLinkNeeded}}
                 {{#meta.Tags.length}}
                   <p class="meta">
-                  Andere Artikel zum Thema
-                    {{#meta.Tags}}
-                      · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/">„{{title}}”</a>
-                    {{/meta.Tags}}
+                    {{#meta.AuthorName}}
+                      <span class="author" itemprop="author">{{meta.AuthorName}}</span>
+                    {{/meta.AuthorName}}
+                    <span class="tags">
+                      Andere Artikel zum Thema
+                      {{#meta.Tags}}
+                        · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/" itemprop="keywords">„{{title}}”</a>
+                      {{/meta.Tags}}
+                    </span>
                   </p>
                 {{/meta.Tags.length}}
               </article>
             {{/index}}
           </div>
 
-          {{#currentPage}}
             <div id="prevnext">
-              Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}
+              <span>
+                {{#currentPage}}
+                    <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+                {{/currentPage}}
+                {{#title}}
+                  <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
+                {{/title}}
+              </span>
               {{#prevUrl}}
                 <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
               {{/prevUrl}}
@@ -71,42 +67,10 @@
                 <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
               {{/nextUrl}}
             </div>
-          {{/currentPage}}
 
-          {{#title}}
-            <a href="{{config.basePath}}">Zurück zur Startseite</a>
-          {{/title}}
         </div>
       </main>
-      <aside>
-        <div id="sidebar">
-          <h2 class="outline_only">Zusatzinfos</h2>
-          <h3>Links</h3>
-          <ul>
-            <li><a href="http://3960.org/" rel="me">Mehr über Frank Boës</a></li>
-            <li><a href="https://www.youtube.com/user/videofboes/" rel="me">Youtube-Videos</a></li>
-            <li><a href="http://blog.3960.org/" rel="me">Mein alter Blog</a></li>
-          </ul>
-
-          <h3>Über…</h3>
-          <p>Merkwürdige Erlebnisse, spontane Einfälle, interessante Entdeckungen und ein paar Meinungen aus dem Leben von <a href="http://3960.org/" rel="me" title="Frank Boes">Frank Boës</a>. <span class="none">Man kann mich auch gerne <a href="http://3960.org/" rel="me">Frank Boes</a> schreiben, aber die Aussprache bleibt bitte [bo:s].</span></p>
-
-          <h3>Suche</h3>
-          <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.baseUrl}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
-              <input type="text" value="" name="q">
-            <input type="submit" value="Suche">
-          </form>
-
-          <h3>Abonnement</h3>
-          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
-          <ul>
-            <li><a type="application/rss+xml" href="{{config.baseUrl}}{{config.basePath}}posts.rss">RSS</a></li>
-            <li><a type="application/atom+xml" href="{{config.baseUrl}}{{config.basePath}}posts.atom">ATOM</a></li>
-            <li><a type="application/json" href="{{config.baseUrl}}{{config.basePath}}rss.json">RSS-JS</a></li>
-          </ul>
-
-       </div>
-      </aside>
+      {{>sidebar}}
     </div>
     <footer>
       <div id="footer">

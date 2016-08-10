@@ -4,7 +4,10 @@
   "basePath": "/",
   "description": "Most-simple blog",
   "language": "en",
-  "siteEmail": "",
+  "defaultAuthor": {
+    "email": "",
+    "name": ""
+  },
   "twitterAccount": "",
   "themeColor": "#ffffff",
   "deploy":"",

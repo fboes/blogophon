@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="{{config.name}}" />
-  <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}{{post.meta.Url}}" />
+  <meta property="og:url" content="{{post.meta.AbsoluteUrl}}" />
   <meta property="og:title" name="title" content="{{post.meta.Title}}" />
   <meta property="og:description" name="description" content="{{post.meta.Description}}" />
   {{#post.meta.Image}}
@@ -14,23 +13,7 @@
   {{#post.meta.Keywords}}
     <meta name="keywords" content="{{post.meta.Keywords}}" />
   {{/post.meta.Keywords}}
-  <link type="image/x-icon" href="http://cdn.3960.org/css/favicon.ico" rel="shortcut icon"/>
-  <link rel="apple-touch-icon" href="http://cdn.3960.org/css/iphone.png" type="image/png" />
-  <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
-  <meta name="viewport" content="width=device-width" />
-  <link title="fbo&euml;s" href="http://3960.org/" rel="me"/>
-  <link href="http://cdn.3960.org/css/styles.css" type="text/css" rel="stylesheet" />
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.baseUrl}}{{config.basePath}}posts.rss"/>
-  <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.baseUrl}}{{config.basePath}}posts.atom"/>
-  <link rel="alternate" type="application/json" title="JSON" href="{{config.baseUrl}}{{config.basePath}}rss.json"/>
-  {{#config.twitterAccount}}
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:site" content="@{{config.twitterAccount}}" />
-    <meta property="twitter:creator" content="@{{config.twitterAccount}}" />
-  {{/config.twitterAccount}}
-  {{#config.themeColor}}
-    <meta name="theme-color" content="{{config.themeColor}}">
-  {{/config.themeColor}}
+  {{>head}}
 </head>
 <body class="post">
   <div id="container">
@@ -40,22 +23,37 @@
     <div id="main">
       <main>
         <div id="content">
-          <article class="{{post.meta.Classes}}" lang="{{post.meta.Language}}">
+          <article class="{{post.meta.Classes}}" lang="{{post.meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
             <span class="date">
-              <time datetime="{{post.meta.isoDate}}">{{post.meta.localeDate}}</time>
+              <time datetime="{{post.meta.isoDate}}" itemprop="datePublished">{{post.meta.localeDate}}</time>
             </span>
-            {{{post.html}}}
+            <h2 itemprop="name headline">{{post.meta.Title}}</h2>
+            <div itemprop="articleBody">
+              {{{post.html}}}
+            </div>
             {{#post.meta.Tags.length}}
               <p class="meta">
-              Andere Artikel zum Thema
-                {{#post.meta.Tags}}
-                  · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/">„{{title}}”</a>
-                {{/post.meta.Tags}}
+                {{#post.meta.AuthorName}}
+                  <span class="author" itemprop="author">{{post.meta.AuthorName}}</span>
+                {{/post.meta.AuthorName}}
+                <span class="tags">
+                  Andere Artikel zum Thema
+                  {{#post.meta.Tags}}
+                    · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/" itemprop="keywords">„{{title}}”</a>
+                  {{/post.meta.Tags}}
+                </span>
+                <span class="share">
+                  Teilen auf
+                  · <a href="{{post.share.twitter}}" class="twitter" rel="nofollow">Twitter</a>
+                  · <a href="{{post.share.facebook}}" class="facebook" rel="nofollow">Facebook</a>
+                </span>
               </p>
             {{/post.meta.Tags.length}}
           </article>
           <div id="prevnext">
-            <a href="../.." rel="up" id="up" style="font-size:1em;">Zurück zur Übersichtsseite</a>
+            <span style="display:inline-block;">
+              <a href="{{config.basePath}}" rel="up" id="up">Zurück zur Übersichtsseite</a>
+            </span>
             {{#post.prev.Url}}
               <a href="{{post.prev.Url}}" rel="prev" class="prev" title="{{post.prev.Title}}">&laquo;</a>
             {{/post.prev.Url}}
@@ -65,36 +63,7 @@
           </div>
         </div>
       </main>
-      <aside>
-        <div id="sidebar">
-          <h2 class="outline_only">Zusatzinfos</h2>
-          <h3>Links</h3>
-          <ul>
-            <li><a href="http://3960.org/" rel="me">Mehr über Frank Boës</a></li>
-            <li><a href="https://www.youtube.com/user/videofboes/" rel="me">Youtube-Videos</a></li>
-            <li><a href="http://blog.3960.org/" rel="me">Mein alter Blog</a></li>
-          </ul>
-
-          <h3>Über…</h3>
-          <p>Merkwürdige Erlebnisse, spontane Einfälle, interessante Entdeckungen und ein paar Meinungen aus dem Leben von <a href="http://3960.org/" rel="me" title="Frank Boes">Frank Boës</a>. <span class="none">Man kann mich auch gerne <a href="http://3960.org/" rel="me">Frank Boes</a> schreiben, aber die Aussprache bleibt bitte [bo:s].</span></p>
-
-
-          <h3>Suche</h3>
-          <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.baseUrl}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
-              <input type="text" value="" name="q">
-            <input type="submit" value="Suche">
-          </form>
-
-          <h3>Abonnement</h3>
-          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
-          <ul>
-            <li><a type="application/rss+xml" href="{{config.baseUrl}}{{config.basePath}}posts.rss">RSS</a></li>
-            <li><a type="application/atom+xml" href="{{config.baseUrl}}{{config.basePath}}posts.atom">ATOM</a></li>
-            <li><a type="application/json" href="{{config.baseUrl}}{{config.basePath}}rss.json">RSS-JS</a></li>
-          </ul>
-
-        </div>
-      </aside>
+      {{>sidebar}}
     </div>
     <footer>
       <div id="footer">

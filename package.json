@@ -3,9 +3,14 @@
   "version": "0.0.4",
   "description": "A small and simple Static Site Generator for blogs.",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fboes/blogophon.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./index.js"
+    "start": "./index.js",
+    "new-page": "./new-page.js"
   },
   "keywords": [
     "blog",
@@ -15,7 +20,6 @@
   ],
   "devDependencies": {
     "beepbeep": "^1.2.0",
-    "gm": "^1.23.0",
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.1",
     "gulp-livereload": "^3.8.1",
@@ -37,10 +41,11 @@
   "license": "MIT",
   "dependencies": {
     "dateformat": "^1.0.12",
+    "gm": "^1.23.0",
     "fs-extra": "^0.30.0",
     "glob": "^7.0.5",
+    "inquirer": "^1.1.2",
     "marked": "^0.3.6",
-    "moment": "^2.14.1",
     "mustache": "^2.2.1",
     "promise": "^7.1.1",
     "shelljs": "^0.7.3",

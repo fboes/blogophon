@@ -1,0 +1,29 @@
+<aside>
+  <div id="sidebar">
+    <h2 class="outline_only">Zusatzinfos</h2>
+    <h3>Links</h3>
+    <ul>
+      <li><a href="http://3960.org/" rel="me">Mehr über Frank Boës</a></li>
+      <li><a href="https://www.youtube.com/user/videofboes/" rel="me">Youtube-Videos</a></li>
+      <li><a href="http://blog.3960.org/" rel="me">Mein alter Blog</a></li>
+    </ul>
+
+    <h3>Über…</h3>
+    <p>Merkwürdige Erlebnisse, spontane Einfälle, interessante Entdeckungen und ein paar Meinungen aus dem Leben von <a href="http://3960.org/" rel="me" title="Frank Boes">Frank Boës</a>. <span class="none">Man kann mich auch gerne <a href="http://3960.org/" rel="me">Frank Boes</a> schreiben, aber die Aussprache bleibt bitte [bo:s].</span></p>
+
+
+    <h3>Suche</h3>
+    <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.baseUrl}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
+        <input type="text" value="" name="q">
+      <input type="submit" value="Suche">
+    </form>
+
+    <h3>Abonnement</h3>
+    <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+    <ul>
+      <li><a type="application/rss+xml" rel="alternate" href="{{config.baseUrl}}{{config.basePath}}posts.rss">RSS</a></li>
+      <li><a type="application/atom+xml" rel="alternate" href="{{config.baseUrl}}{{config.basePath}}posts.atom">ATOM</a></li>
+      <li><a type="application/json" rel="alternate" href="{{config.baseUrl}}{{config.basePath}}rss.json">RSS-JS</a></li>
+    </ul>
+  </div>
+</aside>
