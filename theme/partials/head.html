@@ -1,6 +1,16 @@
 <meta property="og:site_name" content="{{config.name}}" />
+{{#config.ogImage}}
+  {{^post.meta.Image}}
+    <meta property="og:image" content="{{config.ogImage}}" />
+  {{/post.meta.Image}}
+{{/config.ogImage}}
 {{#config.twitterAccount}}
-  <meta property="twitter:card" content="summary" />
+  {{#post.meta.Image}}
+    <meta name="twitter:card" content="summary_large_image">
+  {{/post.meta.Image}}
+  {{^post.meta.Image}}
+    <meta name="twitter:card" content="summary">
+  {{/post.meta.Image}}
   <meta property="twitter:site" content="@{{config.twitterAccount}}" />
   <meta property="twitter:creator" content="@{{config.twitterAccount}}" />
 {{/config.twitterAccount}}

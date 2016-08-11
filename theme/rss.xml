@@ -11,9 +11,9 @@
       <item>
         <title>{{meta.Title}}</title>
         <description><![CDATA[{{{htmlTeaser}}}]]></description>
-        <link>{{config.baseUrl}}{{config.basePath}}{{meta.Url}}</link>
+        <link>{{config.baseUrl}}{{meta.Url}}</link>
         <pubDate>{{meta.rfcDate}}</pubDate>
-        <guid isPermaLink="true">{{config.baseUrl}}{{config.basePath}}{{meta.Url}}</guid>
+        <guid isPermaLink="true">{{config.baseUrl}}{{meta.Url}}</guid>
         {{#meta.Tags}}
           <category>{{title}}</category>
         {{/meta.Tags}}

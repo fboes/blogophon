@@ -27,10 +27,17 @@ How it works
 ------------
 
 1. Start Gulp watcher via `gulp watch`.
-1. Create new Markdown file in `user/posts`. Do not use any other characters for the filename but letters, numbers, dashes and dots.
+1. Create new Markdown file in `user/posts` (e.g. by using [`./new-page.js`](new-page.js)). Do not use any other characters for the filename but letters, numbers, dashes and dots.
 1. Optional: Create images in a folder having the same name as the Markdow file you just created.
 1. Gulp will automatically create all HTML files.
 1. Optional: Use `rsync` to move your HTML files to any remote server you like.
+
+If you want to completly delete an article, run [`./delete-page.js`](delete-page.js). This will delete all HTML- and Markdown files as well as any images associated with the selected article.
+
+Todos
+-----
+
+* <picture>
 
 Version
 -------

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="{{config.language}}">
+<head>
+  <meta charset="UTF-8" />
+  <title>404 | {{config.name}}</title>
+  <meta name="robots" content="noindex, follow" />
+  {{>head}}
+</head>
+<body class="index">
+  <div id="container">
+    <header >
+      <h1 id="header"><a href="{{config.basePath}}" rel="home">{{config.name}}</a></h1>
+    </header>
+    <div id="main">
+      <main>
+        <div id="content">
+          <h2>Sorry, diese URL gibt es (nicht) mehr…</h2>
+
+          <p>…aber vielleicht besteht Interesse an den jüngsten Artikeln:</p>
+
+          <ul>
+            {{#index}}
+              <li><a href="{{meta.Url}}">{{meta.Title}}</a></li>
+            {{/index}}
+          </ul>
+
+          <p>Ansonsten gibt es mehr Artikel auf der <a href="{{config.basePath}}">Startseite</a>.</p>
+
+        </div>
+      </main>
+      {{>sidebar}}
+    </div>
+    <footer>
+      <div id="footer">
+        Layout und alle Inhalte stehen unter <a href="http://creativecommons.org/licenses/by/3.0/de/" rel="license">Creative Commons BY Lizenz</a>
+      </div>
+    </footer>
+  </div>
+  <script src="http://cdn.3960.org/js/main.min.js" async="async"></script>
+</body>
+</html>

@@ -13,12 +13,17 @@
   {{#post.meta.Keywords}}
     <meta name="keywords" content="{{post.meta.Keywords}}" />
   {{/post.meta.Keywords}}
+  {{#post.meta.Latitude}}
+    <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude"/>
+    <meta name="geo.position.latitude" content="{{post.meta.Latitude}}"/>
+    <meta name="geo.position.longitude" content="{{post.meta.Longitude}}"/>
+  {{/post.meta.Latitude}}
   {{>head}}
 </head>
 <body class="post">
   <div id="container">
     <header >
-      <h1 id="header"><a href="{{config.basePath}}">{{config.name}}</a></h1>
+      <h1 id="header"><a href="{{config.basePath}}" rel="home">{{config.name}}</a></h1>
     </header>
     <div id="main">
       <main>

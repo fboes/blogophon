@@ -2,6 +2,7 @@ node_modules
 user/_import
 user/config.json
 user/posts/*
+user/hashes.json
 !user/posts/.gitkeep
 htdocs/*
 !htdocs/robots.txt

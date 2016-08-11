@@ -8,6 +8,9 @@ var Mustache     = require('mustache');
 var shell        = require('shelljs');
 var toolshed     = require('./lib/js-toolshed/src/js-toolshed');
 
+var filenameFromTitle = function (title) {
+  return config.directories.data + '/' + title.trim().asciify();
+};
 var template     = fs.readFileSync(config.directories.theme+'/post.md', 'utf8');
 var questions    = [
   {
@@ -15,10 +18,26 @@ var questions    = [
     name: 'title',
     message: 'Title',
     validate: function(v) {
-      return (v.trim().length > 2) || 'This title is way too short.';
+      if (v.trim().length <= 2) {
+        return 'This title is way too short.';
+      }
+      var filename = filenameFromTitle(v);
+      if (fs.existsSync(filename + '.md')) {
+        return ("File " + filename + '.md already exists');
+      }
+      return true;
     },
     filter: function(v) {
       return v.trim();
+    }
+  },{
+    type: 'list',
+    name: 'classes',
+    message: 'Type of article',
+    choices: ['Normal article', 'Images', 'Video'],
+    default: 'Normal article',
+    filter: function(v) {
+      return (v === 'Normal article') ? null : v;
     }
   },{
     type: 'input',
@@ -40,21 +59,24 @@ var questions    = [
     default: 'Lorem ipsum…'
   }
 ];
-inquirer.prompt(questions).then(function (answers) {
-  var filename = config.directories.data + '/' + answers.title.asciify();
-  if (!fs.existsSync(filename + '.md')) {
+inquirer.prompt(questions).then(
+  function (answers) {
+    var filename = filenameFromTitle(answers.title);
     fs.writeFile(filename + '.md', Mustache.render(template, {
       title: answers.title,
       keywords: answers.keywords,
+      classes: answers.classes,
       lead: answers.lead,
       mainText: answers.mainText,
       date: new Date()
-    }),function() {
-      console.log( filename + '.md created');
-      shell.mkdir('-p', filename);
+    }), function(err) {
+      if (err) {
+        console.error( filename + '.md could not be written');
+      } else {
+        console.log( filename + '.md created');
+        shell.mkdir('-p', filename);
+      }
     });
-  } else {
-    console.log("File " + filename + '.md already exists');
-    process.exit(1);
-  }
-});
+  },
+  function(err) { console.log(err); }
+);
