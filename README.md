@@ -37,11 +37,11 @@ Almost all stuff you will be doing with Blogophon is done via command line.
 ### Generate HTML files automatically
 
 1. Start Gulp watcher via `gulp watch`.
-1. Edit your Markdown file. Gulp will automatically create all HTML files via the Blogophon Generator.
+1. Edit your Markdown file, e.g. via [`./edit.js`](edit.js). Gulp will automatically create all HTML files via the Blogophon Generator.
 
 ### Generate HTML files manually
 
-1. Edit your Markdown file.
+1. Edit your Markdown file, e.g. via [`./edit.js`](edit.js).
 1. Run [`./index.js`](index.js) to make the Blogophon Generator generate all HTML files.
 
 `index.js` has some options:
