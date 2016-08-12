@@ -4,3 +4,16 @@ AddType text/plain md
 AddType application/json .json
 AddCharset utf-8 .html .css .js .rss .xml .md .json
 ErrorDocument 404 /404.html
+
+#General Blogophon redirects
+RedirectMatch 301 ^/htdocs/(.*)$ /$1
+RedirectMatch 301 ^/(posts|tagged)/?$ /
+
+# Grav CMS redirects, including poor man's lowercasing
+RedirectMatch 301 /page:(.*)$ /
+RedirectMatch 301 /tag:A(.*)$ /tagged/a$1/
+RedirectMatch 301 /tag:F(.*)$ /tagged/f$1/
+RedirectMatch 301 /tag:G(.*)$ /tagged/g$1/
+RedirectMatch 301 /tag:L(.*)$ /tagged/l$1/
+RedirectMatch 301 /tag:N(.*)$ /tagged/n$1/
+RedirectMatch 301 /tag:R(.*)$ /tagged/r$1/

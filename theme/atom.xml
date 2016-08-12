@@ -12,9 +12,9 @@
     <entry>
       <title>{{meta.Title}}</title>
       <summary type="html"><![CDATA[{{{htmlTeaser}}}]]></summary>
-      <link href="{{config.baseUrl}}{{meta.Url}}" />
+      <link href="{{meta.AbsoluteUrl}}" />
       <updated>{{meta.isoDate}}</updated>
-      <id>{{config.baseUrl}}{{meta.Url}}</id>
+      <id>{{meta.AbsoluteUrl}}</id>
       {{#meta.Tags}}
         <category term="{{title}}" />
       {{/meta.Tags}}

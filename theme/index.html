@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>{{#title}}{{title}} | {{/title}}{{config.name}}</title>
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="{{config.baseUrl}}{{config.basePath}}" />
+  <meta property="og:url" content="{{absoluteUrl}}" />
   <meta property="og:title" name="title" content="{{title}}" />
   <meta property="og:description" name="description" content="{{config.description}}" />
   {{>head}}
@@ -37,12 +37,12 @@
                 {{#meta.Tags.length}}
                   <p class="meta">
                     {{#meta.AuthorName}}
-                      <span class="author" itemprop="author">{{meta.AuthorName}}</span>
+                      <span class="author" itemprop="author publisher" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></span>
                     {{/meta.AuthorName}}
                     <span class="tags">
                       Andere Artikel zum Thema
                       {{#meta.Tags}}
-                        · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/" itemprop="keywords">„{{title}}”</a>
+                        · <a rel="tag" href="{{url}}" itemprop="keywords">„{{title}}”</a>
                       {{/meta.Tags}}
                     </span>
                   </p>

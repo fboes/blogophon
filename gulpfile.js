@@ -35,7 +35,7 @@ gulp.task('jshint', function() {
 
 // Node Unit
 gulp.task('nodeunit', function() {
-  return gulp.src(pkg.directories.test + '/**/*.js')
+  return gulp.src(pkg.directories.test + '/**/blogophon-urls.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(nodeunit({
       reporter: 'junit',
@@ -55,6 +55,6 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default',     ['jshint']);
+gulp.task('default',     ['jshint','nodeunit']);
 gulp.task('test',        ['jshint','nodeunit']);
 gulp.task('compile',     shell.task(['npm run start']));

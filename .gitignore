@@ -7,3 +7,4 @@ user/hashes.json
 htdocs/*
 !htdocs/robots.txt
 !htdocs/.htaccess
+test/*.xml

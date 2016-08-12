@@ -39,12 +39,12 @@
             {{#post.meta.Tags.length}}
               <p class="meta">
                 {{#post.meta.AuthorName}}
-                  <span class="author" itemprop="author">{{post.meta.AuthorName}}</span>
+                  <span class="author" itemprop="author publisher" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name">{{post.meta.AuthorName}}</span></span>
                 {{/post.meta.AuthorName}}
                 <span class="tags">
                   Andere Artikel zum Thema
                   {{#post.meta.Tags}}
-                    · <a rel="tag" href="{{config.basePath}}tagged/{{id}}/" itemprop="keywords">„{{title}}”</a>
+                    · <a rel="tag" href="{{url}}" itemprop="keywords">„{{title}}”</a>
                   {{/post.meta.Tags}}
                 </span>
                 <span class="share">
