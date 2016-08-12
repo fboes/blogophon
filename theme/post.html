@@ -14,10 +14,11 @@
     <meta name="keywords" content="{{post.meta.Keywords}}" />
   {{/post.meta.Keywords}}
   {{#post.meta.Latitude}}
-    <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude"/>
-    <meta name="geo.position.latitude" content="{{post.meta.Latitude}}"/>
-    <meta name="geo.position.longitude" content="{{post.meta.Longitude}}"/>
+    <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude" />
+    <meta name="geo.position.latitude" content="{{post.meta.Latitude}}" />
+    <meta name="geo.position.longitude" content="{{post.meta.Longitude}}" />
   {{/post.meta.Latitude}}
+  <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
   {{>head}}
 </head>
 <body class="post">
