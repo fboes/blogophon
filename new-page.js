@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 'use strict';
 
-var config       = require('./lib/config');
+var config       = require('./src/config');
 var inquirer     = require('inquirer');
 var fs           = require('fs-extra');
 var Mustache     = require('mustache');
 var shell        = require('shelljs');
-var toolshed     = require('./lib/js-toolshed/src/js-toolshed');
+var toolshed     = require('./src/js-toolshed/src/js-toolshed');
+var chalk        = require('chalk');
 
 var filenameFromTitle = function (title) {
   return config.directories.data + '/' + title.trim().asciify();
@@ -40,6 +41,14 @@ var questions    = [
       return (v === 'Normal article') ? null : v;
     }
   },{
+    type: 'confirm',
+    name: 'images',
+    message: 'But you do want to use images?',
+    default: false,
+    when: function (answers) {
+      return answers.classes !== 'Images';
+    }
+  },{
     type: 'input',
     name: 'keywords',
     message: 'Keywords, comma-separated',
@@ -48,33 +57,57 @@ var questions    = [
       return v.trim();
     }
   },{
+    type: 'confirm',
+    name: 'edit',
+    message: 'Open this in editor right away?',
+    default: true
+  },{
     type: 'input',
     name: 'lead',
     message: 'Lead / teaser text',
-    default: ''
+    default: '',
+    when: function (answers) {
+      return !answers.edit;
+    }
   },{
     type: 'input',
     name: 'mainText',
     message: 'Main text',
-    default: 'Lorem ipsum…'
+    default: 'Lorem ipsum…',
+    when: function (answers) {
+      return !answers.edit;
+    }
+  },{
+    type: 'confirm',
+    name: 'draft',
+    message: 'Is this a draft?',
+    default: false
   }
 ];
 inquirer.prompt(questions).then(
   function (answers) {
     var filename = filenameFromTitle(answers.title);
-    fs.writeFile(filename + '.md', Mustache.render(template, {
+    var markdownFilename = filename + '.md' + (answers.draft ? '~' : '');
+    fs.writeFile(markdownFilename, Mustache.render(template, {
       title: answers.title,
       keywords: answers.keywords,
       classes: answers.classes,
-      lead: answers.lead,
-      mainText: answers.mainText,
+      lead: answers.lead || 'Lorem ipsum…',
+      mainText: answers.mainText || 'Lorem ipsum…',
       date: new Date()
     }), function(err) {
       if (err) {
-        console.error( filename + '.md could not be written');
+        console.error(chalk.red( markdownFilename + ' could not be written' ));
       } else {
-        console.log( filename + '.md created');
-        shell.mkdir('-p', filename);
+        console.log( markdownFilename + ' created');
+        var cmd = 'open ' + markdownFilename;
+        console.log(chalk.grey(cmd));
+        if (answers.edit) {
+          shell.exec(cmd);
+        }
+        if (answers.classes === 'Images' || answers.images) {
+          shell.mkdir('-p', filename);
+        }
       }
     });
   },

@@ -18,7 +18,7 @@ var shell      = require('gulp-shell');
 gulp.task('jshint', function() {
   return gulp.src([
       '*.js',
-      pkg.directories.lib+'/**/*.js',
+      pkg.directories.src+'/**/*.js',
       pkg.directories.test+'/**/*.js'
     ])
     .pipe(plumber({errorHandler: onError}))
@@ -50,11 +50,11 @@ gulp.task('nodeunit', function() {
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(['gulpfile.js','package.json'], process.exit);
-  gulp.watch(['*.js',pkg.directories.lib+'/**/*.js',pkg.directories.test+'/**/*.js'], ['default']);
+  gulp.watch(['*.js',pkg.directories.src+'/**/*.js',pkg.directories.test+'/**/*.js'], ['default']);
   gulp.watch([pkg.directories.data+'/**/*'], ['compile']);
 });
 
 // Default Task
-gulp.task('default',     ['jshint','nodeunit']);
+gulp.task('default',     ['jshint']);
 gulp.task('test',        ['jshint','nodeunit']);
 gulp.task('compile',     shell.task(['npm run start']));

@@ -1,4 +1,4 @@
-var config = require('../lib/config');
+var config = require('../src/config');
 
 exports.testConfigProperties = function(test) {
   'use strict';

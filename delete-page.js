@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-var config       = require('./lib/config');
+var config       = require('./src/config');
 var inquirer     = require('inquirer');
 var fs           = require('fs-extra');
 var shell        = require('shelljs');
@@ -11,9 +11,7 @@ glob(config.directories.data + "/**/*.md", function (err, files) {
   files = files.map(function(v) {
     return v.replace(/^.+\/(.+?)\.md$/,'$1');
   });
-
-
-  var questions    = [
+  var questions = [
     {
       type: 'list',
       name: 'file',

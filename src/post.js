@@ -6,7 +6,7 @@ var markdownConvert = require('marked');
 var dateFormat      = require('dateformat');
 var hash            = require('object-hash');
 var toolshed        = require('./js-toolshed/src/js-toolshed');
-var BlogophonUrls   = require('../lib/blogophon-urls')();
+var BlogophonUrls   = require('./blogophon-urls')();
 
 var markyMark = function (html, relUrl) {
   if (relUrl) {
@@ -81,8 +81,16 @@ var Post = function (filename, markdown, meta) {
     throw new Error('meta.Date not supplied in post');
   }
 
-  var htmlTeaser = markyMark(meta.Description.trim(), meta.Url);
-  var html       = markyMark(markdown, meta.Url);
+  meta.Url         = BlogophonUrls.getUrlOfPost(filename);
+  meta.AbsoluteUrl = BlogophonUrls.getAbsoluteUrlOfPost(filename);
+  meta.Filename    = BlogophonUrls.getFileOfPost(filename);
+  meta.localeDate  = dateFormat(meta.Date,'dd.mm.yyyy');
+  meta.isoDate     = dateFormat(meta.Date,'isoDateTime').replace(/(\d{2})(\d{2})$/,'$1:$2');
+  meta.rfcDate     = dateFormat(meta.Date,'ddd, dd mmm yyyy hh:MM:ss o'); // Wed, 02 Oct 2002 15:00:00 +0200
+  meta.timestamp   = Math.round(new Date(meta.Date).getTime() / 1000);
+
+  var htmlTeaser   = markyMark(meta.Description.trim(), meta.Url);
+  var html         = markyMark(markdown, meta.Url);
 
   if (meta.Title === undefined) {
     meta.Title = markdown.split(/\n/)[0];
@@ -122,14 +130,6 @@ var Post = function (filename, markdown, meta) {
       meta.Image = match[1];
     }
   }
-
-  meta.Url         = BlogophonUrls.getUrlOfPost(filename);
-  meta.AbsoluteUrl = BlogophonUrls.getAbsoluteUrlOfPost(filename);
-  meta.Filename    = BlogophonUrls.getFileOfPost(filename);
-  meta.localeDate  = dateFormat(meta.Date,'dd.mm.yyyy');
-  meta.isoDate     = dateFormat(meta.Date,'isoDateTime').replace(/(\d{2})(\d{2})$/,'$1:$2');
-  meta.rfcDate     = dateFormat(meta.Date,'ddd, dd mmm yyyy hh:MM:ss o'); // Wed, 02 Oct 2002 15:00:00 +0200
-  meta.timestamp   = Math.round(new Date(meta.Date).getTime() / 1000);
 
   var share = {
     twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(meta.AbsoluteUrl)+"&source=tweetbutton&text="+encodeURIComponent(meta.Title)+"&url="+encodeURIComponent(meta.AbsoluteUrl),

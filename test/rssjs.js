@@ -12,7 +12,7 @@ exports.testBasicProperties = function(test) {
         tags: [6,7]
       }
   };
-  var rssjs = require('../lib/rssjs')([item], new Date());
+  var rssjs = require('../src/rssjs')([item], new Date());
 
   test.ok(rssjs.version);
   test.ok(rssjs.channel);

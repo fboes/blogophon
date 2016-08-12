@@ -7,10 +7,15 @@
     "type": "git",
     "url": "git@github.com:fboes/blogophon.git"
   },
+  "bin": {
+    "blogophon-generate":"./index.js"
+  },
   "scripts": {
     "test": "nodeunit test",
     "start": "./index.js",
-    "new-page": "./new-page.js"
+    "new-page": "./new-page.js",
+    "delete-page": "./delete-page.js",
+    "edit": "./edit.js"
   },
   "keywords": [
     "blog",
@@ -31,16 +36,16 @@
   },
   "directories": {
     "doc": "docs",
-    "lib": "lib",
+    "src": "src",
     "test": "test",
     "data": "user/posts",
     "htdocs": "htdocs",
-    "test": "test",
     "theme": "theme"
   },
   "author": "Frank Boës",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.3",
     "dateformat": "^1.0.12",
     "fs-extra": "^0.30.0",
     "glob": "^7.0.5",

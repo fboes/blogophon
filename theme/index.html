@@ -2,25 +2,23 @@
 <html lang="{{config.language}}">
 <head>
   <meta charset="UTF-8" />
-  <title>{{#title}}{{title}} | {{/title}}{{config.name}}</title>
+  <title>{{#meta.title}}{{meta.title}} | {{/meta.title}}{{config.name}}</title>
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="{{absoluteUrl}}" />
-  <meta property="og:title" name="title" content="{{title}}" />
+  <meta property="og:url" content="{{meta.absoluteUrl}}" />
+  <meta property="og:title" name="title" content="{{meta.title}}" />
   <meta property="og:description" name="description" content="{{config.description}}" />
-  <link rel="canonical" href="{{absoluteUrl}}" />
-  {{>head}}
+  <link rel="canonical" href="{{meta.absoluteUrl}}" />
+  {{>meta}}
 </head>
 <body class="index">
   <div id="container">
-    <header >
-      <h1 id="header"><a href="{{config.basePath}}" rel="home">{{config.name}}</a></h1>
-    </header>
+    {{>header}}
     <div id="main">
       <main>
         <div id="content">
-          {{#title}}
-            <h2>{{title}}</h2>
-          {{/title}}
+          {{#meta.title}}
+            <h2>{{meta.title}}</h2>
+          {{/meta.title}}
 
           <div class="teasers">
             {{#index}}
@@ -73,11 +71,7 @@
       </main>
       {{>sidebar}}
     </div>
-    <footer>
-      <div id="footer">
-        Layout und alle Inhalte stehen unter <a href="http://creativecommons.org/licenses/by/3.0/de/" rel="license">Creative Commons BY Lizenz</a>
-      </div>
-    </footer>
+    {{>footer}}
   </div>
   <script src="http://cdn.3960.org/js/main.min.js" async="async"></script>
 </body>

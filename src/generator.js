@@ -12,7 +12,7 @@ var PostReader     = require('./post-reader');
 var RssJs          = require('./rssjs');
 var Url            = require('./rssjs');
 var toolshed       = require('./js-toolshed/src/js-toolshed');
-var BlogophonUrls  = require('../lib/blogophon-urls')();
+var BlogophonUrls  = require('./blogophon-urls')();
 
 /**
  * Generator used for creating the blog
@@ -29,8 +29,10 @@ var templates = {
   sitemap: fs.readFileSync(config.directories.theme+'/sitemap.xml', 'utf8')
 };
 var partials = {
-  head:    fs.readFileSync(config.directories.theme+'/partials/head.html', 'utf8'),
-  sidebar: fs.readFileSync(config.directories.theme+'/partials/sidebar.html', 'utf8')
+  meta:    fs.readFileSync(config.directories.theme+'/partials/meta.html', 'utf8'),
+  header:  fs.readFileSync(config.directories.theme+'/partials/header.html', 'utf8'),
+  sidebar: fs.readFileSync(config.directories.theme+'/partials/sidebar.html', 'utf8'),
+  footer:  fs.readFileSync(config.directories.theme+'/partials/footer.html', 'utf8')
 };
 var strings = {
   'index': 'Startseite',
@@ -91,7 +93,7 @@ Generator.getArticles = function() {
  * Get all {Post} from `index` and generate HTML pages.
  * @return {Promise} with first parameter of `resolve` being the number of files converted, second being the number of articles skipped.
  */
-Generator.buildAllArticles = function () {
+Generator.buildAllArticles = function ( force ) {
   var i,
     allPosts = index.getPosts(),
     processed = 0,
@@ -99,11 +101,13 @@ Generator.buildAllArticles = function () {
     maxProcessed = allPosts.length,
     hashes = {}
   ;
-  try {
-    hashes = JSON.parse(fs.readFileSync('./user/hashes.json'));
-  } catch (e) {
-    // Here you get the error when the file was not found,
-    // but you also get any other error
+  if (force === undefined || !force) {
+    try {
+      hashes = JSON.parse(fs.readFileSync('./user/hashes.json'));
+    } catch (e) {
+      // Here you get the error when the file was not found,
+      // but you also get any other error
+    }
   }
   return new Promise (
     function(resolve, reject) {
@@ -168,8 +172,10 @@ Generator.buildSpecialPages = function () {
           var curPageObj    = index.getPageData(page, pagedPosts.length);
           curPageObj.index  = pagedPosts[page];
           curPageObj.config = config;
-          curPageObj.title  = (curPageObj.currentPage === 1) ? strings.index : strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages);
-          curPageObj.absoluteUrl = BlogophonUrls.getAbsoluteUrlOfIndex(curPageObj.currentUrl);
+          curPageObj.meta   = {
+            title      : (curPageObj.currentPage === 1) ? strings.index : strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            absoluteUrl: BlogophonUrls.getAbsoluteUrlOfIndex(curPageObj.currentUrl)
+          };
           fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(templates.index, curPageObj, partials), checkProcessed);
         }
       });
@@ -178,8 +184,10 @@ Generator.buildSpecialPages = function () {
         Object.keys(tags).map(function (key) {
           shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
           tags[key].config = config;
-          tags[key].title  = strings.tag.sprintf(tags[key].title);
-          tags[key].absoluteUrl = BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id);
+          tags[key].meta   = {
+            title      : strings.tag.sprintf(tags[key].title),
+            absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
+          };
           fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(templates.index, tags[key], partials), checkProcessed);
         });
       });
@@ -216,11 +224,11 @@ Generator.buildSpecialPages = function () {
  * Build all articles and special pages.
  * @return {Promise} [description]
  */
-Generator.buildAllPages = function ( ) {
+Generator.buildAllPages = function ( force ) {
   return new Promise (
     function(resolve, reject) {
       Promise.all([
-        Generator.buildAllArticles(),
+        Generator.buildAllArticles(force),
         Generator.buildSpecialPages()
       ]).then(
         resolve,
@@ -273,11 +281,11 @@ Generator.copyImages = function () {
  * Build all articles, special pages and images.
  * @return {Promise} [description]
  */
-Generator.buildAll = function ( ) {
+Generator.buildAll = function ( force ) {
   return new Promise (
     function(resolve, reject) {
       Promise.all([
-        Generator.buildAllArticles(),
+        Generator.buildAllArticles(force),
         Generator.buildSpecialPages(),
         Generator.copyImages()
       ]).then(
