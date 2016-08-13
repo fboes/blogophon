@@ -18,17 +18,20 @@ var BlogophonConsole = function () {
 
   var files        = [];
   var choicesStr   = [
-    'Create new article','Edit existing article','Delete article','Generate articles','Exit'
+    'Create new article',
+    'Edit existing article',
+    'Delete article',
+    'Generate & publish articles',
+    'Exit'
   ];
-  if (config.deploy) {
-    choicesStr[3] = 'Generate & deploy articles';
-  }
-  var filenameFromTitle = function (title) {
-    return config.directories.data + '/' + title.trim().asciify();
-  };
+
   var template     = fs.readFileSync(config.directories.theme+'/post.md', 'utf8');
 
-  var exports = {
+  var internal = {
+    /**
+     * [makeChoices description]
+     * @return {[type]} [description]
+     */
     makeChoices: function () {
       files = glob.sync(config.directories.data + "/**/*.md").map(function(v) {
         return v.replace(/^.+\/(.+?)\.md$/,'$1');
@@ -40,6 +43,16 @@ var BlogophonConsole = function () {
       choices.push(choicesStr[4]);
       return choices;
     },
+    filenameFromTitle: function (title) {
+      return config.directories.data + '/' + title.trim().asciify();
+    }
+  }
+
+  var exports = {
+    /**
+     * [createArticle description]
+     * @return {[type]} [description]
+     */
     createArticle: function() {
       var questions    = [
         {
@@ -50,7 +63,7 @@ var BlogophonConsole = function () {
             if (v.trim().length <= 2) {
               return 'This title is way too short.';
             }
-            var filename = filenameFromTitle(v);
+            var filename = internal.filenameFromTitle(v);
             if (fs.existsSync(filename + '.md')) {
               return ("File " + filename + '.md already exists');
             }
@@ -114,7 +127,7 @@ var BlogophonConsole = function () {
       ];
       inquirer.prompt(questions).then(
         function (answers) {
-          var filename = filenameFromTitle(answers.title);
+          var filename = internal.filenameFromTitle(answers.title);
           var markdownFilename = filename + '.md' + (answers.draft ? '~' : '');
           fs.writeFile(markdownFilename, Mustache.render(template, {
             title: answers.title,
@@ -143,6 +156,10 @@ var BlogophonConsole = function () {
         function(err) { console.log(err); }
       );
     },
+    /**
+     * [editArticle description]
+     * @return {[type]} [description]
+     */
     editArticle: function() {
       var questions = [
         {
@@ -155,13 +172,17 @@ var BlogophonConsole = function () {
       inquirer.prompt(questions).then(
         function (answers) {
           var cmd = "open " + config.directories.data + '/' + answers.file + ".md";
-          console.log(cmd);
+          console.log(chalk.grey(cmd));
           shell.exec(cmd);
           exports.init();
         },
         function(err) { console.error(err); }
       );
     },
+    /**
+     * [deleteArticle description]
+     * @return {[type]} [description]
+     */
     deleteArticle: function() {
       var questions = [
         {
@@ -183,13 +204,17 @@ var BlogophonConsole = function () {
             fs.removeSync(config.directories.data + '/' + answers.file + ".md");
             fs.removeSync(config.directories.data + '/' + answers.file);
             fs.removeSync(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file);
-            console.log(answers.file + " file deleted, you may want to generate all index pages");
+            console.log(answers.file + " file deleted, you may want to generate & publish all index pages");
           }
           exports.init();
         },
         function(err) { console.error(err); }
       );
     },
+    /**
+     * [generate description]
+     * @return {[type]} [description]
+     */
     generate: function() {
       var questions = [
         {
@@ -200,10 +225,10 @@ var BlogophonConsole = function () {
         },{
           type: 'confirm',
           name: 'deploy',
-          message: 'Do you want to deploy all files?',
+          message: 'Do you want to publish all files?',
           default: true,
           when: function (answers) {
-            return config.deploy;
+            return config.deployCmd;
           }
         }
       ];
@@ -233,7 +258,7 @@ var BlogophonConsole = function () {
           type: 'list',
           name: 'action',
           message: 'Select action',
-          choices: exports.makeChoices()
+          choices: internal.makeChoices()
         }
       ];
       inquirer.prompt(questions).then(

@@ -14,6 +14,7 @@ A small and simple [Static Site Generator](https://davidwalsh.name/introduction-
 * Generate all required tag pages.
 * Scale images and remove unneccessary cruft.
 * Puts all relevant meta stuff into `<head>` for SEO and social sharing.
+* Publish files to remote server.
 
 Installation
 ------------
@@ -49,7 +50,7 @@ If you do not want to use [`./blogophone.js`](blogophone.js), this is the manual
 `index.js` has some options:
 
 * `--force`: Create _all_ articles anew, ignoring cached versions.
-* `--deploy`:  Execute `deploy` command found in `user/config.json`.
+* `--deploy`:  Execute `deployCmd` command found in `user/config.json`.
 
 ### Using drafts
 

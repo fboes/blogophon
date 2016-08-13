@@ -11,7 +11,7 @@
   "ogImage":"",
   "twitterAccount": "",
   "themeColor": "#ffffff",
-  "deploy":"",
+  "deployCmd":"# rsync -az --exclude=node_modules --delete * HOST:PATH/ && echo \"Deployed\"",
   "imageSizes": [
     [200,200],
     [320,640],

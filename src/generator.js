@@ -302,8 +302,8 @@ Generator.buildAll = function ( force ) {
  * @return {Boolean} [description]
  */
 Generator.deploy = function () {
-  if (config.deploy) {
-    shell.exec(config.deploy);
+  if (config.deployCmd) {
+    shell.exec(config.deployCmd);
   }
   return true;
 };
