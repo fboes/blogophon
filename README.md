@@ -31,17 +31,17 @@ Almost all stuff you will be doing with Blogophon is done via command line.
 
 ### Create a new article
 
-1. Create a new Markdown file in `user/posts` by using [`./new-page.js`](new-page.js) or doing this manually.
+1. Create a new Markdown file in `user/posts` by using [`./blogophone.js`](blogophone.js) and selecting "Create new article", or doing this manually.
 1. Generate HTML files either automatically or manually (see below).
 
 ### Generate HTML files automatically
 
 1. Start Gulp watcher via `gulp watch`.
-1. Edit your Markdown file, e.g. via [`./edit.js`](edit.js). Gulp will automatically create all HTML files via the Blogophon Generator.
+1. Edit your Markdown file. Gulp will automatically create all HTML files via the Blogophon Generator.
 
 ### Generate HTML files manually
 
-1. Edit your Markdown file, e.g. via [`./edit.js`](edit.js).
+1. Edit your Markdown file.
 1. Run [`./index.js`](index.js) to make the Blogophon Generator generate all HTML files.
 
 `index.js` has some options:
@@ -55,12 +55,12 @@ If you want to write an article without publishing it, you can append a `~` to y
 
 ### Delete articles
 
-If you want to completly delete an article, run [`./delete-page.js`](delete-page.js). This will delete all HTML- and Markdown files as well as any images associated with the selected article.
+If you want to completly delete an article, run [`./blogophone.js`](blogophone.js) and select "Delete article". This will delete all HTML- and Markdown files as well as any images associated with the selected article.
 
 Version
 -------
 
-Version: 0.0.4 (2016-08-08)
+Version: 0.0.5 (2016-08-13)
 
 Legal stuff
 -----------
