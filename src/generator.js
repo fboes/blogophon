@@ -64,6 +64,7 @@ var index = require('./index')();
  */
 Generator.getArticles = function() {
   var i, processed = 0, maxProcessed = -1;
+  index.clear();
   return new Promise (
     function(resolve, reject) {
      glob(config.directories.data + "/**/*.md", function (err, files) {

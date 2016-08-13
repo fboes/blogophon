@@ -34,6 +34,10 @@ var Index = function () {
   };
 
   return {
+    clear: function () {
+      isSorted = false;
+      index = [];
+    },
     push: function (post) {
       isSorted = false;
       index.push(post);
