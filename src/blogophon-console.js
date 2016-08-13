@@ -20,6 +20,9 @@ var BlogophonConsole = function () {
   var choicesStr   = [
     'Create new article','Edit existing article','Delete article','Generate articles','Exit'
   ];
+  if (config.deploy) {
+    choicesStr[3] = 'Generate & deploy articles';
+  }
   var filenameFromTitle = function (title) {
     return config.directories.data + '/' + title.trim().asciify();
   };
