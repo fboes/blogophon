@@ -11,11 +11,10 @@
     "blogophon-generate":"./index.js"
   },
   "scripts": {
-    "test": "nodeunit test",
+    "install": "./install.js",
     "start": "./index.js",
-    "new-page": "./new-page.js",
-    "delete-page": "./delete-page.js",
-    "edit": "./edit.js"
+    "blogophon": "./blogophon.js",
+    "test": "nodeunit test"
   },
   "keywords": [
     "blog",
