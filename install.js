@@ -148,18 +148,18 @@ inquirer.prompt(questions).then(
     //console.log(answers);
     fs.writeFile(configFilename, JSON.stringify(answers), function(err) {
       if (err) {
-        console.error(configFilename + ' could not be written' );
+        console.error(configFilename + ' could not be written' ); process.exit(1);
       } else {
         console.log( configFilename + ' created');
       }
     });
     fs.writeFile('htdocs/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
       if (err) {
-        console.error('htdocs/robots.txt' + ' could not be written' );
+        console.error('htdocs/robots.txt' + ' could not be written' ); process.exit(1);
       } else {
         console.log( 'htdocs/robots.txt' + ' created');
       }
     });
   },
-  function(err) { console.log(err); }
+  function(err) { console.log(err); process.exit(1); }
 );

@@ -14,8 +14,8 @@ Generator.getArticles().then(
           Generator.deploy();
         }
       },
-      function(err) { console.error(err); }
+      function(err) { console.error(err); process.exit(1); }
     );
   },
-  function(err) { console.error(err); }
+  function(err) { console.error(err); process.exit(1); }
 );
