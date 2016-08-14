@@ -7,7 +7,7 @@ ErrorDocument 404 /404.html
 
 # General Blogophon redirects
 RedirectMatch 301 ^/htdocs/(.*)$ /$1
-RedirectMatch 301 ^/(posts|tagged)/?$ /
+RedirectMatch 301 ^/posts/?$ /
 
 # Grav CMS redirects, including poor man's lowercasing
 RedirectMatch 301 ^/page:(.*)$ /

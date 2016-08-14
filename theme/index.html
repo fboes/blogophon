@@ -50,22 +50,22 @@
             {{/index}}
           </div>
 
-            <div id="prevnext">
-              <span>
-                {{#currentPage}}
-                    <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
-                {{/currentPage}}
-                {{#title}}
-                  <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
-                {{/title}}
-              </span>
-              {{#prevUrl}}
-                <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
-              {{/prevUrl}}
-              {{#nextUrl}}
-                <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
-              {{/nextUrl}}
-            </div>
+          <div id="prevnext">
+            <span>
+              {{#currentPage}}
+                  <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+              {{/currentPage}}
+              {{#title}}
+                <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
+              {{/title}}
+            </span>
+            {{#prevUrl}}
+              <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
+            {{/prevUrl}}
+            {{#nextUrl}}
+              <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
+            {{/nextUrl}}
+          </div>
 
         </div>
       </main>

@@ -3,6 +3,7 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url><loc>{{config.baseUrl}}{{config.basePath}}</loc><lastmod>{{pubDate}}</lastmod></url>
+  <url><loc>{{config.baseUrl}}{{config.basePath}}tagged/</loc><lastmod>{{pubDate}}</lastmod></url>
   {{#index}}
     <url><loc>{{meta.AbsoluteUrl}}</loc><lastmod>{{meta.isoDate}}</lastmod></url>
   {{/index}}
