@@ -46,7 +46,7 @@ var BlogophonConsole = function () {
     filenameFromTitle: function (title) {
       return config.directories.data + '/' + title.trim().asciify();
     }
-  }
+  };
 
   var exports = {
     /**

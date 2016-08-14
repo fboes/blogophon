@@ -22,8 +22,8 @@ try {
       [400,225],
       [800,450]
     ]
-  }
-};
+  };
+}
 
 defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
   return i.join('x');
@@ -148,14 +148,14 @@ inquirer.prompt(questions).then(
     //console.log(answers);
     fs.writeFile(configFilename, JSON.stringify(answers), function(err) {
       if (err) {
-        console.error(chalk.red( configFilename + ' could not be written' ));
+        console.error(configFilename + ' could not be written' );
       } else {
         console.log( configFilename + ' created');
       }
     });
     fs.writeFile('htdocs/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
       if (err) {
-        console.error(chalk.red( 'htdocs/robots.txt' + ' could not be written' ));
+        console.error('htdocs/robots.txt' + ' could not be written' );
       } else {
         console.log( 'htdocs/robots.txt' + ' created');
       }
