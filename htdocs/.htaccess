@@ -4,6 +4,7 @@ AddType text/plain md
 AddType application/json .json
 AddCharset utf-8 .html .css .js .rss .xml .md .json
 ErrorDocument 404 /404.html
+DirectoryIndex index.html
 
 # General Blogophon redirects
 RedirectMatch 301 ^/htdocs/(.*)$ /$1

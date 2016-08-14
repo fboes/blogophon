@@ -178,6 +178,8 @@ Generator.buildSpecialPages = function () {
             title      : (curPageObj.currentPage === 1) ? strings.index : strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: BlogophonUrls.getAbsoluteUrlOfIndex(curPageObj.currentUrl)
           };
+          curPageObj.prevUrl = BlogophonUrls.getUrlOfIndex(curPageObj.prevUrl);
+          curPageObj.nextUrl = BlogophonUrls.getUrlOfIndex(curPageObj.nextUrl);
           fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(templates.index, curPageObj, partials), checkProcessed);
         }
       });
@@ -193,7 +195,6 @@ Generator.buildSpecialPages = function () {
           fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(templates.index, tags[key], partials), checkProcessed);
         });
 
-  console.log(BlogophonUrls.getFileOfIndex('tagged/index.html'));
         fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(templates.tags, {
           index: Object.keys(tags).sort().map(function (key) {
             return {
