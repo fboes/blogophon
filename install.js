@@ -16,9 +16,18 @@ try {
     "basePath": "/",
     "language": "en",
     "themeColor": "#ffffff",
-    "deployCmd":"# rsync -az --exclude=node_modules --delete * HOST:PATH && echo \"Deployed\"",
+    "deployCmd":"# rsync -az --exclude=node_modules --delete * HOST:PATH && echo \"Pubslished\"",
+    "imageSizes": [
+      [180,180],
+      [400,225],
+      [800,450]
+    ]
   }
-}
+};
+
+defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
+  return i.join('x');
+});
 
 var questions = [
   {
@@ -109,6 +118,20 @@ var questions = [
     name: 'deployCmd',
     message: 'CLI command to copy files to your live server (optional)',
     default: defaultValues.deployCmd
+  },{
+    type: 'checkbox',
+    name: 'imageSizes',
+    message: 'What image sizes will be used?',
+    default: defaultValues.imageSizes,
+    choices: [
+      "180x180",
+      "200x200",
+      "300x300",
+      "320x240",
+      "640x480",
+      "400x225",
+      "800x450"
+    ]
   }
 ];
 
@@ -119,11 +142,9 @@ inquirer.prompt(questions).then(
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
     };
-    answers.imageSizes = [
-      [180,180],
-      [400,225],
-      [800,450]
-    ];
+    answers.imageSizes = answers.imageSizes.map(function(i) {
+      return i.split(/x/);
+    });
     //console.log(answers);
     fs.writeFile(configFilename, JSON.stringify(answers), function(err) {
       if (err) {
