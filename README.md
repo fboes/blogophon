@@ -62,7 +62,7 @@ If you want to completly delete an article, you will have to delete all HTML- an
 Version
 -------
 
-Version: 0.0.5 (2016-08-13)
+Version: 0.0.6 (2016-08-15)
 
 Legal stuff
 -----------

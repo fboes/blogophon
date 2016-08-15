@@ -1,6 +1,6 @@
 {
   "name": "blogophon",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A small and simple Static Site Generator for blogs.",
   "main": "index.js",
   "repository": {
