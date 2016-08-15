@@ -7,23 +7,7 @@ var fs             = require('fs-extra');
 var inquirer       = require('inquirer');
 var configFilename = 'user/config.json';
 
-var defaultValues = {};
-try {
-  defaultValues = JSON.parse(fs.readFileSync(configFilename));
-} catch (e) {
-  defaultValues = {
-    "baseUrl": "http://example.com",
-    "basePath": "/",
-    "language": "en",
-    "themeColor": "#ffffff",
-    "deployCmd":"# rsync -az --exclude=node_modules --delete * HOST:PATH && echo \"Pubslished\"",
-    "imageSizes": [
-      [180,180],
-      [400,225],
-      [800,450]
-    ]
-  };
-}
+var defaultValues = require('./src/config');
 
 defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
   return i.join('x');
@@ -34,14 +18,17 @@ var questions = [
     type: 'input',
     name: 'name',
     message: 'The name of your site',
-    default: defaultValues.name
+    default: defaultValues.name,
+    validate: function(v) {
+      return v ? true : 'Please supply at least a short name for your site.'
+    }
   },{
     type: 'input',
     name: 'baseUrl',
     message: 'Domain of your site, starting with `http`',
     default: defaultValues.baseUrl,
     validate: function(v) {
-      return v.match(/^http(s)?:\/\/\S+$/) ? true : 'Please add a valid url, starting with `http://`';
+      return v.match(/^http(s)?:\/\/\S+$/) ? true : 'Please supply a valid url, starting with `http://`.';
     },
     filter: function(v) {
       return v.replace(/\/$/,'');
@@ -52,7 +39,7 @@ var questions = [
     message: 'Base path like `/`',
     default: defaultValues.basePath,
     validate: function(v) {
-      return v.match(/^[a-zA-Z0-9\.\/_-]+$/) ? true : 'Please add a valid path, at least `/`';
+      return v.match(/^[a-zA-Z0-9\.\/_-]+$/) ? true : 'Please supply a valid path, at least `/`.';
     },
     filter: function(v) {
       return v.replace(/^([^\/])/,'/$1').replace(/([^\/])$/,'$1/');
@@ -60,7 +47,7 @@ var questions = [
   },{
     type: 'input',
     name: 'description',
-    message: 'A short description of your blog',
+    message: 'A short description of your blog (optional)',
     default: defaultValues.description
   },{
     type: 'input',
@@ -68,23 +55,37 @@ var questions = [
     message: 'Language code',
     default: defaultValues.language,
     validate: function(v) {
-      return v.match(/^[a-zA-Z]+$/) ? true : 'Please add a valid language code like `en` or `es`';
+      return v.match(/^[a-zA-Z]+$/) ? true : 'Please supply a valid language code like `en` or `es`.';
     },
     filter: function(v) {
       return v.toLowerCase();
     }
   },{
     type: 'input',
+    name: 'itemsPerPage',
+    message: 'Items per page',
+    default: defaultValues.itemsPerPage,
+    validate: function(v) {
+      return Number(v)> 0 ? true : 'Please supply a positive number.';
+    },
+    filter: function(v) {
+      return Number(v);
+    }
+  },{
+    type: 'input',
     name: 'defaultAuthor',
     message: 'Default author name',
-    default: defaultValues.defaultAuthor.name
+    default: defaultValues.defaultAuthor.name,
+    validate: function(v) {
+      return v ? true : 'Please supply at least a short name for your site.'
+    }
   },{
     type: 'input',
     name: 'defaultAuthorEmail',
     message: 'Default email address of author',
     default: defaultValues.defaultAuthor.email,
     validate: function(v) {
-      return v.match(/^\S+@\S+$/) ? true : 'Please add a valid email address';
+      return (v.match(/^\S+@\S+$/)) ? true : 'Please supply a valid email address.';
     }
   },{
     type: 'input',
@@ -92,7 +93,7 @@ var questions = [
     message: 'URL of standard teaser image (optional)',
     default: defaultValues.ogImage,
     validate: function(v) {
-      return (!v || v.match(/^http(s)?:\/\/\S+$/)) ? true : 'Please add a valid url, starting with `http://` or leave field empty';
+      return (!v || v.match(/^http(s)?:\/\/\S+$/)) ? true : 'Please supply a valid url, starting with `http://` or leave field empty.';
     }
   },{
     type: 'input',
@@ -100,7 +101,7 @@ var questions = [
     message: 'Twitter account name (optional)',
     default: defaultValues.twitterAccount,
     validate: function(v) {
-      return (!v || v.match(/^[a-zA-z0-9_-]+$/)) ? true : 'Please add a Twitter account name or leave field empty';
+      return (!v || v.match(/^[a-zA-z0-9_-]+$/)) ? true : 'Please supply a Twitter account name or leave field empty.';
     }
   },{
     type: 'input',
@@ -108,7 +109,7 @@ var questions = [
     message: 'Basic color of your theme as hexcode (optional)',
     default: defaultValues.themeColor,
     validate: function(v) {
-      return (!v || v.match(/^#[a-zA-z0-9]{3,6}$/)) ? true : 'Please add a Thex color code like `#fa647a`';
+      return (!v || v.match(/^#[a-zA-z0-9]{3,6}$/)) ? true : 'Please supply a Thex color code like `#fa647a`.';
     },
     filter: function(v) {
       return v.toLowerCase();
@@ -142,6 +143,7 @@ inquirer.prompt(questions).then(
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
     };
+    delete(answers.defaultAuthorEmail);
     answers.imageSizes = answers.imageSizes.map(function(i) {
       return i.split(/x/);
     });

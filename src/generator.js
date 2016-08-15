@@ -147,7 +147,7 @@ Generator.buildAllArticles = function ( force ) {
  * @return {Promise} with first parameter of `resolve` being the number of files converted.
  */
 Generator.buildSpecialPages = function () {
-  var pagedPosts = index.getPagedPosts(5),
+  var pagedPosts = index.getPagedPosts(config.itemsPerPage),
     page,
     indexFilename,
     i,
