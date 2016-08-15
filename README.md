@@ -27,13 +27,13 @@ Installation
 How it works
 ------------
 
-Almost all stuff you will be doing with Blogophon is done via command line. Or just call [`./blogophone.js`](blogophone.js), so you will not need any manual at all.
+Almost all stuff you will be doing with Blogophon is done via command line. Just call `npm start` or [`./index.js`](index.js) (which results in the same task being called), so you will not need any manual at all.
 
-If you do not want to use [`./blogophone.js`](blogophone.js), this is the manual:
+If you do not want to use [`./index.js`](index.js), this is the manual:
 
 ### Create a new article
 
-1. Create a new Markdown file in `user/posts` (e.g. by using [`./blogophone.js`](blogophone.js) and selecting "Create new article").
+1. Create a new Markdown file in `user/posts`.
 1. Generate HTML files either automatically or manually (see below).
 
 ### Generate HTML files automatically
@@ -44,9 +44,9 @@ If you do not want to use [`./blogophone.js`](blogophone.js), this is the manual
 ### Generate HTML files manually
 
 1. Edit your Markdown file.
-1. Run [`./index.js`](index.js) to make the Blogophon Generator generate all HTML files.
+1. Run [`./generate.js`](generate.js) to make the Blogophon Generator generate all HTML files.
 
-`index.js` has some options:
+`generate.js` has some options:
 
 * `--force`: Create _all_ articles anew, ignoring cached versions.
 * `--deploy`:  Execute `deployCmd` command found in `user/config.json`.
@@ -57,7 +57,7 @@ If you want to write an article without publishing it, you can append a `~` to y
 
 ### Delete articles
 
-If you want to completly delete an article, you will have to delete all HTML- and Markdown files as well as any images associated with the selected article. At least for this actions it is wise to use [`./blogophone.js`](blogophone.js).
+If you want to completly delete an article, you will have to delete all HTML- and Markdown files as well as any images associated with the selected article.
 
 Version
 -------

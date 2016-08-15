@@ -13,7 +13,7 @@
   "scripts": {
     "install": "./install.js",
     "start": "./index.js",
-    "blogophon": "./blogophon.js",
+    "generate": "./generate.js",
     "test": "nodeunit test"
   },
   "keywords": [

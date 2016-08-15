@@ -51,10 +51,10 @@ gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(['gulpfile.js','package.json'], process.exit);
   gulp.watch(['*.js',pkg.directories.src+'/**/*.js',pkg.directories.test+'/**/*.js'], ['default']);
-  gulp.watch([pkg.directories.data+'/**/*'], ['compile']);
+  gulp.watch([pkg.directories.data+'/**/*'], ['generate']);
 });
 
 // Default Task
 gulp.task('default',     ['jshint']);
 gulp.task('test',        ['jshint','nodeunit']);
-gulp.task('compile',     shell.task(['npm run start']));
+gulp.task('generate',    shell.task(['npm run generate']));
