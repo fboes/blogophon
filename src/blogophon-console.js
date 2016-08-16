@@ -44,7 +44,7 @@ var BlogophonConsole = function () {
       return choices;
     },
     filenameFromTitle: function (title) {
-      return config.directories.data + '/' + title.trim().asciify();
+      return config.directories.data + '/' + title.trim().asciify().replace(/(^\-+|\-+$)/,'');
     }
   };
 
