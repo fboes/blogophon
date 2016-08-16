@@ -30,7 +30,6 @@ var BlogophonConsole = function () {
   var internal = {
     /**
      * [makeChoices description]
-     * @return {[type]} [description]
      */
     makeChoices: function () {
       files = glob.sync(config.directories.data + "/**/*.md").map(function(v) {
@@ -44,14 +43,13 @@ var BlogophonConsole = function () {
       return choices;
     },
     filenameFromTitle: function (title) {
-      return config.directories.data + '/' + title.trim().asciify().replace(/(^\-+|\-+$)/,'');
+      return config.directories.data + '/' + title.trim().asciify().replace(/(^\-+|\-+$)/,'').replace(/(\-)\-+/,'$1');
     }
   };
 
   var exports = {
     /**
      * [createArticle description]
-     * @return {[type]} [description]
      */
     createArticle: function() {
       var questions    = [
@@ -158,7 +156,6 @@ var BlogophonConsole = function () {
     },
     /**
      * [editArticle description]
-     * @return {[type]} [description]
      */
     editArticle: function() {
       var questions = [
@@ -181,7 +178,6 @@ var BlogophonConsole = function () {
     },
     /**
      * [deleteArticle description]
-     * @return {[type]} [description]
      */
     deleteArticle: function() {
       var questions = [
@@ -200,20 +196,29 @@ var BlogophonConsole = function () {
       inquirer.prompt(questions).then(
         function (answers) {
           if (answers.sure) {
-            // Sync delete? :(
-            fs.removeSync(config.directories.data + '/' + answers.file + ".md");
-            fs.removeSync(config.directories.data + '/' + answers.file);
-            fs.removeSync(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file);
-            console.log(answers.file + " file deleted, you may want to generate & publish all index pages");
+            var processed = 0, maxProcessed = 3;
+            var checkProcessed  = function(err) {
+              if (err) {
+                reject(err);
+              }
+              if (++processed === maxProcessed) {
+                console.log(answers.file + " files deleted, you may want to generate & publish all index pages");
+                exports.init();
+              }
+            };
+
+            fs.remove(config.directories.data + '/' + answers.file + ".md", checkProcessed);
+            fs.remove(config.directories.data + '/' + answers.file, checkProcessed);
+            fs.remove(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file, checkProcessed);
+          } else {
+            exports.init();
           }
-          exports.init();
         },
         function(err) { console.error(err); }
       );
     },
     /**
      * [generate description]
-     * @return {[type]} [description]
      */
     generate: function() {
       var questions = [
@@ -252,6 +257,9 @@ var BlogophonConsole = function () {
         function(err) { console.error(err); }
       );
     },
+    /**
+     * Show main menu
+     */
     init: function() {
       var questions = [
         {
