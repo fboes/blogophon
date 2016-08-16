@@ -38,9 +38,31 @@ var Index = function () {
       isSorted = false;
       index = [];
     },
+
     push: function (post) {
       isSorted = false;
       index.push(post);
+    },
+
+    /**
+     * Remove all items form index which have a future timestamp.
+     * @return {Number} of items removed
+     */
+    removeFutureItems: function () {
+      if (!isSorted) {
+        sortIndex();
+      }
+      var now   = Math.round(new Date().getTime() / 1000);
+      var count = 0, i;
+      for(i = 0; i < index.length; i++) {
+        if (index[i].meta.timestamp > now) {
+          count++;
+        } else {
+          break;
+        }
+      };
+      index.splice(0,1);
+      return count;
     },
 
     makeNextPrev: function () {

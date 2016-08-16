@@ -20,7 +20,7 @@ var questions = [
     message: 'The name of your site',
     default: defaultValues.name,
     validate: function(v) {
-      return v ? true : 'Please supply at least a short name for your site.'
+      return v ? true : 'Please supply at least a short name for your site.';
     }
   },{
     type: 'input',
@@ -36,7 +36,7 @@ var questions = [
   },{
     type: 'input',
     name: 'basePath',
-    message: 'Base path like `/`',
+    message: 'Base URL path, usually just `/`',
     default: defaultValues.basePath,
     validate: function(v) {
       return v.match(/^[a-zA-Z0-9\.\/_-]+$/) ? true : 'Please supply a valid path, at least `/`.';
@@ -52,10 +52,10 @@ var questions = [
   },{
     type: 'input',
     name: 'language',
-    message: 'Language code',
+    message: 'Standard language of your blog, like `en` for English',
     default: defaultValues.language,
     validate: function(v) {
-      return v.match(/^[a-zA-Z]+$/) ? true : 'Please supply a valid language code like `en` or `es`.';
+      return v.match(/^[a-zA-Z\-]+$/) ? true : 'Please supply a valid two-letter language code like `en`, `es`, `fr` or `de`.';
     },
     filter: function(v) {
       return v.toLowerCase();
@@ -63,7 +63,7 @@ var questions = [
   },{
     type: 'input',
     name: 'itemsPerPage',
-    message: 'Items per page',
+    message: 'How many articles per page?',
     default: defaultValues.itemsPerPage,
     validate: function(v) {
       return Number(v)> 0 ? true : 'Please supply a positive number.';
@@ -74,10 +74,10 @@ var questions = [
   },{
     type: 'input',
     name: 'defaultAuthor',
-    message: 'Default author name',
+    message: 'Default name of author',
     default: defaultValues.defaultAuthor.name,
     validate: function(v) {
-      return v ? true : 'Please supply at least a short name for your site.'
+      return v ? true : 'Please supply at least a short name for your site.';
     }
   },{
     type: 'input',
@@ -109,7 +109,7 @@ var questions = [
     message: 'Basic color of your theme as hexcode (optional)',
     default: defaultValues.themeColor,
     validate: function(v) {
-      return (!v || v.match(/^#[a-zA-z0-9]{3,6}$/)) ? true : 'Please supply a Thex color code like `#fa647a`.';
+      return (!v || v.match(/^#[a-zA-z0-9]{3,6}$/)) ? true : 'Please supply a hex color code like `#fa647a`.';
     },
     filter: function(v) {
       return v.toLowerCase();
@@ -143,7 +143,7 @@ inquirer.prompt(questions).then(
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
     };
-    delete(answers.defaultAuthorEmail);
+    delete answers.defaultAuthorEmail;
     answers.imageSizes = answers.imageSizes.map(function(i) {
       return i.split(/x/);
     });

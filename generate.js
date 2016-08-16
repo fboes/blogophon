@@ -3,8 +3,17 @@
 
 var Generator = require('./src/generator');
 
-var deploy = (process.argv[2] !== undefined && process.argv[2].match(/(^|\s)--deploy(\s|$)/));
-var force  = (process.argv[2] !== undefined && process.argv[2].match(/(^|\s)--force(\s|$)/));
+var deploy = false;
+var force  = false;
+var i;
+
+for (var i = 2; i < process.argv.length; i++) {
+  switch (process.argv[i]) {
+    case '--force'  : force  = true; break;
+    case '--deploy' : deploy = true; break;
+    case '--publish': deploy = true; break;
+  }
+}
 
 Generator.getArticles().then(
   function () {

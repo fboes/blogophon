@@ -10,7 +10,7 @@ var BlogophonUrls   = require('./blogophon-urls')();
 
 var markyMark = function (html, relUrl) {
   if (relUrl) {
-    html = html.replace(/(!\[.+?\]\()/g, '$1'+relUrl);
+    html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
   }
   var entityMap = {
     '...': '…',
