@@ -47,7 +47,7 @@
       .replace(/[üúùû]/g,'u')
       .replace(/[öóòô]/g,'o')
       .replace(/[ëéèê]/g,'o')
-      .replace(/[^a-z0-9]/g,'-')
+      .replace(/[^a-z0-9\-]/g,'-')
     ;
   };
 

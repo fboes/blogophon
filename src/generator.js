@@ -68,7 +68,7 @@ Generator.getArticles = function() {
   index.clear();
   return new Promise (
     function(resolve, reject) {
-     glob(config.directories.data + "/**/*.md", function (err, files) {
+      glob(config.directories.data + "/**/*.md", function (err, files) {
         if (err) {
           reject(err);
         }
@@ -76,6 +76,7 @@ Generator.getArticles = function() {
         var checkProcessed  = function(post) {
           index.push(post);
           if (++processed === maxProcessed) {
+            console.log('Removed ' + index.removeFutureItems() + ' item(s) with future timestamp');
             index.makeNextPrev();
             resolve( processed );
           }
