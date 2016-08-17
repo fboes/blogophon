@@ -72,6 +72,20 @@ var questions = [
       return Number(v);
     }
   },{
+    type: 'checkbox',
+    name: 'imageSizes',
+    message: 'What image sizes will be used?',
+    default: defaultValues.imageSizes,
+    choices: [
+      "180x180",
+      "200x200",
+      "300x300",
+      "320x240",
+      "640x480",
+      "400x225",
+      "800x450"
+    ]
+  },{
     type: 'input',
     name: 'defaultAuthor',
     message: 'Default name of author',
@@ -89,11 +103,37 @@ var questions = [
     }
   },{
     type: 'input',
+    name: 'faviconBaseUrl',
+    message: 'Base-URL of favicons (optional)',
+    default: defaultValues.faviconBaseUrl,
+    validate: function(v) {
+      return (!v || v.match(/^http(s)?:\/\/\S+\/$/)) ? true : 'Please supply a valid url, starting with `http://` and ending with `/` - or leave field empty.';
+    }
+  },{
+    type: 'checkbox',
+    name: 'faviconSizes',
+    message: 'What favicon sizes will be used?',
+    default: defaultValues.faviconSizes,
+    choices: [
+      "96x96",
+      "128x128",
+      "144x144",
+      "196x196",
+      "256x256"
+    ],
+    when: function(answers) {
+      return (answers.faviconBaseUrl);
+    }
+  },{
+    type: 'input',
     name: 'ogImage',
     message: 'URL of standard teaser image (optional)',
     default: defaultValues.ogImage,
     validate: function(v) {
       return (!v || v.match(/^http(s)?:\/\/\S+$/)) ? true : 'Please supply a valid url, starting with `http://` or leave field empty.';
+    },
+    when: function(answers) {
+      return (!answers.faviconBaseUrl);
     }
   },{
     type: 'input',
@@ -119,20 +159,6 @@ var questions = [
     name: 'deployCmd',
     message: 'CLI command to copy files to your live server (optional)',
     default: defaultValues.deployCmd
-  },{
-    type: 'checkbox',
-    name: 'imageSizes',
-    message: 'What image sizes will be used?',
-    default: defaultValues.imageSizes,
-    choices: [
-      "180x180",
-      "200x200",
-      "300x300",
-      "320x240",
-      "640x480",
-      "400x225",
-      "800x450"
-    ]
   }
 ];
 
@@ -147,6 +173,20 @@ inquirer.prompt(questions).then(
     answers.imageSizes = answers.imageSizes.map(function(i) {
       return i.split(/x/);
     });
+
+    var ogImage = NULL;
+    if (answers.faviconBaseUrl) {
+      answers.icons = answers.faviconSizes.map(function(i) {
+        ogImage = answers.faviconBaseUrl + 'favicon-'+i+'.png';
+        return {
+          src: ogImage,
+          sizes: i,
+        };
+      });
+    }
+    if (!answers.ogImage && ogImage) {
+      answers.ogImage = ogImage;
+    }
     //console.log(answers);
     fs.writeFile(configFilename, JSON.stringify(answers), function(err) {
       if (err) {

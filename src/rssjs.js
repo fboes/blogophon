@@ -6,22 +6,6 @@
  */
 var RssJs = function (index, pubDate) {
   var config = require('./config');
-  var items  =  index.map(function(item){
-    var tags = [];
-    if (item.meta.Tags !== undefined) {
-      tags = item.meta.Tags.map(function(t){
-        return t.title;
-      });
-    }
-    return {
-      title: item.meta.Title,
-      description: item.htmlTeaser,
-      link: item.meta.AbsoluteUrl,
-      pubDate: item.meta.rfcDate,
-      guid: item.meta.AbsoluteUrl,
-      categories: tags
-    };
-  });
 
   return {
     version: 2.0,
@@ -31,7 +15,22 @@ var RssJs = function (index, pubDate) {
       description: config.description,
       language: config.language,
       lastBuildDate: pubDate,
-      items: items
+      items: index.map(function(item){
+        var tags = [];
+        if (item.meta.Tags !== undefined) {
+          tags = item.meta.Tags.map(function(t){
+            return t.title;
+          });
+        }
+        return {
+          title: item.meta.Title,
+          description: item.htmlTeaser,
+          link: item.meta.AbsoluteUrl,
+          pubDate: item.meta.rfcDate,
+          guid: item.meta.AbsoluteUrl,
+          categories: tags
+        };
+      })
     }
   };
 };

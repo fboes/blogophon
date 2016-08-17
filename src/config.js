@@ -8,7 +8,6 @@ try {
   config = JSON.parse(fs.readFileSync('./user/config.json'));
 } catch (e) {
   config = {
-    "baseUrl": "http://example.com",
     "basePath": "/",
     "language": "en",
     "itemsPerPage": 5,

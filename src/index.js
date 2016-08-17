@@ -10,30 +10,32 @@ var Index = function () {
   var isSorted = true;
   var pubDate  = new Date();
 
-  var sortIndex = function() {
-    index.sort(function(a,b){
-      if (a.meta.timestamp < b.meta.timestamp) {
-        return 1;
-      } else if (a.meta.timestamp > b.meta.timestamp) {
-        return -1;
+  var internal = {
+    sortIndex: function() {
+      index.sort(function(a,b){
+        if (a.meta.timestamp < b.meta.timestamp) {
+          return 1;
+        } else if (a.meta.timestamp > b.meta.timestamp) {
+          return -1;
+        }
+        return 0;
+      });
+      isSorted = true;
+    },
+
+    getPageName: function (curPage, maxPage, reverse) {
+      curPage ++;
+      if (curPage <= 0 || curPage > maxPage) {
+        return null;
+      } else if ((!reverse && curPage === 1) || (reverse && curPage === maxPage)) {
+        return 'index.html';
+      } else {
+        return 'index-' + curPage + '.html';
       }
-      return 0;
-    });
-    isSorted = true;
-  };
-
-  var getPageName = function (curPage, maxPage, reverse) {
-    curPage ++;
-    if (curPage <= 0 || curPage > maxPage) {
-      return null;
-    } else if ((!reverse && curPage === 1) || (reverse && curPage === maxPage)) {
-      return 'index.html';
-    } else {
-      return 'index-' + curPage + '.html';
     }
-  };
+  }
 
-  return {
+  var exports = {
     clear: function () {
       isSorted = false;
       index = [];
@@ -50,7 +52,7 @@ var Index = function () {
      */
     removeFutureItems: function () {
       if (!isSorted) {
-        sortIndex();
+        internal.sortIndex();
       }
       var now   = Math.round(new Date().getTime() / 1000);
       var count = 0, i;
@@ -61,13 +63,15 @@ var Index = function () {
           break;
         }
       };
-      index.splice(0,1);
+      if (count) {
+        index.splice(0,count);
+      }
       return count;
     },
 
     makeNextPrev: function () {
       if (!isSorted) {
-        sortIndex();
+        internal.sortIndex();
       }
       var i;
       for(i = 0; i < index.length; i++) {
@@ -88,7 +92,7 @@ var Index = function () {
      */
     getPosts: function(i) {
       if (!isSorted) {
-        sortIndex();
+        internal.sortIndex();
       }
       return i ? index.slice(0,i) : index;
     },
@@ -99,7 +103,7 @@ var Index = function () {
      */
     getTags: function() {
       if (!isSorted) {
-        sortIndex();
+        internal.sortIndex();
       }
       index.forEach(function(post){
         if (post.meta.Tags) {
@@ -123,7 +127,7 @@ var Index = function () {
      */
     getPagedPosts: function(itemsPerPage, reverse) {
       if (!isSorted) {
-        sortIndex();
+        internal.sortIndex();
       }
       if (!itemsPerPage) {itemsPerPage = 10;}
       var pages = [], page = 0, newIndex = index, currentSlice = [];
@@ -150,9 +154,9 @@ var Index = function () {
      */
     getPageData: function (curPage, maxPage, reverse) {
       return {
-        currentUrl: getPageName(curPage, maxPage, reverse),
-        nextUrl: getPageName(curPage+1, maxPage, reverse),
-        prevUrl: getPageName(curPage-1, maxPage, reverse),
+        currentUrl: internal.getPageName(curPage, maxPage, reverse),
+        nextUrl: internal.getPageName(curPage+1, maxPage, reverse),
+        prevUrl: internal.getPageName(curPage-1, maxPage, reverse),
         currentPage: (curPage+1),
         nextPage: ((curPage+2 < maxPage) ? curPage+2 : null),
         prevPage: ((curPage > 0) ? curPage : null),
@@ -160,6 +164,8 @@ var Index = function () {
       };
     }
   };
+
+  return exports;
 };
 
 module.exports = Index;
