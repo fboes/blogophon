@@ -8,7 +8,8 @@
     "url": "git@github.com:fboes/blogophon.git"
   },
   "bin": {
-    "blogophon-generate":"./index.js"
+    "blogophon": "./index.js",
+    "blogophon-generate": "./generate.js"
   },
   "scripts": {
     "install": "./install.js",
@@ -20,7 +21,8 @@
     "blog",
     "markdown",
     "mustache",
-    "gulp"
+    "gulp",
+    "static site generator"
   ],
   "devDependencies": {
     "beepbeep": "^1.2.0",
