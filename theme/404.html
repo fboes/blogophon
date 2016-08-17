@@ -2,15 +2,13 @@
 <html lang="{{config.language}}">
 <head>
   <meta charset="UTF-8" />
-  <title>404 | {{config.name}}</title>
+  <title>Unbekannt verzogen… | {{config.name}}</title>
   <meta name="robots" content="noindex, follow" />
-  {{>head}}
+  {{>meta}}
 </head>
 <body class="four-oh-four">
   <div id="container">
-    <header >
-      <h1 id="header"><a href="{{config.basePath}}" rel="home">{{config.name}}</a></h1>
-    </header>
+    {{>header}}
     <div id="main">
       <main>
         <div id="content">
@@ -30,11 +28,8 @@
       </main>
       {{>sidebar}}
     </div>
-    <footer>
-      <div id="footer">
-        Layout und alle Inhalte stehen unter <a href="http://creativecommons.org/licenses/by/3.0/de/" rel="license">Creative Commons BY Lizenz</a>
-      </div>
-    </footer>
+    {{>footer}}
+
   </div>
   <script src="http://cdn.3960.org/js/main.min.js" async="async"></script>
 </body>
