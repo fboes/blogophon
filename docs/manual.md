@@ -23,7 +23,7 @@ Manual
 
 ## Using drafts
 
-If you want to write an article without publishing it, you can append a `~` to your Markdown file. This will hide it from the Blogophon Generator. To publish it, simply remove `~` from your Makrdown filename and follow the generator process above.
+If you want to write an article without publishing it, you can append a `~` to your Markdown file. This will hide it from the Blogophon Generator. To publish it, simply remove `~` from your Markdown filename and follow the generator process above.
 
 ## Delete articles
 
