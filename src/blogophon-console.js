@@ -20,6 +20,7 @@ var BlogophonConsole = function () {
   var choicesStr   = [
     'Create new article',
     'Edit existing article',
+    'Rename article',
     'Delete article',
     'Generate & publish articles',
     'Exit'
@@ -49,9 +50,9 @@ var BlogophonConsole = function () {
 
   var exports = {
     /**
-     * [createArticle description]
+     * [createArticleDialogue description]
      */
-    createArticle: function() {
+    createArticleDialogue: function() {
       var questions    = [
         {
           type: 'input',
@@ -154,10 +155,11 @@ var BlogophonConsole = function () {
         function(err) { console.log(err); }
       );
     },
+
     /**
-     * [editArticle description]
+     * [editArticleDialogue description]
      */
-    editArticle: function() {
+    editArticleDialogue: function() {
       var questions = [
         {
           type: 'list',
@@ -177,10 +179,51 @@ var BlogophonConsole = function () {
         function(err) { console.error(err); }
       );
     },
+
     /**
-     * [deleteArticle description]
+     * [renameArticleDialogue description]
+     * @return {[type]} [description]
      */
-    deleteArticle: function() {
+    renameArticleDialogue: function() {
+      var questions = [
+        {
+          type: 'list',
+          name: 'file',
+          message: 'Select filename to rename',
+          choices: files
+        },{
+          type: 'input',
+          name: 'fileNew',
+          message: 'Please enter a new filename'
+        }
+      ];
+      inquirer.prompt(questions).then(
+        function (answers) {
+          answers.fileNew = internal.filenameFromTitle(answers.fileNew);
+
+          var processed = 0, maxProcessed = 3;
+          var checkProcessed  = function(err) {
+            if (err) {
+              reject(err);
+            }
+            if (++processed === maxProcessed) {
+              console.log(answers.file + " files moved to "+answers.fileNew+", you may want to generate & publish all index pages");
+              exports.init();
+            }
+          };
+
+          fs.move(config.directories.data + '/' + answers.file + ".md", config.directories.data + '/' + answers.fileNew + ".md", checkProcessed);
+          fs.move(config.directories.data + '/' + answers.file, config.directories.data + '/' + answers.fileNew, checkProcessed);
+          fs.move(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file, config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.fileNew, checkProcessed);
+        },
+        function(err) { console.error(err); }
+      );
+    },
+
+    /**
+     * [deleteArticleDialogue description]
+     */
+    deleteArticleDialogue: function() {
       var questions = [
         {
           type: 'list',
@@ -218,10 +261,11 @@ var BlogophonConsole = function () {
         function(err) { console.error(err); }
       );
     },
+
     /**
-     * [generate description]
+     * [generateDialogue description]
      */
-    generate: function() {
+    generateDialogue: function() {
       var questions = [
         {
           type: 'confirm',
@@ -258,6 +302,7 @@ var BlogophonConsole = function () {
         function(err) { console.error(err); }
       );
     },
+
     /**
      * Show main menu
      */
@@ -274,18 +319,21 @@ var BlogophonConsole = function () {
         function (answers) {
           switch (answers.action) {
             case choicesStr[0]:
-              exports.createArticle();
+              exports.createArticleDialogue();
               break;
             case choicesStr[1]:
-              exports.editArticle();
+              exports.editArticleDialogue();
               break;
             case choicesStr[2]:
-              exports.deleteArticle();
+              exports.renameArticleDialogue();
               break;
             case choicesStr[3]:
-              exports.generate();
+              exports.deleteArticleDialogue();
               break;
             case choicesStr[4]:
+              exports.generateDialogue();
+              break;
+            case choicesStr[5]:
               console.log("Good bye");
               break;
             default:

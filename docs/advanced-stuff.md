@@ -18,7 +18,7 @@ Get the path to your `generate.js` by typing `pwd`. Then edit your Crontab: `cro
 Add this line:
 
 ```
-58 23 * * * PATH_TO_YOUR_BLOG/generate.js >/dev/null 2>&1 # Midnight, daily
+58 23 * * * cd PATH_TO_YOUR_BLOG && ./generate.js >/dev/null 2>&1 # Midnight, daily
 ```
 
 For more exotic execution times check http://crontab-generator.org/.
