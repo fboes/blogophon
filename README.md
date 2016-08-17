@@ -4,7 +4,7 @@ Blogophon
 [![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
 [![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
 
-A small and simple [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) for blogs. A live example of this blog can be fount at [3960! Journal](http://journal.3960.org).
+A small and simple [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) for blogs. A live example of this blog generator can be found at [3960! Journal](http://journal.3960.org).
 
 **Features:**
 
@@ -29,35 +29,9 @@ How it works
 
 Almost all stuff you will be doing with Blogophon is done via command line. Just call `npm start` or [`./index.js`](index.js) (which results in the same task being called), so you will not need any manual at all.
 
-If you do not want to use [`./index.js`](index.js), this is the manual:
+![The main menu in action.](docs/example.png)
 
-### Create a new article
-
-1. Create a new Markdown file in `user/posts`.
-1. Generate HTML files either automatically or manually (see below).
-
-### Generate HTML files automatically
-
-1. Start Gulp watcher via `gulp watch`.
-1. Edit your Markdown file. Gulp will automatically create all HTML files via the Blogophon Generator.
-
-### Generate HTML files manually
-
-1. Edit your Markdown file.
-1. Run [`./generate.js`](generate.js) to make the Blogophon Generator generate all HTML files.
-
-`generate.js` has some options:
-
-* `--force`: Create _all_ articles anew, ignoring cached versions.
-* `--deploy`:  Execute `deployCmd` command found in `user/config.json`.
-
-### Using drafts
-
-If you want to write an article without publishing it, you can append a `~` to your Markdown file. This will hide it from the Blogophon Generator. To publish it, simply remove `~` from your Makrdown filename and follow the generator process above.
-
-### Delete articles
-
-If you want to completly delete an article, you will have to delete all HTML- and Markdown files as well as any images associated with the selected article.
+If you do not want to use [`./index.js`](index.js), [read the manual](docs/manual.md).
 
 Version
 -------
