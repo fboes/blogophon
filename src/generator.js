@@ -10,7 +10,7 @@ var gm             = require('gm').subClass({imageMagick: true});
 var dateFormat     = require('dateformat');
 var PostReader     = require('./post-reader');
 var RssJs          = require('./rssjs');
-var Url            = require('./rssjs');
+var Manifest       = require('./manifest');
 var toolshed       = require('./js-toolshed/src/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls')();
 
@@ -76,7 +76,7 @@ Generator.getArticles = function() {
         var checkProcessed  = function(post) {
           index.push(post);
           if (++processed === maxProcessed) {
-            console.log('Removed ' + index.removeFutureItems() + ' item(s) with future timestamp');
+            console.log('Removed ' + index.removeFutureItems() + ' item(s) with future timestamp from index');
             index.makeNextPrev();
             resolve( processed );
           }
@@ -155,7 +155,7 @@ Generator.buildSpecialPages = function () {
     allPosts = index.getPosts(),
     tags = index.getTags(),
     processed = 0,
-    maxProcessed = 6 + pagedPosts.length + Object.keys(tags).length
+    maxProcessed = 7 + pagedPosts.length + Object.keys(tags).length
   ;
 
   return new Promise (
@@ -219,6 +219,8 @@ Generator.buildSpecialPages = function () {
       }), checkProcessed);
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(RssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'))), checkProcessed);
+
+      fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(Manifest), checkProcessed);
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(templates.atom, {
         index: index.getPosts(10),
