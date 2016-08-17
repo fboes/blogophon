@@ -33,18 +33,25 @@ var BlogophonConsole = function () {
      * [makeChoices description]
      */
     makeChoices: function () {
-      files = glob.sync(config.directories.data + "/**/*.md").map(function(v) {
-        return v.replace(/^.+\/(.+?)\.md$/,'$1');
+      files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
+        return v.replace(/^.+\/(.+?)$/,'$1');
       });
+      files.push(new inquirer.Separator());
       var choices = [choicesStr[0]];
       if (files.length > 0) {
-        choices.push(choicesStr[1],choicesStr[2],choicesStr[3]);
+        choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
       }
-      choices.push(choicesStr[4]);
+      choices.push(new inquirer.Separator(), choicesStr[5]);
       return choices;
     },
     filenameFromTitle: function (title) {
-      return config.directories.data + '/' + title.trim().asciify().replace(/(^\-+|\-+$)/,'').replace(/(\-)\-+/,'$1');
+      return config.directories.data + '/' + internal.shortfilenameFromTitle(title);
+    },
+    shortfilenameFromTitle: function (title) {
+      return title.trim().asciify().replace(/(^\-+|\-+$)/,'').replace(/(\-)\-+/,'$1').replace(/\-(md~?)$/,'.$1');
+    },
+    dirnameFromFilename: function (filename) {
+      return filename.replace(/\.md~?$/,'');
     }
   };
 
@@ -63,8 +70,8 @@ var BlogophonConsole = function () {
               return 'This title is way too short.';
             }
             var filename = internal.filenameFromTitle(v);
-            if (fs.existsSync(filename + '.md')) {
-              return ("File " + filename + '.md already exists');
+            if (fs.existsSync(filename)) {
+              return ("File " + filename + ' already exists');
             }
             return true;
           },
@@ -126,8 +133,8 @@ var BlogophonConsole = function () {
       ];
       inquirer.prompt(questions).then(
         function (answers) {
-          var filename = internal.filenameFromTitle(answers.title);
-          var markdownFilename = filename + '.md' + (answers.draft ? '~' : '');
+          var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
+          var filename = internal.dirnameFromFilename(markdownFilename);
           fs.writeFile(markdownFilename, Mustache.render(template, {
             title: answers.title,
             keywords: answers.keywords,
@@ -164,13 +171,13 @@ var BlogophonConsole = function () {
         {
           type: 'list',
           name: 'file',
-          message: 'Select file to edit',
+          message: 'Select file to edit ('+files.length+')',
           choices: files
         }
       ];
       inquirer.prompt(questions).then(
         function (answers) {
-          var markdownFilename = config.directories.data + '/' + answers.file + ".md"
+          var markdownFilename = config.directories.data + '/' + answers.file
           var cmd = 'open ' + markdownFilename + ' || vi '+ markdownFilename;
           console.log(chalk.grey(cmd));
           shell.exec(cmd);
@@ -189,32 +196,45 @@ var BlogophonConsole = function () {
         {
           type: 'list',
           name: 'file',
-          message: 'Select filename to rename',
+          message: 'Select filen to rename ('+files.length+')',
           choices: files
         },{
           type: 'input',
           name: 'fileNew',
-          message: 'Please enter a new filename'
+          message: 'Please enter a new filename or leave empty to cancel',
+          filter: function (v) {
+            return internal.shortfilenameFromTitle(v);
+          },
+          validate: function (v) {
+            console.log(v);
+            return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
+          }
         }
       ];
       inquirer.prompt(questions).then(
         function (answers) {
-          answers.fileNew = internal.filenameFromTitle(answers.fileNew);
+          if (answers.fileNew) {
+            var processed = 0, maxProcessed = 2;
+            var checkProcessed  = function(err) {
+              if (err) {
+                console.log(err);
+              }
+              if (++processed === maxProcessed) {
+                console.log(answers.file + " files moved to "+answers.fileNew+", you may want to generate & publish all index pages");
+                exports.init();
+              }
+            };
 
-          var processed = 0, maxProcessed = 3;
-          var checkProcessed  = function(err) {
-            if (err) {
-              reject(err);
-            }
-            if (++processed === maxProcessed) {
-              console.log(answers.file + " files moved to "+answers.fileNew+", you may want to generate & publish all index pages");
-              exports.init();
-            }
-          };
+            fs.move(config.directories.data + '/' + answers.file, config.directories.data + '/' + answers.fileNew, checkProcessed);
+            fs.move(config.directories.data + '/' + internal.dirnameFromFilename(answers.file), config.directories.data + '/' + internal.dirnameFromFilename(answers.fileNew), checkProcessed);
+            if (! answers.file.match(/~$/)) {
+              maxProcessed ++;
+              fs.move(config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file), config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.fileNew), checkProcessed);
 
-          fs.move(config.directories.data + '/' + answers.file + ".md", answers.fileNew + ".md", checkProcessed);
-          fs.move(config.directories.data + '/' + answers.file, answers.fileNew, checkProcessed);
-          fs.move(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file, answers.fileNew, checkProcessed);
+            }
+          } else {
+            exports.init();
+          }
         },
         function(err) { console.error(err); }
       );
@@ -228,7 +248,7 @@ var BlogophonConsole = function () {
         {
           type: 'list',
           name: 'file',
-          message: 'Select filename to delete',
+          message: 'Select file to delete ('+files.length+')',
           choices: files
         },{
           type: 'confirm',
@@ -251,9 +271,9 @@ var BlogophonConsole = function () {
               }
             };
 
-            fs.remove(config.directories.data + '/' + answers.file + ".md", checkProcessed);
             fs.remove(config.directories.data + '/' + answers.file, checkProcessed);
-            fs.remove(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file, checkProcessed);
+            fs.remove(config.directories.data + '/' + internal.dirnameFromFilename(answers.file), checkProcessed);
+            fs.remove(config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file), checkProcessed);
           } else {
             exports.init();
           }
@@ -333,7 +353,7 @@ var BlogophonConsole = function () {
             case choicesStr[4]:
               exports.generateDialogue();
               break;
-            case choicesStr[5]:
+            case choicesStr[choicesStr.length -1]:
               console.log("Good bye");
               break;
             default:

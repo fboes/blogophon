@@ -94,7 +94,7 @@ Generator.getArticles = function() {
 
 /**
  * Get all {Post} from `index` and generate HTML pages.
- * @return {Promise} with first parameter of `resolve` being the number of files converted, second being the number of articles skipped.
+ * @return {Promise} with first parameter of `resolve` being the list of files generated.
  */
 Generator.buildAllArticles = function ( force ) {
   var i,
@@ -102,7 +102,8 @@ Generator.buildAllArticles = function ( force ) {
     processed = 0,
     skipped = 0,
     maxProcessed = allPosts.length,
-    hashes = {}
+    hashes = {},
+    generatedArticles = []
   ;
   if (force === undefined || !force) {
     try {
@@ -121,7 +122,7 @@ Generator.buildAllArticles = function ( force ) {
         if (++processed === maxProcessed) {
           fs.writeFile('./user/hashes.json', JSON.stringify(hashes));
           console.log("Created " + (processed - skipped) + " articles, skipped " +  skipped + " articles");
-          resolve( processed, skipped );
+          resolve( generatedArticles );
         }
       };
 
@@ -132,6 +133,7 @@ Generator.buildAllArticles = function ( force ) {
           checkProcessed();
         } else {
           hashes[post.meta.Url] = currentHash;
+          generatedArticles.push(post.meta.Url);
           shell.mkdir('-p', config.directories.htdocs + post.meta.Url);
           fs.writeFile(post.meta.Filename, Mustache.render(templates.post, {
             post: post,
@@ -259,23 +261,28 @@ Generator.buildAllPages = function ( force ) {
  * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
  * @return {Promise} with first parameter of `resolve` being the number of files converted.
  */
-Generator.copyImages = function () {
+Generator.copyImages = function ( article ) {
+  article = article.replace(/\/$/, '').replace(/^.+\//,'') || '**';
   var i, j, processed = 0, maxProcessed = -1;
   return new Promise (
     function(resolve, reject) {
-      glob(config.directories.data + "/**/*.{png,jpg,gif}", function (er, files) {
+      glob(config.directories.data + "/" + article + "/*.{png,jpg,gif}", function (er, files) {
         maxProcessed = files.length * (config.imageSizes.length + 1);
+        if (files.length === 0) {
+          resolve( processed );
+        }
         var checkProcessed  = function(err) {
           if (err) {
             reject(err);
           }
           if (++processed === maxProcessed) {
-            console.log("Created " + processed + " images");
+            console.log("Converted " + processed + " images");
             resolve( processed );
           }
         };
         for (i = 0; i < files.length; i++) {
           var targetFile = files[i].replace(/^user\//, config.directories.htdocs + '/');
+          shell.mkdir('-p', targetFile.replace(/(\/).+?$/, '$1'));
           gm(files[i])
             .noProfile()
             .write(targetFile,checkProcessed)
@@ -301,12 +308,17 @@ Generator.copyImages = function () {
 Generator.buildAll = function ( force ) {
   return new Promise (
     function(resolve, reject) {
-      Promise.all([
-        Generator.buildAllArticles(force),
-        Generator.buildSpecialPages(),
-        Generator.copyImages()
-      ]).then(
-        resolve,
+      Generator.buildAllArticles(force).then(
+        function (generatedArticles) {
+          var promises = generatedArticles.map(function( article ) {
+            return Generator.copyImages( article )
+          })
+          promises.push(Generator.buildSpecialPages());
+          Promise.all(promises).then(
+            resolve,
+            reject
+          );
+        },
         reject
       );
     }

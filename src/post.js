@@ -64,6 +64,12 @@ var Post = function (filename, markdown, meta) {
         )
       ;
       //       '<div class="video-player youtube"><a href="https://www.youtube.com/embed/$2?enablejsapi=1"><img class="preview" src="http://img.youtube.com/vi/$2/sddefault.jpg" alt="" /></a><!--iframe allowfullscreen="true" src="https://www.youtube.com/embed/$2?enablejsapi=1"></iframe--></div>'
+    },
+    galleryHtml: function(html) {
+      return html
+        .replace(/(<img[^>]+src="([^"]+)(-\d+x\d+)?"[^>]*>)/g,'<a href="$2">$1</a>')
+        .replace(/(<a href="[^"]+)\-\d+x\d+(\.(jpg|png|gif)">)/g,'$1$2')
+      ;
     }
   };
 
@@ -112,6 +118,10 @@ var Post = function (filename, markdown, meta) {
   meta.Classes = meta.Classes.trim().split(/,\s+/).map(function(c) {
     return c.asciify();
   });
+  if (meta.Classes.indexOf('images') >= 0) {
+    htmlTeaser   = internal.galleryHtml(htmlTeaser);
+    html         = internal.galleryHtml(html);
+  }
   if (meta.Description !== undefined) {
     meta.Description = meta.Description.replace(/>/g,' ').replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1').replace(/\s\s+/g, ' ').niceShorten(160);
   }
