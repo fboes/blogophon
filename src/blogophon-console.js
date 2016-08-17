@@ -212,9 +212,9 @@ var BlogophonConsole = function () {
             }
           };
 
-          fs.move(config.directories.data + '/' + answers.file + ".md", config.directories.data + '/' + answers.fileNew + ".md", checkProcessed);
-          fs.move(config.directories.data + '/' + answers.file, config.directories.data + '/' + answers.fileNew, checkProcessed);
-          fs.move(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file, config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.fileNew, checkProcessed);
+          fs.move(config.directories.data + '/' + answers.file + ".md", answers.fileNew + ".md", checkProcessed);
+          fs.move(config.directories.data + '/' + answers.file, answers.fileNew, checkProcessed);
+          fs.move(config.directories.data.replace(/^user/, 'htdocs') + '/' + answers.file, answers.fileNew, checkProcessed);
         },
         function(err) { console.error(err); }
       );

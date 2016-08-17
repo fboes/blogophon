@@ -113,7 +113,7 @@ var Post = function (filename, markdown, meta) {
     return c.asciify();
   });
   if (meta.Description !== undefined) {
-    meta.Description = meta.Description.replace(/>/g,' ').replace(/!?\[(.+?)\]\(.+?\)/g, '$1').replace(/\s\s+/g, ' ').niceShorten(160);
+    meta.Description = meta.Description.replace(/>/g,' ').replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1').replace(/\s\s+/g, ' ').niceShorten(160);
   }
   if (meta.Language === undefined) {
     meta.Language = config.language;
