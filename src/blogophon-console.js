@@ -48,7 +48,15 @@ var BlogophonConsole = function () {
       return config.directories.data + '/' + internal.shortfilenameFromTitle(title);
     },
     shortfilenameFromTitle: function (title) {
-      return title.trim().asciify().replace(/(^\-+|\-+$)/,'').replace(/(\-)\-+/,'$1').replace(/\-(md~?)$/,'.$1');
+      return title
+        .trim()
+        .toLowerCase()
+        .replace(/^(der|die|das|eine?|a|the|el|las?|los)\s/,'')
+        .asciify()
+        .replace(/(^\-+|\-+$)/,'')
+        .replace(/(\-)\-+/,'$1')
+        .replace(/\-(md~?)$/,'.$1')
+      ;
     },
     dirnameFromFilename: function (filename) {
       return filename.replace(/\.md~?$/,'');

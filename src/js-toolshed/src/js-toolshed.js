@@ -43,10 +43,11 @@
    */
   String.prototype.asciify = function () {
     return this.toLowerCase()
-      .replace(/[äáàâ]/g,'a')
+      .replace(/[äáàâåæ]/g,'a')
+      .replace(/[öóòôø]/g,'o')
       .replace(/[üúùû]/g,'u')
-      .replace(/[öóòô]/g,'o')
       .replace(/[ëéèê]/g,'o')
+      .replace(/[ñ]/g,'n')
       .replace(/[^a-z0-9\-]/g,'-')
     ;
   };
