@@ -13,7 +13,7 @@ try {
     "itemsPerPage": 5,
     "themeColor": "#ffffff",
     "defaultAuthor": {},
-    "deployCmd":"# rsync -az --delete htdocs HOST:PATH && echo \"Pubslished\"",
+    "deployCmd":"# echo \"Publishing...\" && rsync -az --delete htdocs HOST:PATH && echo \"Published\"",
     "imageSizes": [
       [180,180],
       [400,225],
