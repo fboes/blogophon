@@ -137,7 +137,7 @@ var Post = function (filename, markdown, meta) {
     meta.AuthorEmail = metaAuthor[2] ? metaAuthor[2] : config.defaultAuthor.email;
   }
   if (meta.Image === undefined) {
-    var match = htmlTeaser.match(/<img.+?src="(.+?)"/);
+    var match = html.match(/<img.+?src="(.+?)"/);
     if (match) {
       meta.Image = match[1];
     }
