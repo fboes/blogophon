@@ -20,35 +20,39 @@
             <h2>{{meta.title}}</h2>
           {{/meta.title}}
 
-          <div class="teasers">
-            {{#index}}
-              <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
-                <span class="date">
-                  <time datetime="{{meta.isoDate}}" itemprop="datePublished">{{meta.localeDate}}</time>
-                </span>
-                <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
-                <div itemprop="description">
-                  {{{htmlTeaser}}}
-                </div>
-                {{^meta.noLinkNeeded}}
-                  <p><a href="{{meta.Url}}" itemprop="url" title="{{meta.Title}}">Weiter lesen…</a></p>
-                {{/meta.noLinkNeeded}}
-                {{#meta.Tags.length}}
-                  <p class="meta">
-                    {{#meta.AuthorName}}
-                      <span class="author" itemprop="author publisher" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></span>
-                    {{/meta.AuthorName}}
-                    <span class="tags">
-                      Andere Artikel zum Thema
-                      {{#meta.Tags}}
-                        · <a rel="tag" href="{{url}}" itemprop="keywords">„{{title}}”</a>
-                      {{/meta.Tags}}
-                    </span>
-                  </p>
-                {{/meta.Tags.length}}
-              </article>
-            {{/index}}
-          </div>
+          {{#index.length}}
+            <div class="teasers">
+              {{#index}}
+                <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
+                  <span class="date">
+                    <time datetime="{{meta.isoDate}}" itemprop="datePublished">{{meta.localeDate}}</time>
+                  </span>
+                  <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
+                  <div itemprop="description">
+                    {{{htmlTeaser}}}
+                  </div>
+                  {{^meta.noLinkNeeded}}
+                    <p><a href="{{meta.Url}}" itemprop="url" title="{{meta.Title}}">Weiter lesen…</a></p>
+                  {{/meta.noLinkNeeded}}
+                  {{#meta.Tags.length}}
+                    <p class="meta">
+                      {{#meta.AuthorName}}
+                        <span class="author" itemprop="author publisher" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></span>
+                      {{/meta.AuthorName}}
+                      {{#meta.Tags.length}}
+                        <span class="tags">
+                          Andere Artikel zum Thema
+                          {{#meta.Tags}}
+                            · <a rel="tag" href="{{url}}" itemprop="keywords">„{{title}}”</a>
+                          {{/meta.Tags}}
+                        </span>
+                      {{/meta.Tags.length}}
+                    </p>
+                  {{/meta.Tags.length}}
+                </article>
+              {{/index}}
+            </div>
+          {{/index.length}}
 
           <div id="prevnext">
             <span>
