@@ -127,7 +127,7 @@ var BlogophonConsole = function () {
           message: 'Lead / teaser text',
           default: '',
           when: function (answers) {
-            return !answers.edit || type.classes !== 'Link';
+            return !answers.edit && answers.classes !== 'Link';
           }
         },{
           type: 'input',
