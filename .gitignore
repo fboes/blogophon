@@ -6,3 +6,5 @@ user/posts/.gitkeep
 htdocs/*
 !htdocs/.htaccess
 test/*.xml
+tmp
+log
