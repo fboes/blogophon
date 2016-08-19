@@ -14,13 +14,14 @@
         <div id="content">
           <h2>Sorry, diese URL gibt es (nicht) mehr…</h2>
 
-          <p>…aber vielleicht besteht Interesse an den jüngsten Artikeln:</p>
-
-          <ul>
-            {{#index}}
-              <li><a href="{{meta.Url}}">{{meta.Title}}</a></li>
-            {{/index}}
-          </ul>
+          {{#index.length}}
+            <p>…aber vielleicht besteht Interesse an den jüngsten Artikeln:</p>
+            <ul>
+              {{#index}}
+                <li><a href="{{meta.Url}}">{{meta.Title}}</a></li>
+              {{/index}}
+            </ul>
+          {{/index.length}}
 
           <p>Ansonsten gibt es mehr Artikel auf der <a href="{{config.basePath}}">Startseite</a>.</p>
 

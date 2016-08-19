@@ -18,11 +18,13 @@
         <div id="content">
           <h2>Alle Tags</h2>
 
-          <ul>
-            {{#index}}
-              <li><a rel="tag" href="{{url}}" itemprop="keywords">{{title}}</a></li>
-            {{/index}}
-          </ul>
+          {{#index.length}}
+            <ul>
+              {{#index}}
+                <li><a rel="tag" href="{{url}}" itemprop="keywords">{{title}}</a></li>
+              {{/index}}
+            </ul>
+          {{/index.length}}
 
         </div>
       </main>
