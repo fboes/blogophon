@@ -12,6 +12,9 @@ for (var i = 2; i < process.argv.length; i++) {
     case '--force'  : force  = true; break;
     case '--deploy' : deploy = true; break;
     case '--publish': deploy = true; break;
+    case '--log'    :
+      console.log('---- ' + new Date() + ' -----');
+      break;
   }
 }
 

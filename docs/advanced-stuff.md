@@ -19,7 +19,7 @@ Add this line:
 
 ```
 58 23 * * * cd PATH_TO_YOUR_BLOG && ./generate.js >/dev/null 2>&1 # Midnight, daily without log
-58 23 * * * cd PATH_TO_YOUR_BLOG && ./generate.js  >> /log/generate.log 2>&1 # Midnight, daily with log
+58 23 * * * cd PATH_TO_YOUR_BLOG && ./generate.js --log >> logs/generate.log 2>&1 # Midnight, daily with log
 ```
 
 For more exotic execution times check http://crontab-generator.org/.
