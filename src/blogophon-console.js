@@ -26,7 +26,7 @@ var BlogophonConsole = function () {
     'Exit'
   ];
 
-  var template     = fs.readFileSync(config.directories.theme+'/post.md', 'utf8');
+  var template     = fs.readFileSync(config.directories.currentTheme+'/post.md', 'utf8');
 
   var internal = {
     /**
@@ -90,7 +90,7 @@ var BlogophonConsole = function () {
           type: 'list',
           name: 'classes',
           message: 'Type of article',
-          choices: ['Normal article', 'Images', 'Video'],
+          choices: ['Normal article', 'Images', 'Video', 'Link'],
           default: 'Normal article',
           filter: function(v) {
             return (v === 'Normal article') ? null : v;
@@ -127,7 +127,7 @@ var BlogophonConsole = function () {
           message: 'Lead / teaser text',
           default: '',
           when: function (answers) {
-            return !answers.edit;
+            return !answers.edit || type.classes !== 'Link';
           }
         },{
           type: 'input',

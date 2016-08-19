@@ -4,7 +4,7 @@ Date:     {{date}}
 Keywords: {{keywords}}
 {{/keywords}}
 {{#classes}}
-Classes: {{classes}}
+Classes:  {{classes}}
 {{/classes}}
 ---
 

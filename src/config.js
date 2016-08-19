@@ -24,6 +24,8 @@ try {
 
 config.directories = pkg.directories;
 
+config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '');
+
 if (config.deployCmd.match(/^#/)) {
   // delete deployment command with `#` at beginning
   config.deployCmd = null;

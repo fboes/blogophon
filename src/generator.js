@@ -253,12 +253,14 @@ Generator.copyImages = function ( article ) {
           shell.mkdir('-p', targetFile.replace(/(\/).+?$/, '$1'));
           gm(files[i])
             .noProfile()
+            .interlace('Line')
             .write(targetFile,checkProcessed)
           ;
           for (j = 0; j < config.imageSizes.length; j++) {
             var imageSize = config.imageSizes[j];
             gm(files[i])
               .resize(imageSize[0], imageSize[1])
+              .interlace('Line')
               .noProfile()
               .write(targetFile.replace(/(\.[a-z]+$)/,'-'+imageSize[0]+'x'+imageSize[1]+'$1'),checkProcessed)
             ;
