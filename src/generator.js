@@ -2,7 +2,7 @@
 
 var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
-var Mustache       = require('mustache');
+var Mustache       = require('./blogophon-mustache');
 var fs             = require('fs-extra');
 var shell          = require('shelljs');
 var glob           = require("glob");
@@ -20,43 +20,11 @@ var BlogophonUrls  = require('./blogophon-urls')();
  */
 var Generator = {};
 
-var templates = {
-  post:    fs.readFileSync(config.directories.theme+'/post.html', 'utf8'),
-  index:   fs.readFileSync(config.directories.theme+'/index.html', 'utf8'),
-  tags:    fs.readFileSync(config.directories.theme+'/tags.html', 'utf8'),
-  four:    fs.readFileSync(config.directories.theme+'/404.html', 'utf8'),
-  rss:     fs.readFileSync(config.directories.theme+'/rss.xml', 'utf8'),
-  atom:    fs.readFileSync(config.directories.theme+'/atom.xml', 'utf8'),
-  sitemap: fs.readFileSync(config.directories.theme+'/sitemap.xml', 'utf8')
-};
-var partials = {
-  meta:    fs.readFileSync(config.directories.theme+'/partials/meta.html', 'utf8'),
-  header:  fs.readFileSync(config.directories.theme+'/partials/header.html', 'utf8'),
-  sidebar: fs.readFileSync(config.directories.theme+'/partials/sidebar.html', 'utf8'),
-  footer:  fs.readFileSync(config.directories.theme+'/partials/footer.html', 'utf8')
-};
 var strings = {
   'index': 'Startseite',
   'page': 'Seite %d/%d',
   'tag': 'Artikel mit dem Tag "%s"',
 };
-
-Mustache.escape = function (string) {
-  var entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  };
-  return String(string).replace(/[&<>"']/g, function (s) {
-    return entityMap[s];
-  });
-};
-Object.keys(templates).map(function (template) {
-  Mustache.parse(template);
-});
-
 var index = require('./index')();
 
 /**
@@ -135,10 +103,10 @@ Generator.buildAllArticles = function ( force ) {
           hashes[post.meta.Url] = currentHash;
           generatedArticles.push(post.meta.Url);
           shell.mkdir('-p', config.directories.htdocs + post.meta.Url);
-          fs.writeFile(post.meta.Filename, Mustache.render(templates.post, {
+          fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
             post: post,
             config: config
-          },partials),checkProcessed);
+          },Mustache.partials),checkProcessed);
         }
       }
     }
@@ -183,7 +151,7 @@ Generator.buildSpecialPages = function () {
           };
           curPageObj.prevUrl = BlogophonUrls.getUrlOfIndex(curPageObj.prevUrl);
           curPageObj.nextUrl = BlogophonUrls.getUrlOfIndex(curPageObj.nextUrl);
-          fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(templates.index, curPageObj, partials), checkProcessed);
+          fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials), checkProcessed);
         }
       });
 
@@ -195,10 +163,10 @@ Generator.buildSpecialPages = function () {
             title      : strings.tag.sprintf(tags[key].title),
             absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
           };
-          fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(templates.index, tags[key], partials), checkProcessed);
+          fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials), checkProcessed);
         });
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(templates.tags, {
+        fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
           index: Object.keys(tags).sort().map(function (key) {
             return {
               title: tags[key].title,
@@ -206,15 +174,15 @@ Generator.buildSpecialPages = function () {
             };
           }),
           config: config
-        }, partials), checkProcessed);
+        }, Mustache.partials), checkProcessed);
       });
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('404.html'), Mustache.render(templates.four, {
+      fs.writeFile( BlogophonUrls.getFileOfIndex('404.html'), Mustache.render(Mustache.templates.four, {
         index: index.getPosts(5),
         config: config
-      }, partials), checkProcessed);
+      }, Mustache.partials), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('posts.rss'), Mustache.render(templates.rss, {
+      fs.writeFile( BlogophonUrls.getFileOfIndex('posts.rss'), Mustache.render(Mustache.templates.rss, {
         index: index.getPosts(10),
         pubDate: dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
         config: config
@@ -224,13 +192,13 @@ Generator.buildSpecialPages = function () {
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(Manifest), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(templates.atom, {
+      fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(Mustache.templates.atom, {
         index: index.getPosts(10),
         pubDate: dateFormat(index.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
         config: config
       }), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('sitemap.xml'), Mustache.render(templates.sitemap, {
+      fs.writeFile( BlogophonUrls.getFileOfIndex('sitemap.xml'), Mustache.render(Mustache.templates.sitemap, {
         index: allPosts,
         pubDate: dateFormat(index.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
         config: config
