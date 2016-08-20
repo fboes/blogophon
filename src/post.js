@@ -142,6 +142,16 @@ var Post = function (filename, markdown, meta) {
       meta.Image = match[1];
     }
   }
+  if (meta.Rating) {
+    var match = meta.Rating.match(/^(\d)\/(\d)$/);
+    if (match) {
+      meta.RatingObj = {
+        worst: 1,
+        best: match[2],
+        value: match[1]
+      }
+    }
+  }
 
   var share = {
     twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(meta.AbsoluteUrl)+"&source=tweetbutton&text="+encodeURIComponent(meta.Title)+"&url="+encodeURIComponent(meta.AbsoluteUrl),
