@@ -81,14 +81,17 @@ var questions = [
       "240x240",
       "320x320",
       "640x640",
+      new inquirer.Separator(),
       "320x240",
       "640x480",
       "1024x768",
       "1280x1024",
+      new inquirer.Separator(),
       "400x225",
       "800x450",
       "1024x576",
-      "1280x720"
+      "1280x720",
+      new inquirer.Separator()
     ]
   },{
     type: 'input',
@@ -179,7 +182,7 @@ inquirer.prompt(questions).then(
       return i.split(/x/);
     });
 
-    var ogImage = NULL;
+    var ogImage = null;
     if (answers.faviconBaseUrl) {
       answers.icons = answers.faviconSizes.map(function(i) {
         ogImage = answers.faviconBaseUrl + 'favicon-'+i+'.png';
