@@ -15,11 +15,11 @@ As the Blogophon will ignore articles with a publising date set into the future,
 
 Get the path to your `generate.js` by typing `pwd`. Then edit your Crontab: `crontab -e`
 
-Add this line:
+Add one of these lines:
 
 ```
 58 23 * * * cd PATH_TO_YOUR_BLOG && ./generate.js >/dev/null 2>&1 # Midnight, daily without log
 58 23 * * * cd PATH_TO_YOUR_BLOG && ./generate.js --log >> logs/generate.log 2>&1 # Midnight, daily with log
 ```
 
-For more exotic execution times check http://crontab-generator.org/.
+For more exotic execution times check http://crontab-generator.org/. And keep in mind to check the timezone your crontab will be executed in.
