@@ -185,7 +185,7 @@ var BlogophonConsole = function () {
       ];
       inquirer.prompt(questions).then(
         function (answers) {
-          var markdownFilename = config.directories.data + '/' + answers.file
+          var markdownFilename = config.directories.data + '/' + answers.file;
           var cmd = 'open ' + markdownFilename + ' || vi '+ markdownFilename;
           console.log(chalk.grey(cmd));
           shell.exec(cmd);
@@ -270,9 +270,6 @@ var BlogophonConsole = function () {
           if (answers.sure) {
             var processed = 0, maxProcessed = 3;
             var checkProcessed  = function(err) {
-              if (err) {
-                reject(err);
-              }
               if (++processed === maxProcessed) {
                 console.log(answers.file + " files deleted, you may want to generate & publish all index pages");
                 exports.init();

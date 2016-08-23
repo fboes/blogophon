@@ -66,9 +66,7 @@ Generator.getArticles = function() {
 Generator.buildAllArticles = function( force ) {
   var i,
     allPosts = index.getPosts(),
-    processed = 0,
     skipped = 0,
-    maxProcessed = allPosts.length,
     hashes = {},
     generatedArticles = []
   ;
@@ -90,7 +88,7 @@ Generator.buildAllArticles = function( force ) {
           hashes[post.meta.Url] = currentHash;
           generatedArticles.push(post.meta.Url);
 
-          return Generator.buildSingleArticle(post)
+          return Generator.buildSingleArticle(post);
         }
       });
       // Checking promises
@@ -302,8 +300,8 @@ Generator.buildAll = function ( force ) {
         .buildAllArticles(force)
         .then(function (generatedArticles) {
           var promises = generatedArticles.map(function( article ) {
-            return Generator.copyImages( article )
-          })
+            return Generator.copyImages( article );
+          });
           promises.push(Generator.buildSpecialPages());
           Promise
             .all(promises)

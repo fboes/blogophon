@@ -149,13 +149,13 @@ var Post = function (filename, markdown, meta) {
     }
   }
   if (meta.Rating) {
-    var match = meta.Rating.match(/^(\d)\/(\d)$/);
-    if (match) {
+    var match2 = meta.Rating.match(/^(\d)\/(\d)$/);
+    if (match2) {
       meta.RatingObj = {
         worst: 1,
-        best: match[2],
-        value: match[1]
-      }
+        best: match2[2],
+        value: match2[1]
+      };
     }
   }
 

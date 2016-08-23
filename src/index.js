@@ -33,7 +33,7 @@ var Index = function () {
         return 'index-' + curPage + '.html';
       }
     }
-  }
+  };
 
   var exports = {
     clear: function () {
@@ -67,7 +67,7 @@ var Index = function () {
         } else {
           break;
         }
-      };
+      }
       if (count) {
         index.splice(0,count);
       }
