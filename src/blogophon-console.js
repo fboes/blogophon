@@ -223,7 +223,7 @@ var BlogophonConsole = function () {
         function (answers) {
           if (answers.fileNew) {
             var processed = 0, maxProcessed = 2;
-            var checkProcessed  = function(err) {
+            var checkProcessed = function(err) {
               if (err) {
                 console.log(err);
               }
@@ -269,7 +269,7 @@ var BlogophonConsole = function () {
         function (answers) {
           if (answers.sure) {
             var processed = 0, maxProcessed = 3;
-            var checkProcessed  = function(err) {
+            var checkProcessed = function(err) {
               if (++processed === maxProcessed) {
                 console.log(answers.file + " files deleted, you may want to generate & publish all index pages");
                 exports.init();

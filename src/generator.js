@@ -147,7 +147,7 @@ Generator.buildSpecialPages = function () {
 
   return new Promise (
     function(resolve, reject) {
-      var checkProcessed  = function(err) {
+      var checkProcessed = function(err) {
         if (err) {
           reject(err);
         }
@@ -257,7 +257,7 @@ Generator.copyImages = function ( article ) {
         if (files.length === 0) {
           resolve( processed );
         }
-        var checkProcessed  = function(err) {
+        var checkProcessed = function(err) {
           if (err) {
             reject(err);
           }
