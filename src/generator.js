@@ -32,7 +32,6 @@ var index = require('./index')();
  * @return {Promise} with first parameter of `resolve` being the number of files converted.
  */
 Generator.getArticles = function() {
-  var i, processed = 0, maxProcessed = -1;
   index.clear();
   return new Promise (
     function(resolve, reject) {
@@ -40,21 +39,21 @@ Generator.getArticles = function() {
         if (err) {
           reject(err);
         }
-        maxProcessed = files.length;
-        var checkProcessed  = function(post) {
-          index.push(post);
-          if (++processed === maxProcessed) {
+       // Making promises
+        var promises = files.map(function(i) {
+          return PostReader(i);
+        });
+        // Checking promises
+        Promise
+          .all(promises)
+          .then(function(posts) {
+            index.pushArray(posts);
             console.log('Removed ' + index.removeFutureItems() + ' item(s) with future timestamp from index');
             index.makeNextPrev();
-            resolve( processed );
-          }
-        };
-        for (i = 0; i < maxProcessed; i++) {
-          PostReader(files[i]).then(
-            checkProcessed,
-            reject
-          );
-        }
+            resolve( files.length );
+          })
+          .catch(reject)
+        ;
       });
     }
   );
@@ -64,7 +63,7 @@ Generator.getArticles = function() {
  * Get all {Post} from `index` and generate HTML pages.
  * @return {Promise} with first parameter of `resolve` being the list of files generated.
  */
-Generator.buildAllArticles = function ( force ) {
+Generator.buildAllArticles = function( force ) {
   var i,
     allPosts = index.getPosts(),
     processed = 0,
@@ -77,38 +76,58 @@ Generator.buildAllArticles = function ( force ) {
     try {
       hashes = JSON.parse(fs.readFileSync('./user/hashes.json'));
     } catch (e) {
-      // Here you get the error when the file was not found,
-      // but you also get any other error
+      hashes = {};
     }
   }
   return new Promise (
     function(resolve, reject) {
-      var checkProcessed  = function(err) {
-        if (err) {
-          reject(err);
-        }
-        if (++processed === maxProcessed) {
-          fs.writeFile('./user/hashes.json', JSON.stringify(hashes));
-          console.log("Created " + (processed - skipped) + " articles, skipped " +  skipped + " articles");
-          resolve( generatedArticles );
-        }
-      };
-
-      for (i = 0; i < maxProcessed; i++) {
-        var post = allPosts[i], currentHash = String(post);
+      // Making promises
+      var promises = allPosts.map(function(post) {
+        var currentHash = String(post);
         if (hashes[post.meta.Url] !== undefined && hashes[post.meta.Url] === currentHash) {
           skipped++;
-          checkProcessed();
         } else {
           hashes[post.meta.Url] = currentHash;
           generatedArticles.push(post.meta.Url);
-          shell.mkdir('-p', config.directories.htdocs + post.meta.Url);
-          fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
-            post: post,
-            config: config
-          },Mustache.partials),checkProcessed);
+
+          return Generator.buildSingleArticle(post)
         }
-      }
+      });
+      // Checking promises
+      Promise
+        .all(promises)
+        .then(function() {
+          fs.writeFile('./user/hashes.json', JSON.stringify(hashes));
+          console.log("Created " + (promises.length - skipped) + " articles, skipped " +  skipped + " articles");
+          resolve( generatedArticles );
+        })
+        .catch(reject)
+      ;
+    }
+  );
+};
+
+/**
+ * Build a single article
+ * @param  {Post} post [description]
+ * @return {Promise}  with first parameter being the filename
+ */
+Generator.buildSingleArticle = function( post ) {
+  if (!post) {
+    throw new Error('Empty post');
+  }
+  return new Promise (
+    function (resolve, reject) {
+      shell.mkdir('-p', config.directories.htdocs + post.meta.Url);
+      fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
+        post: post,
+        config: config
+      },Mustache.partials), function(err) {
+        if (err) {
+          reject(err);
+        }
+        resolve(post.meta.Filename);
+      });
     }
   );
 };
@@ -214,13 +233,14 @@ Generator.buildSpecialPages = function () {
 Generator.buildAllPages = function ( force ) {
   return new Promise (
     function(resolve, reject) {
-      Promise.all([
-        Generator.buildAllArticles(force),
-        Generator.buildSpecialPages()
-      ]).then(
-        resolve,
-        reject
-      );
+      Promise
+        .all([
+          Generator.buildAllArticles(force),
+          Generator.buildSpecialPages()
+        ])
+        .then(resolve)
+        .catch(reject)
+      ;
     }
   );
 };
@@ -278,19 +298,21 @@ Generator.copyImages = function ( article ) {
 Generator.buildAll = function ( force ) {
   return new Promise (
     function(resolve, reject) {
-      Generator.buildAllArticles(force).then(
-        function (generatedArticles) {
+      Generator
+        .buildAllArticles(force)
+        .then(function (generatedArticles) {
           var promises = generatedArticles.map(function( article ) {
             return Generator.copyImages( article )
           })
           promises.push(Generator.buildSpecialPages());
-          Promise.all(promises).then(
-            resolve,
-            reject
-          );
-        },
-        reject
-      );
+          Promise
+            .all(promises)
+            .then(resolve)
+            .catch(reject)
+          ;
+        })
+        .catch(reject)
+      ;
     }
   );
 };

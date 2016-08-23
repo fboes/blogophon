@@ -46,6 +46,11 @@ var Index = function () {
       index.push(post);
     },
 
+    pushArray: function (posts) {
+      isSorted = false;
+      index = posts;
+    },
+
     /**
      * Remove all items form index which have a future timestamp.
      * @return {Number} of items removed
