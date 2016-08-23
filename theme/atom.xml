@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{config.language}}">
   <title>{{config.name}}</title>
   <link href="{{config.baseUrl}}{{config.basePath}}" />
   <id>{{config.baseUrl}}{{config.basePath}}</id>
@@ -9,9 +9,10 @@
     <name>{{config.name}}</name>
   </author>
   {{#index}}
-    <entry>
+    <entry xml:lang="{{meta.Language}}" xml:base="{{config.baseUrl}}{{config.basePath}}">
       <title>{{meta.Title}}</title>
-      <summary type="html"><![CDATA[{{{htmlTeaser}}}]]></summary>
+      <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
+      <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
       <link href="{{meta.AbsoluteUrl}}" />
       <updated>{{meta.isoDate}}</updated>
       <id>{{meta.AbsoluteUrl}}</id>

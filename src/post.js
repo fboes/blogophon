@@ -70,6 +70,12 @@ var Post = function (filename, markdown, meta) {
         .replace(/(<img[^>]+src="([^"]+)(-\d+x\d+)?"[^>]*>)/g,'<a href="$2">$1</a>')
         .replace(/(<a href="[^"]+)\-\d+x\d+(\.(jpg|png|gif)">)/g,'$1$2')
       ;
+    },
+    makeSafeHtml: function(html) {
+      return html
+        .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
+        .replace(/(<\/?)iframe/g,'$1a')
+      ;
     }
   };
 
@@ -167,6 +173,8 @@ var Post = function (filename, markdown, meta) {
     meta: meta,
     html: html,
     htmlTeaser: htmlTeaser,
+    safeHtml: internal.makeSafeHtml(html),
+    safeHtmlTeaser: internal.makeSafeHtml(htmlTeaser),
     toString: function() {
       return hash([markdown,share,meta,html,htmlTeaser]);
     }

@@ -10,7 +10,7 @@
     {{#index}}
       <item>
         <title>{{meta.Title}}</title>
-        <description><![CDATA[{{{htmlTeaser}}}]]></description>
+        <description><![CDATA[{{{safeHtmlTeaser}}}]]></description>
         <link>{{meta.AbsoluteUrl}}</link>
         <pubDate>{{meta.rfcDate}}</pubDate>
         <guid isPermaLink="true">{{meta.AbsoluteUrl}}</guid>

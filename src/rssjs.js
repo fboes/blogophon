@@ -24,7 +24,7 @@ var RssJs = function (index, pubDate) {
         }
         return {
           title: item.meta.Title,
-          description: item.htmlTeaser,
+          description: item.safeHtmlTeaser || item.htmlTeaser,
           link: item.meta.AbsoluteUrl,
           pubDate: item.meta.rfcDate,
           guid: item.meta.AbsoluteUrl,
