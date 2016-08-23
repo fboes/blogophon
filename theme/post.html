@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{config.language}}">
+<html lang="{{config.language}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
   <title>{{post.meta.Title}} | {{config.name}}</title>
@@ -14,6 +14,7 @@
     <meta name="keywords" content="{{post.meta.Keywords}}" />
   {{/post.meta.Keywords}}
   {{#post.meta.Latitude}}
+    <meta name="ICBM" content="{{post.meta.Latitude}}, {{post.meta.Longitude" />
     <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude" />
     <meta name="geo.position.latitude" content="{{post.meta.Latitude}}" />
     <meta name="geo.position.longitude" content="{{post.meta.Longitude}}" />
@@ -51,7 +52,7 @@
                 <span class="tags">
                   Andere Artikel zum Thema
                   {{#post.meta.Tags}}
-                    · <a rel="tag" href="{{url}}" itemprop="keywords">„{{title}}”</a>
+                    · <a rel="tag" href="{{url}}" itemprop="keywords" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„{{title}}”</a>
                   {{/post.meta.Tags}}
                 </span>
               {{/post.meta.Tags.length}}
@@ -70,7 +71,7 @@
           </article>
           <div id="prevnext">
             <span style="display:inline-block;">
-              <a href="{{config.basePath}}" rel="up" id="up">Zurück zur Übersichtsseite</a>
+              <a href="{{config.basePath}}" rel="contents" id="up">Zurück zur Übersichtsseite</a>
             </span>
             {{#post.prev.Url}}
               <a href="{{post.prev.Url}}" rel="prev" class="prev" title="{{post.prev.Title}}">&laquo;</a>

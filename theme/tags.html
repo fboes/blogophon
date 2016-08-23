@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{config.language}}">
+<html lang="{{config.language}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
   <title>Alle Tags | {{config.name}}</title>
@@ -19,11 +19,13 @@
           <h2>Alle Tags</h2>
 
           {{#index.length}}
-            <ul>
-              {{#index}}
-                <li><a rel="tag" href="{{url}}" itemprop="keywords">{{title}}</a></li>
-              {{/index}}
-            </ul>
+            <nav>
+              <ul>
+                {{#index}}
+                  <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">{{title}}</a></li>
+                {{/index}}
+              </ul>
+            </nav>
           {{/index.length}}
 
         </div>

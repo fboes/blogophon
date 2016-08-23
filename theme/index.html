@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{config.language}}">
+<html lang="{{config.language}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
   <title>{{#meta.title}}{{meta.title}} | {{/meta.title}}{{config.name}}</title>
@@ -43,7 +43,7 @@
                         <span class="tags">
                           Andere Artikel zum Thema
                           {{#meta.Tags}}
-                            · <a rel="tag" href="{{url}}" itemprop="keywords">„{{title}}”</a>
+                            · <a rel="tag" href="{{url}}" itemprop="keywords" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„{{title}}”</a>
                           {{/meta.Tags}}
                         </span>
                       {{/meta.Tags.length}}
