@@ -14,10 +14,11 @@ Mustache.templates = {
   sitemap: fs.readFileSync(config.directories.currentTheme+'/sitemap.xml', 'utf8')
 };
 Mustache.partials = {
-  meta:    fs.readFileSync(config.directories.currentTheme+'/partials/meta.html', 'utf8'),
-  header:  fs.readFileSync(config.directories.currentTheme+'/partials/header.html', 'utf8'),
-  sidebar: fs.readFileSync(config.directories.currentTheme+'/partials/sidebar.html', 'utf8'),
-  footer:  fs.readFileSync(config.directories.currentTheme+'/partials/footer.html', 'utf8')
+  meta:       fs.readFileSync(config.directories.currentTheme+'/partials/meta.html', 'utf8'),
+  header:     fs.readFileSync(config.directories.currentTheme+'/partials/header.html', 'utf8'),
+  navigation: fs.readFileSync(config.directories.currentTheme+'/partials/navigation.html', 'utf8'),
+  sidebar:    fs.readFileSync(config.directories.currentTheme+'/partials/sidebar.html', 'utf8'),
+  footer:     fs.readFileSync(config.directories.currentTheme+'/partials/footer.html', 'utf8')
 };
 
 Mustache.escape = function (string) {
