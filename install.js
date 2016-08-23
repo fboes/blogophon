@@ -203,7 +203,7 @@ inquirer.prompt(questions).then(
         console.log( configFilename + ' created');
       }
     });
-    fs.writeFile('htdocs/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
+    fs.writeFile('htdocs/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nDisallow:\n\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
       if (err) {
         console.error('htdocs/robots.txt' + ' could not be written' ); process.exit(1);
       } else {
