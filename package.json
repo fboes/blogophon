@@ -2,7 +2,7 @@
   "name": "blogophon",
   "version": "0.1.0",
   "description": "A small and simple Static Site Generator for blogs.",
-  "main": "index.js",
+  "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:fboes/blogophon.git"
@@ -15,6 +15,7 @@
     "install": "./install.js",
     "start": "./index.js",
     "generate": "./generate.js",
+    "precommit": "gulp jshint && npm test",
     "test": "nodeunit test"
   },
   "keywords": [
@@ -32,6 +33,7 @@
     "gulp-nodeunit": "0.0.5",
     "gulp-plumber": "^1.1.0",
     "gulp-shell": "^0.5.2",
+    "husky": "^0.11.6",
     "jshint": "^2.9.2",
     "nodeunit": "^0.9.1"
   },
