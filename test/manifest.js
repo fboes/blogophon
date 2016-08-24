@@ -5,7 +5,7 @@ exports.testBasicProperties = function(test) {
 
   var manifest = require('../src/manifest');
 
-  console.log(manifest);
+  // console.log(manifest);
 
   test.ok(manifest.lang);
   test.ok(manifest.name);

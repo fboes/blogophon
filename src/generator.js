@@ -19,16 +19,16 @@ var BlogophonUrls  = require('./blogophon-urls')();
  * @constructor
  */
 var Generator = {};
+var index = require('./index')();
 
-var strings = {
+Generator.strings = {
   'index': 'Startseite',
   'page': 'Seite %d/%d',
   'tag': 'Artikel mit dem Tag "%s"',
 };
-var index = require('./index')();
 
 /**
- * Get all articles from file system and populate `index` them into {Post}. Uses {PostReader}.
+ * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.
  * @return {Promise} with first parameter of `resolve` being the number of files converted.
  */
 Generator.getArticles = function() {
@@ -144,6 +144,12 @@ Generator.buildSpecialPages = function () {
     processed = 0,
     maxProcessed = 7 + pagedPosts.length + Object.keys(tags).length
   ;
+  var tagPages = Object.keys(tags).sort().map(function (key) {
+    return {
+      title: tags[key].title,
+      url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
+    };
+  });
 
   return new Promise (
     function(resolve, reject) {
@@ -163,7 +169,7 @@ Generator.buildSpecialPages = function () {
           curPageObj.index  = pagedPosts[page];
           curPageObj.config = config;
           curPageObj.meta   = {
-            title      : (curPageObj.currentPage === 1) ? strings.index : strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            title      : (curPageObj.currentPage === 1) ? Generator.strings.index : Generator.strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: BlogophonUrls.getAbsoluteUrlOfIndex(curPageObj.currentUrl)
           };
           curPageObj.prevUrl = BlogophonUrls.getUrlOfIndex(curPageObj.prevUrl);
@@ -177,19 +183,14 @@ Generator.buildSpecialPages = function () {
           shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
           tags[key].config = config;
           tags[key].meta   = {
-            title      : strings.tag.sprintf(tags[key].title),
+            title      : Generator.strings.tag.sprintf(tags[key].title),
             absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
           };
           fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials), checkProcessed);
         });
 
         fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
-          index: Object.keys(tags).sort().map(function (key) {
-            return {
-              title: tags[key].title,
-              url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
-            };
-          }),
+          index: tagPages,
           config: config
         }, Mustache.partials), checkProcessed);
       });
@@ -217,6 +218,7 @@ Generator.buildSpecialPages = function () {
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('sitemap.xml'), Mustache.render(Mustache.templates.sitemap, {
         index: allPosts,
+        tagPages: tagPages,
         pubDate: dateFormat(index.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
         config: config
       }), checkProcessed);
