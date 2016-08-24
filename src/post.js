@@ -62,6 +62,7 @@ var Post = function (filename, markdown, meta) {
           /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
           '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1">$2</iframe></div>'
         )
+        .trim()
       ;
       //       '<div class="video-player youtube"><a href="https://www.youtube.com/embed/$2?enablejsapi=1"><img class="preview" src="http://img.youtube.com/vi/$2/sddefault.jpg" alt="" /></a><!--iframe allowfullscreen="true" src="https://www.youtube.com/embed/$2?enablejsapi=1"></iframe--></div>'
     },
@@ -119,7 +120,7 @@ var Post = function (filename, markdown, meta) {
     });
   }
   if (meta.Classes === undefined) {
-    meta.Classes = '';
+    meta.Classes = 'Normal article';
   }
   meta.Classes = meta.Classes.trim().split(/,\s+/).map(function(c) {
     return c.asciify();
