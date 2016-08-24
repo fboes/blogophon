@@ -22,12 +22,7 @@ gulp.task('jshint', function() {
       pkg.directories.test+'/**/*.js'
     ])
     .pipe(plumber({errorHandler: onError}))
-    .pipe(jshint({ // see https://github.com/jshint/jshint/blob/master/examples/.jshintrc
-      node: true,
-      curly: true,
-      undef: true,
-      strict: true
-    }))
+    .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'))
   ;
