@@ -1,7 +1,6 @@
 'use strict';
 
 var config          = require('./config');
-var fs              = require('fs');
 var markdownConvert = require('marked');
 var dateFormat      = require('dateformat');
 var hash            = require('object-hash');
@@ -76,6 +75,11 @@ var Post = function (filename, markdown, meta) {
       return html
         .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
         .replace(/(<\/?)iframe/g,'$1a')
+      ;
+    },
+    ampifyHtml: function(html) {
+      return html
+        .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
       ;
     }
   };
@@ -176,6 +180,12 @@ var Post = function (filename, markdown, meta) {
     htmlTeaser: htmlTeaser,
     safeHtml: internal.makeSafeHtml(html),
     safeHtmlTeaser: internal.makeSafeHtml(htmlTeaser),
+    ampHtml: function() {
+      return internal.ampifyHtml(html);
+    },
+    ampHtmlTeaser: function() {
+      return internal.ampifyHtml(safeHtmlTeaser);
+    },
     toString: function() {
       return hash([markdown,share,meta,html,htmlTeaser]);
     }

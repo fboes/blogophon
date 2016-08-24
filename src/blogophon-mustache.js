@@ -2,7 +2,7 @@
 
 var Mustache       = require('mustache');
 var config         = require('./config');
-var fs             = require('fs-extra');
+var fs             = require('fs');
 
 Mustache.themePath = config.directories.currentTheme;
 Mustache.templates = {

@@ -1,6 +1,6 @@
 'use strict';
 
-var fs             = require('fs-extra');
+var fs             = require('fs');
 var config         = {};
 var pkg            = JSON.parse(fs.readFileSync('./package.json'));
 

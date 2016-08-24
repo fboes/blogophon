@@ -9,7 +9,7 @@ A small and simple [Static Site Generator](https://davidwalsh.name/introduction-
 **Features:**
 
 * Generate static HTML files from Markdown files.
-* Siple and fast templating via Mustache.
+* Simple and fast templating via Mustache.
 * Generate all required teaser pages.
 * Generate all required tag pages.
 * Scale images and remove unneccessary cruft.

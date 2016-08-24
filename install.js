@@ -3,7 +3,7 @@
 'use strict';
 
 // var pkg            = JSON.parse(fs.readFileSync('./package.json'));
-var fs             = require('fs-extra');
+var fs             = require('fs');
 var inquirer       = require('inquirer');
 var configFilename = 'user/config.json';
 
