@@ -6,7 +6,7 @@
     <description>{{config.description}}</description>
     <language>{{config.language}}</language>
     <lastBuildDate>{{pubDate}}</lastBuildDate>
-    <atom:link href="{{config.baseUrl}}{{config.basePath}}posts.rss" rel="self" type="application/rss+xml"/>
+    <atom:link href="{{config.baseUrl}}{{config.basePath}}posts.rss" rel="self" type="application/rss+xml" />
     {{#index}}
       <item>
         <title>{{meta.Title}}</title>
