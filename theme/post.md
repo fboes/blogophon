@@ -6,6 +6,7 @@ Keywords: {{keywords}}
 {{#classes}}
 Classes:  {{classes}}
 {{/classes}}
+Twitter:  {{title}}
 ---
 
 {{title}}

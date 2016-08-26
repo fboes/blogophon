@@ -154,6 +154,9 @@ var Post = function (filename, markdown, meta) {
       meta.Image = match[1];
     }
   }
+  if (meta.Twitter === undefined) {
+    meta.Twitter = meta.Title;
+  }
   if (meta.Rating) {
     var match2 = meta.Rating.match(/^(\d)\/(\d)$/);
     if (match2) {
@@ -166,7 +169,7 @@ var Post = function (filename, markdown, meta) {
   }
 
   var share = {
-    twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(meta.AbsoluteUrl)+"&source=tweetbutton&text="+encodeURIComponent(meta.Title)+"&url="+encodeURIComponent(meta.AbsoluteUrl),
+    twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(meta.AbsoluteUrl)+"&source=tweetbutton&text="+encodeURIComponent(meta.Twitter)+"&url="+encodeURIComponent(meta.AbsoluteUrl),
     facebook: "http://www.facebook.com/sharer.php?u="+encodeURIComponent(meta.AbsoluteUrl),
     gplus: "https://plus.google.com/share?url="+encodeURIComponent(meta.AbsoluteUrl),
     whatsapp: 'whatsapp://send?text=' +encodeURIComponent(meta.Title + ' [' + meta.AbsoluteUrl + ']'),
