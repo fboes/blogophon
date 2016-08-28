@@ -24,6 +24,7 @@ try {
 }
 
 config.directories = pkg.directories;
+config.isWin = /^win/.test(process.platform);
 
 config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '');
 
