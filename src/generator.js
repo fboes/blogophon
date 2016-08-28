@@ -179,20 +179,22 @@ Generator.buildSpecialPages = function () {
       });
 
       fs.remove(config.directories.htdocs + '/tagged', function (err) {
-        Object.keys(tags).map(function (key) {
-          shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
-          tags[key].config = config;
-          tags[key].meta   = {
-            title      : Generator.strings.tag.sprintf(tags[key].title),
-            absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
-          };
-          fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials), checkProcessed);
-        });
+        if (tags.length) {
+          Object.keys(tags).map(function (key) {
+            shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
+            tags[key].config = config;
+            tags[key].meta   = {
+              title      : Generator.strings.tag.sprintf(tags[key].title),
+              absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
+            };
+            fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials), checkProcessed);
+          });
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
-          index: tagPages,
-          config: config
-        }, Mustache.partials), checkProcessed);
+          fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
+            index: tagPages,
+            config: config
+          }, Mustache.partials), checkProcessed);
+        }
       });
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('404.html'), Mustache.render(Mustache.templates.four, {
