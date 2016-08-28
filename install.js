@@ -16,7 +16,7 @@ for (var i = 2; i < process.argv.length; i++) {
     case '--only-new':
       if (! defaultValues.notInitialized) {
         console.log('`config.json` already present, start withour `--only-new` to overwrite configuration.');
-        process.exit(0)
+        process.exit(0);
       }
       break;
   }

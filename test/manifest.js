@@ -7,11 +7,11 @@ exports.testBasicProperties = function(test) {
 
   // console.log(manifest);
 
-  test.ok(manifest.lang);
-  test.ok(manifest.name);
-  test.ok(manifest.description);
-  test.ok(manifest.theme_color);
-  test.ok(manifest.start_url);
+  test.ok(manifest.lang !== undefined);
+  test.ok(manifest.name !== undefined);
+  test.ok(manifest.description !== undefined);
+  test.ok(manifest.theme_color !== undefined);
+  test.ok(manifest.start_url !== undefined);
 
   test.done();
 };

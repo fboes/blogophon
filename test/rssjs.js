@@ -14,15 +14,15 @@ exports.testBasicProperties = function(test) {
   };
   var rssjs = require('../src/rssjs')([item], new Date());
 
-  test.ok(rssjs.version);
-  test.ok(rssjs.channel);
-  test.ok(rssjs.channel.title);
-  test.ok(rssjs.channel.link);
-  test.ok(rssjs.channel.description);
-  test.ok(rssjs.channel.items[0]);
-  test.ok(rssjs.channel.items[0].title);
-  test.ok(rssjs.channel.items[0].link);
-  test.ok(rssjs.channel.items[0].description);
+  test.ok(rssjs.version !== undefined);
+  test.ok(rssjs.channel !== undefined);
+  test.ok(rssjs.channel.title !== undefined);
+  test.ok(rssjs.channel.link !== undefined);
+  test.ok(rssjs.channel.description !== undefined);
+  test.ok(rssjs.channel.items[0] !== undefined);
+  test.ok(rssjs.channel.items[0].title !== undefined);
+  test.ok(rssjs.channel.items[0].link !== undefined);
+  test.ok(rssjs.channel.items[0].description !== undefined);
 
   test.done();
 };

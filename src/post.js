@@ -188,7 +188,7 @@ var Post = function (filename, markdown, meta) {
       return internal.ampifyHtml(html);
     },
     ampHtmlTeaser: function() {
-      return internal.ampifyHtml(safeHtmlTeaser);
+      return internal.ampifyHtml(htmlTeaser);
     },
     toString: function() {
       return hash([markdown,share,meta,html,htmlTeaser]);
