@@ -62,3 +62,13 @@ And this part will only be shown on article pages.
 ```
 
 If you do not use both methods, the Blogophon will build a ***teaser text from article text** by using the first 160 characters.
+
+Special markdown
+----------------
+
+```markdown
+
+* [ ] <-- Produces an empty checkbox
+* [X] <-- Produces a checked checkbox
+
+```
