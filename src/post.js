@@ -94,10 +94,10 @@ var Post = function (filename, markdown, meta) {
   if (!markdown) {
     throw new Error('markdown is empty in post');
   }
-  if (meta.Description === undefined) {
+  if (!meta.Description) {
     throw new Error('meta.Description not supplied in post');
   }
-  if (meta.Date === undefined) {
+  if (!meta.Date) {
     throw new Error('meta.Date not supplied in post');
   }
 
@@ -112,7 +112,7 @@ var Post = function (filename, markdown, meta) {
   var htmlTeaser   = internal.markyMark(meta.Description.trim(), meta.Url);
   var html         = internal.markyMark(markdown, meta.Url);
 
-  if (meta.Title === undefined) {
+  if (!meta.Title) {
     meta.Title = markdown.split(/\n/)[0];
   }
   if (meta.Keywords !== undefined) {
@@ -124,7 +124,7 @@ var Post = function (filename, markdown, meta) {
       };
     });
   }
-  if (meta.Classes === undefined) {
+  if (!meta.Classes) {
     meta.Classes = 'Normal article';
   }
   meta.Classes = meta.Classes.trim().split(/,\s+/).map(function(c) {
@@ -137,10 +137,10 @@ var Post = function (filename, markdown, meta) {
   if (meta.Description !== undefined) {
     meta.Description = meta.Description.replace(/>/g,' ').replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1').replace(/\s\s+/g, ' ').niceShorten(160);
   }
-  if (meta.Language === undefined) {
+  if (!meta.Language) {
     meta.Language = config.language;
   }
-  if (meta.Author === undefined) {
+  if (!meta.Author) {
     meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
   }
   var metaAuthor = meta.Author.match(/^(.+?)(?:\s<(.+)>)?$/);
@@ -148,14 +148,16 @@ var Post = function (filename, markdown, meta) {
     meta.AuthorName  = metaAuthor[1];
     meta.AuthorEmail = metaAuthor[2] ? metaAuthor[2] : config.defaultAuthor.email;
   }
-  if (meta.Image === undefined) {
+  if (!meta.Image) {
     var match = html.match(/<img.+?src="(.+?)"/);
     if (match) {
       meta.Image = match[1];
     }
   }
-  if (meta.Twitter === undefined) {
+  if (!meta.Twitter) {
     meta.Twitter = meta.Title;
+  } else {
+    meta.Twitter = meta.Twitter.replace(/\\(#)/g,'$1');
   }
   if (meta.Rating) {
     var match2 = meta.Rating.match(/^(\d)\/(\d)$/);
