@@ -11,7 +11,7 @@ var Manifest = {
   name: config.name,
   description: config.description,
   short_name: config.name,
-  icons: config.icons.map(function(i) {
+  icons: !config.icons ? [] : config.icons.map(function(i) {
     return i;
   }),
   scope: config.basePath,

@@ -14,7 +14,7 @@ Manual
 ## Generate HTML files manually
 
 1. Edit your Markdown file.
-1. Run [`./generate.js`](generate.js) to make the Blogophon Generator generate all HTML files.
+1. Run [`node ./generate.js`](generate.js) to make the Blogophon Generator generate all HTML files.
 
 `generate.js` has some options:
 

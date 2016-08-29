@@ -155,7 +155,7 @@ var BlogophonConsole = function () {
               console.error(chalk.red( markdownFilename + ' could not be written' ));
             } else {
               console.log( markdownFilename + ' created');
-              var cmd = 'open ' + markdownFilename + ' || vi '+ markdownFilename;
+              var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
               console.log(chalk.grey(cmd));
               if (answers.edit) {
                 shell.exec(cmd);
@@ -186,7 +186,7 @@ var BlogophonConsole = function () {
       inquirer.prompt(questions).then(
         function (answers) {
           var markdownFilename = config.directories.data + '/' + answers.file;
-          var cmd = 'open ' + markdownFilename + ' || vi '+ markdownFilename;
+          var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
           console.log(chalk.grey(cmd));
           shell.exec(cmd);
           exports.init();

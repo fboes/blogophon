@@ -9,6 +9,19 @@ var configFilename = 'user/config.json';
 
 var defaultValues = require('./src/config');
 
+var i;
+
+for (var i = 2; i < process.argv.length; i++) {
+  switch (process.argv[i]) {
+    case '--only-new':
+      if (! defaultValues.notInitialized) {
+        console.log('`config.json` already present, start withour `--only-new` to overwrite configuration.');
+        process.exit(0);
+      }
+      break;
+  }
+}
+
 defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
   return i.join('x');
 });

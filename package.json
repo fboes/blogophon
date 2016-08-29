@@ -8,13 +8,13 @@
     "url": "git@github.com:fboes/blogophon.git"
   },
   "bin": {
-    "blogophon": "./index.js",
-    "blogophon-generate": "./generate.js"
+    "blogophon": "node ./index.js",
+    "blogophon-generate": "node ./generate.js"
   },
   "scripts": {
-    "install": "./install.js",
-    "start": "./index.js",
-    "generate": "./generate.js",
+    "install": "node ./install.js --only-new",
+    "start": "node ./index.js",
+    "generate": "node ./generate.js",
     "precommit": "gulp jshint && npm test",
     "test": "nodeunit test"
   },

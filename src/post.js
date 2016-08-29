@@ -45,7 +45,7 @@ var Post = function (filename, markdown, meta) {
       ;
 
       return markdownConvert(html)
-        .replace(/<p>===<\/p>/g,'<!-- more -->')
+        .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
         .replace(/(<\/?h)3/g,'$14')
         .replace(/(<\/?h)2/g,'$13')
         .replace(/(<\/?h)1/g,'$12')
@@ -190,7 +190,7 @@ var Post = function (filename, markdown, meta) {
       return internal.ampifyHtml(html);
     },
     ampHtmlTeaser: function() {
-      return internal.ampifyHtml(safeHtmlTeaser);
+      return internal.ampifyHtml(htmlTeaser);
     },
     toString: function() {
       return hash([markdown,share,meta,html,htmlTeaser]);

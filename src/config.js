@@ -20,11 +20,13 @@ try {
       [180,180],
       [640,480],
       [1024,768]
-    ]
+    ],
+    "notInitialized":true
   };
 }
 
 config.directories = pkg.directories;
+config.isWin = /^win/.test(process.platform);
 
 config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '');
 
