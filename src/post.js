@@ -62,6 +62,8 @@ var Post = function (filename, markdown, meta) {
           /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
           '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1">$2</iframe></div>'
         )
+        .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
+        .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
         .trim()
       ;
       //       '<div class="video-player youtube"><a href="https://www.youtube.com/embed/$2?enablejsapi=1"><img class="preview" src="http://img.youtube.com/vi/$2/sddefault.jpg" alt="" /></a><!--iframe allowfullscreen="true" src="https://www.youtube.com/embed/$2?enablejsapi=1"></iframe--></div>'
