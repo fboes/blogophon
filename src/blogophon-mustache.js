@@ -19,7 +19,8 @@ Mustache.partials = {
   header:     fs.readFileSync(Mustache.themePath + '/partials/header.html', 'utf8'),
   navigation: fs.readFileSync(Mustache.themePath + '/partials/navigation.html', 'utf8'),
   sidebar:    fs.readFileSync(Mustache.themePath + '/partials/sidebar.html', 'utf8'),
-  footer:     fs.readFileSync(Mustache.themePath + '/partials/footer.html', 'utf8')
+  footer:     fs.readFileSync(Mustache.themePath + '/partials/footer.html', 'utf8'),
+  closure:    fs.readFileSync(Mustache.themePath + '/partials/closure.html', 'utf8')
 };
 Object.keys(Mustache.templates).map(function (t) {
   Mustache.parse(t);
