@@ -11,6 +11,7 @@ var dateFormat     = require('dateformat');
 var PostReader     = require('./post-reader');
 var RssJs          = require('./rssjs');
 var Manifest       = require('./manifest');
+var translations   = require('./translations');
 var toolshed       = require('./js-toolshed/src/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls')();
 
@@ -21,11 +22,7 @@ var BlogophonUrls  = require('./blogophon-urls')();
 var Generator = {};
 var index = require('./index')();
 
-Generator.strings = {
-  'index': 'Startseite',
-  'page': 'Seite %d/%d',
-  'tag': 'Artikel mit dem Tag "%s"',
-};
+Generator.strings = translations(config.language).getAll();
 
 /**
  * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.
