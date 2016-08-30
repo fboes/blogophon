@@ -18,16 +18,22 @@ for (var i = 2; i < process.argv.length; i++) {
   }
 }
 
-Generator.getArticles().then(
-  function () {
-    Generator.buildAll(force).then(
-      function() {
+Generator
+  .getArticles()
+  .then(function () {
+    Generator
+      .buildAll(force)
+      .then(function() {
         if(deploy) {
           Generator.deploy();
         }
-      },
-      function(err) { console.error(err); process.exit(1); }
-    );
-  },
-  function(err) { console.error(err); process.exit(1); }
-);
+      })
+      .catch(function(err) {
+        console.error(err); process.exit(1);
+      })
+    ;
+  })
+  .catch(function(err) {
+    console.error(err); process.exit(1);
+  })
+;
