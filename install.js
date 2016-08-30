@@ -7,6 +7,11 @@ var fs             = require('fs');
 var inquirer       = require('inquirer');
 var defaultValues  = require('./src/config');
 var configFilename = defaultValues.directories.user + '/config.json';
+var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
+
+if (themesAvailable.length < 1) {
+  throw new Error('No themes found');
+}
 
 var i;
 
@@ -33,6 +38,15 @@ var questions = [
     default: defaultValues.name,
     validate: function(v) {
       return v ? true : 'Please supply at least a short name for your site.';
+    }
+  },{
+    type: 'list',
+    name: 'theme',
+    message: 'Choose theme',
+    default: defaultValues.theme,
+    choices: themesAvailable,
+    when: function(answers) {
+      return (themesAvailable.length > 1);
     }
   },{
     type: 'input',
@@ -184,7 +198,7 @@ var questions = [
 
 inquirer.prompt(questions).then(
   function (answers) {
-    answers.theme = defaultValues.theme ? defaultValues.theme : 'default';
+    answers.theme = defaultValues.theme ? defaultValues.theme : themesAvailable[0];
     answers.defaultAuthor = {
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
