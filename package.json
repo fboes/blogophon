@@ -7,10 +7,6 @@
     "type": "git",
     "url": "git@github.com:fboes/blogophon.git"
   },
-  "bin": {
-    "blogophon": "node ./index.js",
-    "blogophon-generate": "node ./generate.js"
-  },
   "scripts": {
     "install": "node ./install.js --only-new",
     "start": "node ./index.js",
@@ -41,9 +37,10 @@
     "doc": "docs",
     "src": "src",
     "test": "test",
+    "user": "user",
     "data": "user/posts",
     "htdocs": "htdocs",
-    "theme": "theme"
+    "theme": "themes"
   },
   "author": "Frank Boës",
   "license": "MIT",
@@ -60,5 +57,6 @@
     "promise": "^7.1.1",
     "shelljs": "^0.7.3",
     "yamljs": "^0.2.8"
-  }
+  },
+  "engine": "node >= 0.12.0"
 }

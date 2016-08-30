@@ -5,9 +5,8 @@
 // var pkg            = JSON.parse(fs.readFileSync('./package.json'));
 var fs             = require('fs');
 var inquirer       = require('inquirer');
-var configFilename = 'user/config.json';
-
-var defaultValues = require('./src/config');
+var defaultValues  = require('./src/config');
+var configFilename = defaultValues.directories.user + '/config.json';
 
 var i;
 
@@ -185,7 +184,7 @@ var questions = [
 
 inquirer.prompt(questions).then(
   function (answers) {
-
+    answers.theme = defaultValues.theme ? defaultValues.theme : 'default';
     answers.defaultAuthor = {
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
@@ -208,6 +207,8 @@ inquirer.prompt(questions).then(
     if (!answers.ogImage && ogImage) {
       answers.ogImage = ogImage;
     }
+
+    shell.mkdir('-p', defaultValues.directories.data);
     //console.log(answers);
     fs.writeFile(configFilename, JSON.stringify(answers), function(err) {
       if (err) {
@@ -216,7 +217,7 @@ inquirer.prompt(questions).then(
         console.log( configFilename + ' created');
       }
     });
-    fs.writeFile('htdocs/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nDisallow:\n\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
+    fs.writeFile(defaultValues.directories.htdocs+'/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nDisallow: /google*.html\n\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
       if (err) {
         console.error('htdocs/robots.txt' + ' could not be written' ); process.exit(1);
       } else {
