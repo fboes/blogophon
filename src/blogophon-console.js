@@ -26,7 +26,7 @@ var BlogophonConsole = function () {
     'Exit'
   ];
 
-  var template     = fs.readFileSync(config.directories.currentTheme+'/post.md', 'utf8');
+  var template     = fs.readFileSync('./src/post.md', 'utf8');
 
   var internal = {
     /**
@@ -51,10 +51,10 @@ var BlogophonConsole = function () {
       return title
         .trim()
         .toLowerCase()
-        .replace(/^(der|die|d(a|e|o)s|eine?|a|the|el|las?|los)\s/,'')
         .asciify()
-        .replace(/(^\-+|\-+$)/,'')
-        .replace(/(\-)\-+/,'$1')
+        .replace(/^(der|die|d(a|e|o)s|eine?|a|the|el|las?|los)\—/,'')
+        .replace(/(^[\-]+|[\-]+$)/g,'')
+        .replace(/([\-])[\-]+/g,'$1')
         .replace(/\-(md~?)$/,'.$1')
       ;
     },
@@ -307,25 +307,29 @@ var BlogophonConsole = function () {
           }
         }
       ];
-      inquirer.prompt(questions).then(
-        function (answers) {
-          Generator.getArticles().then(
-            function () {
-              Generator.buildAll(!answers.noforce).then(
-                function() {
-                  if(answers.deploy) {
-                    Generator.deploy();
-                  }
-                  exports.init();
-                },
-                function(err) { console.error(err); }
-              );
-            },
-            function(err) { console.error(err); }
-          );
-        },
-        function(err) { console.error(err); }
-      );
+      inquirer
+        .prompt(questions)
+        .then(
+          function (answers) {
+            Generator
+              .getArticles()
+              .then(function () {
+                Generator
+                  .buildAll(!answers.noforce)
+                  .then(function() {
+                    if(answers.deploy) {
+                      Generator.deploy();
+                    }
+                    exports.init();
+                  })
+                  .catch( function(err) { console.error(err); } )
+                ;
+              })
+              .catch( function(err) { console.error(err); } )
+            ;
+          })
+        .catch( function(err) { console.error(err); } )
+      ;
     },
 
     /**

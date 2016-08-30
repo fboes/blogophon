@@ -6,3 +6,5 @@
 /test/*.xml
 /tmp
 /user
+/themes/*
+!/themes/default

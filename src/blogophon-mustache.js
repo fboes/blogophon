@@ -4,7 +4,7 @@ var Mustache       = require('mustache');
 var config         = require('./config');
 var fs             = require('fs');
 
-Mustache.themePath = config.directories.currentTheme;
+Mustache.themePath = config.directories.currentTheme + '/templates';
 Mustache.templates = {
   post:    fs.readFileSync(Mustache.themePath + '/post.html', 'utf8'),
   index:   fs.readFileSync(Mustache.themePath + '/index.html', 'utf8'),

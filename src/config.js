@@ -28,7 +28,7 @@ try {
 config.directories = pkg.directories;
 config.isWin = /^win/.test(process.platform);
 
-config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '');
+config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '/default');
 
 if (config.deployCmd && config.deployCmd.match(/^#/)) {
   // delete deployment command with `#` at beginning
