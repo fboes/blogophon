@@ -70,8 +70,7 @@ var Post = function (filename, markdown, meta) {
     },
     galleryHtml: function(html) {
       return html
-        .replace(/(<img[^>]+src="([^"]+)(-\d+x\d+)?"[^>]*>)/g,'<a href="$2">$1</a>')
-        .replace(/(<a href="[^"]+)\-\d+x\d+(\.(jpg|png|gif)">)/g,'$1$2')
+        .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g,'<a href="$2$3" class="image">$1</a>')
       ;
     },
     makeSafeHtml: function(html) {

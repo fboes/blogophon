@@ -43,11 +43,15 @@
    */
   String.prototype.asciify = function () {
     return this.toLowerCase()
-      .replace(/[äáàâåæ]/g,'a')
-      .replace(/[öóòôø]/g,'o')
-      .replace(/[üúùû]/g,'u')
+      .replace(/[äåæ]/g,'ae')
+      .replace(/[áàâ]/g,'a')
+      .replace(/[öø]/g,'oe')
+      .replace(/[óòô]/g,'o')
+      .replace(/[ü]/g,'ue')
+      .replace(/[úùû]/g,'u')
       .replace(/[ëéèê]/g,'o')
       .replace(/[ñ]/g,'n')
+      .replace(/[ß]/g,'ss')
       .replace(/[^a-z0-9\-]/g,'-')
     ;
   };

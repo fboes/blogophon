@@ -11,7 +11,7 @@ Gulp
 Cronjob
 -------
 
-As the Blogophon will ignore articles with a publising date set into the future, you may want to build some mechanism for generating your pages automatically. Ideally this will generate all pages anew.
+As the Blogophon will ignore articles with a publising date set into the future, you may want to build some mechanism for generating your unpublished pages automatically. Here is how:
 
 Get the path to your `generate.js` by typing `pwd`. Then edit your Crontab: `crontab -e`
 
@@ -23,3 +23,13 @@ Add one of these lines:
 ```
 
 For more exotic execution times check http://crontab-generator.org/. And keep in mind to check the timezone your crontab will be executed in.
+
+Article deployment
+------------------
+
+If you like to keep your editing and your HTML files in separate directory or a separate machine, the `deployCmd` in `user/config.json` may come in handy. Here are some examples you might find useful:
+
+```bash
+echo \"Publishing...\" && rsync -az --delete htdocs HOST:PATH_TO_YOUR_BLOG && echo \"Published\" # Sync only published HTML files, keep Blogophon from live server
+echo \"Publishing...\" && rsync -az --delete user HOST:PATH_TO_YOUR_BLOG && echo \"Published\"   # Sync only Markdown files, let publishing be done by Cronjob or Daemon
+```

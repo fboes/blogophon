@@ -1,8 +1,7 @@
-AddType text/xml rss
-AddType text/xml xml
-AddType text/plain md
+AddType text/xml xml rss atom
+AddType text/plain .md
 AddType application/json .json
-AddCharset utf-8 .html .css .js .rss .xml .md .json
+AddCharset utf-8 .html .css .js .rss .atom .xml .md .json .txt
 ErrorDocument 404 /404.html
 ErrorDocument 410 /404.html
 DirectoryIndex index.html
