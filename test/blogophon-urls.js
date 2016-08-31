@@ -23,13 +23,13 @@ exports.testSpecialTransformation = function(test) {
   'use strict';
   test.expect(6);
 
-  test.strictEqual(BlogophonUrls.getUrlOfPost('Ich-ünd-Dü.md'), '/posts/ich-und-du/');
-  test.ok(BlogophonUrls.getAbsoluteUrlOfPost('Ich-ünd-Dü.md').match(/^\S+\/posts\/ich-und-du\/$/));
-  test.ok(BlogophonUrls.getFileOfPost('Ich-ünd-Dü.md').match(/^\S+\/posts\/ich-und-du\/index\.html$/));
+  test.strictEqual(BlogophonUrls.getUrlOfPost('Ich-ünd-Dü.md'), '/posts/ich-uend-due/');
+  test.ok(BlogophonUrls.getAbsoluteUrlOfPost('Ich-ünd-Dü.md').match(/^\S+\/posts\/ich-uend-due\/$/));
+  test.ok(BlogophonUrls.getFileOfPost('Ich-ünd-Dü.md').match(/^\S+\/posts\/ich-uend-due\/index\.html$/));
 
-  test.strictEqual(BlogophonUrls.getUrlOfTagged('Ich bin ein merkwürdiges Tag'), '/tagged/ich-bin-ein-merkwurdiges-tag/');
-  test.ok(BlogophonUrls.getAbsoluteUrlOfTagged('Ich bin ein merkwürdiges Tag').match(/^\S+\/tagged\/ich-bin-ein-merkwurdiges-tag\/$/));
-  test.ok(BlogophonUrls.getFileOfTagged('Ich bin ein merkwürdiges Tag').match(/^\S+\/tagged\/ich-bin-ein-merkwurdiges-tag\/index\.html$/));
+  test.strictEqual(BlogophonUrls.getUrlOfTagged('Ich bin ein merkwürdiges Tag'), '/tagged/ich-bin-ein-merkwuerdiges-tag/');
+  test.ok(BlogophonUrls.getAbsoluteUrlOfTagged('Ich bin ein merkwürdiges Tag').match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
+  test.ok(BlogophonUrls.getFileOfTagged('Ich bin ein merkwürdiges Tag').match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/index\.html$/));
 
   test.done();
 };

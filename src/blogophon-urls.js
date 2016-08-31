@@ -1,46 +1,101 @@
 'use strict';
 
+var config         = require('./config');
+var toolshed       = require('./js-toolshed/src/js-toolshed');
+
 /**
- * Represents all posts
+ * Converts filenames into URLs, absolute URLs, filenames etc.
  * @constructor
  */
 var BlogophonUrls = function () {
-  var config         = require('./config');
-  var toolshed       = require('./js-toolshed/src/js-toolshed');
-
   var exports = {
+    /**
+     * Convert filename of post into URL of post.
+     * @param  {String} filename [description]
+     * @return {String}          [description]
+     */
     getUrlOfPost: function (filename) {
       return !filename ? null : config.basePath + 'posts/' + filename.replace(/\.[^\.]+$/,'').replace(/.+\//,'').asciify() + '/';
     },
+    /**
+     * Convert filename of index file into URL of index file.
+     * @param  {String} filename [description]
+     * @return {String}          [description]
+     */
     getUrlOfIndex: function (filename) {
       return !filename ? null : config.basePath + filename.trim().toLowerCase().replace(/\s/g, '').replace(/^index\.html$/, '');
     },
+    /**
+     * Convert tag into URL of tag.
+     * @param  {String} tag [description]
+     * @return {String}     [description]
+     */
     getUrlOfTagged: function (tag) {
       return !tag ? null : config.basePath + 'tagged/' + tag.asciify() + '/';
     },
+    /**
+     * Converts any URL into an absolute URL.
+     * @param  {String} url [description]
+     * @return {String}     [description]
+     */
     getAbsoluteUrlOfUrl: function (url) {
       return !url ? null : config.baseUrl + url;
     },
+    /**
+     * Converts URL into corresponding filename.
+     * @param  {String} url [description]
+     * @return {String}     [description]
+     */
     getFileOfUrl: function (url) {
       return !url ? null : process.cwd() + '/' + config.directories.htdocs + url.replace(/(\/)$/, '$1index.html');
     },
-    getAbsoluteUrlOfPost: function(x) {
-      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfPost(x));
+    /**
+     * Convert filename of post into its absolute URL.
+     * @param  {String} filename [description]
+     * @return {String}          [description]
+     */
+    getAbsoluteUrlOfPost: function(filename) {
+      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfPost(filename));
     },
-    getFileOfPost: function(x) {
-      return exports.getFileOfUrl(exports.getUrlOfPost(x));
+    /**
+     * Converts post URL into filename.
+     * @param  {String} filename [description]
+     * @return {String}          [description]
+     */
+    getFileOfPost: function(filename) {
+      return exports.getFileOfUrl(exports.getUrlOfPost(filename));
     },
-    getAbsoluteUrlOfIndex  : function(x) {
-      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfIndex(x));
+    /**
+     * Convert filename of index into its absolute URL.
+     * @param  {String} filename [description]
+     * @return {String}          [description]
+     */
+    getAbsoluteUrlOfIndex  : function(filename) {
+      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfIndex(filename));
     },
-    getFileOfIndex: function(x) {
-      return exports.getFileOfUrl(exports.getUrlOfIndex(x));
+    /**
+     * Converts index URL into filename.
+     * @param  {String} url [description]
+     * @return {String}     [description]
+     */
+    getFileOfIndex: function(url) {
+      return exports.getFileOfUrl(exports.getUrlOfIndex(url));
     },
-    getAbsoluteUrlOfTagged: function(x) {
-      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfTagged(x));
+    /**
+     * Convert filename of tag into its absolute URL.
+     * @param  {String} tag [description]
+     * @return {String}     [description]
+     */
+    getAbsoluteUrlOfTagged: function(tag) {
+      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfTagged(tag));
     },
-    getFileOfTagged: function(x) {
-      return exports.getFileOfUrl(exports.getUrlOfTagged(x));
+    /**
+     * Converts tag URL into filename.
+     * @param  {String} url [description]
+     * @return {String}     [description]
+     */
+    getFileOfTagged: function(url) {
+      return exports.getFileOfUrl(exports.getUrlOfTagged(url));
     }
   };
 

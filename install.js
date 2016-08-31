@@ -2,8 +2,8 @@
 
 'use strict';
 
-// var pkg            = JSON.parse(fs.readFileSync('./package.json'));
 var fs             = require('fs');
+var shell          = require('shelljs');
 var inquirer       = require('inquirer');
 var defaultValues  = require('./src/config');
 var configFilename = defaultValues.directories.user + '/config.json';
@@ -19,7 +19,7 @@ for (var i = 2; i < process.argv.length; i++) {
   switch (process.argv[i]) {
     case '--only-new':
       if (! defaultValues.notInitialized) {
-        console.log('`config.json` already present, start withour `--only-new` to overwrite configuration.');
+        console.log('`config.json` already present, start without `--only-new` to overwrite configuration.');
         process.exit(0);
       }
       break;
@@ -224,7 +224,7 @@ inquirer.prompt(questions).then(
 
     shell.mkdir('-p', defaultValues.directories.data);
     //console.log(answers);
-    fs.writeFile(configFilename, JSON.stringify(answers), function(err) {
+    fs.writeFile(configFilename, JSON.stringify(answers, undefined, 2), function(err) {
       if (err) {
         console.error(configFilename + ' could not be written' ); process.exit(1);
       } else {
@@ -239,5 +239,5 @@ inquirer.prompt(questions).then(
       }
     });
   },
-  function(err) { console.log(err); process.exit(1); }
+  function(err) { console.error(err); process.exit(1); }
 );

@@ -5,14 +5,21 @@ var markdownConvert = require('marked');
 var dateFormat      = require('dateformat');
 var hash            = require('object-hash');
 var toolshed        = require('./js-toolshed/src/js-toolshed');
-var BlogophonUrls   = require('./blogophon-urls')();
+var blogophonUrls   = require('./blogophon-urls')();
 
 /**
- * Represents a single post
+ * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
 var Post = function (filename, markdown, meta) {
+
   var internal = {
+    /**
+     * [markyMark description]
+     * @param  {[type]} html   [description]
+     * @param  {[type]} relUrl [description]
+     * @return {[type]}        [description]
+     */
     markyMark: function (html, relUrl) {
       if (relUrl) {
         html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
@@ -53,7 +60,7 @@ var Post = function (filename, markdown, meta) {
         .replace(/(<img)/,'$1 itemprop="image"')
         .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 height="$2" width="$3"')
         // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
-        .replace(/(href=")([a-zA-Z0-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
+        .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
         .replace(
           /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
           '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1">$2</iframe></div>'
@@ -68,17 +75,32 @@ var Post = function (filename, markdown, meta) {
       ;
       //       '<div class="video-player youtube"><a href="https://www.youtube.com/embed/$2?enablejsapi=1"><img class="preview" src="http://img.youtube.com/vi/$2/sddefault.jpg" alt="" /></a><!--iframe allowfullscreen="true" src="https://www.youtube.com/embed/$2?enablejsapi=1"></iframe--></div>'
     },
+    /**
+     * [galleryHtml description]
+     * @param  {[type]} html [description]
+     * @return {[type]}      [description]
+     */
     galleryHtml: function(html) {
       return html
         .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g,'<a href="$2$3" class="image">$1</a>')
       ;
     },
+    /**
+     * [makeSafeHtml description]
+     * @param  {[type]} html [description]
+     * @return {[type]}      [description]
+     */
     makeSafeHtml: function(html) {
       return html
         .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
         .replace(/(<\/?)iframe/g,'$1a')
       ;
     },
+    /**
+     * [ampifyHtml description]
+     * @param  {[type]} html [description]
+     * @return {[type]}      [description]
+     */
     ampifyHtml: function(html) {
       return html
         .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
@@ -102,9 +124,9 @@ var Post = function (filename, markdown, meta) {
     throw new Error('meta.Date not supplied in post');
   }
 
-  meta.Url         = BlogophonUrls.getUrlOfPost(filename);
-  meta.AbsoluteUrl = BlogophonUrls.getAbsoluteUrlOfPost(filename);
-  meta.Filename    = BlogophonUrls.getFileOfPost(filename);
+  meta.Url         = blogophonUrls.getUrlOfPost(filename);
+  meta.AbsoluteUrl = blogophonUrls.getAbsoluteUrlOfPost(filename);
+  meta.Filename    = blogophonUrls.getFileOfPost(filename);
   meta.localeDate  = dateFormat(meta.Date,'dd.mm.yyyy');
   meta.isoDate     = dateFormat(meta.Date,'isoDateTime').replace(/(\d{2})(\d{2})$/,'$1:$2');
   meta.rfcDate     = dateFormat(meta.Date,'ddd, dd mmm yyyy hh:MM:ss o'); // Wed, 02 Oct 2002 15:00:00 +0200
@@ -121,7 +143,7 @@ var Post = function (filename, markdown, meta) {
       return {
         title: tag,
         id: String(tag).asciify(),
-        url: BlogophonUrls.getUrlOfTagged(tag),
+        url: blogophonUrls.getUrlOfTagged(tag),
       };
     });
   }
@@ -187,12 +209,24 @@ var Post = function (filename, markdown, meta) {
     htmlTeaser: htmlTeaser,
     safeHtml: internal.makeSafeHtml(html),
     safeHtmlTeaser: internal.makeSafeHtml(htmlTeaser),
+    /**
+     * [ampHtml description]
+     * @return {[type]} [description]
+     */
     ampHtml: function() {
       return internal.ampifyHtml(html);
     },
+    /**
+     * [ampHtmlTeaser description]
+     * @return {[type]} [description]
+     */
     ampHtmlTeaser: function() {
       return internal.ampifyHtml(htmlTeaser);
     },
+    /**
+     * [toString description]
+     * @return {[type]} [description]
+     */
     toString: function() {
       return hash([markdown,share,meta,html,htmlTeaser]);
     }

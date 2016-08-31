@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Represents all posts
+ * Represents all posts.
  * @constructor
  */
 var Index = function () {
@@ -11,6 +11,10 @@ var Index = function () {
   var pubDate  = new Date();
 
   var internal = {
+    /**
+     * [sortIndex description]
+     * @return {[type]} [description]
+     */
     sortIndex: function() {
       index.sort(function(a,b){
         if (a.meta.timestamp < b.meta.timestamp) {
@@ -22,7 +26,13 @@ var Index = function () {
       });
       isSorted = true;
     },
-
+    /**
+     * [getPageName description]
+     * @param  {[type]} curPage [description]
+     * @param  {[type]} maxPage [description]
+     * @param  {[type]} reverse [description]
+     * @return {[type]}         [description]
+     */
     getPageName: function (curPage, maxPage, reverse) {
       curPage ++;
       if (curPage <= 0 || curPage > maxPage) {
@@ -36,16 +46,30 @@ var Index = function () {
   };
 
   var exports = {
+    /**
+     * [clear description]
+     * @return {[type]} [description]
+     */
     clear: function () {
       isSorted = false;
       index = [];
     },
 
+    /**
+     * [push description]
+     * @param  {[type]} post [description]
+     * @return {[type]}      [description]
+     */
     push: function (post) {
       isSorted = false;
       index.push(post);
     },
 
+    /**
+     * [pushArray description]
+     * @param  {[type]} posts [description]
+     * @return {[type]}       [description]
+     */
     pushArray: function (posts) {
       isSorted = false;
       index = posts;
@@ -74,6 +98,10 @@ var Index = function () {
       return count;
     },
 
+    /**
+     * [makeNextPrev description]
+     * @return {[type]} [description]
+     */
     makeNextPrev: function () {
       if (!isSorted) {
         internal.sortIndex();

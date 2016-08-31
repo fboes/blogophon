@@ -1,18 +1,18 @@
 'use strict';
 
-var config         = require('./config');
-var Promise        = require('promise/lib/es6-extensions');
-var fs             = require('fs');
-var readline       = require("readline");
-var yamljs         = require('yamljs');
-var util           = require('util');
-var Post           = require('./post');
-
 /**
- * Represents a single blog item.
+ * This class reads Markdown files into an object.
  * @constructor
  */
 var PostReader = function ( file ) {
+  var config         = require('./config');
+  var Promise        = require('promise/lib/es6-extensions');
+  var fs             = require('fs');
+  var readline       = require("readline");
+  var yamljs         = require('yamljs');
+  var util           = require('util');
+  var post           = require('./post');
+
   var readYaml = true,
     yamlBuffer = '',
     descriptionBuffer = '',
@@ -77,7 +77,7 @@ var PostReader = function ( file ) {
         }
 
         //console.log(exports);
-        resolve( Post(file, exports.markdown, exports.meta) );
+        resolve( post(file, exports.markdown, exports.meta) );
       });
     }
   );

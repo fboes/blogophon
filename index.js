@@ -1,5 +1,4 @@
 #!/usr/bin/env node
 'use strict';
 
-var BlogophonConsole = require('./src/blogophon-console')();
-BlogophonConsole.init();
+var blogophonConsole = require('./src/blogophon-console')();

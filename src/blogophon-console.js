@@ -1,21 +1,20 @@
 'use strict';
 
+var config       = require('./config');
+var toolshed     = require('./js-toolshed/src/js-toolshed');
+var inquirer     = require('inquirer');
+var glob         = require('glob');
+var fs           = require('fs-extra');
+var shell        = require('shelljs');
+var Mustache     = require('mustache');
+var chalk        = require('chalk');
+var generator    = require('./generator');
+
 /**
- * Represents all posts
+ * Represents the Inquirer dialogue with which to edit articles.
  * @constructor
  */
 var BlogophonConsole = function () {
-  var config       = require('./config');
-  var toolshed     = require('./js-toolshed/src/js-toolshed');
-  var inquirer     = require('inquirer');
-  var glob         = require('glob');
-  var fs           = require('fs-extra');
-  var shell        = require('shelljs');
-  var Mustache     = require('mustache');
-  var chalk        = require('chalk');
-
-  var Generator    = require('./generator');
-
   var files        = [];
   var choicesStr   = [
     'Create new article',
@@ -30,7 +29,8 @@ var BlogophonConsole = function () {
 
   var internal = {
     /**
-     * [makeChoices description]
+     * Get all Markdown files as a simple array
+     * @return {Array} [description]
      */
     makeChoices: function () {
       files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
@@ -44,9 +44,19 @@ var BlogophonConsole = function () {
       choices.push(new inquirer.Separator(), choicesStr[5]);
       return choices;
     },
+    /**
+     * Convert title to Markdown filename
+     * @param  {String} title [description]
+     * @return {String}       [description]
+     */
     filenameFromTitle: function (title) {
       return config.directories.data + '/' + internal.shortfilenameFromTitle(title);
     },
+    /**
+     * Remove stop words from filename
+     * @param  {String} title [description]
+     * @return {String}       [description]
+     */
     shortfilenameFromTitle: function (title) {
       return title
         .trim()
@@ -58,6 +68,11 @@ var BlogophonConsole = function () {
         .replace(/\-(md~?)$/,'.$1')
       ;
     },
+    /**
+     * Convert Markdown filename into corresponding directory name (e.g. for images)
+     * @param  {String} filename [description]
+     * @return {String}          [description]
+     */
     dirnameFromFilename: function (filename) {
       return filename.replace(/\.md~?$/,'');
     }
@@ -65,7 +80,7 @@ var BlogophonConsole = function () {
 
   var exports = {
     /**
-     * [createArticleDialogue description]
+     * This is the Inquirer dialogue for creating a new articles. Will call exports.init() on finish.
      */
     createArticleDialogue: function() {
       var questions    = [
@@ -167,12 +182,12 @@ var BlogophonConsole = function () {
             }
           });
         },
-        function(err) { console.log(err); }
+        function(err) { console.error(err); }
       );
     },
 
     /**
-     * [editArticleDialogue description]
+     * This is the Inquirer dialogue for editing an existing article. Will call exports.init() on finish.
      */
     editArticleDialogue: function() {
       var questions = [
@@ -196,8 +211,7 @@ var BlogophonConsole = function () {
     },
 
     /**
-     * [renameArticleDialogue description]
-     * @return {[type]} [description]
+     * This is the Inquirer dialogue for renaming an existing article. Will call exports.init() on finish.
      */
     renameArticleDialogue: function() {
       var questions = [
@@ -214,7 +228,6 @@ var BlogophonConsole = function () {
             return internal.shortfilenameFromTitle(v);
           },
           validate: function (v) {
-            console.log(v);
             return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
           }
         }
@@ -225,7 +238,7 @@ var BlogophonConsole = function () {
             var processed = 0, maxProcessed = 2;
             var checkProcessed = function(err) {
               if (err) {
-                console.log(err);
+                console.error(err);
               }
               if (++processed === maxProcessed) {
                 console.log(answers.file + " files moved to "+answers.fileNew+", you may want to generate & publish all index pages");
@@ -249,7 +262,7 @@ var BlogophonConsole = function () {
     },
 
     /**
-     * [deleteArticleDialogue description]
+     * This is the Inquirer dialogue for deleting an existing article. Will call exports.init() on finish.
      */
     deleteArticleDialogue: function() {
       var questions = [
@@ -288,7 +301,7 @@ var BlogophonConsole = function () {
     },
 
     /**
-     * [generateDialogue description]
+     * This is the Inquirer dialogue for generating all HTML files. Will call exports.init() on finish.
      */
     generateDialogue: function() {
       var questions = [
@@ -311,14 +324,14 @@ var BlogophonConsole = function () {
         .prompt(questions)
         .then(
           function (answers) {
-            Generator
+            generator
               .getArticles()
               .then(function () {
-                Generator
+                generator
                   .buildAll(!answers.noforce)
                   .then(function() {
                     if(answers.deploy) {
-                      Generator.deploy();
+                      generator.deploy();
                     }
                     exports.init();
                   })
@@ -333,7 +346,7 @@ var BlogophonConsole = function () {
     },
 
     /**
-     * Show main menu
+     * This is the Inquirer dialogue for showing the main menu. This will be called in a loop until `Exit` is selected.
      */
     init: function() {
       var questions = [
@@ -375,6 +388,7 @@ var BlogophonConsole = function () {
     }
   };
 
+  exports.init();
   return exports;
 };
 

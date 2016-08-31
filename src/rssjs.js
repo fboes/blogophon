@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Represents all posts
+ * Returns RSS as a javascript object.
  * @constructor
  */
 var RssJs = function (index, pubDate) {

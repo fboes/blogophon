@@ -16,7 +16,7 @@ var toolshed       = require('./js-toolshed/src/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls')();
 
 /**
- * Generator used for creating the blog
+ * Generator used for creating the blog.
  * @constructor
  */
 var Generator = {};
@@ -69,7 +69,7 @@ Generator.buildAllArticles = function( force ) {
   ;
   if (force === undefined || !force) {
     try {
-      hashes = JSON.parse(fs.readFileSync('./user/hashes.json'));
+      hashes = require('../user/hashes.json');
     } catch (e) {
       hashes = {};
     }
@@ -92,7 +92,7 @@ Generator.buildAllArticles = function( force ) {
       Promise
         .all(promises)
         .then(function() {
-          fs.writeFile('./user/hashes.json', JSON.stringify(hashes));
+          fs.writeFile('./user/hashes.json', JSON.stringify(hashes, undefined, 2));
           console.log("Created " + (promises.length - skipped) + " articles, skipped " +  skipped + " articles");
           resolve( generatedArticles );
         })
@@ -203,9 +203,9 @@ Generator.buildSpecialPages = function () {
         config: config
       }), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(RssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'))), checkProcessed);
+      fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(RssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o')), undefined, 2), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(Manifest), checkProcessed);
+      fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(Manifest, undefined, 2), checkProcessed);
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(Mustache.templates.atom, {
         index: index.getPosts(10),

@@ -1,11 +1,11 @@
 'use strict';
 
+var config = require('./config');
+
 /**
  * Represents all posts
  * @constructor
  */
-var config = require('./config');
-
 var Manifest = {
   lang: config.language,
   name: config.name,

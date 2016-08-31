@@ -1,11 +1,14 @@
 'use strict';
 
 var fs             = require('fs');
-var config         = {};
-var pkg            = JSON.parse(fs.readFileSync('./package.json'));
+var pkg            = require('../package.json');
 
+/**
+ * Returns an object with all configuration settings found in `package.json` and `config.json`.
+ */
+var config         = {};
 try {
-  config = JSON.parse(fs.readFileSync('./user/config.json'));
+  config = require('../user/config.json');
 } catch (e) {
   var os = require("os");
   config = {

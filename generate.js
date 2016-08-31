@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-var Generator = require('./src/generator');
+var generator = require('./src/generator');
 
 var deploy = false;
 var force  = false;
@@ -18,14 +18,14 @@ for (var i = 2; i < process.argv.length; i++) {
   }
 }
 
-Generator
+generator
   .getArticles()
   .then(function () {
-    Generator
+    generator
       .buildAll(force)
       .then(function() {
         if(deploy) {
-          Generator.deploy();
+          generator.deploy();
         }
       })
       .catch(function(err) {

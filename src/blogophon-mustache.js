@@ -1,6 +1,10 @@
 'use strict';
 
+/**
+ * This adds additonal functionality to Mustache.
+ */
 var Mustache       = require('mustache');
+
 var config         = require('./config');
 var fs             = require('fs');
 
@@ -26,6 +30,11 @@ Object.keys(Mustache.templates).map(function (t) {
   Mustache.parse(t);
 });
 
+/**
+ * New HTML escaping
+ * @param  {String} string [description]
+ * @return {String}        [description]
+ */
 Mustache.escape = function (string) {
   var entityMap = {
     '&': '&amp;',
