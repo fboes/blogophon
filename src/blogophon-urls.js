@@ -34,6 +34,14 @@ var BlogophonUrls = function () {
       return !tag ? null : config.basePath + 'tagged/' + tag.asciify() + '/';
     },
     /**
+     * Convert author name into URL of author.
+     * @param  {String} name [description]
+     * @return {String}      [description]
+     */
+    getUrlOfAuthor: function (name) {
+      return !name ? null : config.basePath + 'authored-by/' + name.asciify() + '/';;
+    },
+    /**
      * Converts any URL into an absolute URL.
      * @param  {String} url [description]
      * @return {String}     [description]
@@ -75,14 +83,14 @@ var BlogophonUrls = function () {
     },
     /**
      * Converts index URL into filename.
-     * @param  {String} url [description]
-     * @return {String}     [description]
+     * @param  {String} filename [description]
+     * @return {String}          [description]
      */
-    getFileOfIndex: function(url) {
-      return exports.getFileOfUrl(exports.getUrlOfIndex(url));
+    getFileOfIndex: function(filename) {
+      return exports.getFileOfUrl(exports.getUrlOfIndex(filename));
     },
     /**
-     * Convert filename of tag into its absolute URL.
+     * Convert tag into its absolute URL.
      * @param  {String} tag [description]
      * @return {String}     [description]
      */
@@ -90,12 +98,28 @@ var BlogophonUrls = function () {
       return exports.getAbsoluteUrlOfUrl(exports.getUrlOfTagged(tag));
     },
     /**
-     * Converts tag URL into filename.
-     * @param  {String} url [description]
+     * Converts tag into filename.
+     * @param  {String} tag [description]
      * @return {String}     [description]
      */
-    getFileOfTagged: function(url) {
-      return exports.getFileOfUrl(exports.getUrlOfTagged(url));
+    getFileOfTagged: function(tag) {
+      return exports.getFileOfUrl(exports.getUrlOfTagged(tag));
+    },
+    /**
+     * Convert author name into his/her absolute URL.
+     * @param  {String} name [description]
+     * @return {String}      [description]
+     */
+    getAbsoluteUrlOfAuthor: function(name) {
+      return exports.getAbsoluteUrlOfUrl(exports.getUrlOfAuthor(name));
+    },
+    /**
+     * Converts author name into filename.
+     * @param  {String} name [description]
+     * @return {String}      [description]
+     */
+    getFileOfAuthor: function(name) {
+      return exports.getFileOfUrl(exports.getUrlOfAuthor(name));
     }
   };
 

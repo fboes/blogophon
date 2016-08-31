@@ -14,6 +14,7 @@ var Manifest       = require('./manifest');
 var translations   = require('./translations');
 var toolshed       = require('./js-toolshed/src/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls')();
+var path           = require('path');
 
 /**
  * Generator used for creating the blog.
@@ -138,13 +139,20 @@ Generator.buildSpecialPages = function () {
     i,
     allPosts = index.getPosts(),
     tags = index.getTags(),
+    authors = index.getAuthors(),
     processed = 0,
-    maxProcessed = 7 + pagedPosts.length + Object.keys(tags).length
+    maxProcessed = 8 + pagedPosts.length + Object.keys(tags).length + Object.keys(authors).length
   ;
   var tagPages = Object.keys(tags).sort().map(function (key) {
     return {
       title: tags[key].title,
       url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
+    };
+  });
+  var authorPages = Object.keys(authors).sort().map(function (name) {
+    return {
+      title: name,
+      url  : BlogophonUrls.getUrlOfAuthor(name)
     };
   });
 
@@ -175,7 +183,8 @@ Generator.buildSpecialPages = function () {
         }
       });
 
-      fs.remove(config.directories.htdocs + '/tagged/*', function (err) {
+      fs.remove(config.directories.htdocs + '/tagged', function (err) {
+        shell.mkdir('-p', config.directories.htdocs + '/tagged');
         Object.keys(tags).map(function (key) {
           shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
           tags[key].config = config;
@@ -188,6 +197,26 @@ Generator.buildSpecialPages = function () {
 
         fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
           index: tagPages,
+          config: config
+        }, Mustache.partials), checkProcessed);
+      });
+
+      fs.remove(config.directories.htdocs + '/authored-by', function (err) {
+        shell.mkdir('-p', config.directories.htdocs + '/authored-by');
+        Object.keys(authors).map(function (name) {
+          shell.mkdir('-p', path.dirname(BlogophonUrls.getFileOfAuthor(name)));
+          fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
+            config: config,
+            index: authorPages[name],
+            meta:  {
+              title      : Generator.strings.author.sprintf(name),
+              absoluteUrl: BlogophonUrls.getAbsoluteUrlOfAuthor(name)
+            }
+          }, Mustache.partials), checkProcessed);
+        });
+
+        fs.writeFile( BlogophonUrls.getFileOfIndex('authored-by/index.html'), Mustache.render(Mustache.templates.authors, {
+          index: authorPages,
           config: config
         }, Mustache.partials), checkProcessed);
       });

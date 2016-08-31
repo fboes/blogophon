@@ -13,6 +13,7 @@ Mustache.templates = {
   post:    fs.readFileSync(Mustache.themePath + '/post.html', 'utf8'),
   index:   fs.readFileSync(Mustache.themePath + '/index.html', 'utf8'),
   tags:    fs.readFileSync(Mustache.themePath + '/tags.html', 'utf8'),
+  authors: fs.readFileSync(Mustache.themePath + '/authors.html', 'utf8'),
   four:    fs.readFileSync(Mustache.themePath + '/404.html', 'utf8'),
   rss:     fs.readFileSync(Mustache.themePath + '/rss.xml', 'utf8'),
   atom:    fs.readFileSync(Mustache.themePath + '/atom.xml', 'utf8'),

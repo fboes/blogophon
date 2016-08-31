@@ -2,7 +2,7 @@ var BlogophonUrls = require('../src/blogophon-urls')();
 
 exports.testBasicTransformation = function(test) {
   'use strict';
-  test.expect(9);
+  test.expect(9+3);
 
   test.strictEqual(BlogophonUrls.getUrlOfPost('ich-und-du.md'), '/posts/ich-und-du/');
   test.ok(BlogophonUrls.getAbsoluteUrlOfPost('ich-und-du.md').match(/^\S+\/posts\/ich-und-du\/$/));
@@ -15,6 +15,10 @@ exports.testBasicTransformation = function(test) {
   test.strictEqual(BlogophonUrls.getUrlOfTagged('Tag'), '/tagged/tag/');
   test.ok(BlogophonUrls.getAbsoluteUrlOfTagged('Tag').match(/^\S+\/tagged\/tag\/$/));
   test.ok(BlogophonUrls.getFileOfTagged('Tag').match(/^\S+\/tagged\/tag\/index\.html$/));
+
+  test.strictEqual(BlogophonUrls.getUrlOfAuthor('Paul Wischwedel'), '/authored-by/paul-wischwedel/');
+  test.ok(BlogophonUrls.getAbsoluteUrlOfAuthor('Paul Wischwedel').match(/^\S+\/authored\-by\/paul\-wischwedel\/$/));
+  test.ok(BlogophonUrls.getFileOfAuthor('Paul Wischwedel').match(/^\S+\/authored\-by\/paul\-wischwedel\/index\.html$/));
 
   test.done();
 };
