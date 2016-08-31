@@ -92,9 +92,13 @@ Generator.buildAllArticles = function( force ) {
       Promise
         .all(promises)
         .then(function() {
-          fs.writeFile('./user/hashes.json', JSON.stringify(hashes, undefined, 2));
-          console.log("Created " + (promises.length - skipped) + " articles, skipped " +  skipped + " articles");
-          resolve( generatedArticles );
+          fs.writeFileSync('./user/hashes.json', JSON.stringify(hashes, undefined, 2));
+          console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
+          if (generatedArticles.length > 0) {
+            resolve(generatedArticles);
+          } else {
+            reject ('No articles needed to be generated');
+          }
         })
         .catch(reject)
       ;
