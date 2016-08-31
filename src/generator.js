@@ -94,11 +94,7 @@ Generator.buildAllArticles = function( force ) {
         .then(function() {
           fs.writeFileSync('./user/hashes.json', JSON.stringify(hashes, undefined, 2));
           console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
-          if (generatedArticles.length > 0) {
-            resolve(generatedArticles);
-          } else {
-            reject ('No articles needed to be generated');
-          }
+          resolve(generatedArticles);
         })
         .catch(reject)
       ;
@@ -228,25 +224,6 @@ Generator.buildSpecialPages = function () {
 };
 
 /**
- * Build all articles and special pages.
- * @return {Promise} [description]
- */
-Generator.buildAllPages = function ( force ) {
-  return new Promise (
-    function(resolve, reject) {
-      Promise
-        .all([
-          Generator.buildAllArticles(force),
-          Generator.buildSpecialPages()
-        ])
-        .then(resolve)
-        .catch(reject)
-      ;
-    }
-  );
-};
-
-/**
  * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
  * @return {Promise} with first parameter of `resolve` being the number of files converted.
  */
@@ -305,7 +282,9 @@ Generator.buildAll = function ( force ) {
           var promises = generatedArticles.map(function( article ) {
             return Generator.copyImages( article );
           });
-          promises.push(Generator.buildSpecialPages());
+          if (generatedArticles.length) {
+            promises.push(Generator.buildSpecialPages());
+          }
           Promise
             .all(promises)
             .then(resolve)
