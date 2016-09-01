@@ -79,7 +79,7 @@ Generator.buildAllArticles = function( force ) {
     function(resolve, reject) {
       // Making promises
       var promises = allPosts.map(function(post) {
-        var currentHash = String(post);
+        var currentHash = post.hash;
         if (hashes[post.meta.Url] !== undefined && hashes[post.meta.Url] === currentHash) {
           skipped++;
         } else {

@@ -202,6 +202,7 @@ var Post = function (filename, markdown, meta) {
     whatsapp: 'whatsapp://send?text=' +encodeURIComponent(meta.Title + ' [' + meta.AbsoluteUrl + ']'),
     mail: "mailto:?subject="+encodeURIComponent('Email von ' + config.name)+"&body="+encodeURIComponent(meta.title+"\n\n"+meta.AbsoluteUrl)+"."
   };
+  var hashOfData = crypto.createHash('md5').update(JSON.stringify([markdown,share,meta,html,htmlTeaser])).digest('hex');
 
   return {
     markdown: markdown,
@@ -211,6 +212,7 @@ var Post = function (filename, markdown, meta) {
     htmlTeaser: htmlTeaser,
     safeHtml: internal.makeSafeHtml(html),
     safeHtmlTeaser: internal.makeSafeHtml(htmlTeaser),
+    hash:hashOfData,
     /**
      * [ampHtml description]
      * @return {[type]} [description]
@@ -230,7 +232,7 @@ var Post = function (filename, markdown, meta) {
      * @return {[type]} [description]
      */
     toString: function() {
-      return crypto.createHash('md5').update(JSON.stringify([markdown,share,meta,html,htmlTeaser])).digest('hex');
+      return hashOfData;
     }
   };
 };
