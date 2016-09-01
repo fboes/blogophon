@@ -224,6 +224,12 @@ inquirer.prompt(questions).then(
 
     shell.mkdir('-p', defaultValues.directories.data);
     //console.log(answers);
+
+    ['/css', '/js'].forEach(function(link) {
+      fs.unlink(defaultValues.directories.htdocs + link, function() {
+        fs.linkSync(defaultValues.directories.theme + '/' + answers.theme + link,defaultValues.directories.htdocs + link);
+      });
+    });
     fs.writeFile(configFilename, JSON.stringify(answers, undefined, 2), function(err) {
       if (err) {
         console.error(configFilename + ' could not be written' ); process.exit(1);
