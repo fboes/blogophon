@@ -9,7 +9,11 @@ DirectoryIndex index.html
 # General Blogophon redirects
 RedirectMatch 301 ^/htdocs/(.*)$ /$1
 RedirectMatch 301 ^/posts/?$ /
+
+# Fixes for older versions
 RedirectMatch 301 ^(/posts/.+?)\-/$ $1/
+RedirectMatch 301 ([^\/]+)\.md$ /posts/$1/
+Redirect Gone ^/posts/ich-und-du/
 
 # Grav CMS redirects, including poor man's lowercasing
 RedirectMatch 301 ^/page:(.*)$ /
@@ -20,4 +24,3 @@ RedirectMatch 301 ^/tag:L(.*)$ /tagged/l$1/
 RedirectMatch 301 ^/tag:N(.*)$ /tagged/n$1/
 RedirectMatch 301 ^/tag:R(.*)$ /tagged/r$1/
 RedirectMatch 301 ^/tag:(.*)$ /
-Redirect Gone ^/posts/ich-und-du/
