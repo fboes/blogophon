@@ -70,10 +70,11 @@ var PostReader = function ( file ) {
           exports.meta.Description = descriptionBuffer;
           exports.meta.noLinkNeeded = true;
         }
-        if (exports.meta.Date) {
-          exports.meta.Date = exports.meta.Date;
-        } else if (exports.meta.Date === undefined && fileStat.mtime !== undefined) {
-          exports.meta.Date = fileStat.mtime;
+        if (fileStat.mtime !== undefined) {
+          exports.meta.DateModified = fileStat.mtime;
+        }
+        if (exports.meta.Date === undefined && exports.meta.DateModified) {
+          exports.meta.Date = exports.meta.DateModified;
         }
 
         //console.log(exports);

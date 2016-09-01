@@ -17,9 +17,9 @@ var Index = function () {
      */
     sortIndex: function() {
       index.sort(function(a,b){
-        if (a.meta.timestamp < b.meta.timestamp) {
+        if (a.meta.Created.timestamp < b.meta.Created.timestamp) {
           return 1;
-        } else if (a.meta.timestamp > b.meta.timestamp) {
+        } else if (a.meta.Created.timestamp > b.meta.Created.timestamp) {
           return -1;
         }
         return 0;
@@ -86,7 +86,7 @@ var Index = function () {
       var now   = Math.round(new Date().getTime() / 1000);
       var count = 0, i;
       for(i = 0; i < index.length; i++) {
-        if (index[i].meta.timestamp > now) {
+        if (index[i].meta.Created.timestamp > now) {
           count++;
         } else {
           break;

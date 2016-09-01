@@ -25,7 +25,7 @@
               {{#index}}
                 <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
                   <span class="date">
-                    <time datetime="{{meta.isoDate}}" itemprop="datePublished">{{meta.localeDate}}</time>
+                    <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified">{{meta.Created.locale}}</time>
                   </span>
                   <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
                   <div itemprop="description">
@@ -37,13 +37,13 @@
                   {{#meta.Tags.length}}
                     <p class="meta">
                       {{#meta.AuthorName}}
-                        <span class="author" itemprop="author publisher" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></span>
+                        <span class="author" itemprop="author publisher" itemscope="" itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="logo" /> <span itemprop="name">{{meta.AuthorName}}</span></span>
                       {{/meta.AuthorName}}
                       {{#meta.Tags.length}}
                         <span class="tags">
                           Andere Artikel zum Thema
                           {{#meta.Tags}}
-                            · <a rel="tag" href="{{url}}" itemprop="keywords" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„{{title}}”</a>
+                            · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords">{{title}}</span>”</a>
                           {{/meta.Tags}}
                         </span>
                       {{/meta.Tags.length}}

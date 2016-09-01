@@ -53,7 +53,6 @@
     "inquirer": "^1.1.2",
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
-    "object-hash": "^1.1.4",
     "promise": "^7.1.1",
     "shelljs": "^0.7.3",
     "yamljs": "^0.2.8"

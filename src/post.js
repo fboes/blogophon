@@ -2,10 +2,10 @@
 
 var config          = require('./config');
 var markdownConvert = require('marked');
-var dateFormat      = require('dateformat');
-var hash            = require('object-hash');
+var crypto          = require('crypto');
 var toolshed        = require('./js-toolshed/src/js-toolshed');
-var blogophonUrls   = require('./blogophon-urls')();
+var blogophonUrls   = require('./blogophon-urls');
+var blogophonDate   = require('./blogophon-date');
 
 /**
  * This class holds Markdown and converts it into a proper post.
@@ -123,14 +123,19 @@ var Post = function (filename, markdown, meta) {
   if (!meta.Date) {
     throw new Error('meta.Date not supplied in post');
   }
+  if (!meta.DateModified) {
+    meta.DateModified = meta.Date;
+  }
+  if (!meta.Language) {
+    meta.Language = config.language;
+  }
 
   meta.Url         = blogophonUrls.getUrlOfPost(filename);
   meta.AbsoluteUrl = blogophonUrls.getAbsoluteUrlOfPost(filename);
   meta.Filename    = blogophonUrls.getFileOfPost(filename);
-  meta.localeDate  = dateFormat(meta.Date,'dd.mm.yyyy');
-  meta.isoDate     = dateFormat(meta.Date,'isoDateTime').replace(/(\d{2})(\d{2})$/,'$1:$2');
-  meta.rfcDate     = dateFormat(meta.Date,'ddd, dd mmm yyyy hh:MM:ss o'); // Wed, 02 Oct 2002 15:00:00 +0200
-  meta.timestamp   = Math.round(new Date(meta.Date).getTime() / 1000);
+
+  meta.Created     = blogophonDate(meta.Date, meta.Language);
+  meta.Modified    = blogophonDate(meta.DateModified, meta.Language);
 
   var htmlTeaser   = internal.markyMark(meta.Description.trim(), meta.Url);
   var html         = internal.markyMark(markdown, meta.Url);
@@ -160,16 +165,14 @@ var Post = function (filename, markdown, meta) {
   if (meta.Description !== undefined) {
     meta.Description = meta.Description.replace(/>/g,' ').replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1').replace(/\s\s+/g, ' ').niceShorten(160);
   }
-  if (!meta.Language) {
-    meta.Language = config.language;
-  }
   if (!meta.Author) {
     meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
   }
   var metaAuthor = meta.Author.match(/^(.+?)(?:\s<(.+)>)?$/);
   if (metaAuthor) {
     meta.AuthorName  = metaAuthor[1];
-    meta.AuthorEmail = metaAuthor[2] ? metaAuthor[2] : config.defaultAuthor.email;
+    meta.AuthorEmail = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
+    meta.Gravatar    = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
   }
   if (!meta.Image) {
     var match = html.match(/<img.+?src="(.+?)"/);
@@ -228,7 +231,7 @@ var Post = function (filename, markdown, meta) {
      * @return {[type]} [description]
      */
     toString: function() {
-      return hash([markdown,share,meta,html,htmlTeaser]);
+      return crypto.createHash('md5').update(JSON.stringify([markdown,share,meta,html,htmlTeaser])).digest('hex');
     }
   };
 };

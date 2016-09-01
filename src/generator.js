@@ -13,7 +13,7 @@ var RssJs          = require('./rssjs');
 var Manifest       = require('./manifest');
 var translations   = require('./translations');
 var toolshed       = require('./js-toolshed/src/js-toolshed');
-var BlogophonUrls  = require('./blogophon-urls')();
+var BlogophonUrls  = require('./blogophon-urls');
 
 /**
  * Generator used for creating the blog.
