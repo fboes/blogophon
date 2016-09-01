@@ -8,7 +8,7 @@ var dateFormat      = require('dateformat');
  */
 var BlogophoneDate = function (date, locale) {
   if (!locale) {
-    locale = de;
+    locale = 'de';
   }
   var localeString = 'dd.mm.yyyy';
   switch (locale) {

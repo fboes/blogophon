@@ -33,6 +33,14 @@ var BlogophonUrls = {
     return !tag ? null : config.basePath + 'tagged/' + tag.asciify() + '/';
   },
   /**
+   * Convert author name into URL of author.
+   * @param  {String} name [description]
+   * @return {String}      [description]
+   */
+  getUrlOfAuthor: function (name) {
+    return !name ? null : config.basePath + 'authored-by/' + name.asciify() + '/';
+  },
+  /**
    * Converts any URL into an absolute URL.
    * @param  {String} url [description]
    * @return {String}     [description]
@@ -95,6 +103,22 @@ var BlogophonUrls = {
    */
   getFileOfTagged: function(url) {
     return BlogophonUrls.getFileOfUrl(BlogophonUrls.getUrlOfTagged(url));
+  },
+  /**
+   * Convert author name into his/her absolute URL.
+   * @param  {String} name [description]
+   * @return {String}      [description]
+   */
+  getAbsoluteUrlOfAuthor: function(name) {
+    return exports.getAbsoluteUrlOfUrl(exports.getUrlOfAuthor(name));
+  },
+  /**
+   * Converts author name into filename.
+   * @param  {String} name [description]
+   * @return {String}      [description]
+   */
+  getFileOfAuthor: function(name) {
+    return exports.getFileOfUrl(exports.getUrlOfAuthor(name));
   }
 };
 

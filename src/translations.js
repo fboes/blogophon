@@ -10,26 +10,31 @@ var Translations = function ( language ) {
     en: {
       'index': 'Home',
       'page': 'Page %d/%d',
+      'author': 'Articles written by %s',
       'tag': 'Articles with tag "%s"'
     },
     de: {
       'index': 'Startseite',
       'page': 'Seite %d/%d',
+      'author': 'Artikel von %s',
       'tag': 'Artikel mit dem Tag "%s"'
     },
     fr: {
       'index': 'Page d\'accueil',
       'page': 'Page %d/%d',
+      'author': 'Articles de %s',
       'tag': 'Articles avec le tag "%s"'
     },
     es: {
       'index': 'Portada',
       'page': 'Página %d/%d',
+      'author': 'Artículos de %s',
       'tag': 'Artículos con la etiqueta "%s"'
     },
     ru: {
       'index': 'Главная страница',
       'page': 'Страница %d/%d',
+      'author': '%s',
       'tag': 'Статьи с тегом "%s"'
     }
   };

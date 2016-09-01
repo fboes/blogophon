@@ -7,6 +7,7 @@
 var Index = function () {
   var index    = [];
   var tags     = {};
+  var authors  = {};
   var isSorted = true;
   var pubDate  = new Date();
 
@@ -150,6 +151,25 @@ var Index = function () {
         }
       });
       return tags;
+    },
+
+    /**
+     * [getAuthors description]
+     * @return {[type]} [description]
+     */
+    getAuthors: function() {
+      if (!isSorted) {
+        internal.sortIndex();
+      }
+      index.forEach(function(post){
+        if (post.meta.AuthorName) {
+          if (authors[post.meta.AuthorName] === undefined) {
+            authors[post.meta.AuthorName] = [];
+          }
+          authors[post.meta.AuthorName].push(post);
+        }
+      });
+      return authors;
     },
 
     /**
