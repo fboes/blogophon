@@ -22,19 +22,19 @@ var Translations = function ( language ) {
     fr: {
       'index': 'Page d\'accueil',
       'page': 'Page %d/%d',
-      'author': 'Articles de %s',
+      'author': 'Articles écrits par %s',
       'tag': 'Articles avec le tag "%s"'
     },
     es: {
       'index': 'Portada',
       'page': 'Página %d/%d',
-      'author': 'Artículos de %s',
+      'author': 'Artículos escritos por %s',
       'tag': 'Artículos con la etiqueta "%s"'
     },
     ru: {
       'index': 'Главная страница',
       'page': 'Страница %d/%d',
-      'author': '%s',
+      'author': 'Статьи, написанные %s',
       'tag': 'Статьи с тегом "%s"'
     }
   };

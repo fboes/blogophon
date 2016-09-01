@@ -2,17 +2,17 @@
 
 var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
-var Mustache       = require('./blogophon-mustache');
+var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var fs             = require('fs-extra');
 var shell          = require('shelljs');
 var glob           = require("glob");
 var gm             = require('gm').subClass({imageMagick: true});
 var dateFormat     = require('dateformat');
 var PostReader     = require('./post-reader');
-var RssJs          = require('./rssjs');
-var Manifest       = require('./manifest');
-var translations   = require('./translations');
-var toolshed       = require('./js-toolshed/src/js-toolshed');
+var rssJs          = require('./models/rss-js');
+var manifest       = require('./models/manifest');
+var translations   = require('./helpers/translations');
+var toolshed       = require('./helpers/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls');
 var path           = require('path');
 
@@ -232,9 +232,9 @@ Generator.buildSpecialPages = function () {
         config: config
       }), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(RssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o')), undefined, 2), checkProcessed);
+      fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(rssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), config), undefined, 2), checkProcessed);
 
-      fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(Manifest, undefined, 2), checkProcessed);
+      fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(manifest(config), undefined, 2), checkProcessed);
 
       fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(Mustache.templates.atom, {
         index: index.getPosts(10),
@@ -286,9 +286,11 @@ Generator.copyImages = function ( article ) {
           for (j = 0; j < config.imageSizes.length; j++) {
             var imageSize = config.imageSizes[j];
             gm(files[i])
-              .resize(imageSize[0], imageSize[1])
-              .interlace('Line')
               .noProfile()
+              .geometry(imageSize[0], imageSize[1], "^")
+              .gravity('Center')
+              .crop(imageSize[0], imageSize[1])
+              .interlace('Line')
               .write(targetFile.replace(/(\.[a-z]+$)/,'-'+imageSize[0]+'x'+imageSize[1]+'$1'),checkProcessed)
             ;
           }

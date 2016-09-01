@@ -4,9 +4,7 @@
  * Returns RSS as a javascript object.
  * @constructor
  */
-var RssJs = function (index, pubDate) {
-  var config = require('./config');
-
+var RssJs = function (index, pubDate, config) {
   return {
     version: 2.0,
     channel: {

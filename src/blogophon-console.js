@@ -1,14 +1,14 @@
 'use strict';
 
-var config       = require('./config');
-var toolshed     = require('./js-toolshed/src/js-toolshed');
-var inquirer     = require('inquirer');
-var glob         = require('glob');
-var fs           = require('fs-extra');
-var shell        = require('shelljs');
-var Mustache     = require('mustache');
-var chalk        = require('chalk');
-var generator    = require('./generator');
+var config         = require('./config');
+var toolshed       = require('./helpers/js-toolshed');
+var inquirer       = require('inquirer');
+var glob           = require('glob');
+var fs             = require('fs-extra');
+var shell          = require('shelljs');
+var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
+var chalk          = require('chalk');
+var generator      = require('./generator');
 
 /**
  * Represents the Inquirer dialogue with which to edit articles.

@@ -3,6 +3,7 @@ exports.testBasicProperties = function(test) {
   'use strict';
   test.expect(9);
 
+  var config = require('../src/config');
   var item = {
       htmlTeaser: 1,
       meta: {
@@ -12,7 +13,7 @@ exports.testBasicProperties = function(test) {
         tags: [6,7]
       }
   };
-  var rssjs = require('../src/rssjs')([item], new Date());
+  var rssjs = require('../src/models/rssjs')([item], new Date(), config);
 
   test.ok(rssjs.version !== undefined);
   test.ok(rssjs.channel !== undefined);

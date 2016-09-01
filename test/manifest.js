@@ -3,7 +3,8 @@ exports.testBasicProperties = function(test) {
   'use strict';
   test.expect(5);
 
-  var manifest = require('../src/manifest');
+  var config = require('../src/config');
+  var manifest = require('../src/models/manifest')(config);
 
   // console.log(manifest);
 

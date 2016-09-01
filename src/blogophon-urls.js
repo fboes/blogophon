@@ -1,7 +1,7 @@
 'use strict';
 
 var config         = require('./config');
-var toolshed       = require('./js-toolshed/src/js-toolshed');
+var toolshed       = require('./helpers/js-toolshed');
 
 /**
  * Converts filenames into URLs, absolute URLs, filenames etc.

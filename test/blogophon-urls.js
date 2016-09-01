@@ -1,4 +1,4 @@
-var BlogophonUrls = require('../src/blogophon-urls')();
+var BlogophonUrls = require('../src/blogophon-urls');
 
 exports.testBasicTransformation = function(test) {
   'use strict';

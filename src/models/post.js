@@ -1,18 +1,17 @@
 'use strict';
 
-var config          = require('./config');
+var config          = require('../config');
 var markdownConvert = require('marked');
 var crypto          = require('crypto');
-var toolshed        = require('./js-toolshed/src/js-toolshed');
-var blogophonUrls   = require('./blogophon-urls');
-var blogophonDate   = require('./blogophon-date');
+var blogophonUrls   = require('../blogophon-urls');
+var toolshed        = require('../helpers/js-toolshed');
+var blogophonDate   = require('../models/blogophon-date');
 
 /**
  * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
 var Post = function (filename, markdown, meta) {
-
   var internal = {
     /**
      * [markyMark description]
