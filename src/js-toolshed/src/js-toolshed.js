@@ -49,7 +49,7 @@
       .replace(/[óòô]/g,'o')
       .replace(/[ü]/g,'ue')
       .replace(/[úùû]/g,'u')
-      .replace(/[ëéèê]/g,'o')
+      .replace(/[ëéèê]/g,'e')
       .replace(/[ñ]/g,'n')
       .replace(/[ß]/g,'ss')
       .replace(/[^a-z0-9\-]/g,'-')

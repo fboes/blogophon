@@ -110,7 +110,7 @@ var BlogophonUrls = {
    * @return {String}      [description]
    */
   getAbsoluteUrlOfAuthor: function(name) {
-    return exports.getAbsoluteUrlOfUrl(exports.getUrlOfAuthor(name));
+    return BlogophonUrls.getAbsoluteUrlOfUrl(BlogophonUrls.getUrlOfAuthor(name));
   },
   /**
    * Converts author name into filename.
@@ -118,7 +118,7 @@ var BlogophonUrls = {
    * @return {String}      [description]
    */
   getFileOfAuthor: function(name) {
-    return exports.getFileOfUrl(exports.getUrlOfAuthor(name));
+    return BlogophonUrls.getFileOfUrl(BlogophonUrls.getUrlOfAuthor(name));
   }
 };
 
