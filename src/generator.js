@@ -2,19 +2,18 @@
 
 var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
-var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var fs             = require('fs-extra-promise');
-var shell          = require('shelljs');
 var glob           = require("glob");
+var path           = require('path');
 var gm             = require('gm').subClass({imageMagick: true});
 var dateFormat     = require('dateformat');
+var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
 var manifest       = require('./models/manifest');
 var translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls');
-var path           = require('path');
 var index          = require('./index');
 
 /**
@@ -57,7 +56,12 @@ var Generator = {
     );
   },
 
-  getHashes: function (force) {
+  /**
+   * Get all articles hashes
+   * @param  {Boolean} force [description]
+   * @return {Object}        [description]
+   */
+  getHashesOfArticles: function (force) {
     if (force === undefined || !force) {
       try {
         return require('../user/hashes.json');
@@ -73,12 +77,11 @@ var Generator = {
    * @return {Promise} with first parameter of `resolve` being the list of files generated.
    */
   buildAllArticles: function( force ) {
-    var i,
-      allPosts = Generator.currentIndex.getPosts(),
-      skipped = 0,
-      hashes = Generator.getHashes(force),
-      generatedArticles = []
-    ;
+    var allPosts = Generator.currentIndex.getPosts();
+    var skipped = 0;
+    var hashes = Generator.getHashesOfArticles(force);
+    var generatedArticles = [];
+
     return new Promise (
       function(resolve, reject) {
         // Making promises
@@ -118,15 +121,16 @@ var Generator = {
     }
     return new Promise (
       function (resolve, reject) {
-        shell.mkdir('-p', config.directories.htdocs + post.meta.Url);
-        fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
-          post: post,
-          config: config
-        },Mustache.partials), function(err) {
-          if (err) {
-            reject(err);
-          }
-          resolve(post.meta.Filename);
+        fs.ensureDir(config.directories.htdocs + post.meta.Url, function() {
+          fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
+            post: post,
+            config: config
+          },Mustache.partials), function(err) {
+            if (err) {
+              reject(err);
+            }
+            resolve(post.meta.Filename);
+          });
         });
       }
     );
@@ -134,7 +138,7 @@ var Generator = {
 
   /**
    * Build special pages from `index` like index pages, tag pages, etc.
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   * @return {Promise} with first parameter of `resolve` being an array with the numbers of files converted.
    */
   buildSpecialPages: function () {
     return new Promise (
@@ -149,15 +153,14 @@ var Generator = {
           .then(resolve)
           .catch(reject)
         ;
-
-        /*
-        console.log("Created " + processed + " special pages");
-        resolve( processed );
-        */
        }
     );
   },
 
+  /**
+   * [buildIndexFiles description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
   buildIndexFiles: function() {
     return new Promise (
       function(resolve, reject) {
@@ -181,7 +184,7 @@ var Generator = {
           Promise
             .all(promises)
             .then(function() {
-              console.log("Wrote "+promises.length+" files");
+              console.log("Wrote "+promises.length+" index files");
               return resolve(promises.length);
             })
             .catch(reject)
@@ -191,6 +194,10 @@ var Generator = {
     );
   },
 
+  /**
+   * [buildTagPages description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
   buildTagPages: function() {
     return new Promise (
       function(resolve, reject) {
@@ -203,17 +210,16 @@ var Generator = {
         });
 
         fs.remove(config.directories.htdocs + '/tagged', function (err) {
-          shell.mkdir('-p', config.directories.htdocs + '/tagged');
+          fs.ensureDirSync(config.directories.htdocs + '/tagged');
 
-          var promises = [];
-          Object.keys(tags).map(function (key) {
-            shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
+          var promises = Object.keys(tags).map(function (key) {
+            fs.ensureDirSync(config.directories.htdocs + '/tagged/' + tags[key].id);
             tags[key].config = config;
             tags[key].meta   = {
               title      : Generator.strings.tag.sprintf(tags[key].title),
               absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
             };
-            promises.push(fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials)));
+            return fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
           });
 
           promises.push(fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
@@ -224,7 +230,7 @@ var Generator = {
           Promise
             .all(promises)
             .then(function() {
-              console.log("Wrote "+promises.length+" files");
+              console.log("Wrote "+promises.length+" tag pages");
               return resolve(promises.length);
             })
             .catch(reject)
@@ -234,6 +240,10 @@ var Generator = {
     );
   },
 
+  /**
+   * [buildAuthorPages description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
   buildAuthorPages: function() {
     return new Promise (
       function(resolve, reject) {
@@ -246,19 +256,18 @@ var Generator = {
         });
 
         fs.remove(config.directories.htdocs + '/authored-by', function (err) {
-          shell.mkdir('-p', config.directories.htdocs + '/authored-by');
+          fs.ensureDirSync(config.directories.htdocs + '/authored-by');
 
-          var promises = [];
-          Object.keys(authors).map(function (name) {
-            shell.mkdir('-p', path.dirname(BlogophonUrls.getFileOfAuthor(name)));
-            promises.push(fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
+          var promises = Object.keys(authors).map(function (name) {
+            fs.ensureDirSync(path.dirname(BlogophonUrls.getFileOfAuthor(name)));
+            return fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
               config: config,
               index: authorPages[name],
               meta:  {
                 title      : Generator.strings.author.sprintf(name),
                 absoluteUrl: BlogophonUrls.getAbsoluteUrlOfAuthor(name)
               }
-            }, Mustache.partials)));
+            }, Mustache.partials));
           });
 
           promises.push(fs.writeFile( BlogophonUrls.getFileOfIndex('authored-by/index.html'), Mustache.render(Mustache.templates.authors, {
@@ -269,7 +278,7 @@ var Generator = {
           Promise
             .all(promises)
             .then(function() {
-              console.log("Wrote "+promises.length+" files");
+              console.log("Wrote "+promises.length+" author pages");
               return resolve(promises.length);
             })
             .catch(reject)
@@ -281,7 +290,7 @@ var Generator = {
 
   /**
    * Build 404 pages, sitemaps, newsfeeds an stuff like that
-   * @return {[type]} [description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   buildMetaFiles: function() {
     return new Promise (
@@ -327,7 +336,7 @@ var Generator = {
         Promise
           .all(promises)
           .then(function() {
-            console.log("Wrote "+promises.length+" files");
+            console.log("Wrote "+promises.length+" meta files");
             return resolve(promises.length);
           })
           .catch(reject)
@@ -361,7 +370,7 @@ var Generator = {
           };
           for (i = 0; i < files.length; i++) {
             var targetFile = files[i].replace(/^user\//, config.directories.htdocs + '/');
-            shell.mkdir('-p', targetFile.replace(/(\/).+?$/, '$1'));
+            fs.ensureDirSync(targetFile.replace(/(\/).+?$/, '$1'));
             gm(files[i])
               .noProfile()
               .interlace('Line')
@@ -417,6 +426,7 @@ var Generator = {
    * @return {Boolean} [description]
    */
   deploy: function () {
+    var shell = require('shelljs');
     if (config.deployCmd) {
       shell.exec(config.deployCmd);
     }
