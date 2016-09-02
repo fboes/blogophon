@@ -12,8 +12,20 @@ var BlogophoneDate = function (date, locale) {
   }
   var localeString = 'dd.mm.yyyy';
   switch (locale) {
-    case 'de': localeString = 'dd.mm.yyyy'; break;
-    default  : localeString = 'yyyy-mm-dd'; break;
+    case 'de':
+    case 'ru':
+      localeString = 'dd.mm.yyyy';
+      break;
+    case 'fr':
+      localeString = 'dd-mm-yyyy';
+      break;
+    case 'es':
+    case 'en':
+      localeString = 'dd/mm/yyyy';
+      break;
+    default:
+      localeString = 'yyyy-mm-dd';
+      break;
   }
   return {
     locale:    dateFormat(date,localeString),

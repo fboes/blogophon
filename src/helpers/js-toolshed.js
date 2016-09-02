@@ -149,31 +149,4 @@
     max = parseInt(max);
     return Math.floor(Math.random() * (max - min +1)) + min;
   };
-
-  /** @class Array */
-
-  /**
-   * Push element only to array if element is not empty.
-   * @param  {mixed}    element [description]
-   * @return {Array}            [description]
-   */
-  Array.prototype.pushOnNotEmpty = function (element) {
-    return (element !== undefined && element !== null && element !== '') ? this.push(element) : this.length;
-  };
-
-  /** @class Object */
-
-  /**
-   * Run function on all properties of an object.
-   * @param  {Function} fn  function(value,key,object){}, `this` being the current object
-   * @return {Object}       [description]
-   */
-  Object.prototype.forEachProperty = function (fn) {
-    var key;
-    for (key in this) {
-      if (!this.hasOwnProperty(key)) {continue;}
-      fn.call(this,this[key],key,this);
-    }
-    return this;
-  };
 }());
