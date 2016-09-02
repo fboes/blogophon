@@ -1,4 +1,3 @@
-
 exports.testBasicProperties = function(test) {
   'use strict';
   test.expect(5);

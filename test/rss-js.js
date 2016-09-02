@@ -1,4 +1,3 @@
-
 exports.testBasicProperties = function(test) {
   'use strict';
   test.expect(9);
@@ -13,7 +12,7 @@ exports.testBasicProperties = function(test) {
         tags: [6,7]
       }
   };
-  var rssjs = require('../src/models/rssjs')([item], new Date(), config);
+  var rssjs = require('../src/models/rss-js')([item], new Date(), config);
 
   test.ok(rssjs.version !== undefined);
   test.ok(rssjs.channel !== undefined);

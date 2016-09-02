@@ -1,4 +1,3 @@
-
 exports.testTranslations = function(test) {
   'use strict';
   test.expect(2);

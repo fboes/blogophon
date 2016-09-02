@@ -35,7 +35,7 @@ Mustache.getTemplates = function(path) {
     Mustache.parse(t);
   });
   return this;
-}
+};
 
 /**
  * New HTML escaping
