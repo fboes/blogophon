@@ -2,19 +2,18 @@
 
 var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
-var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
-var fs             = require('fs-extra');
-var shell          = require('shelljs');
+var fs             = require('fs-extra-promise');
 var glob           = require("glob");
+var path           = require('path');
 var gm             = require('gm').subClass({imageMagick: true});
 var dateFormat     = require('dateformat');
+var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
 var manifest       = require('./models/manifest');
 var translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls');
-var path           = require('path');
 var index          = require('./index');
 
 /**
@@ -58,23 +57,31 @@ var Generator = {
   },
 
   /**
+   * Get all articles hashes
+   * @param  {Boolean} force [description]
+   * @return {Object}        [description]
+   */
+  getHashesOfArticles: function (force) {
+    if (force === undefined || !force) {
+      try {
+        return require('../user/hashes.json');
+      } catch (e) {
+        return {};
+      }
+    }
+    return {};
+  },
+
+  /**
    * Get all {Post} from `index` and generate HTML pages.
    * @return {Promise} with first parameter of `resolve` being the list of files generated.
    */
   buildAllArticles: function( force ) {
-    var i,
-      allPosts = Generator.currentIndex.getPosts(),
-      skipped = 0,
-      hashes = {},
-      generatedArticles = []
-    ;
-    if (force === undefined || !force) {
-      try {
-        hashes = require('../user/hashes.json');
-      } catch (e) {
-        hashes = {};
-      }
-    }
+    var allPosts = Generator.currentIndex.getPosts();
+    var skipped = 0;
+    var hashes = Generator.getHashesOfArticles(force);
+    var generatedArticles = [];
+
     return new Promise (
       function(resolve, reject) {
         // Making promises
@@ -114,15 +121,16 @@ var Generator = {
     }
     return new Promise (
       function (resolve, reject) {
-        shell.mkdir('-p', config.directories.htdocs + post.meta.Url);
-        fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
-          post: post,
-          config: config
-        },Mustache.partials), function(err) {
-          if (err) {
-            reject(err);
-          }
-          resolve(post.meta.Filename);
+        fs.ensureDir(config.directories.htdocs + post.meta.Url, function() {
+          fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
+            post: post,
+            config: config
+          },Mustache.partials), function(err) {
+            if (err) {
+              reject(err);
+            }
+            resolve(post.meta.Filename);
+          });
         });
       }
     );
@@ -130,45 +138,37 @@ var Generator = {
 
   /**
    * Build special pages from `index` like index pages, tag pages, etc.
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   * @return {Promise} with first parameter of `resolve` being an array with the numbers of files converted.
    */
   buildSpecialPages: function () {
-    var pagedPosts = Generator.currentIndex.getPagedPosts(config.itemsPerPage),
-      page,
-      indexFilename,
-      i,
-      allPosts = Generator.currentIndex.getPosts(),
-      tags = Generator.currentIndex.getTags(),
-      authors = Generator.currentIndex.getAuthors(),
-      processed = 0,
-      maxProcessed = 8 + pagedPosts.length + Object.keys(tags).length + Object.keys(authors).length
-    ;
-    var tagPages = Object.keys(tags).sort().map(function (key) {
-      return {
-        title: tags[key].title,
-        url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
-      };
-    });
-    var authorPages = Object.keys(authors).sort().map(function (name) {
-      return {
-        title: name,
-        url  : BlogophonUrls.getUrlOfAuthor(name)
-      };
-    });
-
     return new Promise (
       function(resolve, reject) {
-        var checkProcessed = function(err) {
-          if (err) {
-            reject(err);
-          }
-          if (++processed === maxProcessed) {
-            console.log("Created " + processed + " special pages");
-            resolve( processed );
-          }
-        };
+        Promise
+          .all([
+            Generator.buildIndexFiles(),
+            Generator.buildTagPages(),
+            Generator.buildAuthorPages(),
+            Generator.buildMetaFiles()
+          ])
+          .then(resolve)
+          .catch(reject)
+        ;
+       }
+    );
+  },
 
+  /**
+   * [buildIndexFiles description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
+  buildIndexFiles: function() {
+    return new Promise (
+      function(resolve, reject) {
         fs.remove(config.directories.htdocs + '/index*', function (err) {
+          var promises = [];
+          var page;
+          var pagedPosts = Generator.currentIndex.getPagedPosts(config.itemsPerPage);
+
           for (page = 0; page < pagedPosts.length; page ++) {
             var curPageObj    = Generator.currentIndex.getPageData(page, pagedPosts.length);
             curPageObj.index  = pagedPosts[page];
@@ -179,75 +179,168 @@ var Generator = {
             };
             curPageObj.prevUrl = BlogophonUrls.getUrlOfIndex(curPageObj.prevUrl);
             curPageObj.nextUrl = BlogophonUrls.getUrlOfIndex(curPageObj.nextUrl);
-            fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials), checkProcessed);
+            promises.push(fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
           }
+          Promise
+            .all(promises)
+            .then(function() {
+              console.log("Wrote "+promises.length+" index files");
+              return resolve(promises.length);
+            })
+            .catch(reject)
+          ;
+        });
+      }
+    );
+  },
+
+  /**
+   * [buildTagPages description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
+  buildTagPages: function() {
+    return new Promise (
+      function(resolve, reject) {
+        var tags = Generator.currentIndex.getTags();
+        var tagPages = Object.keys(tags).sort().map(function (key) {
+          return {
+            title: tags[key].title,
+            url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
+          };
         });
 
         fs.remove(config.directories.htdocs + '/tagged', function (err) {
-          shell.mkdir('-p', config.directories.htdocs + '/tagged');
-          Object.keys(tags).map(function (key) {
-            shell.mkdir('-p', config.directories.htdocs + '/tagged/' + tags[key].id);
+          fs.ensureDirSync(config.directories.htdocs + '/tagged');
+
+          var promises = Object.keys(tags).map(function (key) {
+            fs.ensureDirSync(config.directories.htdocs + '/tagged/' + tags[key].id);
             tags[key].config = config;
             tags[key].meta   = {
               title      : Generator.strings.tag.sprintf(tags[key].title),
               absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
             };
-            fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials), checkProcessed);
+            return fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
           });
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/Generator.currentIndex.html'), Mustache.render(Mustache.templates.tags, {
+          promises.push(fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
             index: tagPages,
             config: config
-          }, Mustache.partials), checkProcessed);
+          }, Mustache.partials)));
+
+          Promise
+            .all(promises)
+            .then(function() {
+              console.log("Wrote "+promises.length+" tag pages");
+              return resolve(promises.length);
+            })
+            .catch(reject)
+          ;
+        });
+      }
+    );
+  },
+
+  /**
+   * [buildAuthorPages description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
+  buildAuthorPages: function() {
+    return new Promise (
+      function(resolve, reject) {
+        var authors = Generator.currentIndex.getAuthors();
+        var authorPages = Object.keys(authors).sort().map(function (name) {
+          return {
+            title: name,
+            url  : BlogophonUrls.getUrlOfAuthor(name)
+          };
         });
 
         fs.remove(config.directories.htdocs + '/authored-by', function (err) {
-          shell.mkdir('-p', config.directories.htdocs + '/authored-by');
-          Object.keys(authors).map(function (name) {
-            shell.mkdir('-p', path.dirname(BlogophonUrls.getFileOfAuthor(name)));
-            fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
+          fs.ensureDirSync(config.directories.htdocs + '/authored-by');
+
+          var promises = Object.keys(authors).map(function (name) {
+            fs.ensureDirSync(path.dirname(BlogophonUrls.getFileOfAuthor(name)));
+            return fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
               config: config,
               index: authorPages[name],
               meta:  {
                 title      : Generator.strings.author.sprintf(name),
                 absoluteUrl: BlogophonUrls.getAbsoluteUrlOfAuthor(name)
               }
-            }, Mustache.partials), checkProcessed);
+            }, Mustache.partials));
           });
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('authored-by/Generator.currentIndex.html'), Mustache.render(Mustache.templates.authors, {
+          promises.push(fs.writeFile( BlogophonUrls.getFileOfIndex('authored-by/index.html'), Mustache.render(Mustache.templates.authors, {
             index: authorPages,
             config: config
-          }, Mustache.partials), checkProcessed);
+          }, Mustache.partials)));
+
+          Promise
+            .all(promises)
+            .then(function() {
+              console.log("Wrote "+promises.length+" author pages");
+              return resolve(promises.length);
+            })
+            .catch(reject)
+          ;
+        });
+      }
+    );
+  },
+
+  /**
+   * Build 404 pages, sitemaps, newsfeeds an stuff like that
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
+  buildMetaFiles: function() {
+    return new Promise (
+      function(resolve, reject) {
+        var tags = Generator.currentIndex.getTags();
+        var tagPages = Object.keys(tags).sort().map(function (key) {
+          return {
+            title: tags[key].title,
+            url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
+          };
         });
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('404.html'), Mustache.render(Mustache.templates.four, {
-          index: Generator.currentIndex.getPosts(5),
-          config: config
-        }, Mustache.partials), checkProcessed);
+        var promises = [
+          fs.writeFile( BlogophonUrls.getFileOfIndex('404.html'), Mustache.render(Mustache.templates.four, {
+            index: Generator.currentIndex.getPosts(5),
+            config: config
+          }, Mustache.partials)),
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('posts.rss'), Mustache.render(Mustache.templates.rss, {
-          index: Generator.currentIndex.getPosts(10),
-          pubDate: dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
-          config: config
-        }), checkProcessed);
+          fs.writeFile( BlogophonUrls.getFileOfIndex('posts.rss'), Mustache.render(Mustache.templates.rss, {
+            index: Generator.currentIndex.getPosts(10),
+            pubDate: dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
+            config: config
+          })),
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(rssJs(Generator.currentIndex.getPosts(20), dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), config), undefined, 2), checkProcessed);
+          fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(rssJs(Generator.currentIndex.getPosts(20), dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), config), undefined, 2)),
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(manifest(config), undefined, 2), checkProcessed);
+          fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(manifest(config), undefined, 2)),
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(Mustache.templates.atom, {
-          index: Generator.currentIndex.getPosts(10),
-          pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
-          config: config
-        }), checkProcessed);
+          fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(Mustache.templates.atom, {
+            index: Generator.currentIndex.getPosts(10),
+            pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
+            config: config
+          })),
 
-        fs.writeFile( BlogophonUrls.getFileOfIndex('sitemap.xml'), Mustache.render(Mustache.templates.sitemap, {
-          index: allPosts,
-          tagPages: tagPages,
-          pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
-          config: config
-        }), checkProcessed);
+          fs.writeFile( BlogophonUrls.getFileOfIndex('sitemap.xml'), Mustache.render(Mustache.templates.sitemap, {
+            index: Generator.currentIndex.getPosts(),
+            tagPages: tagPages,
+            pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
+            config: config
+          }))
+        ];
+
+        Promise
+          .all(promises)
+          .then(function() {
+            console.log("Wrote "+promises.length+" meta files");
+            return resolve(promises.length);
+          })
+          .catch(reject)
+        ;
       }
     );
   },
@@ -277,7 +370,7 @@ var Generator = {
           };
           for (i = 0; i < files.length; i++) {
             var targetFile = files[i].replace(/^user\//, config.directories.htdocs + '/');
-            shell.mkdir('-p', targetFile.replace(/(\/).+?$/, '$1'));
+            fs.ensureDirSync(targetFile.replace(/(\/).+?$/, '$1'));
             gm(files[i])
               .noProfile()
               .interlace('Line')
@@ -333,6 +426,7 @@ var Generator = {
    * @return {Boolean} [description]
    */
   deploy: function () {
+    var shell = require('shelljs');
     if (config.deployCmd) {
       shell.exec(config.deployCmd);
     }
