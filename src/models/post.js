@@ -5,13 +5,14 @@ var markdownConvert = require('marked');
 var crypto          = require('crypto');
 var blogophonUrls   = require('../blogophon-urls');
 var toolshed        = require('../helpers/js-toolshed');
+var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
 
 /**
  * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
-var Post = function (filename, markdown, meta) {
+var Post = function(filename, markdown, meta) {
   var internal = {
     /**
      * [markyMark description]
@@ -19,7 +20,7 @@ var Post = function (filename, markdown, meta) {
      * @param  {[type]} relUrl [description]
      * @return {[type]}        [description]
      */
-    markyMark: function (html, relUrl) {
+    markyMark: function(html, relUrl) {
       if (relUrl) {
         html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
       }
@@ -38,7 +39,7 @@ var Post = function (filename, markdown, meta) {
         '<-': '←',
         //'<=': '⇐'
       };
-      html = html.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|->|=>|<-|<=)/g, function (s) {
+      html = html.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|->|=>|<-|<=)/g, function(s) {
         return entityMap[s];
       });
       html = html
@@ -204,13 +205,7 @@ var Post = function (filename, markdown, meta) {
     }
   }
 
-  var share = {
-    twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(meta.AbsoluteUrl)+"&source=tweetbutton&text="+encodeURIComponent(meta.Twitter)+"&url="+encodeURIComponent(meta.AbsoluteUrl),
-    facebook: "http://www.facebook.com/sharer.php?u="+encodeURIComponent(meta.AbsoluteUrl),
-    gplus: "https://plus.google.com/share?url="+encodeURIComponent(meta.AbsoluteUrl),
-    whatsapp: 'whatsapp://send?text=' +encodeURIComponent(meta.Title + ' [' + meta.AbsoluteUrl + ']'),
-    mail: "mailto:?subject="+encodeURIComponent('Email von ' + config.name)+"&body="+encodeURIComponent(meta.title+"\n\n"+meta.AbsoluteUrl)+"."
-  };
+  var share = shareLinks( meta.Title, meta.Twitter, meta.AbsoluteUrl, config.name);
   var hashOfData = crypto.createHash('md5').update(JSON.stringify([markdown,share,meta,html,htmlTeaser])).digest('hex');
 
   return {
