@@ -8,22 +8,15 @@ var inquirer       = require('inquirer');
 var defaultValues  = require('./src/config');
 var configFilename = defaultValues.directories.user + '/config.json';
 var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
+var args           = require('./src/helpers/arguments')();
 
 if (themesAvailable.length < 1) {
   throw new Error('No themes found');
 }
 
-var i;
-
-for (var i = 2; i < process.argv.length; i++) {
-  switch (process.argv[i]) {
-    case '--only-new':
-      if (! defaultValues.notInitialized) {
-        console.log('`config.json` already present, start without `--only-new` to overwrite configuration.');
-        process.exit(0);
-      }
-      break;
-  }
+if (args['only-new'] && ! defaultValues.notInitialized) {
+  console.log('`config.json` already present, start without `--only-new` to overwrite configuration.');
+  process.exit(0);
 }
 
 defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){

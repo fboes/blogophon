@@ -2,29 +2,19 @@
 'use strict';
 
 var generator = require('./src/generator');
+var args      = require('./src/helpers/arguments')();
 
-var deploy = false;
-var force  = false;
-var i;
-
-for (var i = 2; i < process.argv.length; i++) {
-  switch (process.argv[i]) {
-    case '--force'  : force  = true; break;
-    case '--deploy' : deploy = true; break;
-    case '--publish': deploy = true; break;
-    case '--log'    :
-      console.log('---- ' + new Date() + ' -----');
-      break;
-  }
+if (args.log) {
+  console.log('---- ' + new Date() + ' -----');
 }
 
 generator
   .getArticles()
   .then(function () {
     generator
-      .buildAll(force)
+      .buildAll(args.force)
       .then(function() {
-        if(deploy) {
+        if(args.deploy || args.publish) {
           generator.deploy();
         }
       })
