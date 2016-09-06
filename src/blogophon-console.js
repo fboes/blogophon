@@ -14,7 +14,7 @@ var generator      = require('./generator');
  * Represents the Inquirer dialogue with which to edit articles.
  * @constructor
  */
-var BlogophonConsole = function () {
+var BlogophonConsole = function() {
   var files        = [];
   var choicesStr   = [
     'Create new article',
@@ -32,7 +32,7 @@ var BlogophonConsole = function () {
      * Get all Markdown files as a simple array
      * @return {Array} [description]
      */
-    makeChoices: function () {
+    makeChoices: function() {
       files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
         return v.replace(/^.+\/(.+?)$/,'$1');
       });
@@ -49,7 +49,7 @@ var BlogophonConsole = function () {
      * @param  {String} title [description]
      * @return {String}       [description]
      */
-    filenameFromTitle: function (title) {
+    filenameFromTitle: function(title) {
       return config.directories.data + '/' + internal.shortfilenameFromTitle(title);
     },
     /**
@@ -57,7 +57,7 @@ var BlogophonConsole = function () {
      * @param  {String} title [description]
      * @return {String}       [description]
      */
-    shortfilenameFromTitle: function (title) {
+    shortfilenameFromTitle: function(title) {
       return title
         .trim()
         .toLowerCase()
@@ -73,7 +73,7 @@ var BlogophonConsole = function () {
      * @param  {String} filename [description]
      * @return {String}          [description]
      */
-    dirnameFromFilename: function (filename) {
+    dirnameFromFilename: function(filename) {
       return filename.replace(/\.md~?$/,'');
     }
   };
@@ -115,7 +115,7 @@ var BlogophonConsole = function () {
           name: 'images',
           message: 'But you do want to use images?',
           default: false,
-          when: function (answers) {
+          when: function(answers) {
             return answers.classes !== 'Images';
           }
         },{
@@ -141,7 +141,7 @@ var BlogophonConsole = function () {
           name: 'lead',
           message: 'Lead / teaser text',
           default: '',
-          when: function (answers) {
+          when: function(answers) {
             return !answers.edit && answers.classes !== 'Link';
           }
         },{
@@ -149,13 +149,13 @@ var BlogophonConsole = function () {
           name: 'mainText',
           message: 'Main text',
           default: 'Lorem ipsum…',
-          when: function (answers) {
+          when: function(answers) {
             return !answers.edit;
           }
         }
       ];
       inquirer.prompt(questions).then(
-        function (answers) {
+        function(answers) {
           var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
           var filename = internal.dirnameFromFilename(markdownFilename);
           fs.writeFile(markdownFilename, Mustache.render(template, {
@@ -199,7 +199,7 @@ var BlogophonConsole = function () {
         }
       ];
       inquirer.prompt(questions).then(
-        function (answers) {
+        function(answers) {
           var markdownFilename = config.directories.data + '/' + answers.file;
           var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
           console.log(chalk.grey(cmd));
@@ -224,16 +224,16 @@ var BlogophonConsole = function () {
           type: 'input',
           name: 'fileNew',
           message: 'Please enter a new filename or leave empty to cancel',
-          filter: function (v) {
+          filter: function(v) {
             return internal.shortfilenameFromTitle(v);
           },
-          validate: function (v) {
+          validate: function(v) {
             return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
           }
         }
       ];
       inquirer.prompt(questions).then(
-        function (answers) {
+        function(answers) {
           if (answers.fileNew) {
             var processed = 0, maxProcessed = 2;
             var checkProcessed = function(err) {
@@ -279,7 +279,7 @@ var BlogophonConsole = function () {
         }
       ];
       inquirer.prompt(questions).then(
-        function (answers) {
+        function(answers) {
           if (answers.sure) {
             var processed = 0, maxProcessed = 3;
             var checkProcessed = function(err) {
@@ -315,7 +315,7 @@ var BlogophonConsole = function () {
           name: 'deploy',
           message: 'Do you want to publish all files?',
           default: true,
-          when: function (answers) {
+          when: function(answers) {
             return config.deployCmd;
           }
         }
@@ -323,10 +323,10 @@ var BlogophonConsole = function () {
       inquirer
         .prompt(questions)
         .then(
-          function (answers) {
+          function(answers) {
             generator
               .getArticles()
-              .then(function () {
+              .then(function() {
                 generator
                   .buildAll(!answers.noforce)
                   .then(function() {
@@ -358,7 +358,7 @@ var BlogophonConsole = function () {
         }
       ];
       inquirer.prompt(questions).then(
-        function (answers) {
+        function(answers) {
           switch (answers.action) {
             case choicesStr[0]:
               exports.createArticleDialogue();
@@ -387,8 +387,6 @@ var BlogophonConsole = function () {
       );
     }
   };
-
-  exports.init();
   return exports;
 };
 
