@@ -6,7 +6,7 @@ var dateFormat      = require('dateformat');
  * Returns RSS as a javascript object.
  * @constructor
  */
-var BlogophoneDate = function (date, locale) {
+var BlogophoneDate = function(date, locale) {
   if (!locale) {
     locale = 'de';
   }

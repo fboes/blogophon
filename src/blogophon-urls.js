@@ -13,7 +13,7 @@ var BlogophonUrls = {
    * @param  {String} filename [description]
    * @return {String}          [description]
    */
-  getUrlOfPost: function (filename) {
+  getUrlOfPost: function(filename) {
     return !filename ? null : config.basePath + 'posts/' + filename.replace(/\.[^\.]+$/,'').replace(/.+\//,'').asciify() + '/';
   },
   /**
@@ -21,7 +21,7 @@ var BlogophonUrls = {
    * @param  {String} filename [description]
    * @return {String}          [description]
    */
-  getUrlOfIndex: function (filename) {
+  getUrlOfIndex: function(filename) {
     return !filename ? null : config.basePath + filename.trim().toLowerCase().replace(/\s/g, '').replace(/^index\.html$/, '');
   },
   /**
@@ -29,7 +29,7 @@ var BlogophonUrls = {
    * @param  {String} tag [description]
    * @return {String}     [description]
    */
-  getUrlOfTagged: function (tag) {
+  getUrlOfTagged: function(tag) {
     return !tag ? null : config.basePath + 'tagged/' + tag.asciify() + '/';
   },
   /**
@@ -37,7 +37,7 @@ var BlogophonUrls = {
    * @param  {String} name [description]
    * @return {String}      [description]
    */
-  getUrlOfAuthor: function (name) {
+  getUrlOfAuthor: function(name) {
     return !name ? null : config.basePath + 'authored-by/' + name.asciify() + '/';
   },
   /**
@@ -45,7 +45,7 @@ var BlogophonUrls = {
    * @param  {String} url [description]
    * @return {String}     [description]
    */
-  getAbsoluteUrlOfUrl: function (url) {
+  getAbsoluteUrlOfUrl: function(url) {
     return !url ? null : config.baseUrl + url;
   },
   /**
@@ -53,7 +53,7 @@ var BlogophonUrls = {
    * @param  {String} url [description]
    * @return {String}     [description]
    */
-  getFileOfUrl: function (url) {
+  getFileOfUrl: function(url) {
     return !url ? null : process.cwd() + '/' + config.directories.htdocs + url.replace(/(\/)$/, '$1index.html');
   },
   /**

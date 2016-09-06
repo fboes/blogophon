@@ -1,11 +1,10 @@
 'use strict';
 
-
 /**
  * List of arguments from command line
  * @constructor
  */
-var Arguments = function () {
+var Arguments = function() {
   var obj = {};
   if (process.argv && process.argv.length > 1) {
     process.argv.forEach(function(arg, i) {

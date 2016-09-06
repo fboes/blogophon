@@ -31,7 +31,7 @@ Mustache.getTemplates = function(path) {
     footer:     fs.readFileSync(Mustache.themePath + '/partials/footer.html', 'utf8'),
     closure:    fs.readFileSync(Mustache.themePath + '/partials/closure.html', 'utf8')
   };
-  Object.keys(Mustache.templates).map(function (t) {
+  Object.keys(Mustache.templates).map(function(t) {
     Mustache.parse(t);
   });
   return this;
@@ -42,7 +42,7 @@ Mustache.getTemplates = function(path) {
  * @param  {String} string [description]
  * @return {String}        [description]
  */
-Mustache.escape = function (string) {
+Mustache.escape = function(string) {
   var entityMap = {
     '&': '&amp;',
     '<': '&lt;',
@@ -50,7 +50,7 @@ Mustache.escape = function (string) {
     '"': '&quot;',
     "'": '&#39;'
   };
-  return String(string).replace(/[&<>"']/g, function (s) {
+  return String(string).replace(/[&<>"']/g, function(s) {
     return entityMap[s];
   });
 };

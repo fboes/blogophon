@@ -4,7 +4,7 @@
  * Represents all posts.
  * @constructor
  */
-var Index = function () {
+var Index = function() {
   var index    = [];
   var tags     = {};
   var authors  = {};
@@ -34,7 +34,7 @@ var Index = function () {
      * @param  {[type]} reverse [description]
      * @return {[type]}         [description]
      */
-    getPageName: function (curPage, maxPage, reverse) {
+    getPageName: function(curPage, maxPage, reverse) {
       curPage ++;
       if (curPage <= 0 || curPage > maxPage) {
         return null;
@@ -51,7 +51,7 @@ var Index = function () {
      * [clear description]
      * @return {[type]} [description]
      */
-    clear: function () {
+    clear: function() {
       isSorted = false;
       index = [];
     },
@@ -61,7 +61,7 @@ var Index = function () {
      * @param  {[type]} post [description]
      * @return {[type]}      [description]
      */
-    push: function (post) {
+    push: function(post) {
       isSorted = false;
       index.push(post);
     },
@@ -71,7 +71,7 @@ var Index = function () {
      * @param  {[type]} posts [description]
      * @return {[type]}       [description]
      */
-    pushArray: function (posts) {
+    pushArray: function(posts) {
       isSorted = false;
       index = posts;
     },
@@ -80,7 +80,7 @@ var Index = function () {
      * Remove all items form index which have a future timestamp.
      * @return {Number} of items removed
      */
-    removeFutureItems: function () {
+    removeFutureItems: function() {
       if (!isSorted) {
         internal.sortIndex();
       }
@@ -103,7 +103,7 @@ var Index = function () {
      * [makeNextPrev description]
      * @return {[type]} [description]
      */
-    makeNextPrev: function () {
+    makeNextPrev: function() {
       if (!isSorted) {
         internal.sortIndex();
       }
@@ -205,7 +205,7 @@ var Index = function () {
      * @param  {[type]} reverse [description]
      * @return {[type]}         [description]
      */
-    getPageData: function (curPage, maxPage, reverse) {
+    getPageData: function(curPage, maxPage, reverse) {
       return {
         currentUrl: internal.getPageName(curPage, maxPage, reverse),
         nextUrl: internal.getPageName(curPage+1, maxPage, reverse),

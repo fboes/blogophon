@@ -34,7 +34,7 @@ var Generator = {
     Generator.currentIndex = index();
     return new Promise (
       function(resolve, reject) {
-        glob(config.directories.data + "/**/*.md", function (err, files) {
+        glob(config.directories.data + "/**/*.md", function(err, files) {
           if (err) {
             reject(err);
           }
@@ -62,7 +62,7 @@ var Generator = {
    * Get all {Post} from `index` and generate HTML pages.
    * @return {Promise} with first parameter of `resolve` being the list of files generated.
    */
-  buildAllArticles: function( force ) {
+  buildAllArticles: function(force) {
     var allPosts = Generator.currentIndex.getPosts();
     var skipped = 0;
     var generatedArticles = [];
@@ -97,12 +97,12 @@ var Generator = {
    * @param  {Post} post [description]
    * @return {Promise}  with first parameter being the filename
    */
-  buildSingleArticle: function( post ) {
+  buildSingleArticle: function(post) {
     if (!post) {
       throw new Error('Empty post');
     }
     return new Promise (
-      function (resolve, reject) {
+      function(resolve, reject) {
         fs.ensureDir(config.directories.htdocs + post.meta.Url, function() {
           fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
             post: post,
@@ -125,7 +125,7 @@ var Generator = {
    * Build special pages from `index` like index pages, tag pages, etc.
    * @return {Promise} with first parameter of `resolve` being an array with the numbers of files converted.
    */
-  buildSpecialPages: function () {
+  buildSpecialPages: function() {
     return new Promise (
       function(resolve, reject) {
         Promise
@@ -149,7 +149,7 @@ var Generator = {
   buildIndexFiles: function() {
     return new Promise (
       function(resolve, reject) {
-        fs.remove(config.directories.htdocs + '/index*', function (err) {
+        fs.remove(config.directories.htdocs + '/index*', function(err) {
           var promises = [];
           var page;
           var pagedPosts = Generator.currentIndex.getPagedPosts(config.itemsPerPage);
@@ -187,17 +187,17 @@ var Generator = {
     return new Promise (
       function(resolve, reject) {
         var tags = Generator.currentIndex.getTags();
-        var tagPages = Object.keys(tags).sort().map(function (key) {
+        var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
             url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
           };
         });
 
-        fs.remove(config.directories.htdocs + '/tagged', function (err) {
+        fs.remove(config.directories.htdocs + '/tagged', function(err) {
           fs.ensureDirSync(config.directories.htdocs + '/tagged');
 
-          var promises = Object.keys(tags).map(function (key) {
+          var promises = Object.keys(tags).map(function(key) {
             fs.ensureDirSync(config.directories.htdocs + '/tagged/' + tags[key].id);
             tags[key].config = config;
             tags[key].meta   = {
@@ -233,17 +233,17 @@ var Generator = {
     return new Promise (
       function(resolve, reject) {
         var authors = Generator.currentIndex.getAuthors();
-        var authorPages = Object.keys(authors).sort().map(function (name) {
+        var authorPages = Object.keys(authors).sort().map(function(name) {
           return {
             title: name,
             url  : BlogophonUrls.getUrlOfAuthor(name)
           };
         });
 
-        fs.remove(config.directories.htdocs + '/authored-by', function (err) {
+        fs.remove(config.directories.htdocs + '/authored-by', function(err) {
           fs.ensureDirSync(config.directories.htdocs + '/authored-by');
 
-          var promises = Object.keys(authors).map(function (name) {
+          var promises = Object.keys(authors).map(function(name) {
             fs.ensureDirSync(path.dirname(BlogophonUrls.getFileOfAuthor(name)));
             return fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
               config: config,
@@ -281,7 +281,7 @@ var Generator = {
     return new Promise (
       function(resolve, reject) {
         var tags = Generator.currentIndex.getTags();
-        var tagPages = Object.keys(tags).sort().map(function (key) {
+        var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
             url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
@@ -334,12 +334,12 @@ var Generator = {
    * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
-  copyImages: function ( article ) {
+  copyImages: function(article) {
     article = article.replace(/\/$/, '').replace(/^.+\//,'') || '**';
     var i, j, processed = 0, maxProcessed = -1;
     return new Promise (
       function(resolve, reject) {
-        glob(config.directories.data + "/" + article + "/*.{png,jpg,gif}", function (er, files) {
+        glob(config.directories.data + "/" + article + "/*.{png,jpg,gif}", function(er, files) {
           maxProcessed = files.length * (config.imageSizes.length + 1);
           if (files.length === 0) {
             resolve( processed );
@@ -382,13 +382,13 @@ var Generator = {
    * Build all articles, special pages and images.
    * @return {Promise} [description]
    */
-  buildAll: function ( force ) {
+  buildAll: function(force) {
     return new Promise (
       function(resolve, reject) {
         Generator
           .buildAllArticles(force)
-          .then(function (generatedArticles) {
-            var promises = generatedArticles.map(function( article ) {
+          .then(function(generatedArticles) {
+            var promises = generatedArticles.map(function(article) {
               return Generator.copyImages( article );
             });
             if (generatedArticles.length) {
@@ -410,7 +410,7 @@ var Generator = {
    * Executes deployment command as given in `config.json`.
    * @return {Boolean} [description]
    */
-  deploy: function () {
+  deploy: function() {
     var shell = require('shelljs');
     if (config.deployCmd) {
       shell.exec(config.deployCmd);

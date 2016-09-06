@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   /** @class String */
 
@@ -7,7 +7,7 @@
    * @param  {scalar}  args One or morge arguments
    * @return {String}         [description]
    */
-  String.prototype.sprintf = function () {
+  String.prototype.sprintf = function() {
     var i, that = this;
     if (arguments) {
       for (i = 0; i < arguments.length; ++i) {
@@ -33,7 +33,7 @@
    * Convert `#string` into `string`.
    * @return {String}           [description]
    */
-  String.prototype.fromId = function () {
+  String.prototype.fromId = function() {
     return this.replace(/^#/,'');
   };
 
@@ -41,7 +41,7 @@
    * Remove any special characters from string and convert into lowercase.
    * @return {String} [description]
    */
-  String.prototype.asciify = function () {
+  String.prototype.asciify = function() {
     return this.toLowerCase()
       .replace(/[äåæ]/g,'ae')
       .replace(/[áàâ]/g,'a')
@@ -60,7 +60,7 @@
    * Convert `#string` into `string`.
    * @return {String}           [description]
    */
-  String.prototype.toId = function () {
+  String.prototype.toId = function() {
     return '#' + this.asciify();
   };
 
@@ -68,7 +68,7 @@
    * Convert string to XML / HTML safe string.
    * @return {String}           [description]
    */
-  String.prototype.htmlEncode = function () {
+  String.prototype.htmlEncode = function() {
     return this.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   };
 
@@ -77,7 +77,7 @@
    * @param  {RegExp}  splitter term to split key/value-pairs
    * @return {Object}  E.g. `{a:'b',c:'d'}`
    */
-  String.prototype.paramsToObject = function (splitter) {
+  String.prototype.paramsToObject = function(splitter) {
     var obj = {}, parts, i, currItem;
     splitter = splitter ? splitter : /&/;
     parts = this.replace(/^\?/,'').split(splitter);
@@ -88,7 +88,7 @@
     return obj;
   };
 
-  String.prototype.niceShorten = function (maxChars, replaceString) {
+  String.prototype.niceShorten = function(maxChars, replaceString) {
     replaceString = replaceString ? replaceString : '';
     if (this.length > maxChars) {
       return this.trim().replace(new RegExp('^(.{0,' + (maxChars-2) + '}\\W)(.*?)'),'$1') + replaceString;
@@ -103,7 +103,7 @@
    * @param  {integer} digits number of characters
    * @return {String}         [description]
    */
-  Number.prototype.toFixedString = function (digits, decimals) {
+  Number.prototype.toFixedString = function(digits, decimals) {
     decimals = decimals ? decimals : 0;
     if (digits <= 0) {
       return '';
@@ -134,7 +134,7 @@
    * @param  {integer} precision [description]
    * @return {Number}            [description]
    */
-  Math.roundPrecision = function (val, precision) {
+  Math.roundPrecision = function(val, precision) {
     return Math.round(val * Math.pow(10,precision)) / Math.pow(10,precision);
   };
 
@@ -144,7 +144,7 @@
    * @param  {integer} max [description]
    * @return {integer}     [description]
    */
-  Math.randomInt = function (min, max) {
+  Math.randomInt = function(min, max) {
     min = parseInt(min);
     max = parseInt(max);
     return Math.floor(Math.random() * (max - min +1)) + min;

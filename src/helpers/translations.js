@@ -4,7 +4,7 @@
  * Translate strings.
  * @constructor
  */
-var Translations = function ( language ) {
+var Translations = function(language) {
   // Todo: Move languages to separate files
   var translations = {
     en: {
@@ -50,7 +50,7 @@ var Translations = function ( language ) {
      * [availableLanguageCodes description]
      * @return {[type]} [description]
      */
-    availableLanguageCodes: function () {
+    availableLanguageCodes: function() {
       return Object.keys(translations);
     },
     /**

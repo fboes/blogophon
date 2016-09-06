@@ -6,7 +6,7 @@ var fs             = require('fs');
  * Represents all posts.
  * @constructor
  */
-var Hashes = function () {
+var Hashes = function() {
   var hashes = {};
   var hashFilename = './user/hashes.json';
 
@@ -17,13 +17,13 @@ var Hashes = function () {
   }
 
   return {
-    isHashed: function (url, hash) {
+    isHashed: function(url, hash) {
       return (hashes[url] !== undefined && hashes[url] === hash);
     },
-    update: function (url, hash) {
+    update: function(url, hash) {
       hashes[url] = hash;
     },
-    save: function () {
+    save: function() {
       fs.writeFileSync(hashFilename, JSON.stringify(hashes, undefined, 2));
     }
   };

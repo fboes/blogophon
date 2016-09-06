@@ -12,7 +12,7 @@ var post           = require('./models/post');
  * This class reads Markdown files into an object.
  * @constructor
  */
-var PostReader = function ( file ) {
+var PostReader = function(file) {
   var readYaml = true,
     yamlBuffer = '',
     descriptionBuffer = '',
@@ -31,7 +31,7 @@ var PostReader = function ( file ) {
 
       var lineReader = readline.createInterface({
         input: require('fs').createReadStream( file )
-      }).on('line', function (line) {
+      }).on('line', function(line) {
         if (readYaml && line.match(/\S+:[\s\S]/)) {
           yamlBuffer += line + "\n";
         } else if(readYaml && line.match(/^---$/)) {
@@ -61,7 +61,7 @@ var PostReader = function ( file ) {
           }
         }
       })
-      .once('close',function () {
+      .once('close',function() {
         if (!exports.meta || !exports.markdown) {
           reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
         }
