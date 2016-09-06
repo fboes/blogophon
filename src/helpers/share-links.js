@@ -17,7 +17,7 @@ var ShareLinks = function(title, link, description, siteName) {
   siteName    = (siteName !== undefined)    ? siteName    : title;
 
   return {
-    twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(link)+"&source=tweetbutton&text="+encodeURIComponent()+"&link="+encodeURIComponent(link),
+    twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(link)+"&source=tweetbutton&text="+encodeURIComponent(description)+"&link="+encodeURIComponent(link),
     facebook: "http://www.facebook.com/sharer.php?u="+encodeURIComponent(link),
     gplus: "https://plus.google.com/share?link="+encodeURIComponent(link),
     whatsapp: 'whatsapp://send?text=' +encodeURIComponent(title + ' [' + link + ']'),
