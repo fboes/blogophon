@@ -56,18 +56,18 @@ var Post = function (filename, markdown, meta) {
         .replace(/(<\/?h)2/g,'$13')
         .replace(/(<\/?h)1/g,'$12')
         .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
-        .replace(/(<img)/,'$1 itemprop="image"')
-        .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 height="$2" width="$3"')
-        // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
-        .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
         .replace(
           /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1">$2</iframe></div>'
+          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><img src="http://img.youtube.com/vi/$1/default.jpg" alt="$2" /></iframe></div>'
         )
         .replace(
           /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
           '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1">$2</iframe></div>'
         )
+        .replace(/(<img)/,'$1 itemprop="image"')
+        .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 height="$2" width="$3"')
+        // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
+        .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
         .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
         .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
         .trim()
@@ -178,6 +178,9 @@ var Post = function (filename, markdown, meta) {
     if (match) {
       meta.Image = match[1];
     }
+  }
+  if (meta.Image && !meta.Image.match(/^http/)) {
+    meta.Image = config.baseUrl + meta.Image;
   }
   if (!meta.Twitter) {
     meta.Twitter = meta.Title;
