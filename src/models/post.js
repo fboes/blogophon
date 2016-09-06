@@ -169,7 +169,6 @@ var Post = function (filename, markdown, meta) {
       .replace(/http(s)?:\S+/g, '')
       .niceShorten(160)
     ;
-    console.log(meta.Description);
   }
   if (!meta.Author) {
     meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
