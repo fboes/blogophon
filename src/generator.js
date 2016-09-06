@@ -15,6 +15,7 @@ var translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
 var BlogophonUrls  = require('./blogophon-urls');
 var index          = require('./index');
+var hashes         = require('./models/hashes');
 
 /**
  * Generator used for creating the blog.
@@ -23,6 +24,7 @@ var index          = require('./index');
 var Generator = {
   strings: translations(config.language).getAll(),
   currentIndex: null,
+  hashes: hashes(),
 
   /**
    * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.
@@ -57,42 +59,22 @@ var Generator = {
   },
 
   /**
-   * Get all articles hashes
-   * @param  {Boolean} force [description]
-   * @return {Object}        [description]
-   */
-  getHashesOfArticles: function (force) {
-    if (force === undefined || !force) {
-      try {
-        return require('../user/hashes.json');
-      } catch (e) {
-        return {};
-      }
-    }
-    return {};
-  },
-
-  /**
    * Get all {Post} from `index` and generate HTML pages.
    * @return {Promise} with first parameter of `resolve` being the list of files generated.
    */
   buildAllArticles: function( force ) {
     var allPosts = Generator.currentIndex.getPosts();
     var skipped = 0;
-    var hashes = Generator.getHashesOfArticles(force);
     var generatedArticles = [];
 
     return new Promise (
       function(resolve, reject) {
         // Making promises
         var promises = allPosts.map(function(post) {
-          var currentHash = post.hash;
-          if (hashes[post.meta.Url] !== undefined && hashes[post.meta.Url] === currentHash) {
+          if (!force && Generator.hashes.isHashed(post.meta.Url, post.hash)) {
             skipped++;
           } else {
-            hashes[post.meta.Url] = currentHash;
             generatedArticles.push(post.meta.Url);
-
             return Generator.buildSingleArticle(post);
           }
         });
@@ -100,7 +82,7 @@ var Generator = {
         Promise
           .all(promises)
           .then(function() {
-            fs.writeFileSync('./user/hashes.json', JSON.stringify(hashes, undefined, 2));
+            Generator.hashes.save();
             console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
             resolve(generatedArticles);
           })
@@ -128,6 +110,9 @@ var Generator = {
           },Mustache.partials), function(err) {
             if (err) {
               reject(err);
+            }
+            if (Generator.hashes) {
+              Generator.hashes.update(post.meta.Url, post.hash);
             }
             resolve(post.meta.Filename);
           });
@@ -262,7 +247,7 @@ var Generator = {
             fs.ensureDirSync(path.dirname(BlogophonUrls.getFileOfAuthor(name)));
             return fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
               config: config,
-              index: authorPages[name],
+              index: authors[name],
               meta:  {
                 title      : Generator.strings.author.sprintf(name),
                 absoluteUrl: BlogophonUrls.getAbsoluteUrlOfAuthor(name)
