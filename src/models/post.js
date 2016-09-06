@@ -205,7 +205,7 @@ var Post = function(filename, markdown, meta) {
     }
   }
 
-  var share = shareLinks( meta.Title, meta.Twitter, meta.AbsoluteUrl, config.name);
+  var share = shareLinks( meta.Title, meta.AbsoluteUrl, meta.Twitter, config.name);
   var hashOfData = crypto.createHash('md5').update(JSON.stringify([markdown,share,meta,html,htmlTeaser])).digest('hex');
 
   return {
