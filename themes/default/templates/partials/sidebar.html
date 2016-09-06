@@ -14,16 +14,16 @@
 
     <h3>Suche</h3>
     <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.baseUrl}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
-        <input type="text" value="" name="q">
+        <input type="text" name="q">
       <input type="submit" value="Suche">
     </form>
 
     <h3>Abonnement</h3>
     <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
     <ul>
-      <li><a type="application/rss+xml" rel="alternate" href="{{config.baseUrl}}{{config.basePath}}posts.rss">RSS-Feed</a></li>
-      <li><a type="application/atom+xml" rel="alternate" href="{{config.baseUrl}}{{config.basePath}}posts.atom">ATOM-Feed</a></li>
-      <li><a type="application/json" rel="alternate" href="{{config.baseUrl}}{{config.basePath}}rss.json">RSS-JS / JSON</a></li>
+      <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">RSS-Feed</a></li>
+      <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
+      <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
     </ul>
   </div>
 </aside>

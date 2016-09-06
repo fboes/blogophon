@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{config.language}}">
   <title>{{config.name}}</title>
-  <link href="{{config.baseUrl}}{{config.basePath}}" />
-  <id>{{config.baseUrl}}{{config.basePath}}</id>
+  <link href="{{config.absoluteBasePath}}" />
+  <id>{{config.absoluteBasePath}}</id>
   <updated>{{pubDate}}</updated>
-  <link href="{{config.baseUrl}}{{config.basePath}}posts.atom" rel="self" />
+  <link href="{{config.absoluteBasePath}}posts.atom" rel="self" />
   <author>
     <name>{{config.name}}</name>
   </author>
   {{#index}}
-    <entry xml:lang="{{meta.Language}}" xml:base="{{config.baseUrl}}{{config.basePath}}">
+    <entry xml:lang="{{meta.Language}}" xml:base="{{config.absoluteBasePath}}">
       <title>{{meta.Title}}</title>
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
