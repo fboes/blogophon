@@ -162,7 +162,14 @@ var Post = function (filename, markdown, meta) {
     html         = internal.galleryHtml(html);
   }
   if (meta.Description !== undefined) {
-    meta.Description = meta.Description.replace(/>/g,' ').replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1').replace(/\s\s+/g, ' ').niceShorten(160);
+    meta.Description = meta.Description
+      .replace(/>/g,' ')
+      .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
+      .replace(/\s\s+/g, ' ')
+      .replace(/http(s)?:\S+/g, '')
+      .niceShorten(160)
+    ;
+    console.log(meta.Description);
   }
   if (!meta.Author) {
     meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
