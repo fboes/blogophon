@@ -45,7 +45,7 @@
     return this.toLowerCase()
       .replace(/[äåæ]/g,'ae')
       .replace(/[áàâ]/g,'a')
-      .replace(/[öø]/g,'oe')
+      .replace(/[öøœ]/g,'oe')
       .replace(/[óòô]/g,'o')
       .replace(/[ü]/g,'ue')
       .replace(/[úùû]/g,'u')
