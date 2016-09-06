@@ -58,7 +58,7 @@ var Post = function (filename, markdown, meta) {
         .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
         .replace(
           /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><img src="http://img.youtube.com/vi/$1/default.jpg" alt="$2" /></iframe></div>'
+          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><img src="http://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></iframe></div>'
         )
         .replace(
           /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
