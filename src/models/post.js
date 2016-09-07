@@ -155,7 +155,7 @@ var Post = function(filename, markdown, meta) {
   if (!meta.Classes) {
     meta.Classes = 'Normal article';
   }
-  meta.Classes = meta.Classes.trim().split(/,\s+/).map(function(c) {
+  meta.Classes = meta.Classes.trim().split(/,\s*/).map(function(c) {
     return c.asciify();
   });
   if (meta.Classes.indexOf('images') >= 0) {
