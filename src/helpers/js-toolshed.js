@@ -42,18 +42,20 @@
    * @return {String} [description]
    */
   String.prototype.asciify = function() {
-    return this.toLowerCase()
-      .replace(/[äåæ]/g,'ae')
-      .replace(/[áàâ]/g,'a')
-      .replace(/[öøœ]/g,'oe')
-      .replace(/[óòô]/g,'o')
-      .replace(/[ü]/g,'ue')
-      .replace(/[úùû]/g,'u')
-      .replace(/[ëéèê]/g,'e')
-      .replace(/[ñ]/g,'n')
-      .replace(/[ß]/g,'ss')
-      .replace(/[^a-z0-9\-]/g,'-')
-    ;
+    return this.toLowerCase().replace(/[äåæáàâãöøœóòôõüúùûëéèêïíìîÿýñß]/g, function(s) {
+      return s.replace(/[äåæ]/g,'ae')
+        .replace(/[áàâã]/,'a')
+        .replace(/[öøœ]/,'oe')
+        .replace(/[óòôõ]/,'o')
+        .replace(/[ü]/,'ue')
+        .replace(/[úùû]/,'u')
+        .replace(/[ëéèê]/,'e')
+        .replace(/[ïíìî]/,'i')
+        .replace(/[ÿý]/,'y')
+        .replace(/[ñ]/,'n')
+        .replace(/[ß]/,'ss')
+      ;
+    }).replace(/[^a-z0-9\-]/g,'-');
   };
 
   /**
