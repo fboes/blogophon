@@ -62,7 +62,7 @@ var BlogophonConsole = function() {
         .trim()
         .toLowerCase()
         .asciify()
-        .replace(/^(der|die|d(a|e|o)s|eine?|a|the|el|las?|los)\—/,'')
+        .replace(/(^|\-)(der|die|d(a|o|e)s|eine?|a|the|el|las?|los)\-/g,'$1')
         .replace(/(^[\-]+|[\-]+$)/g,'')
         .replace(/([\-])[\-]+/g,'$1')
         .replace(/\-(md~?)$/,'.$1')
