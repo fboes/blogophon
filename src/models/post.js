@@ -144,7 +144,7 @@ var Post = function(filename, markdown, meta) {
     meta.Title = markdown.split(/\n/)[0];
   }
   if (meta.Keywords !== undefined) {
-    meta.Tags = meta.Keywords.trim().split(/,\s+/).map(function(tag){
+    meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
       return {
         title: tag,
         id: String(tag).asciify(),
