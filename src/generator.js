@@ -413,7 +413,9 @@ var Generator = {
   deploy: function() {
     var shell = require('shelljs');
     if (config.deployCmd) {
+      console.log('Deploying...');
       shell.exec(config.deployCmd);
+      console.log('Finished deploying');
     }
     return true;
   }
