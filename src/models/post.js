@@ -66,7 +66,7 @@ var Post = function(filename, markdown, meta) {
           '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1">$2</iframe></div>'
         )
         .replace(/(<img)/,'$1 itemprop="image"')
-        .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 height="$2" width="$3"')
+        .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
         // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
         .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
         .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
