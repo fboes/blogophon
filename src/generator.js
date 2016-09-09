@@ -12,13 +12,10 @@ var rssJs          = require('./models/rss-js');
 var manifest       = require('./models/manifest');
 var translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
-
-var PostUrl   = require('./helpers/post-url');
-var IndexUrl  = require('./helpers/index-url');
-var TagUrl    = require('./helpers/tag-url');
-var AuthorUrl = require('./helpers/author-url');
-
-
+var PostUrl        = require('./helpers/post-url');
+var IndexUrl       = require('./helpers/index-url');
+var TagUrl         = require('./helpers/tag-url');
+var AuthorUrl      = require('./helpers/author-url');
 var index          = require('./index');
 var hashes         = require('./models/hashes');
 
