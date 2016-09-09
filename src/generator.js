@@ -12,10 +12,7 @@ var rssJs          = require('./models/rss-js');
 var manifest       = require('./models/manifest');
 var translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
-var PostUrl        = require('./helpers/post-url');
 var IndexUrl       = require('./helpers/index-url');
-var TagUrl         = require('./helpers/tag-url');
-var AuthorUrl      = require('./helpers/author-url');
 var index          = require('./index');
 var hashes         = require('./models/hashes');
 
@@ -242,7 +239,7 @@ var Generator = {
         var authorPages = Object.keys(authors).sort().map(function(name) {
           return {
             title: name,
-            url  : new AuthorUrl(name).relativeUrl()
+            url  : authors[name].urlObj.relativeUrl()
           };
         });
 
@@ -250,14 +247,13 @@ var Generator = {
           fs.ensureDirSync(config.directories.htdocs + '/authored-by');
 
           var promises = Object.keys(authors).map(function(name) {
-            var authorUrl = new AuthorUrl(name);
-            fs.ensureDirSync(authorUrl.dirname());
-            return fs.writeFile(authorUrl.filename(), Mustache.render(Mustache.templates.index, {
+            fs.ensureDirSync(authors[name].urlObj.dirname());
+            return fs.writeFile(authors[name].urlObj.filename(), Mustache.render(Mustache.templates.index, {
               config: config,
               index: authors[name],
               meta:  {
                 title      : Generator.strings.author.sprintf(name),
-                absoluteUrl: authorUrl.absoluteUrl()
+                absoluteUrl: authors[name].urlObj.absoluteUrl()
               }
             }, Mustache.partials));
           });

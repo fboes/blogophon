@@ -5,6 +5,7 @@ var markdownConvert = require('marked');
 var crypto          = require('crypto');
 var PostUrl         = require('../helpers/post-url');
 var TagUrl          = require('../helpers/tag-url');
+var AuthorUrl       = require('../helpers/author-url');
 var toolshed        = require('../helpers/js-toolshed');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
@@ -184,10 +185,11 @@ var Post = function(filename, markdown, meta) {
   }
   var metaAuthor = meta.Author.match(/^(.+?)(?:\s<(.+)>)?$/);
   if (metaAuthor) {
-    meta.AuthorName  = metaAuthor[1];
-    meta.AuthorEmail = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
-    meta.Gravatar    = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
+    meta.AuthorName   = metaAuthor[1];
+    meta.AuthorEmail  = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
+    meta.Gravatar     = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
   }
+  meta.AuthorUrlObj = new AuthorUrl(meta.AuthorName);
   if (!meta.Image) {
     var match = html.match(/<img.+?src="(.+?)"/);
     if (match) {
