@@ -18,7 +18,7 @@ exports.testErrors = function(test) {
 
 exports.testStructure = function(test) {
   'use strict';
-  test.expect(19);
+  test.expect(20);
 
   var testPost = post('test.md', 'Test', {
     Description: 'Description',
@@ -34,6 +34,7 @@ exports.testStructure = function(test) {
   test.ok(testPost.meta.Date);
   test.ok(testPost.meta.DateModified);
   test.ok(testPost.meta.Url);
+  test.ok(testPost.meta.AbsoluteUrl);
   test.ok(testPost.hash);
   test.ok(testPost.hash.match(/^[a-z0-9]+$/));
   test.ok(testPost.html);

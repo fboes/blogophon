@@ -4,7 +4,6 @@ var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
 var glob           = require("glob");
-var path           = require('path');
 var gm             = require('gm').subClass({imageMagick: true});
 var dateFormat     = require('dateformat');
 var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
@@ -13,7 +12,13 @@ var rssJs          = require('./models/rss-js');
 var manifest       = require('./models/manifest');
 var translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
-var BlogophonUrls  = require('./blogophon-urls');
+
+var PostUrl   = require('./helpers/post-url');
+var IndexUrl  = require('./helpers/index-url');
+var TagUrl    = require('./helpers/tag-url');
+var AuthorUrl = require('./helpers/author-url');
+
+
 var index          = require('./index');
 var hashes         = require('./models/hashes');
 
@@ -66,6 +71,10 @@ var Generator = {
     var allPosts = Generator.currentIndex.getPosts();
     var skipped = 0;
     var generatedArticles = [];
+
+    if (force) {
+      fs.removeSync(config.directories.htdocs + '/posts/*');
+    }
 
     return new Promise (
       function(resolve, reject) {
@@ -160,11 +169,11 @@ var Generator = {
             curPageObj.config = config;
             curPageObj.meta   = {
               title      : (curPageObj.currentPage === 1) ? Generator.strings.index : Generator.strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
-              absoluteUrl: BlogophonUrls.getAbsoluteUrlOfIndex(curPageObj.currentUrl)
+              absoluteUrl: new IndexUrl(curPageObj.currentUrl).absoluteUrl()
             };
-            curPageObj.prevUrl = BlogophonUrls.getUrlOfIndex(curPageObj.prevUrl);
-            curPageObj.nextUrl = BlogophonUrls.getUrlOfIndex(curPageObj.nextUrl);
-            promises.push(fs.writeFile(BlogophonUrls.getFileOfIndex(curPageObj.currentUrl), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+            curPageObj.prevUrl = new IndexUrl(curPageObj.prevUrl).relativeUrl();
+            curPageObj.nextUrl = new IndexUrl(curPageObj.nextUrl).relativeUrl();
+            promises.push(fs.writeFile(new IndexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
           }
           Promise
             .all(promises)
@@ -190,7 +199,7 @@ var Generator = {
         var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
-            url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
+            url  : new TagUrl(tags[key].title).relativeUrl()
           };
         });
 
@@ -199,15 +208,16 @@ var Generator = {
 
           var promises = Object.keys(tags).map(function(key) {
             fs.ensureDirSync(config.directories.htdocs + '/tagged/' + tags[key].id);
+            tags[key].objUrl = new TagUrl(tags[key].title);
             tags[key].config = config;
             tags[key].meta   = {
               title      : Generator.strings.tag.sprintf(tags[key].title),
-              absoluteUrl: BlogophonUrls.getAbsoluteUrlOfTagged(tags[key].id)
+              absoluteUrl: tags[key].objUrl.absoluteUrl()
             };
-            return fs.writeFile(BlogophonUrls.getFileOfTagged(tags[key].id), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
+            return fs.writeFile(tags[key].objUrl.filename(), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
           });
 
-          promises.push(fs.writeFile( BlogophonUrls.getFileOfIndex('tagged/index.html'), Mustache.render(Mustache.templates.tags, {
+          promises.push(fs.writeFile( new IndexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
             index: tagPages,
             config: config
           }, Mustache.partials)));
@@ -236,7 +246,7 @@ var Generator = {
         var authorPages = Object.keys(authors).sort().map(function(name) {
           return {
             title: name,
-            url  : BlogophonUrls.getUrlOfAuthor(name)
+            url  : new AuthorUrl(name).relativeUrl()
           };
         });
 
@@ -244,18 +254,19 @@ var Generator = {
           fs.ensureDirSync(config.directories.htdocs + '/authored-by');
 
           var promises = Object.keys(authors).map(function(name) {
-            fs.ensureDirSync(path.dirname(BlogophonUrls.getFileOfAuthor(name)));
-            return fs.writeFile(BlogophonUrls.getFileOfAuthor(name), Mustache.render(Mustache.templates.index, {
+            var authorUrl = new AuthorUrl(name);
+            fs.ensureDirSync(authorUrl.dirname());
+            return fs.writeFile(authorUrl.filename(), Mustache.render(Mustache.templates.index, {
               config: config,
               index: authors[name],
               meta:  {
                 title      : Generator.strings.author.sprintf(name),
-                absoluteUrl: BlogophonUrls.getAbsoluteUrlOfAuthor(name)
+                absoluteUrl: authorUrl.absoluteUrl()
               }
             }, Mustache.partials));
           });
 
-          promises.push(fs.writeFile( BlogophonUrls.getFileOfIndex('authored-by/index.html'), Mustache.render(Mustache.templates.authors, {
+          promises.push(fs.writeFile( new IndexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
             index: authorPages,
             config: config
           }, Mustache.partials)));
@@ -284,33 +295,33 @@ var Generator = {
         var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
-            url  : BlogophonUrls.getUrlOfTagged(tags[key].title)
+            url  : new TagUrl(tags[key].title).relativeUrl()
           };
         });
 
         var promises = [
-          fs.writeFile( BlogophonUrls.getFileOfIndex('404.html'), Mustache.render(Mustache.templates.four, {
+          fs.writeFile( new IndexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
             index: Generator.currentIndex.getPosts(5),
             config: config
           }, Mustache.partials)),
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('posts.rss'), Mustache.render(Mustache.templates.rss, {
+          fs.writeFile( new IndexUrl('posts.rss').filename(), Mustache.render(Mustache.templates.rss, {
             index: Generator.currentIndex.getPosts(10),
             pubDate: dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
             config: config
           })),
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('rss.json'), JSON.stringify(rssJs(Generator.currentIndex.getPosts(20), dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), config), undefined, 2)),
+          fs.writeFile( new IndexUrl('rss.json').filename(), JSON.stringify(rssJs(Generator.currentIndex.getPosts(20), dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), config), undefined, 2)),
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('manifest.json'), JSON.stringify(manifest(config), undefined, 2)),
+          fs.writeFile( new IndexUrl('manifest.json').filename(), JSON.stringify(manifest(config), undefined, 2)),
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('posts.atom'), Mustache.render(Mustache.templates.atom, {
+          fs.writeFile( new IndexUrl('posts.atom').filename(), Mustache.render(Mustache.templates.atom, {
             index: Generator.currentIndex.getPosts(10),
             pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
             config: config
           })),
 
-          fs.writeFile( BlogophonUrls.getFileOfIndex('sitemap.xml'), Mustache.render(Mustache.templates.sitemap, {
+          fs.writeFile( new IndexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
             index: Generator.currentIndex.getPosts(),
             tagPages: tagPages,
             pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),

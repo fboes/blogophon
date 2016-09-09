@@ -3,7 +3,8 @@
 var config          = require('../config');
 var markdownConvert = require('marked');
 var crypto          = require('crypto');
-var blogophonUrls   = require('../blogophon-urls');
+var PostUrl         = require('../helpers/post-url');
+var TagUrl          = require('../helpers/tag-url');
 var toolshed        = require('../helpers/js-toolshed');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
@@ -64,6 +65,10 @@ var Post = function(filename, markdown, meta) {
         .replace(
           /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
           '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
+        )
+        .replace(
+          /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+          '<img src="https://i.giphy.com/$1.gif" alt="" />'
         )
         .replace(/(<img)/,'$1 itemprop="image"')
         .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
@@ -129,9 +134,11 @@ var Post = function(filename, markdown, meta) {
     meta.Language = config.language;
   }
 
-  meta.Url         = blogophonUrls.getUrlOfPost(filename);
-  meta.AbsoluteUrl = blogophonUrls.getAbsoluteUrlOfPost(filename);
-  meta.Filename    = blogophonUrls.getFileOfPost(filename);
+  var postUrlObj   = new PostUrl(filename);
+
+  meta.Url         = postUrlObj.relativeUrl();
+  meta.AbsoluteUrl = postUrlObj.absoluteUrl();
+  meta.Filename    = postUrlObj.filename();
 
   meta.Created     = blogophonDate(meta.Date, meta.Language);
   meta.Modified    = blogophonDate(meta.DateModified, meta.Language);
@@ -144,10 +151,12 @@ var Post = function(filename, markdown, meta) {
   }
   if (meta.Keywords !== undefined) {
     meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
+      var tagUrlObj = new TagUrl(tag);
       return {
         title: tag,
         id: String(tag).asciify(),
-        url: blogophonUrls.getUrlOfTagged(tag),
+        url: tagUrlObj.relativeUrl(),
+        urlObj: tagUrlObj
       };
     });
   }
@@ -216,6 +225,7 @@ var Post = function(filename, markdown, meta) {
     safeHtml: internal.makeSafeHtml(html),
     safeHtmlTeaser: internal.makeSafeHtml(htmlTeaser),
     hash:hashOfData,
+    urlObj: postUrlObj,
     /**
      * [ampHtml description]
      * @return {[type]} [description]
