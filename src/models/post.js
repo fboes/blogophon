@@ -14,105 +14,7 @@ var blogophonDate   = require('../models/blogophon-date');
  * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
-var Post = function(filename, markdown, meta) {
-  var internal = {
-    /**
-     * [markyMark description]
-     * @param  {[type]} html   [description]
-     * @param  {[type]} relUrl [description]
-     * @return {[type]}        [description]
-     */
-    markyMark: function(html, relUrl) {
-      if (relUrl) {
-        html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
-      }
-      var entityMap = {
-        '...': '…',
-        '… …': '…',
-        '(C)': '©',
-        '(R)': '®',
-        '(TM)': '™',
-        '(+-)': '±',
-        '(1/4)': '¼',
-        '(1/2)': '½',
-        '(3/4)': '¾',
-        '->': '→',
-        //'=>': '⇒',
-        '<-': '←',
-        //'<=': '⇐'
-      };
-      html = html.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|->|=>|<-|<=)/g, function(s) {
-        return entityMap[s];
-      });
-      html = html
-        .replace(/\s--\s/g, ' — ')
-        .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
-        .replace(/(\s)-(\s)/g,'$1–$2')
-        //.replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
-        .replace(/([^\S])"(\S.*?\S)"([^\S])/g,'$1„$2“$3')
-        .replace(/([^\S])'(\S.*?\S)'([^\S])/g,'$1‚$2‘$3')
-      ;
-
-      return markdownConvert(html)
-        .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
-        .replace(/(<\/?h)3/g,'$14')
-        .replace(/(<\/?h)2/g,'$13')
-        .replace(/(<\/?h)1/g,'$12')
-        .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
-        .replace(
-          /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="http://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
-        )
-        .replace(
-          /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
-        )
-        .replace(
-          /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<img src="https://i.giphy.com/$1.gif" alt="" />'
-        )
-        .replace(/(<img)/,'$1 itemprop="image"')
-        .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
-        // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
-        .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
-        .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
-        .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
-        .trim()
-      ;
-    },
-    /**
-     * [galleryHtml description]
-     * @param  {[type]} html [description]
-     * @return {[type]}      [description]
-     */
-    galleryHtml: function(html) {
-      return html
-        .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g,'<a href="$2$3" class="image">$1</a>')
-      ;
-    },
-    /**
-     * [makeSafeHtml description]
-     * @param  {[type]} html [description]
-     * @return {[type]}      [description]
-     */
-    makeSafeHtml: function(html) {
-      return html
-        .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
-        .replace(/(<\/?)iframe/g,'$1a')
-      ;
-    },
-    /**
-     * [ampifyHtml description]
-     * @param  {[type]} html [description]
-     * @return {[type]}      [description]
-     */
-    ampifyHtml: function(html) {
-      return html
-        .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
-      ;
-    }
-  };
-
+function Post (filename, markdown, meta) {
   if (!filename) {
     throw new Error('filename is empty');
   }
@@ -135,17 +37,18 @@ var Post = function(filename, markdown, meta) {
     meta.Language = config.language;
   }
 
-  var postUrlObj   = new PostUrl(filename);
-
-  meta.Url         = postUrlObj.relativeUrl();
-  meta.AbsoluteUrl = postUrlObj.absoluteUrl();
-  meta.Filename    = postUrlObj.filename();
+  this.urlObj = new PostUrl(filename);
+  if (this.urlObj) {
+    meta.Url         = this.urlObj.relativeUrl();
+    meta.AbsoluteUrl = this.urlObj.absoluteUrl();
+    meta.Filename    = this.urlObj.filename();
+  }
 
   meta.Created     = blogophonDate(meta.Date, meta.Language);
   meta.Modified    = blogophonDate(meta.DateModified, meta.Language);
 
-  var htmlTeaser   = internal.markyMark(meta.Description.trim(), meta.Url);
-  var html         = internal.markyMark(markdown, meta.Url);
+  var htmlTeaser   = this.markyMark(meta.Description.trim(), meta.Url);
+  var html         = this.markyMark(markdown, meta.Url);
 
   if (!meta.Title) {
     meta.Title = markdown.split(/\n/)[0];
@@ -168,8 +71,8 @@ var Post = function(filename, markdown, meta) {
     return c.asciify();
   });
   if (meta.Classes.indexOf('images') >= 0) {
-    htmlTeaser   = internal.galleryHtml(htmlTeaser);
-    html         = internal.galleryHtml(html);
+    htmlTeaser   = this.galleryHtml(htmlTeaser);
+    html         = this.galleryHtml(html);
   }
   if (meta.Description !== undefined) {
     meta.Description = meta.Description
@@ -215,41 +118,140 @@ var Post = function(filename, markdown, meta) {
     }
   }
 
-  var share = shareLinks( meta.Title, meta.AbsoluteUrl, meta.Twitter, config.name);
-  var hashOfData = crypto.createHash('md5').update(JSON.stringify([markdown,share,meta,html,htmlTeaser])).digest('hex');
+  this.markdown   = markdown;
+  this.meta       = meta;
+  this.html       = html;
+  this.htmlTeaser = htmlTeaser;
+  this.share      = shareLinks( meta.Title, meta.AbsoluteUrl, meta.Twitter, config.name);
+  this.hash       = crypto.createHash('md5').update(JSON.stringify([markdown,this.share,meta,html,htmlTeaser])).digest('hex');
+  this.safeHtml       = this.makeSafeHtml(html);
+  this.safeHtmlTeaser = this.makeSafeHtml(htmlTeaser);
+  this.hash   = this.hash;
+  return this;
+}
 
-  return {
-    markdown: markdown,
-    share: share,
-    meta: meta,
-    html: html,
-    htmlTeaser: htmlTeaser,
-    safeHtml: internal.makeSafeHtml(html),
-    safeHtmlTeaser: internal.makeSafeHtml(htmlTeaser),
-    hash:hashOfData,
-    urlObj: postUrlObj,
-    /**
-     * [ampHtml description]
-     * @return {[type]} [description]
-     */
-    ampHtml: function() {
-      return internal.ampifyHtml(html);
-    },
-    /**
-     * [ampHtmlTeaser description]
-     * @return {[type]} [description]
-     */
-    ampHtmlTeaser: function() {
-      return internal.ampifyHtml(htmlTeaser);
-    },
-    /**
-     * [toString description]
-     * @return {[type]} [description]
-     */
-    toString: function() {
-      return hashOfData;
-    }
+/**
+ * [markyMark description]
+ * @param  {[type]} html   [description]
+ * @param  {[type]} relUrl [description]
+ * @return {[type]}        [description]
+ */
+Post.prototype.markyMark = function(html, relUrl) {
+  if (relUrl) {
+    html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
+  }
+  var entityMap = {
+    '...': '…',
+    '… …': '…',
+    '(C)': '©',
+    '(R)': '®',
+    '(TM)': '™',
+    '(+-)': '±',
+    '(1/4)': '¼',
+    '(1/2)': '½',
+    '(3/4)': '¾',
+    '->': '→',
+    //'=>': '⇒',
+    '<-': '←',
+    //'<=': '⇐'
   };
+  html = html.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|->|=>|<-|<=)/g, function(s) {
+    return entityMap[s];
+  });
+  html = html
+    .replace(/\s--\s/g, ' — ')
+    .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
+    .replace(/(\s)-(\s)/g,'$1–$2')
+    //.replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
+    .replace(/([^\S])"(\S.*?\S)"([^\S])/g,'$1„$2“$3')
+    .replace(/([^\S])'(\S.*?\S)'([^\S])/g,'$1‚$2‘$3')
+  ;
+
+  return markdownConvert(html)
+    .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
+    .replace(/(<\/?h)3/g,'$14')
+    .replace(/(<\/?h)2/g,'$13')
+    .replace(/(<\/?h)1/g,'$12')
+    .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
+    .replace(
+      /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+      '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="http://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
+    )
+    .replace(
+      /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+      '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
+    )
+    .replace(
+      /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+      '<img src="https://i.giphy.com/$1.gif" alt="" />'
+    )
+    .replace(/(<img)/,'$1 itemprop="image"')
+    .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
+    // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
+    .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
+    .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
+    .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
+    .trim()
+  ;
 };
+
+/**
+ * [galleryHtml description]
+ * @param  {[type]} html [description]
+ * @return {[type]}      [description]
+ */
+Post.prototype.galleryHtml = function(html) {
+  return html
+    .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g,'<a href="$2$3" class="image">$1</a>')
+  ;
+};
+
+/**
+ * [makeSafeHtml description]
+ * @param  {[type]} html [description]
+ * @return {[type]}      [description]
+ */
+Post.prototype.makeSafeHtml = function(html) {
+  return html
+    .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
+    .replace(/(<\/?)iframe/g,'$1a')
+  ;
+};
+
+/**
+ * [ampifyHtml description]
+ * @param  {[type]} html [description]
+ * @return {[type]}      [description]
+ */
+Post.prototype.ampifyHtml = function(html) {
+  return html
+    .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
+  ;
+};
+
+/**
+ * [ampHtml description]
+ * @return {[type]} [description]
+ */
+Post.prototype.ampHtml = function() {
+  return this.ampifyHtml(this.html);
+};
+
+/**
+ * [ampHtmlTeaser description]
+ * @return {[type]} [description]
+ */
+Post.prototype.ampHtmlTeaser = function() {
+  return this.ampifyHtml(this.htmlTeaser);
+};
+
+/**
+ * [toString description]
+ * @return {[type]} [description]
+ */
+Post.prototype.toString = function() {
+  return this.hash;
+};
+
 
 module.exports = Post;

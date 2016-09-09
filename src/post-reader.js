@@ -6,7 +6,7 @@ var fs             = require('fs');
 var readline       = require("readline");
 var yamljs         = require('yamljs');
 var util           = require('util');
-var post           = require('./models/post');
+var Post           = require('./models/post');
 
 /**
  * This class reads Markdown files into an object.
@@ -78,7 +78,7 @@ var PostReader = function(file) {
         }
 
         //console.log(exports);
-        resolve( post(file, exports.markdown, exports.meta) );
+        resolve( new Post(file, exports.markdown, exports.meta) );
       });
     }
   );

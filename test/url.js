@@ -21,7 +21,7 @@ exports.testExtender = function(test) {
   test.ok(!url.dirname().match(/index\.html$/));
 
   test.done();
-}
+};
 
 exports.testBasicTransformation = function(test) {
   'use strict';
