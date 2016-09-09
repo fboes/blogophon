@@ -4,9 +4,9 @@
  * Translate strings.
  * @constructor
  */
-var Translations = function(language) {
+var Translations = function (language) {
   // Todo: Move languages to separate files
-  var translations = {
+  this.translations = {
     en: {
       'index': 'Home',
       'page': 'Page %d/%d',
@@ -39,39 +39,42 @@ var Translations = function(language) {
     }
   };
 
-  if (!translations[language]) {
+  if (!this.translations[language]) {
     throw new Error("Missing locale "+language);
   }
 
-  var currentLanguage = translations[language];
+  this.language = language;
+  this.currentLanguage = this.translations[language];
 
-  return {
-    /**
-     * [availableLanguageCodes description]
-     * @return {[type]} [description]
-     */
-    availableLanguageCodes: function() {
-      return Object.keys(translations);
-    },
-    /**
-     * [getAll description]
-     * @return {[type]} [description]
-     */
-    getAll: function() {
-      return currentLanguage;
-    },
-    /**
-     * [getString description]
-     * @param  {[type]} key [description]
-     * @return {[type]}     [description]
-     */
-    getString: function(key) {
-        if (!currentLanguage[key]) {
-          throw new Error("Missing string key "+key+" in locale "+language);
-        }
-        return currentLanguage[key];
+  return this;
+};
+
+/**
+ * [availableLanguageCodes description]
+ * @return {[type]} [description]
+ */
+Translations.prototype.availableLanguageCodes = function() {
+  return Object.keys(this.translations);
+};
+
+/**
+ * [getAll description]
+ * @return {[type]} [description]
+ */
+Translations.prototype.getAll = function() {
+  return this.currentLanguage;
+};
+
+/**
+ * [getString description]
+ * @param  {[type]} key [description]
+ * @return {[type]}     [description]
+ */
+Translations.prototype.getString = function(key) {
+    if (!this.currentLanguage[key]) {
+      throw new Error("Missing string key "+key+" in locale "+this.language);
     }
-  };
+    return this.currentLanguage[key];
 };
 
 module.exports = Translations;

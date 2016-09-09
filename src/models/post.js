@@ -14,7 +14,7 @@ var blogophonDate   = require('../models/blogophon-date');
  * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
-function Post (filename, markdown, meta) {
+var Post = function (filename, markdown, meta) {
   if (!filename) {
     throw new Error('filename is empty');
   }
@@ -128,7 +128,7 @@ function Post (filename, markdown, meta) {
   this.safeHtmlTeaser = this.makeSafeHtml(htmlTeaser);
   this.hash   = this.hash;
   return this;
-}
+};
 
 /**
  * [markyMark description]

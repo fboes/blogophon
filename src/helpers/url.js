@@ -9,10 +9,10 @@ var path           = require('path');
  * @param  {String} identifier [description]
  * @return {Url}    [description]
  */
-function Url (identifier) {
+var Url = function (identifier) {
   this.identifier = identifier;
   return this;
-}
+};
 
 /**
  * [convert description]

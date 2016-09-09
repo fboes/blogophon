@@ -10,7 +10,7 @@ var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
 var manifest       = require('./models/manifest');
-var translations   = require('./helpers/translations');
+var Translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
 var IndexUrl       = require('./helpers/index-url');
 var index          = require('./index');
@@ -21,7 +21,7 @@ var hashes         = require('./models/hashes');
  * @constructor
  */
 var Generator = {
-  strings: translations(config.language).getAll(),
+  strings: new Translations(config.language).getAll(),
   currentIndex: null,
   hashes: hashes(),
 

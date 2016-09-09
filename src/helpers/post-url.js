@@ -6,10 +6,10 @@ var Url       = require('../helpers/url');
  * [PostUrl description]
  * @param {[type]} identifier [description]
  */
-function PostUrl(identifier) {
+var PostUrl = function (identifier) {
   Url.call(this, identifier);
   return this;
-}
+};
 PostUrl.prototype = Object.create(Url.prototype);
 PostUrl.prototype.constructor = PostUrl;
 PostUrl.prototype.convert = function () {

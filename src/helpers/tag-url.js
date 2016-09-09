@@ -6,10 +6,10 @@ var Url       = require('../helpers/url');
  * [TagUrl description]
  * @param {[type]} identifier [description]
  */
-function TagUrl(identifier) {
+var TagUrl = function (identifier) {
   Url.call(this, identifier);
   return this;
-}
+};
 TagUrl.prototype = Object.create(Url.prototype);
 TagUrl.prototype.constructor = TagUrl;
 TagUrl.prototype.convert = function () {
