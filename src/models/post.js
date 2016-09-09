@@ -59,11 +59,11 @@ var Post = function(filename, markdown, meta) {
         .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
         .replace(
           /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><img src="http://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></iframe></div>'
+          '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="http://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
         )
         .replace(
           /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-          '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1">$2</iframe></div>'
+          '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
         )
         .replace(/(<img)/,'$1 itemprop="image"')
         .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
@@ -73,7 +73,6 @@ var Post = function(filename, markdown, meta) {
         .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
         .trim()
       ;
-      //       '<div class="video-player youtube"><a href="https://www.youtube.com/embed/$2?enablejsapi=1"><img class="preview" src="http://img.youtube.com/vi/$2/sddefault.jpg" alt="" /></a><!--iframe allowfullscreen="true" src="https://www.youtube.com/embed/$2?enablejsapi=1"></iframe--></div>'
     },
     /**
      * [galleryHtml description]
