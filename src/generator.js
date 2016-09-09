@@ -199,7 +199,7 @@ var Generator = {
         var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
-            url  : new TagUrl(tags[key].title).relativeUrl()
+            url  : tags[key].urlObj.relativeUrl()
           };
         });
 
@@ -207,14 +207,13 @@ var Generator = {
           fs.ensureDirSync(config.directories.htdocs + '/tagged');
 
           var promises = Object.keys(tags).map(function(key) {
-            fs.ensureDirSync(config.directories.htdocs + '/tagged/' + tags[key].id);
-            tags[key].objUrl = new TagUrl(tags[key].title);
+            fs.ensureDirSync(tags[key].urlObj.dirname());
             tags[key].config = config;
             tags[key].meta   = {
               title      : Generator.strings.tag.sprintf(tags[key].title),
-              absoluteUrl: tags[key].objUrl.absoluteUrl()
+              absoluteUrl: tags[key].urlObj.absoluteUrl()
             };
-            return fs.writeFile(tags[key].objUrl.filename(), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
+            return fs.writeFile(tags[key].urlObj.filename(), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
           });
 
           promises.push(fs.writeFile( new IndexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
@@ -295,7 +294,7 @@ var Generator = {
         var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
-            url  : new TagUrl(tags[key].title).relativeUrl()
+            url  : tags[key].urlObj.relativeUrl()
           };
         });
 
