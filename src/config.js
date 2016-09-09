@@ -6,7 +6,7 @@ var pkg            = require('../package.json');
 /**
  * Returns an object with all configuration settings found in `package.json` and `config.json`.
  */
-var config         = {};
+var config = {};
 try {
   config = require('../user/config.json');
 } catch (e) {
