@@ -142,9 +142,9 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
 
 /**
  * [markyMark description]
- * @param  {[type]} html   [description]
- * @param  {[type]} relUrl [description]
- * @return {[type]}        [description]
+ * @param  {String} html   [description]
+ * @param  {String} relUrl [description]
+ * @return {String}        [description]
  */
 Post.prototype.markyMark = function(html, relUrl) {
   if (relUrl) {
@@ -207,8 +207,8 @@ Post.prototype.markyMark = function(html, relUrl) {
 
 /**
  * [galleryHtml description]
- * @param  {[type]} html [description]
- * @return {[type]}      [description]
+ * @param  {String} html [description]
+ * @return {String}      [description]
  */
 Post.prototype.galleryHtml = function(html) {
   return html
@@ -218,8 +218,8 @@ Post.prototype.galleryHtml = function(html) {
 
 /**
  * [makeSafeHtml description]
- * @param  {[type]} html [description]
- * @return {[type]}      [description]
+ * @param  {String} html [description]
+ * @return {String}      [description]
  */
 Post.prototype.makeSafeHtml = function(html) {
   return html
@@ -230,8 +230,8 @@ Post.prototype.makeSafeHtml = function(html) {
 
 /**
  * [ampifyHtml description]
- * @param  {[type]} html [description]
- * @return {[type]}      [description]
+ * @param  {String} html [description]
+ * @return {String}      [description]
  */
 Post.prototype.ampifyHtml = function(html) {
   return html
@@ -241,7 +241,7 @@ Post.prototype.ampifyHtml = function(html) {
 
 /**
  * [ampHtml description]
- * @return {[type]} [description]
+ * @return {String} [description]
  */
 Post.prototype.ampHtml = function() {
   return this.ampifyHtml(this.html);
@@ -249,7 +249,7 @@ Post.prototype.ampHtml = function() {
 
 /**
  * [ampHtmlTeaser description]
- * @return {[type]} [description]
+ * @return {String} [description]
  */
 Post.prototype.ampHtmlTeaser = function() {
   return this.ampifyHtml(this.htmlTeaser);
@@ -257,7 +257,7 @@ Post.prototype.ampHtmlTeaser = function() {
 
 /**
  * [toString description]
- * @return {[type]} [description]
+ * @return {String} [description]
  */
 Post.prototype.toString = function() {
   return this.hash;
