@@ -248,14 +248,12 @@ var Generator = {
 
           var promises = Object.keys(authors).map(function(name) {
             fs.ensureDirSync(authors[name].urlObj.dirname());
-            return fs.writeFile(authors[name].urlObj.filename(), Mustache.render(Mustache.templates.index, {
-              config: config,
-              index: authors[name],
-              meta:  {
-                title      : Generator.strings.author.sprintf(name),
-                absoluteUrl: authors[name].urlObj.absoluteUrl()
-              }
-            }, Mustache.partials));
+            authors[name].config = config;
+            authors[name].meta   = {
+              title      : Generator.strings.tag.sprintf(authors[name].title),
+              absoluteUrl: authors[name].urlObj.absoluteUrl()
+            };
+            return fs.writeFile(authors[name].urlObj.filename(), Mustache.render(Mustache.templates.index, authors[name], Mustache.partials));
           });
 
           promises.push(fs.writeFile( new IndexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {

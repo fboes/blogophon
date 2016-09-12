@@ -139,6 +139,7 @@ var Index = function() {
       if (!isSorted) {
         internal.sortIndex();
       }
+      tags = {};
       index.forEach(function(post){
         if (post.meta.Tags) {
           post.meta.Tags.forEach(function(tag){
@@ -161,6 +162,7 @@ var Index = function() {
       if (!isSorted) {
         internal.sortIndex();
       }
+      authors = {};
       index.forEach(function(post){
         if (post.meta.AuthorName) {
           if (authors[post.meta.AuthorName] === undefined) {
