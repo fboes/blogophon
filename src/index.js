@@ -164,9 +164,13 @@ var Index = function() {
       index.forEach(function(post){
         if (post.meta.AuthorName) {
           if (authors[post.meta.AuthorName] === undefined) {
-            authors[post.meta.AuthorName] = [];
+            authors[post.meta.AuthorName] = {
+              name:   post.meta.AuthorName,
+              urlObj: post.meta.AuthorUrlObj,
+              index:  []
+            };
           }
-          authors[post.meta.AuthorName].push(post);
+          authors[post.meta.AuthorName].index.push(post);
         }
       });
       return authors;
