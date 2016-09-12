@@ -15,6 +15,17 @@ var blogophonDate   = require('../models/blogophon-date');
  * @constructor
  */
 var Post = function (filename, markdown, meta) {
+  return this.makeMeta(filename, markdown, meta);
+};
+
+/**
+ * Convert input data into final object
+ * @param  {String} filename [description]
+ * @param  {String} markdown [description]
+ * @param  {Object} meta     [description]
+ * @return {Post}            [description]
+ */
+Post.prototype.makeMeta = function (filename, markdown, meta) {
   if (!filename) {
     throw new Error('filename is empty');
   }
@@ -118,15 +129,14 @@ var Post = function (filename, markdown, meta) {
     }
   }
 
-  this.markdown   = markdown;
-  this.meta       = meta;
-  this.html       = html;
-  this.htmlTeaser = htmlTeaser;
-  this.share      = shareLinks( meta.Title, meta.AbsoluteUrl, meta.Twitter, config.name);
-  this.hash       = crypto.createHash('md5').update(JSON.stringify([markdown,this.share,meta,html,htmlTeaser])).digest('hex');
-  this.safeHtml       = this.makeSafeHtml(html);
-  this.safeHtmlTeaser = this.makeSafeHtml(htmlTeaser);
-  this.hash   = this.hash;
+  this.markdown       = markdown;
+  this.meta           = meta;
+  this.html           = html;
+  this.htmlTeaser     = htmlTeaser;
+  this.share          = shareLinks( meta.Title, meta.AbsoluteUrl, meta.Twitter, config.name);
+  this.hash           = crypto.createHash('md5').update(JSON.stringify([this.markdown,this.share,this.meta,this.html,this.htmlTeaser])).digest('hex');
+  this.safeHtml       = this.makeSafeHtml(this.html);
+  this.safeHtmlTeaser = this.makeSafeHtml(this.htmlTeaser);
   return this;
 };
 
