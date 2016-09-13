@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+{{#post}}
+  <tile>
+    <visual lang="{{post.meta.Language}}" version="2">
+      <binding template="TileSquare150x150Text04">
+        <text id="1">{{meta.Title}}</text>
+      </binding>
+      <binding template="TileWide310x150Text03">
+        <text id="1">{{meta.Title}}</text>
+      </binding>
+    </visual>
+  </tile>
+{{/post}}

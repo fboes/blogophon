@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+   <msapplication>
+     <tile>
+        <square70x70logo src="http://cdn.3960.org/images/tile-128x128.png"/>
+        <square150x150logo src="http://cdn.3960.org/images/tile-270x270.png"/>
+        <wide310x150logo src="http://cdn.3960.org/images/tile-558x270.png"/>
+        <square310x310logo src="http://cdn.3960.org/images/tile-558x558.png"/>
+        <TileColor>{{config.themeColor}}</TileColor>
+     </tile>
+     <notification>
+        <polling-uri  src="{{config.absoluteBasePath}}notifications/livetile-1.xml"/>
+        <polling-uri2 src="{{config.absoluteBasePath}}notifications/livetile-2.xml"/>
+        <polling-uri3 src="{{config.absoluteBasePath}}notifications/livetile-3.xml"/>
+        <polling-uri4 src="{{config.absoluteBasePath}}notifications/livetile-4.xml"/>
+        <polling-uri5 src="{{config.absoluteBasePath}}notifications/livetile-5.xml"/>
+        <frequency>30</frequency>
+        <cycle>1</cycle>
+     </notification>
+   </msapplication>
+</browserconfig>

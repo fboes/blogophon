@@ -316,8 +316,21 @@ var Generator = {
             tagPages: tagPages,
             pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
             config: config
+          })),
+
+          fs.writeFile( new IndexUrl('browserconfig.xml').filename(), Mustache.render(Mustache.templates.browserconfig, {
+            config: config
           }))
         ];
+
+        fs.ensureDirSync(config.directories.htdocs + '/notifications');
+        Generator.currentIndex.getPosts(5).forEach(function(post,index) {
+          promises.push(
+            fs.writeFile( new IndexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
+              post: post
+            }))
+          );
+        });
 
         Promise
           .all(promises)
