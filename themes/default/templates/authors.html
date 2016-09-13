@@ -14,21 +14,19 @@
   <div id="container">
     {{>header}}
     <div id="main">
-      <main>
-        <div id="content">
-          <h2>Alle Autoren</h2>
+      <main id="content">
+        <h2>Alle Autoren</h2>
 
-          {{#index.length}}
-            <nav>
-              <ul>
-                {{#index}}
-                  <li><a href="{{url}}" title="Weitere Artikel vom Author {{title}}">{{title}}</a></li>
-                {{/index}}
-              </ul>
-            </nav>
-          {{/index.length}}
+        {{#index.length}}
+          <nav>
+            <ul>
+              {{#index}}
+                <li><a href="{{url}}" title="Weitere Artikel vom Author {{title}}">{{title}}</a></li>
+              {{/index}}
+            </ul>
+          </nav>
+        {{/index.length}}
 
-        </div>
       </main>
       {{>sidebar}}
     </div>

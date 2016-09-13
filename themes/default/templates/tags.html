@@ -14,21 +14,19 @@
   <div id="container">
     {{>header}}
     <div id="main">
-      <main>
-        <div id="content">
-          <h2>Alle Tags</h2>
+      <main id="content">
+        <h2>Alle Tags</h2>
 
-          {{#index.length}}
-            <nav>
-              <ul>
-                {{#index}}
-                  <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">{{title}}</a></li>
-                {{/index}}
-              </ul>
-            </nav>
-          {{/index.length}}
+        {{#index.length}}
+          <nav>
+            <ul>
+              {{#index}}
+                <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">{{title}}</a></li>
+              {{/index}}
+            </ul>
+          </nav>
+        {{/index.length}}
 
-        </div>
       </main>
       {{>sidebar}}
     </div>

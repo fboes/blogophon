@@ -14,64 +14,62 @@
   <div id="container">
     {{>header}}
     <div id="main">
-      <main>
-        <div id="content">
-          {{#meta.title}}
-            <h2>{{meta.title}}</h2>
-          {{/meta.title}}
+      <main id="content">
+        {{#meta.title}}
+          <h2>{{meta.title}}</h2>
+        {{/meta.title}}
 
-          {{#index.length}}
-            <div class="teasers">
-              {{#index}}
-                <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
-                  <span class="date">
-                    <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified">{{meta.Created.locale}}</time>
-                  </span>
-                  <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
-                  <div itemprop="description">
-                    {{{htmlTeaser}}}
-                  </div>
-                  {{^meta.noLinkNeeded}}
-                    <p><a href="{{meta.Url}}" itemprop="url" title="{{meta.Title}}">Weiter lesen…</a></p>
-                  {{/meta.noLinkNeeded}}
-                  {{#meta.Tags.length}}
-                    <p class="meta">
-                      {{#meta.AuthorName}}
-                        <span class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></span>
-                      {{/meta.AuthorName}}
-                      {{#meta.Tags.length}}
-                        <span class="tags">
-                          Andere Artikel zum Thema
-                          {{#meta.Tags}}
-                            · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords">{{title}}</span>”</a>
-                          {{/meta.Tags}}
-                        </span>
-                      {{/meta.Tags.length}}
-                    </p>
-                  {{/meta.Tags.length}}
-                </article>
-              {{/index}}
-            </div>
-          {{/index.length}}
-
-          <div id="prevnext">
-            <span>
-              {{#currentPage}}
-                  <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
-              {{/currentPage}}
-              {{#title}}
-                <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
-              {{/title}}
-            </span>
-            {{#prevUrl}}
-              <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
-            {{/prevUrl}}
-            {{#nextUrl}}
-              <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
-            {{/nextUrl}}
+        {{#index.length}}
+          <div class="teasers">
+            {{#index}}
+              <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
+                <aside class="date">
+                  <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified">{{meta.Created.locale}}</time>
+                </aside>
+                <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
+                <div itemprop="description">
+                  {{{htmlTeaser}}}
+                </div>
+                {{^meta.noLinkNeeded}}
+                  <p><a href="{{meta.Url}}" itemprop="url" title="{{meta.Title}}">Weiter lesen…</a></p>
+                {{/meta.noLinkNeeded}}
+                {{#meta.Tags.length}}
+                  <footer class="meta">
+                    {{#meta.AuthorName}}
+                      <span class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></span>
+                    {{/meta.AuthorName}}
+                    {{#meta.Tags.length}}
+                      <span class="tags">
+                        Andere Artikel zum Thema
+                        {{#meta.Tags}}
+                          · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords">{{title}}</span>”</a>
+                        {{/meta.Tags}}
+                      </span>
+                    {{/meta.Tags.length}}
+                  </footer>
+                {{/meta.Tags.length}}
+              </article>
+            {{/index}}
           </div>
+        {{/index.length}}
 
+        <div id="prevnext">
+          <span>
+            {{#currentPage}}
+                <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+            {{/currentPage}}
+            {{#title}}
+              <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
+            {{/title}}
+          </span>
+          {{#prevUrl}}
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
+          {{/prevUrl}}
+          {{#nextUrl}}
+            <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
+          {{/nextUrl}}
         </div>
+
       </main>
       {{>sidebar}}
     </div>
