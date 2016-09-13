@@ -34,9 +34,46 @@ config.isWin = /^win/.test(process.platform);
 config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '/default');
 config.absoluteBasePath = config.baseUrl + config.basePath;
 
+config.imageFormats = {};
+config.imageSizes = config.imageSizes.map(function(size) {
+  var ratio = size[0] / size[1];
+  size[2] = '';
+
+  if (ratio <= 1/2) {
+    size[2] = '1:2';
+  }
+  else if (ratio <= 1/1.3) {
+    size[2] = '3:4';
+  }
+  else if (ratio <= 1/1.7) {
+    size[2] = '9:16';
+  }
+  else if (ratio === 1) {
+    size[2] = '1:1';
+  }
+  else if (ratio >= 2) {
+    size[2] = '2:1';
+  }
+  else if (ratio >= 1.7) {
+    size[2] = '16:9';
+  }
+  else if (ratio >= 1.3) {
+    size[2] = '4:3';
+  }
+
+  if (size[2]) {
+    if (!config.imageFormats[size[2]]) {
+      config.imageFormats[size[2]] = [];
+    }
+    config.imageFormats[size[2]].push(size);
+  }
+
+  return size;
+});
+
 if (config.deployCmd && config.deployCmd.match(/^#/)) {
   // delete deployment command with `#` at beginning
   config.deployCmd = null;
 }
 
-module.exports     = config;
+module.exports = config;
