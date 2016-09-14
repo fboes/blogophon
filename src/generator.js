@@ -316,10 +316,6 @@ var Generator = {
             tagPages: tagPages,
             pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
             config: config
-          })),
-
-          fs.writeFile( new IndexUrl('browserconfig.xml').filename(), Mustache.render(Mustache.templates.browserconfig, {
-            config: config
           }))
         ];
 

@@ -9,6 +9,20 @@ var defaultValues  = require('./src/config');
 var configFilename = defaultValues.directories.user + '/config.json';
 var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
 var args           = require('./src/helpers/arguments')();
+var Mustache       = require('mustache');
+
+Mustache.escape = function(string) {
+  var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  };
+  return String(string).replace(/[&<>"']/g, function(s) {
+    return entityMap[s];
+  });
+};
 
 if (themesAvailable.length < 1) {
   throw new Error('No themes found');
@@ -230,11 +244,26 @@ inquirer.prompt(questions).then(
         console.log( configFilename + ' created');
       }
     });
-    fs.writeFile(defaultValues.directories.htdocs+'/robots.txt', "# http://www.robotstxt.org/\n\nUser-agent: *\nDisallow: /google*.html\n\nSitemap: "+defaultValues.baseUrl+defaultValues.basePath+"sitemap.xml\n", function(err) {
+    fs.writeFile(defaultValues.directories.htdocs+'/robots.txt', Mustache.render(
+      fs.readFileSync('./src/templates/robots.txt', 'utf8'), {
+        config: defaultValues
+      }
+    ), function(err) {
       if (err) {
         console.error('htdocs/robots.txt' + ' could not be written' ); process.exit(1);
       } else {
         console.log( 'htdocs/robots.txt' + ' created');
+      }
+    });
+    fs.writeFile(defaultValues.directories.htdocs+'/browserconfig.xml', Mustache.render(
+      fs.readFileSync('./src/templates/browserconfig.xml', 'utf8'), {
+        config: defaultValues
+      }
+    ), function(err) {
+      if (err) {
+        console.error('htdocs/browserconfig.xml' + ' could not be written' ); process.exit(1);
+      } else {
+        console.log( 'htdocs/browserconfig.xml' + ' created');
       }
     });
   },
