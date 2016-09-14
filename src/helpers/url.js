@@ -46,7 +46,7 @@ Url.prototype.absoluteUrl = function () {
  */
 Url.prototype.absoluteUrlDirname = function () {
   var url = this.absoluteUrl();
-  return !url ? null : path.dirname(url);
+  return !url ? null : path.dirname(url + '-');
 };
 
 /**
