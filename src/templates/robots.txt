@@ -1,0 +1,6 @@
+# http://www.robotstxt.org/
+
+User-agent: *
+Disallow: /google*.html
+
+Sitemap: {{config.absoluteBasePath}}sitemap.xml

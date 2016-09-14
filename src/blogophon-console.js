@@ -25,7 +25,7 @@ var BlogophonConsole = function() {
     'Exit'
   ];
 
-  var template     = fs.readFileSync('./src/post.md', 'utf8');
+  var template     = fs.readFileSync('./src/templates/post.md', 'utf8');
 
   var internal = {
     /**

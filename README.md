@@ -38,7 +38,7 @@ If you do not want to use [`node ./index.js`](index.js), [read the manual](docs/
 Version
 -------
 
-Version: 0.3.0 (2016-09-07)
+Version: 0.3.1 (2016-09-14)
 
 Legal stuff
 -----------

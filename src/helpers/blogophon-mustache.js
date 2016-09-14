@@ -19,11 +19,11 @@ Mustache.getTemplates = function(path) {
     tags:    fs.readFileSync(Mustache.themePath + '/tags.html', 'utf8'),
     authors: fs.readFileSync(Mustache.themePath + '/authors.html', 'utf8'),
     four:    fs.readFileSync(Mustache.themePath + '/404.html', 'utf8'),
-    rss:     fs.readFileSync(Mustache.themePath + '/rss.xml', 'utf8'),
-    atom:    fs.readFileSync(Mustache.themePath + '/atom.xml', 'utf8'),
-    sitemap: fs.readFileSync(Mustache.themePath + '/sitemap.xml', 'utf8'),
-    livetile:fs.readFileSync(Mustache.themePath + '/livetile.xml', 'utf8'),
-    browserconfig:fs.readFileSync(Mustache.themePath + '/browserconfig.xml', 'utf8')
+    rss:     fs.readFileSync('./src/templates/rss.xml', 'utf8'),
+    atom:    fs.readFileSync('./src/templates/atom.xml', 'utf8'),
+    sitemap: fs.readFileSync('./src/templates/sitemap.xml', 'utf8'),
+    livetile:fs.readFileSync('./src/templates/livetile.xml', 'utf8'),
+    browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
   };
   Mustache.partials = {
     meta:       fs.readFileSync(Mustache.themePath + '/partials/meta.html', 'utf8'),
