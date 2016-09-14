@@ -1,5 +1,4 @@
 /htdocs/*
-!/htdocs/.htaccess
 /log
 /logs
 /node_modules

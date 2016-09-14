@@ -1,0 +1,13 @@
+AddType text/xml xml rss atom
+AddType text/plain .md
+AddType application/json .json
+AddCharset utf-8 .html .css .js .rss .atom .xml .md .json .txt
+ErrorDocument 404 /404.html
+ErrorDocument 410 /404.html
+DirectoryIndex index.html
+
+# General Blogophon redirects
+RedirectMatch 301 ^/htdocs/(.*)$ /$1
+RedirectMatch 301 ^/posts/?$ /
+
+# Add your stuff here

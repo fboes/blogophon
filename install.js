@@ -230,6 +230,9 @@ inquirer.prompt(questions).then(
     }
 
     shell.mkdir('-p', defaultValues.directories.data);
+    shell.mkdir('-p', defaultValues.directories.htdocs);
+
+    shell.cp('./src/templates/.htaccess', defaultValues.directories.htdocs);
     //console.log(answers);
 
     ['/css', '/js'].forEach(function(link) {
