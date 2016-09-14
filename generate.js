@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 
-var generator = require('./src/generator');
+var Generator = require('./src/generator');
 var args      = require('./src/helpers/arguments')();
+var config    = require('./src/config');
 
 if (args.log) {
   console.log('---- ' + new Date() + ' -----');
 }
 
+var generator = new Generator(config);
 generator
   .getArticles()
   .then(function () {

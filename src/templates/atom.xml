@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{config.language}}">
-  <title>{{config.name}}</title>
+  <title>{{config.name}} | {{title}}</title>
   <link href="{{config.absoluteBasePath}}" />
   <id>{{config.absoluteBasePath}}</id>
   <updated>{{pubDate}}</updated>

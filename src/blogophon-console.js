@@ -8,7 +8,7 @@ var fs             = require('fs-extra-promise');
 var shell          = require('shelljs');
 var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var chalk          = require('chalk');
-var generator      = require('./generator');
+var Generator      = require('./generator');
 
 /**
  * Represents the Inquirer dialogue with which to edit articles.
@@ -320,6 +320,7 @@ var BlogophonConsole = function() {
           }
         }
       ];
+      var generator = new Generator(config);
       inquirer
         .prompt(questions)
         .then(

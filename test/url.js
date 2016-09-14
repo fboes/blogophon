@@ -54,15 +54,29 @@ exports.testBasicTransformation = function(test) {
 
 exports.testSpecialTransformation = function(test) {
   'use strict';
-  test.expect(6);
+  test.expect(12);
 
-  test.strictEqual(new PostUrl('Ich-ünd-Dü.md').relativeUrl(), '/posts/ich-uend-due/');
-  test.ok(new PostUrl('Ich-ünd-Dü.md').absoluteUrl().match(/^\S+\/posts\/ich-uend-due\/$/));
-  test.ok(new PostUrl('Ich-ünd-Dü.md').filename().match(/^\S+\/posts\/ich-uend-due\/index\.html$/));
+  var url;
 
-  test.strictEqual(new TagUrl('Ich bin ein merkwürdiges Tag').relativeUrl(), '/tagged/ich-bin-ein-merkwuerdiges-tag/');
-  test.ok(new TagUrl('Ich bin ein merkwürdiges Tag').absoluteUrl().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
-  test.ok(new TagUrl('Ich bin ein merkwürdiges Tag').filename().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/index\.html$/));
+  url = new PostUrl('Ich-ünd-Dü.md');
+  test.strictEqual(url.relativeUrl(), '/posts/ich-uend-due/');
+  test.ok(url.absoluteUrl().match(/^\S+\/posts\/ich-uend-due\/$/));
+  test.ok(url.filename().match(/^\S+\/posts\/ich-uend-due\/index\.html$/));
+
+  url = new TagUrl('Ich bin ein merkwürdiges Tag');
+  test.strictEqual(url.relativeUrl(), '/tagged/ich-bin-ein-merkwuerdiges-tag/');
+  test.ok(url.absoluteUrl().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
+  test.ok(url.filename().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/index\.html$/));
+
+  url = new IndexUrl('/Tag');
+  test.strictEqual(url.relativeUrl(), '/tag');
+  test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
+  test.ok(url.filename().match(/^\S+\/tag$/));
+
+  url = new IndexUrl('////Tag');
+  test.strictEqual(url.relativeUrl(), '/tag');
+  test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
+  test.ok(url.filename().match(/^\S+\/tag$/));
 
   test.done();
 };

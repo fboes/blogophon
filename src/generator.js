@@ -1,434 +1,453 @@
 'use strict';
 
-var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
 var glob           = require("glob");
 var gm             = require('gm').subClass({imageMagick: true});
 var dateFormat     = require('dateformat');
-var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
+var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
-var manifest       = require('./models/manifest');
 var Translations   = require('./helpers/translations');
 var toolshed       = require('./helpers/js-toolshed');
 var IndexUrl       = require('./helpers/index-url');
-var index          = require('./index');
+var Index          = require('./index');
 var hashes         = require('./models/hashes');
 
 /**
  * Generator used for creating the blog.
  * @constructor
  */
-var Generator = {
-  strings: new Translations(config.language).getAll(),
-  currentIndex: null,
-  hashes: hashes(),
+var Generator = function (config) {
+  this.config       = config;
+  this.strings      = new Translations(config.language).getAll();
+  this.currentIndex = null;
+  this.hashes       = hashes();
+  Mustache = Mustache.getTemplates(config.directories.currentTheme + '/templates');
+  return this;
+};
 
-  /**
-   * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  getArticles: function() {
-    Generator.currentIndex = index();
-    return new Promise (
-      function(resolve, reject) {
-        glob(config.directories.data + "/**/*.md", function(err, files) {
-          if (err) {
-            reject(err);
-          }
-         // Making promises
-          var promises = files.map(function(i) {
-            return PostReader(i);
-          });
-          // Checking promises
-          Promise
-            .all(promises)
-            .then(function(posts) {
-              Generator.currentIndex.pushArray(posts);
-              console.log('Removed ' + Generator.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
-              Generator.currentIndex.makeNextPrev();
-              resolve( files.length );
-            })
-            .catch(reject)
-          ;
-        });
-      }
-    );
-  },
-
-  /**
-   * Get all {Post} from `index` and generate HTML pages.
-   * @return {Promise} with first parameter of `resolve` being the list of files generated.
-   */
-  buildAllArticles: function(force) {
-    var allPosts = Generator.currentIndex.getPosts();
-    var skipped = 0;
-    var generatedArticles = [];
-
-    if (force) {
-      fs.removeSync(config.directories.htdocs + '/posts/*');
-    }
-
-    return new Promise (
-      function(resolve, reject) {
-        // Making promises
-        var promises = allPosts.map(function(post) {
-          if (!force && Generator.hashes.isHashed(post.meta.Url, post.hash)) {
-            skipped++;
-          } else {
-            generatedArticles.push(post.meta.Url);
-            return Generator.buildSingleArticle(post);
-          }
+/**
+ * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.
+ * @return {Promise} with first parameter of `resolve` being the number of files converted.
+ */
+Generator.prototype.getArticles = function() {
+  var that = this;
+  this.currentIndex = new Index();
+  return new Promise (
+    function(resolve, reject) {
+      glob(that.config.directories.data + "/**/*.md", function(err, files) {
+        if (err) {
+          reject(err);
+        }
+       // Making promises
+        var promises = files.map(function(i) {
+          return PostReader(i);
         });
         // Checking promises
         Promise
           .all(promises)
-          .then(function() {
-            Generator.hashes.save();
-            console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
-            resolve(generatedArticles);
+          .then(function(posts) {
+            that.currentIndex.pushArray(posts);
+            console.log('Removed ' + that.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
+            that.currentIndex.makeNextPrev();
+            resolve( files.length );
           })
           .catch(reject)
         ;
-      }
-    );
-  },
-
-  /**
-   * Build a single article
-   * @param  {Post} post [description]
-   * @return {Promise}  with first parameter being the filename
-   */
-  buildSingleArticle: function(post) {
-    if (!post) {
-      throw new Error('Empty post');
+      });
     }
-    return new Promise (
-      function(resolve, reject) {
-        fs.ensureDir(config.directories.htdocs + post.meta.Url, function() {
-          fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
-            post: post,
-            config: config
-          },Mustache.partials), function(err) {
-            if (err) {
-              reject(err);
-            }
-            if (Generator.hashes) {
-              Generator.hashes.update(post.meta.Url, post.hash);
-            }
-            resolve(post.meta.Filename);
-          });
-        });
-      }
-    );
-  },
+  );
+};
 
-  /**
-   * Build special pages from `index` like index pages, tag pages, etc.
-   * @return {Promise} with first parameter of `resolve` being an array with the numbers of files converted.
-   */
-  buildSpecialPages: function() {
-    return new Promise (
-      function(resolve, reject) {
-        Promise
-          .all([
-            Generator.buildIndexFiles(),
-            Generator.buildTagPages(),
-            Generator.buildAuthorPages(),
-            Generator.buildMetaFiles()
-          ])
-          .then(resolve)
-          .catch(reject)
-        ;
-       }
-    );
-  },
+/**
+ * Get all {Post} from `index` and generate HTML pages.
+ * @return {Promise} with first parameter of `resolve` being the list of files generated.
+ */
+Generator.prototype.buildAllArticles = function(force) {
+  var that     = this;
+  var allPosts = this.currentIndex.getPosts();
+  var skipped  = 0;
+  var generatedArticles = [];
 
-  /**
-   * [buildIndexFiles description]
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  buildIndexFiles: function() {
-    return new Promise (
-      function(resolve, reject) {
-        fs.remove(config.directories.htdocs + '/index*', function(err) {
-          var promises = [];
-          var page;
-          var pagedPosts = Generator.currentIndex.getPagedPosts(config.itemsPerPage);
+  if (force) {
+    fs.removeSync(this.config.directories.htdocs + '/posts/*');
+  }
 
-          for (page = 0; page < pagedPosts.length; page ++) {
-            var curPageObj    = Generator.currentIndex.getPageData(page, pagedPosts.length);
-            curPageObj.index  = pagedPosts[page];
-            curPageObj.config = config;
-            curPageObj.meta   = {
-              title      : (curPageObj.currentPage === 1) ? Generator.strings.index : Generator.strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
-              absoluteUrl: new IndexUrl(curPageObj.currentUrl).absoluteUrl()
-            };
-            curPageObj.prevUrl = new IndexUrl(curPageObj.prevUrl).relativeUrl();
-            curPageObj.nextUrl = new IndexUrl(curPageObj.nextUrl).relativeUrl();
-            promises.push(fs.writeFile(new IndexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+  return new Promise (
+    function(resolve, reject) {
+      // Making promises
+      var promises = allPosts.map(function(post) {
+        if (!force && that.hashes.isHashed(post.meta.Url, post.hash)) {
+          skipped++;
+        } else {
+          generatedArticles.push(post.meta.Url);
+          return that.buildSingleArticle(post);
+        }
+      });
+      // Checking promises
+      Promise
+        .all(promises)
+        .then(function() {
+          that.hashes.save();
+          console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
+          resolve(generatedArticles);
+        })
+        .catch(reject)
+      ;
+    }
+  );
+};
+
+/**
+ * Build a single article
+ * @param  {Post} post [description]
+ * @return {Promise}  with first parameter being the filename
+ */
+Generator.prototype.buildSingleArticle = function(post) {
+  var that     = this;
+  if (!post) {
+    throw new Error('Empty post');
+  }
+  return new Promise (
+    function(resolve, reject) {
+      fs.ensureDir(that.config.directories.htdocs + post.meta.Url, function() {
+        fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
+          post: post,
+          config: that.config
+        },Mustache.partials), function(err) {
+          if (err) {
+            reject(err);
           }
-          Promise
-            .all(promises)
-            .then(function() {
-              console.log("Wrote "+promises.length+" index files");
-              return resolve(promises.length);
-            })
-            .catch(reject)
-          ;
+          if (that.hashes) {
+            that.hashes.update(post.meta.Url, post.hash);
+          }
+          resolve(post.meta.Filename);
         });
-      }
-    );
-  },
+      });
+    }
+  );
+};
 
-  /**
-   * [buildTagPages description]
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  buildTagPages: function() {
-    return new Promise (
-      function(resolve, reject) {
-        var tags = Generator.currentIndex.getTags();
-        var tagPages = Object.keys(tags).sort().map(function(key) {
-          return {
-            title: tags[key].title,
-            url  : tags[key].urlObj.relativeUrl()
-          };
-        });
+/**
+ * Build special pages from `index` like index pages, tag pages, etc.
+ * @return {Promise} with first parameter of `resolve` being an array with the numbers of files converted.
+ */
+Generator.prototype.buildSpecialPages = function() {
+  var that = this;
+  return new Promise (
+    function(resolve, reject) {
+      Promise
+        .all([
+          that.buildIndexFiles(),
+          that.buildTagPages(),
+          that.buildAuthorPages(),
+          that.buildMetaFiles()
+        ])
+        .then(resolve)
+        .catch(reject)
+      ;
+     }
+  );
+};
 
-        fs.remove(config.directories.htdocs + '/tagged', function(err) {
-          fs.ensureDirSync(config.directories.htdocs + '/tagged');
+/**
+ * [buildIndexFiles description]
+ * @return {Promise} with first parameter of `resolve` being the number of files converted.
+ */
+Generator.prototype.buildIndexFiles = function(index, path, title) {
+  var that = this;
+  index = index || this.currentIndex;
+  path  = path  || '/';
+  title = title || this.strings.index;
 
-          var promises = Object.keys(tags).map(function(key) {
-            fs.ensureDirSync(tags[key].urlObj.dirname());
-            tags[key].config = config;
-            tags[key].meta   = {
-              title      : Generator.strings.tag.sprintf(tags[key].title),
-              absoluteUrl: tags[key].urlObj.absoluteUrl()
-            };
-            return fs.writeFile(tags[key].urlObj.filename(), Mustache.render(Mustache.templates.index, tags[key], Mustache.partials));
-          });
-
-          promises.push(fs.writeFile( new IndexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
-            index: tagPages,
-            config: config
-          }, Mustache.partials)));
-
-          Promise
-            .all(promises)
-            .then(function() {
-              console.log("Wrote "+promises.length+" tag pages");
-              return resolve(promises.length);
-            })
-            .catch(reject)
-          ;
-        });
-      }
-    );
-  },
-
-  /**
-   * [buildAuthorPages description]
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  buildAuthorPages: function() {
-    return new Promise (
-      function(resolve, reject) {
-        var authors = Generator.currentIndex.getAuthors();
-        var authorPages = Object.keys(authors).sort().map(function(name) {
-          return {
-            title: name,
-            url  : authors[name].urlObj.relativeUrl()
-          };
-        });
-
-        fs.remove(config.directories.htdocs + '/authored-by', function(err) {
-          fs.ensureDirSync(config.directories.htdocs + '/authored-by');
-
-          var promises = Object.keys(authors).map(function(name) {
-            fs.ensureDirSync(authors[name].urlObj.dirname());
-            authors[name].config = config;
-            authors[name].meta   = {
-              title      : Generator.strings.tag.sprintf(authors[name].title),
-              absoluteUrl: authors[name].urlObj.absoluteUrl()
-            };
-            return fs.writeFile(authors[name].urlObj.filename(), Mustache.render(Mustache.templates.index, authors[name], Mustache.partials));
-          });
-
-          promises.push(fs.writeFile( new IndexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
-            index: authorPages,
-            config: config
-          }, Mustache.partials)));
-
-          Promise
-            .all(promises)
-            .then(function() {
-              console.log("Wrote "+promises.length+" author pages");
-              return resolve(promises.length);
-            })
-            .catch(reject)
-          ;
-        });
-      }
-    );
-  },
-
-  /**
-   * Build 404 pages, sitemaps, newsfeeds an stuff like that
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  buildMetaFiles: function() {
-    return new Promise (
-      function(resolve, reject) {
-        var tags = Generator.currentIndex.getTags();
-        var tagPages = Object.keys(tags).sort().map(function(key) {
-          return {
-            title: tags[key].title,
-            url  : tags[key].urlObj.relativeUrl()
-          };
-        });
+  return new Promise (
+    function(resolve, reject) {
+      fs.ensureDirSync(that.config.directories.htdocs + path);
+      fs.remove(that.config.directories.htdocs + path + 'index*', function(err) {
+        var page;
+        var pagedPosts = index.getPagedPosts(that.config.itemsPerPage);
 
         var promises = [
-          fs.writeFile( new IndexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
-            index: Generator.currentIndex.getPosts(5),
-            config: config
-          }, Mustache.partials)),
-
-          fs.writeFile( new IndexUrl('posts.rss').filename(), Mustache.render(Mustache.templates.rss, {
-            index: Generator.currentIndex.getPosts(10),
-            pubDate: dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
-            config: config
+          fs.writeFile( new IndexUrl(path + 'posts.rss').filename(), Mustache.render(Mustache.templates.rss, {
+            index: index.getPosts(10),
+            pubDate: dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
+            config: that.config,
+            title: title
           })),
 
-          fs.writeFile( new IndexUrl('rss.json').filename(), JSON.stringify(rssJs(Generator.currentIndex.getPosts(20), dateFormat(Generator.currentIndex.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), config), undefined, 2)),
+          fs.writeFile( new IndexUrl(path + 'rss.json').filename(), JSON.stringify(rssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), that.config, title), undefined, 2)),
 
-          fs.writeFile( new IndexUrl('manifest.json').filename(), JSON.stringify(manifest(config), undefined, 2)),
-
-          fs.writeFile( new IndexUrl('posts.atom').filename(), Mustache.render(Mustache.templates.atom, {
-            index: Generator.currentIndex.getPosts(10),
-            pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
-            config: config
-          })),
-
-          fs.writeFile( new IndexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
-            index: Generator.currentIndex.getPosts(),
-            tagPages: tagPages,
-            pubDate: dateFormat(Generator.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
-            config: config
+          fs.writeFile( new IndexUrl(path + 'posts.atom').filename(), Mustache.render(Mustache.templates.atom, {
+            index: index.getPosts(10),
+            pubDate: dateFormat(index.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
+            config: that.config,
+            title: title
           }))
         ];
 
-        fs.ensureDirSync(config.directories.htdocs + '/notifications');
-        Generator.currentIndex.getPosts(5).forEach(function(post,index) {
-          promises.push(
-            fs.writeFile( new IndexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
-              post: post
-            }))
-          );
-        });
-
+        for (page = 0; page < pagedPosts.length; page ++) {
+          var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
+          var curUrlObj     = new IndexUrl(curPageObj.currentUrl);
+          curPageObj.index  = pagedPosts[page];
+          curPageObj.config = that.config;
+          curPageObj.meta   = {
+            title      : title,
+            subtitle   : (curPageObj.currentPage === 1) ? '' : that.strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            absoluteUrl: curUrlObj.absoluteUrl(),
+            absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
+          };
+          curPageObj.prevUrl = new IndexUrl(curPageObj.prevUrl).relativeUrl();
+          curPageObj.nextUrl = new IndexUrl(curPageObj.nextUrl).relativeUrl();
+          promises.push(fs.writeFile(new IndexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+        }
         Promise
           .all(promises)
           .then(function() {
-            console.log("Wrote "+promises.length+" meta files");
+            console.log("Wrote "+promises.length+" files for '"+title+"'");
             return resolve(promises.length);
           })
           .catch(reject)
         ;
-      }
-    );
-  },
+      });
+    }
+  );
+};
 
-  /**
-   * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  copyImages: function(article) {
-    article = article.replace(/\/$/, '').replace(/^.+\//,'') || '**';
-    var i, j, processed = 0, maxProcessed = -1;
-    return new Promise (
-      function(resolve, reject) {
-        glob(config.directories.data + "/" + article + "/*.{png,jpg,gif}", function(er, files) {
-          maxProcessed = files.length * (config.imageSizes.length + 1);
-          if (files.length === 0) {
-            resolve( processed );
-          }
-          var checkProcessed = function(err) {
-            if (err) {
-              reject(err);
-            }
-            if (++processed === maxProcessed) {
-              console.log("Converted " + processed + " images");
-              resolve( processed );
-            }
-          };
-          for (i = 0; i < files.length; i++) {
-            var targetFile = files[i].replace(/^user\//, config.directories.htdocs + '/');
-            fs.ensureDirSync(targetFile.replace(/(\/).+?$/, '$1'));
-            gm(files[i])
-              .noProfile()
-              .interlace('Line')
-              .write(targetFile,checkProcessed)
-            ;
-            for (j = 0; j < config.imageSizes.length; j++) {
-              var imageSize = config.imageSizes[j];
-              gm(files[i])
-                .noProfile()
-                .geometry(imageSize[0], imageSize[1], "^")
-                .gravity('Center')
-                .crop(imageSize[0], imageSize[1])
-                .interlace('Line')
-                .write(targetFile.replace(/(\.[a-z]+$)/,'-'+imageSize[0]+'x'+imageSize[1]+'$1'),checkProcessed)
-              ;
-            }
-          }
+/**
+ * [buildTagPages description]
+ * @return {Promise} with first parameter of `resolve` being the number of files converted.
+ */
+Generator.prototype.buildTagPages = function() {
+  var that = this;
+  return new Promise (
+    function(resolve, reject) {
+      var tags = that.currentIndex.getTags();
+      var tagPages = Object.keys(tags).sort().map(function(key) {
+        return {
+          title: tags[key].title,
+          url  : tags[key].urlObj.relativeUrl()
+        };
+      });
+
+      fs.remove(that.config.directories.htdocs + '/tagged', function(err) {
+        fs.ensureDirSync(that.config.directories.htdocs + '/tagged');
+
+        var promises = Object.keys(tags).map(function(key) {
+          return that.buildIndexFiles(
+            tags[key].index,
+            tags[key].urlObj.relativeUrl(),
+            that.strings.tag.sprintf(tags[key].title)
+          );
         });
-      }
-    );
-  },
 
-  /**
-   * Build all articles, special pages and images.
-   * @return {Promise} [description]
-   */
-  buildAll: function(force) {
-    return new Promise (
-      function(resolve, reject) {
-        Generator
-          .buildAllArticles(force)
-          .then(function(generatedArticles) {
-            var promises = generatedArticles.map(function(article) {
-              return Generator.copyImages( article );
-            });
-            if (generatedArticles.length) {
-              promises.push(Generator.buildSpecialPages());
-            }
-            Promise
-              .all(promises)
-              .then(resolve)
-              .catch(reject)
-            ;
+        promises.push(fs.writeFile( new IndexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
+          index: tagPages,
+          config: that.config
+        }, Mustache.partials)));
+
+        Promise
+          .all(promises)
+          .then(function() {
+            return resolve(promises.length);
           })
           .catch(reject)
         ;
-      }
-    );
-  },
-
-  /**
-   * Executes deployment command as given in `config.json`.
-   * @return {Boolean} [description]
-   */
-  deploy: function() {
-    var shell = require('shelljs');
-    if (config.deployCmd) {
-      console.log('Deploying...');
-      shell.exec(config.deployCmd);
-      console.log('Finished deploying');
+      });
     }
-    return true;
+  );
+};
+
+/**
+ * [buildAuthorPages description]
+ * @return {Promise} with first parameter of `resolve` being the number of files converted.
+ */
+Generator.prototype.buildAuthorPages = function() {
+  var that = this;
+  return new Promise (
+    function(resolve, reject) {
+      var authors = that.currentIndex.getAuthors();
+      var authorPages = Object.keys(authors).sort().map(function(name) {
+        return {
+          title: name,
+          url  : authors[name].urlObj.relativeUrl()
+        };
+      });
+
+      fs.remove(that.config.directories.htdocs + '/authored-by', function(err) {
+        fs.ensureDirSync(that.config.directories.htdocs + '/authored-by');
+
+        var promises = Object.keys(authors).map(function(name) {
+          return that.buildIndexFiles(
+            authors[name].index,
+            authors[name].urlObj.relativeUrl(),
+            that.strings.author.sprintf(name)
+          );
+        });
+
+        promises.push(fs.writeFile( new IndexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
+          index: authorPages,
+          config: that.config
+        }, Mustache.partials)));
+
+        Promise
+          .all(promises)
+          .then(function() {
+            return resolve(promises.length);
+          })
+          .catch(reject)
+        ;
+      });
+    }
+  );
+};
+
+/**
+ * Build 404 pages, sitemaps, newsfeeds an stuff like that
+ * @return {Promise} with first parameter of `resolve` being the number of files converted.
+ */
+Generator.prototype.buildMetaFiles = function() {
+  var that = this;
+  return new Promise (
+    function(resolve, reject) {
+      var tags = that.currentIndex.getTags();
+      var tagPages = Object.keys(tags).sort().map(function(key) {
+        return {
+          title: tags[key].title,
+          url  : tags[key].urlObj.relativeUrl()
+        };
+      });
+
+      var promises = [
+        fs.writeFile( new IndexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
+          index: that.currentIndex.getPosts(5),
+          config: that.config
+        }, Mustache.partials)),
+
+        fs.writeFile( new IndexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
+          index: that.currentIndex.getPosts(),
+          tagPages: tagPages,
+          pubDate: dateFormat(that.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
+          config: that.config
+        }))
+      ];
+
+      fs.ensureDirSync(that.config.directories.htdocs + '/notifications');
+      that.currentIndex.getPosts(5).forEach(function(post,index) {
+        promises.push(
+          fs.writeFile( new IndexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
+            post: post
+          }))
+        );
+      });
+
+      Promise
+        .all(promises)
+        .then(function() {
+          console.log("Wrote "+promises.length+" meta files");
+          return resolve(promises.length);
+        })
+        .catch(reject)
+      ;
+    }
+  );
+};
+
+/**
+ * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
+ * @return {Promise} with first parameter of `resolve` being the number of files converted.
+ */
+Generator.prototype.copyImages = function(article) {
+  article = article.replace(/\/$/, '').replace(/^.+\//,'') || '**';
+
+  var that = this;
+  var i;
+  var j;
+  var processed = 0;
+  var maxProcessed = -1;
+
+  return new Promise (
+    function(resolve, reject) {
+      glob(that.config.directories.data + "/" + article + "/*.{png,jpg,gif}", function(er, files) {
+        maxProcessed = files.length * (that.config.imageSizes.length + 1);
+        if (files.length === 0) {
+          resolve( processed );
+        }
+        var checkProcessed = function(err) {
+          if (err) {
+            reject(err);
+          }
+          if (++processed === maxProcessed) {
+            console.log("Converted " + processed + " images");
+            resolve( processed );
+          }
+        };
+        for (i = 0; i < files.length; i++) {
+          var targetFile = files[i].replace(/^user\//, that.config.directories.htdocs + '/');
+          fs.ensureDirSync(targetFile.replace(/(\/).+?$/, '$1'));
+          gm(files[i])
+            .noProfile()
+            .interlace('Line')
+            .write(targetFile,checkProcessed)
+          ;
+          for (j = 0; j < that.config.imageSizes.length; j++) {
+            var imageSize = that.config.imageSizes[j];
+            gm(files[i])
+              .noProfile()
+              .geometry(imageSize[0], imageSize[1], "^")
+              .gravity('Center')
+              .crop(imageSize[0], imageSize[1])
+              .interlace('Line')
+              .write(targetFile.replace(/(\.[a-z]+$)/,'-'+imageSize[0]+'x'+imageSize[1]+'$1'),checkProcessed)
+            ;
+          }
+        }
+      });
+    }
+  );
+};
+
+/**
+ * Build all articles, special pages and images.
+ * @return {Promise} [description]
+ */
+Generator.prototype.buildAll = function(force) {
+  var that = this;
+  return new Promise (
+    function(resolve, reject) {
+      that
+        .buildAllArticles(force)
+        .then(function(generatedArticles) {
+          var promises = generatedArticles.map(function(article) {
+            return that.copyImages( article );
+          });
+          if (generatedArticles.length) {
+            promises.push(that.buildSpecialPages());
+          }
+          Promise
+            .all(promises)
+            .then(resolve)
+            .catch(reject)
+          ;
+        })
+        .catch(reject)
+      ;
+    }
+  );
+};
+
+/**
+ * Executes deployment command as given in `this.config.json`.
+ * @return {Boolean} [description]
+ */
+Generator.prototype.deploy = function() {
+  var shell = require('shelljs');
+  if (this.config.deployCmd) {
+    console.log('Deploying...');
+    shell.exec(this.config.deployCmd);
+    console.log('Finished deploying');
   }
+  return true;
 };
 
 module.exports = Generator;

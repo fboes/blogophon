@@ -10,7 +10,7 @@ var path           = require('path');
  * @return {Url}    [description]
  */
 var Url = function (identifier) {
-  this.identifier = identifier;
+  this.identifier = identifier? identifier.replace(/^\/+/, '') : null;
   return this;
 };
 
@@ -38,6 +38,15 @@ Url.prototype.relativeUrl = function () {
 Url.prototype.absoluteUrl = function () {
   var url = this.relativeUrl();
   return !url ? null : config.baseUrl + url;
+};
+
+/**
+ * [absoluteUrlDirname description]
+ * @return {String} [description]
+ */
+Url.prototype.absoluteUrlDirname = function () {
+  var url = this.absoluteUrl();
+  return !url ? null : path.dirname(url);
 };
 
 /**

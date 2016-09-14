@@ -4,11 +4,11 @@
  * Returns RSS as a javascript object.
  * @constructor
  */
-var RssJs = function(index, pubDate, config) {
+var RssJs = function(index, pubDate, config, title) {
   return {
     version: 2.0,
     channel: {
-      title: config.name,
+      title: config.name + (title ? ' | ' + title : ''),
       link: config.baseUrl + config.basePath,
       description: config.description,
       language: config.language,

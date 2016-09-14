@@ -10,6 +10,7 @@ var configFilename = defaultValues.directories.user + '/config.json';
 var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
 var args           = require('./src/helpers/arguments')();
 var Mustache       = require('mustache');
+var manifest       = require('./src/models/manifest');
 
 Mustache.escape = function(string) {
   var entityMap = {
@@ -253,9 +254,9 @@ inquirer.prompt(questions).then(
       }
     ), function(err) {
       if (err) {
-        console.error('htdocs/robots.txt' + ' could not be written' ); process.exit(1);
+        console.error(defaultValues.directories.htdocs+'/robots.txt' + ' could not be written' ); process.exit(1);
       } else {
-        console.log( 'htdocs/robots.txt' + ' created');
+        console.log( defaultValues.directories.htdocs+'/robots.txt' + ' created');
       }
     });
     fs.writeFile(defaultValues.directories.htdocs+'/browserconfig.xml', Mustache.render(
@@ -264,11 +265,20 @@ inquirer.prompt(questions).then(
       }
     ), function(err) {
       if (err) {
-        console.error('htdocs/browserconfig.xml' + ' could not be written' ); process.exit(1);
+        console.error(defaultValues.directories.htdocs+'/browserconfig.xml' + ' could not be written' ); process.exit(1);
       } else {
-        console.log( 'htdocs/browserconfig.xml' + ' created');
+        console.log( defaultValues.directories.htdocs+'/browserconfig.xml' + ' created');
       }
     });
+
+    fs.writeFile( defaultValues.directories.htdocs+'/manifest.json', JSON.stringify(manifest(defaultValues), undefined, 2), function(err) {
+      if (err) {
+        console.error(defaultValues.directories.htdocs+'/manifest.json' + ' could not be written' ); process.exit(1);
+      } else {
+        console.log( defaultValues.directories.htdocs+'/manifest.json' + ' created');
+      }
+    });
+
   },
   function(err) { console.error(err); process.exit(1); }
 );
