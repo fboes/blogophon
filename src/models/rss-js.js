@@ -23,8 +23,9 @@ var RssJs = function(index, pubDate, config, title) {
         return {
           title: item.meta.Title,
           description: item.safeHtmlTeaser || item.htmlTeaser,
+          contentEncoded: item.safeHtml || item.html,
           link: item.meta.AbsoluteUrl,
-          pubDate: item.meta.rfcDate,
+          pubDate: item.meta.Created.rfc,
           guid: item.meta.AbsoluteUrl,
           categories: tags
         };
