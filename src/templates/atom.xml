@@ -4,7 +4,7 @@
   <link href="{{config.absoluteBasePath}}" />
   <id>{{config.absoluteBasePath}}</id>
   <updated>{{pubDate}}</updated>
-  <link href="{{config.absoluteBasePath}}posts.atom" rel="self" />
+  <link href="{{absoluteUrl}}" rel="self" />
   <author>
     <name>{{config.name}}</name>
   </author>

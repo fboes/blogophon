@@ -165,23 +165,33 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
     function(resolve, reject) {
       fs.ensureDirSync(that.config.directories.htdocs + path);
       fs.remove(that.config.directories.htdocs + path + 'index*', function(err) {
+        if (err) {
+          reject(err);
+        }
         var page;
         var pagedPosts = index.getPagedPosts(that.config.itemsPerPage);
+        var urls = {
+          rss   : new IndexUrl(path + 'posts.rss'),
+          rssjs : new IndexUrl(path + 'rss.json'),
+          atom  : new IndexUrl(path + 'posts.atom')
+        };
 
         var promises = [
-          fs.writeFile( new IndexUrl(path + 'posts.rss').filename(), Mustache.render(Mustache.templates.rss, {
+          fs.writeFile( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index: index.getPosts(10),
             pubDate: dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
             config: that.config,
+            absoluteUrl : urls.rss.absoluteUrl(),
             title: title
           })),
 
-          fs.writeFile( new IndexUrl(path + 'rss.json').filename(), JSON.stringify(rssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), that.config, title), undefined, 2)),
+          fs.writeFile( urls.rssjs.filename(), JSON.stringify(rssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), that.config, title), undefined, 2)),
 
-          fs.writeFile( new IndexUrl(path + 'posts.atom').filename(), Mustache.render(Mustache.templates.atom, {
+          fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
             index: index.getPosts(10),
             pubDate: dateFormat(index.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
             config: that.config,
+            absoluteUrl : urls.atom.absoluteUrl(),
             title: title
           }))
         ];

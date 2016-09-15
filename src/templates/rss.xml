@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xml:base="{{config.absoluteBasePath}}">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xml:base="{{config.absoluteBasePath}}" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>{{config.name}} | {{title}}</title>
     <link>{{config.absoluteBasePath}}</link>
     <description>{{config.description}}</description>
     <language>{{config.language}}</language>
     <lastBuildDate>{{pubDate}}</lastBuildDate>
-    <atom:link href="{{config.absoluteBasePath}}posts.rss" rel="self" type="application/rss+xml" />
+    <atom:link href="{{absoluteUrl}}" rel="self" type="application/rss+xml" />
     {{#index}}
       <item>
         <title>{{meta.Title}}</title>
         <description><![CDATA[{{{safeHtmlTeaser}}}]]></description>
         <link>{{meta.AbsoluteUrl}}</link>
         <pubDate>{{meta.Created.rfc}}</pubDate>
+        <content:encoded><![CDATA[{{{safeHtml}}}]]></content:encoded>
         <guid isPermaLink="true">{{meta.AbsoluteUrl}}</guid>
         {{#meta.Tags}}
           <category>{{title}}</category>

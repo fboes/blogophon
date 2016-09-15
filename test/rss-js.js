@@ -1,6 +1,6 @@
 exports.testBasicProperties = function(test) {
   'use strict';
-  test.expect(9);
+  test.expect(10);
 
   var config = require('../src/config');
   var item = {
@@ -8,7 +8,9 @@ exports.testBasicProperties = function(test) {
       meta: {
         AbsoluteUrl: 2,
         Title: 3,
-        rfcDate: 4,
+        Created: {
+          rfc: 4
+        },
         tags: [6,7]
       }
   };
@@ -23,6 +25,7 @@ exports.testBasicProperties = function(test) {
   test.ok(rssjs.channel.items[0].title !== undefined);
   test.ok(rssjs.channel.items[0].link !== undefined);
   test.ok(rssjs.channel.items[0].description !== undefined);
+  test.ok(rssjs.channel.items[0].pubDate !== undefined);
 
   test.done();
 };
