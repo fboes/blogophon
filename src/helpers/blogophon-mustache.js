@@ -22,6 +22,8 @@ Mustache.getTemplates = function(path) {
     rss:     fs.readFileSync('./src/templates/rss.xml', 'utf8'),
     atom:    fs.readFileSync('./src/templates/atom.xml', 'utf8'),
     sitemap: fs.readFileSync('./src/templates/sitemap.xml', 'utf8'),
+    robots:  fs.readFileSync('./src/templates/robots.txt', 'utf8'),
+    htaccess:  fs.readFileSync('./src/templates/.htaccess', 'utf8'),
     livetile:fs.readFileSync('./src/templates/livetile.xml', 'utf8'),
     browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
   };

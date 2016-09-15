@@ -450,4 +450,45 @@ Generator.prototype.deploy = function() {
   return true;
 };
 
+/**
+ * Writes static files which will only be needed anwed if the blog gets a new URL
+ * @return {Promise} [description]
+ */
+Generator.prototype.buildBasicFiles = function(answers) {
+  var that = this;
+  var manifest = require('./models/manifest');
+
+  fs.ensureDirSync(that.config.directories.data);
+  fs.ensureDirSync(that.config.directories.htdocs);
+
+  ['/css', '/js'].forEach(function(link) {
+    fs.unlink(that.config.directories.htdocs + link, function() {
+      fs.linkSync(that.config.directories.theme + '/' + answers.theme + link,that.config.directories.htdocs + link);
+    });
+  });
+
+  var promises = [
+    fs.writeFile(that.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
+    fs.writeFile(that.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
+      config: that.config
+    })),
+    fs.writeFile(that.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
+      config: that.config
+    })),
+    fs.writeFile(that.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
+      config: that.config
+    })),
+    fs.writeFile( that.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(that.config), undefined, 2))
+  ];
+  return Promise
+    .all(promises)
+    .then(function() {
+        console.log("Wrote " + promises.length + " basic files");
+    })
+    .catch(function(err) {
+      console.error(err);
+    })
+  ;
+};
+
 module.exports = Generator;

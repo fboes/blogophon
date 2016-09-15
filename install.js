@@ -9,21 +9,7 @@ var defaultValues  = require('./src/config');
 var configFilename = defaultValues.directories.user + '/config.json';
 var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
 var args           = require('./src/helpers/arguments')();
-var Mustache       = require('mustache');
-var manifest       = require('./src/models/manifest');
-
-Mustache.escape = function(string) {
-  var entityMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;'
-  };
-  return String(string).replace(/[&<>"']/g, function(s) {
-    return entityMap[s];
-  });
-};
+var Generator      = require('./src/generator');
 
 if (themesAvailable.length < 1) {
   throw new Error('No themes found');
@@ -230,55 +216,8 @@ inquirer.prompt(questions).then(
       answers.ogImage = ogImage;
     }
 
-    shell.mkdir('-p', defaultValues.directories.data);
-    shell.mkdir('-p', defaultValues.directories.htdocs);
-
-    shell.cp('./src/templates/.htaccess', defaultValues.directories.htdocs);
-    //console.log(answers);
-
-    ['/css', '/js'].forEach(function(link) {
-      fs.unlink(defaultValues.directories.htdocs + link, function() {
-        fs.linkSync(defaultValues.directories.theme + '/' + answers.theme + link,defaultValues.directories.htdocs + link);
-      });
-    });
-    fs.writeFile(configFilename, JSON.stringify(answers, undefined, 2), function(err) {
-      if (err) {
-        console.error(configFilename + ' could not be written' ); process.exit(1);
-      } else {
-        console.log( configFilename + ' created');
-      }
-    });
-    fs.writeFile(defaultValues.directories.htdocs+'/robots.txt', Mustache.render(
-      fs.readFileSync('./src/templates/robots.txt', 'utf8'), {
-        config: defaultValues
-      }
-    ), function(err) {
-      if (err) {
-        console.error(defaultValues.directories.htdocs+'/robots.txt' + ' could not be written' ); process.exit(1);
-      } else {
-        console.log( defaultValues.directories.htdocs+'/robots.txt' + ' created');
-      }
-    });
-    fs.writeFile(defaultValues.directories.htdocs+'/browserconfig.xml', Mustache.render(
-      fs.readFileSync('./src/templates/browserconfig.xml', 'utf8'), {
-        config: defaultValues
-      }
-    ), function(err) {
-      if (err) {
-        console.error(defaultValues.directories.htdocs+'/browserconfig.xml' + ' could not be written' ); process.exit(1);
-      } else {
-        console.log( defaultValues.directories.htdocs+'/browserconfig.xml' + ' created');
-      }
-    });
-
-    fs.writeFile( defaultValues.directories.htdocs+'/manifest.json', JSON.stringify(manifest(defaultValues), undefined, 2), function(err) {
-      if (err) {
-        console.error(defaultValues.directories.htdocs+'/manifest.json' + ' could not be written' ); process.exit(1);
-      } else {
-        console.log( defaultValues.directories.htdocs+'/manifest.json' + ' created');
-      }
-    });
-
+    var generator = new Generator(defaultValues);
+    generator.buildBasicFiles(answers);
   },
   function(err) { console.error(err); process.exit(1); }
 );
