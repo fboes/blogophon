@@ -32,10 +32,10 @@
       <main id="content">
         {{#post}}
           <article class="{{post.meta.Classes}}" lang="{{post.meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
-            <aside class="date">
-              <time datetime="{{post.meta.Created.iso}}" itemprop="datePublished dateModified">{{meta.Created.locale}}</time>
-            </aside>
-            <h2 itemprop="name headline">{{meta.Title}}</h2>
+            <header>
+              <time datetime="{{post.meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
+              <h2 itemprop="name headline">{{meta.Title}}</h2>
+            </header>
             <div itemprop="articleBody">
               {{{html}}}
 
