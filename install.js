@@ -35,7 +35,7 @@ if (args['only-new'] && ! defaultValues.notInitialized) {
 }
 
 defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
-  return i.join('x');
+  return i[0] + 'x' + i[1];
 });
 
 var questions = [
