@@ -8,9 +8,9 @@
   <meta property="og:title" name="title" content="{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}" />
   <meta property="og:description" name="description" content="{{config.description}}" />
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" title="{{meta.title}}" />
-  <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" title="{{meta.title}}" />
-  <link rel="alternate" type="application/json" title="JSON" href="{{meta.absoluteUrlDirname}}/rss.json" title="{{meta.title}}" />
+  <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
+  <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
+  <link rel="alternate" type="application/json" title="{{meta.title}} JSON" href="{{meta.absoluteUrlDirname}}/rss.json" />
   {{>meta}}
 </head>
 <body class="index">

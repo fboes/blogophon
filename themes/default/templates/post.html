@@ -20,9 +20,9 @@
     <meta name="geo.position.longitude" content="{{post.meta.Longitude}}" />
   {{/post.meta.Latitude}}
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{{config.absoluteBasePath}}posts.rss" title="{{config.name}}" />
-  <link rel="alternate" type="application/atom+xml" title="ATOM" href="{{config.absoluteBasePath}}posts.atom" title="{{config.name}}" />
-  <link rel="alternate" type="application/json" title="JSON" href="{{config.absoluteBasePath}}rss.json" title="{{config.name}}" />
+  <link rel="alternate" type="application/rss+xml" title="{{config.name}} RSS" href="{{config.absoluteBasePath}}posts.rss" />
+  <link rel="alternate" type="application/atom+xml" title="{{config.name}} ATOM" href="{{config.absoluteBasePath}}posts.atom" />
+  <link rel="alternate" type="application/json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
   {{>meta}}
 </head>
 <body class="post">
