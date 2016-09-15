@@ -1,12 +1,12 @@
 'use strict';
 
+var SuperString     = require('../helpers/super-string');
 var config          = require('../config');
 var markdownConvert = require('marked');
 var crypto          = require('crypto');
 var PostUrl         = require('../helpers/post-url');
 var TagUrl          = require('../helpers/tag-url');
 var AuthorUrl       = require('../helpers/author-url');
-var toolshed        = require('../helpers/js-toolshed');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
 
@@ -69,7 +69,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
       var tagUrlObj = new TagUrl(tag);
       return {
         title: tag,
-        id: String(tag).asciify(),
+        id: new SuperString(tag).asciify(),
         url: tagUrlObj.relativeUrl(),
         urlObj: tagUrlObj
       };
@@ -79,7 +79,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     meta.Classes = 'Normal article';
   }
   meta.Classes = meta.Classes.trim().split(/,\s*/).map(function(c) {
-    return c.asciify();
+    return new SuperString(c).asciify();
   });
   if (meta.Classes.indexOf('images') >= 0) {
     htmlTeaser   = this.galleryHtml(htmlTeaser);
@@ -91,8 +91,8 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
       .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
       .replace(/\s\s+/g, ' ')
       .replace(/http(s)?:\S+/g, '')
-      .niceShorten(160)
     ;
+    meta.Description = new SuperString(meta.Description).niceShorten(320);
   }
   if (!meta.Author) {
     meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
@@ -225,6 +225,7 @@ Post.prototype.makeSafeHtml = function(html) {
   return html
     .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
     .replace(/(<\/?)iframe/g,'$1a')
+    .replace(/((?:src|href)=")(\/)/g,'$1' + config.baseUrl +'$2')
   ;
 };
 

@@ -3,10 +3,8 @@
 'use strict';
 
 var fs             = require('fs');
-var shell          = require('shelljs');
 var inquirer       = require('inquirer');
 var defaultValues  = require('./src/config');
-var configFilename = defaultValues.directories.user + '/config.json';
 var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
 var args           = require('./src/helpers/arguments')();
 var Generator      = require('./src/generator');
@@ -39,7 +37,7 @@ var questions = [
     message: 'Choose theme',
     default: defaultValues.theme,
     choices: themesAvailable,
-    when: function(answers) {
+    when: function() {
       return (themesAvailable.length > 1);
     }
   },{

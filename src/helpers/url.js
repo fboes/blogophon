@@ -1,7 +1,7 @@
 'use strict';
 
+var SuperString    = require('../helpers/super-string');
 var config         = require('../config');
-var toolshed       = require('../helpers/js-toolshed');
 var path           = require('path');
 
 /**
@@ -19,7 +19,7 @@ var Url = function (identifier) {
  * @return {String} [description]
  */
 Url.prototype.convert = function () {
-  return !this.identifier ? null : this.identifier.asciify() + '/index.html';
+  return !this.identifier ? null : new SuperString(this.identifier).asciify() + '/index.html';
 };
 
 /**
@@ -65,6 +65,14 @@ Url.prototype.filename = function () {
 Url.prototype.dirname = function () {
   var url = this.filename();
   return !url ? null : path.dirname(url);
+};
+
+/**
+ * [toString description]
+ * @return {String} [description]
+ */
+Url.prototype.toString = function() {
+  return this.identifier;
 };
 
 module.exports = Url;

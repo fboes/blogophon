@@ -1,6 +1,7 @@
 'use strict';
 
-var Url       = require('../helpers/url');
+var Url         = require('../helpers/url');
+var SuperString = require('../helpers/super-string');
 
 /**
  * [AuthorUrl description]
@@ -13,7 +14,7 @@ var AuthorUrl = function (identifier) {
 AuthorUrl.prototype = Object.create(Url.prototype);
 AuthorUrl.prototype.constructor = AuthorUrl;
 AuthorUrl.prototype.convert = function () {
-  return !this.identifier ? null : 'authored-by/' + this.identifier.asciify() + '/index.html';
+  return !this.identifier ? null : 'authored-by/' + new SuperString(this.identifier).asciify() + '/index.html';
 };
 
 module.exports = AuthorUrl;

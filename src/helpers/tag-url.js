@@ -1,6 +1,7 @@
 'use strict';
 
-var Url       = require('../helpers/url');
+var Url         = require('../helpers/url');
+var SuperString = require('../helpers/super-string');
 
 /**
  * [TagUrl description]
@@ -13,7 +14,7 @@ var TagUrl = function (identifier) {
 TagUrl.prototype = Object.create(Url.prototype);
 TagUrl.prototype.constructor = TagUrl;
 TagUrl.prototype.convert = function () {
-  return !this.identifier ? null : 'tagged/' + this.identifier.asciify() + '/index.html';
+  return !this.identifier ? null : 'tagged/' + new SuperString(this.identifier).asciify() + '/index.html';
 };
 
 module.exports = TagUrl;

@@ -1,7 +1,7 @@
 'use strict';
 
+var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
-var toolshed       = require('./helpers/js-toolshed');
 var inquirer       = require('inquirer');
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
@@ -58,9 +58,7 @@ var BlogophonConsole = function() {
      * @return {String}       [description]
      */
     shortfilenameFromTitle: function(title) {
-      return title
-        .trim()
-        .toLowerCase()
+      return new SuperString(title.trim().toLowerCase())
         .asciify()
         .replace(/(^|\-)(der|die|d(a|o|e)s|eine?|a|the|el|las?|los)\-/g,'$1')
         .replace(/(^[\-]+|[\-]+$)/g,'')
@@ -283,6 +281,9 @@ var BlogophonConsole = function() {
           if (answers.sure) {
             var processed = 0, maxProcessed = 3;
             var checkProcessed = function(err) {
+              if (err) {
+                console.error(err);
+              }
               if (++processed === maxProcessed) {
                 console.log(answers.file + " files deleted, you may want to generate & publish all index pages");
                 exports.init();
@@ -315,7 +316,7 @@ var BlogophonConsole = function() {
           name: 'deploy',
           message: 'Do you want to publish all files?',
           default: true,
-          when: function(answers) {
+          when: function() { // answers
             return config.deployCmd;
           }
         }

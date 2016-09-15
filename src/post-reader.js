@@ -1,11 +1,9 @@
 'use strict';
 
-var config         = require('./config');
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs');
 var readline       = require("readline");
 var yamljs         = require('yamljs');
-var util           = require('util');
 var Post           = require('./models/post');
 
 /**
@@ -13,6 +11,10 @@ var Post           = require('./models/post');
  * @constructor
  */
 var PostReader = function(file) {
+  if (!file) {
+    throw new Error('file is empty');
+  }
+
   var readYaml = true,
     yamlBuffer = '',
     descriptionBuffer = '',
@@ -29,7 +31,7 @@ var PostReader = function(file) {
         fileStat = stats;
       });
 
-      var lineReader = readline.createInterface({
+      readline.createInterface({
         input: require('fs').createReadStream( file )
       }).on('line', function(line) {
         if (readYaml && line.match(/\S+:[\s\S]/)) {

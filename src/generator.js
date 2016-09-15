@@ -1,5 +1,6 @@
 'use strict';
 
+var SuperString    = require('./helpers/super-string');
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
 var glob           = require("glob");
@@ -9,7 +10,6 @@ var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
 var Translations   = require('./helpers/translations');
-var toolshed       = require('./helpers/js-toolshed');
 var IndexUrl       = require('./helpers/index-url');
 var Index          = require('./index');
 var hashes         = require('./models/hashes');
@@ -19,6 +19,9 @@ var hashes         = require('./models/hashes');
  * @constructor
  */
 var Generator = function (config) {
+  if (!config) {
+    throw new Error('config is empty');
+  }
   this.config       = config;
   this.strings      = new Translations(config.language).getAll();
   this.currentIndex = null;
@@ -203,7 +206,7 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
           curPageObj.config = that.config;
           curPageObj.meta   = {
             title      : title,
-            subtitle   : (curPageObj.currentPage === 1) ? '' : that.strings.page.sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            subtitle   : (curPageObj.currentPage === 1) ? '' : new SuperString(that.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: curUrlObj.absoluteUrl(),
             absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
           };
@@ -241,13 +244,16 @@ Generator.prototype.buildTagPages = function() {
       });
 
       fs.remove(that.config.directories.htdocs + '/tagged', function(err) {
+        if (err) {
+          reject(err);
+        }
         fs.ensureDirSync(that.config.directories.htdocs + '/tagged');
 
         var promises = Object.keys(tags).map(function(key) {
           return that.buildIndexFiles(
             tags[key].index,
             tags[key].urlObj.relativeUrl(),
-            that.strings.tag.sprintf(tags[key].title)
+            new SuperString(that.strings.tag).sprintf(tags[key].title)
           );
         });
 
@@ -285,13 +291,16 @@ Generator.prototype.buildAuthorPages = function() {
       });
 
       fs.remove(that.config.directories.htdocs + '/authored-by', function(err) {
+        if (err) {
+          reject(err);
+        }
         fs.ensureDirSync(that.config.directories.htdocs + '/authored-by');
 
         var promises = Object.keys(authors).map(function(name) {
           return that.buildIndexFiles(
             authors[name].index,
             authors[name].urlObj.relativeUrl(),
-            that.strings.author.sprintf(name)
+            new SuperString(that.strings.author).sprintf(name)
           );
         });
 

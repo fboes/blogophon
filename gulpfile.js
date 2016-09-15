@@ -2,10 +2,9 @@
 
 // Include gulp
 var gulp = require('gulp');
-var fs   = require('fs');
 var pkg  = require('./package.json');
 var beep = require('beepbeep');
-var onError = function (err) { beep(); };
+var onError = function () { beep(); };
 
 // Include Our Plugins
 var jshint     = require('gulp-jshint');
