@@ -27,14 +27,12 @@ Mustache.getTemplates = function(path) {
     livetile:fs.readFileSync('./src/templates/livetile.xml', 'utf8'),
     browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
   };
-  Mustache.partials = {
-    meta:       fs.readFileSync(Mustache.themePath + '/partials/meta.html', 'utf8'),
-    header:     fs.readFileSync(Mustache.themePath + '/partials/header.html', 'utf8'),
-    navigation: fs.readFileSync(Mustache.themePath + '/partials/navigation.html', 'utf8'),
-    sidebar:    fs.readFileSync(Mustache.themePath + '/partials/sidebar.html', 'utf8'),
-    footer:     fs.readFileSync(Mustache.themePath + '/partials/footer.html', 'utf8'),
-    closure:    fs.readFileSync(Mustache.themePath + '/partials/closure.html', 'utf8')
-  };
+
+  Mustache.partials = {}
+  fs.readdirSync(Mustache.themePath + '/partials').forEach(function(file){
+    Mustache.partials[file.replace(/\.[a-z]+$/,'')] = fs.readFileSync(Mustache.themePath + '/partials/'+file, 'utf8');
+  })
+
   Object.keys(Mustache.templates).map(function(t) {
     Mustache.parse(t);
   });
