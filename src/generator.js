@@ -65,7 +65,7 @@ Generator.prototype.getArticles = function() {
 
 /**
  * Get all {Post} from `index` and generate HTML pages.
- * @param  {Boolean} force [description]
+ * @param  {Boolean} force    [description]
  * @return {Promise} with first parameter of `resolve` being the list of files generated.
  */
 Generator.prototype.buildAllArticles = function(force) {
@@ -429,18 +429,24 @@ Generator.prototype.copyImages = function(article) {
 
 /**
  * Build all articles, special pages and images.
+ * @param  {Boolean} force    [description]
+ * @param  {Boolean} noimages [description]
  * @return {Promise} [description]
  */
-Generator.prototype.buildAll = function(force) {
+Generator.prototype.buildAll = function(force, noimages) {
   var that = this;
   return new Promise (
     function(resolve, reject) {
       that
         .buildAllArticles(force)
         .then(function(generatedArticles) {
-          var promises = generatedArticles.map(function(article) {
-            return that.copyImages( article );
-          });
+          var promises = []
+
+          if (!noimages) {
+            promises = generatedArticles.map(function(article) {
+              return that.copyImages( article );
+            });
+          }
           if (generatedArticles.length) {
             promises.push(that.buildSpecialPages());
           }

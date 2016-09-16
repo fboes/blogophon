@@ -10,7 +10,7 @@ var Arguments = function() {
     process.argv.forEach(function(arg, i) {
       var m = arg.match(/^\-\-(.+)(?:=(.+))?$/);
       if (i >= 2 && m) {
-        obj[m[1]] = m[2] ? m[2] : true;
+        obj[m[1].replace(/\-+/g,'')] = m[2] ? m[2] : true;
       }
     });
   }

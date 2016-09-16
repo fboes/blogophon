@@ -21,6 +21,7 @@ Manual
 * `--force`: Create _all_ articles anew, ignoring cached versions.
 * `--deploy`:  Execute `deployCmd` command found in `user/config.json`.
 * `--log`:  Ouputs a header with the current date. This may be useful if you want to pipe the output of this command to a logfile. Seeh [advanced stuff](advanced-stuff.md).
+* `--no-images`: Do not generate images.
 
 ## Using drafts
 

@@ -14,7 +14,7 @@ generator
   .getArticles()
   .then(function () {
     generator
-      .buildAll(args.force)
+      .buildAll(args.force, args.noimages)
       .then(function() {
         if(args.deploy || args.publish) {
           generator.deploy();
