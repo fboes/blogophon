@@ -11,7 +11,7 @@
       <item>
         <title>{{meta.Title}}</title>
         <description><![CDATA[{{{safeHtmlTeaser}}}]]></description>
-        <link>{{meta.AbsoluteUrl}}</link>
+        <link>{{meta.AbsoluteUrl}}?utm_campaign=newsfeed</link>
         <pubDate>{{meta.Created.rfc}}</pubDate>
         <content:encoded><![CDATA[{{{safeHtml}}}]]></content:encoded>
         <guid isPermaLink="true">{{meta.AbsoluteUrl}}</guid>

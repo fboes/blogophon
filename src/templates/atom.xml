@@ -13,7 +13,7 @@
       <title>{{meta.Title}}</title>
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
-      <link href="{{meta.AbsoluteUrl}}" />
+      <link href="{{meta.AbsoluteUrl}}?utm_campaign=newsfeed" />
       <updated>{{meta.Created.iso}}</updated>
       <id>{{meta.AbsoluteUrl}}</id>
       {{#meta.Tags}}
