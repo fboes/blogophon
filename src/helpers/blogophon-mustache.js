@@ -28,10 +28,10 @@ Mustache.getTemplates = function(path) {
     browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
   };
 
-  Mustache.partials = {}
+  Mustache.partials = {};
   fs.readdirSync(Mustache.themePath + '/partials').forEach(function(file){
     Mustache.partials[file.replace(/\.[a-z]+$/,'')] = fs.readFileSync(Mustache.themePath + '/partials/'+file, 'utf8');
-  })
+  });
 
   Object.keys(Mustache.templates).map(function(t) {
     Mustache.parse(t);

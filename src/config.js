@@ -7,10 +7,11 @@ var pkg            = require('../package.json');
  */
 var config = {};
 try {
-  config = require('../user/config.json');
+  config = require(process.env.PWD + '/user/config.json');
 } catch (e) {
   var os = require("os");
   config = {
+    "name": "Example",
     "baseUrl": "http://" + os.hostname(),
     "basePath": "/",
     "language": "en",

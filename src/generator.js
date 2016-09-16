@@ -440,8 +440,7 @@ Generator.prototype.buildAll = function(force, noimages) {
       that
         .buildAllArticles(force)
         .then(function(generatedArticles) {
-          var promises = []
-
+          var promises = [];
           if (!noimages) {
             promises = generatedArticles.map(function(article) {
               return that.copyImages( article );

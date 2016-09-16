@@ -7,9 +7,9 @@
 var Manifest = function(config) {
   return {
     lang: config.language,
-    name: config.name,
-    description: config.description,
-    short_name: config.name,
+    name: config.name || '',
+    description: config.description || '',
+    short_name: config.name || '',
     icons: !config.icons ? [] : config.icons.map(function(i) {
       return i;
     }),

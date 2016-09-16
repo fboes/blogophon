@@ -8,9 +8,9 @@ var RssJs = function(index, pubDate, config, title) {
   return {
     version: 2.0,
     channel: {
-      title: config.name + (title ? ' | ' + title : ''),
+      title: (config.name || '') + (title ? ' | ' + title : ''),
       link: config.baseUrl + config.basePath,
-      description: config.description,
+      description: config.description || '',
       language: config.language,
       lastBuildDate: pubDate,
       items: index.map(function(item){
