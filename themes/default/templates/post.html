@@ -87,16 +87,16 @@
       </main>
       <aside id="sidebar">
         {{>sidebar}}
-        {{#meta.Tags.length}}
+        {{#post.meta.Tags.length}}
           <section>
             <h3>Verwandte Artikel</h3>
             <ul>
-              {{#meta.Tags}}
+              {{#post.meta.Tags}}
                 <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">…zum Thema „<span itemprop="keywords">{{title}}</span>”</a></li>
-              {{/meta.Tags}}
+              {{/post.meta.Tags}}
             </ul>
           </section>
-        {{/meta.Tags.length}}
+        {{/post.meta.Tags.length}}
 
         <section>
           <h3>Abonnement</h3>
