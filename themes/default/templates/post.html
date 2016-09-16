@@ -85,7 +85,29 @@
           {{/post.next.Url}}
         </div>
       </main>
-      {{>sidebar}}
+      <aside id="sidebar">
+        {{>sidebar}}
+        {{#meta.Tags.length}}
+          <section>
+            <h3>Verwandte Artikel</h3>
+            <ul>
+              {{#meta.Tags}}
+                <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">…zum Thema „<span itemprop="keywords">{{title}}</span>”</a></li>
+              {{/meta.Tags}}
+            </ul>
+          </section>
+        {{/meta.Tags.length}}
+
+        <section>
+          <h3>Abonnement</h3>
+          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+          <ul>
+            <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">RSS-Feed</a></li>
+            <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
+            <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
+          </ul>
+        </section>
+      </aside>
     </div>
     {{>footer}}
   </div>
