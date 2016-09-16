@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Represents all posts.
+ * Represents an index of all posts.
  * @constructor
  */
 var Index = function() {
@@ -11,10 +11,41 @@ var Index = function() {
   return this;
 };
 
+/**
+ * Remove all elements from index
+ * @return {Index} [description]
+ */
+Index.prototype.clear = function() {
+  this.isSorted = false;
+  this.index = [];
+  return this;
+};
 
 /**
- * [sortIndex description]
- * @return {[type]} [description]
+ * Add a single post to index.
+ * @param  {Post}  post [description]
+ * @return {Index}      [description]
+ */
+Index.prototype.push = function(post) {
+  this.isSorted = false;
+  this.index.push(post);
+  return this;
+};
+
+/**
+ * Add multiple posts to index.
+ * @param  {Array} posts [description]
+ * @return {Index}       [description]
+ */
+Index.prototype.pushArray = function(posts) {
+  this.isSorted = false;
+  this.index = posts;
+  return this;
+};
+
+/**
+ * Sort all items by `meta.Created`
+ * @return {Index} [description]
  */
 Index.prototype.sortIndex = function() {
   this.index.sort(function(a,b){
@@ -26,54 +57,7 @@ Index.prototype.sortIndex = function() {
     return 0;
   });
   this.isSorted = true;
-};
-
-/**
- * [getPageName description]
- * @param  {Number}  curPage [description]
- * @param  {Number}  maxPage [description]
- * @param  {Boolean} reverse [description]
- * @param  {String}  path    [description]
- * @return {String}          [description]
- */
-Index.prototype.getPageName = function(curPage, maxPage, reverse, path) {
-  curPage ++;
-  if (curPage <= 0 || curPage > maxPage) {
-    return null;
-  } else if ((!reverse && curPage === 1) || (reverse && curPage === maxPage)) {
-    return path + 'index.html';
-  } else {
-    return path + 'index-' + curPage + '.html';
-  }
-};
-
-/**
- * [clear description]
- * @return {[type]} [description]
- */
-Index.prototype.clear = function() {
-  this.isSorted = false;
-  this.index = [];
-};
-
-/**
- * [push description]
- * @param  {[type]} post [description]
- * @return {[type]}      [description]
- */
-Index.prototype.push = function(post) {
-  this.isSorted = false;
-  this.index.push(post);
-};
-
-/**
- * [pushArray description]
- * @param  {[type]} posts [description]
- * @return {[type]}       [description]
- */
-Index.prototype.pushArray = function(posts) {
-  this.isSorted = false;
-  this.index = posts;
+  return this;
 };
 
 /**
@@ -101,7 +85,7 @@ Index.prototype.removeFutureItems = function() {
 
 /**
  * [makeNextPrev description]
- * @return {[type]} [description]
+ * @return {Index} [description]
  */
 Index.prototype.makeNextPrev = function() {
   if (!this.isSorted) {
@@ -121,8 +105,8 @@ Index.prototype.makeNextPrev = function() {
 
 /**
  * Get all posts, sorted by date.
- * @param  {integer} i Only return i results. If left empty, all results will be returned.
- * @return {Array}   [description]
+ * @param  {Number} i Only return i results. If left empty, all results will be returned.
+ * @return {Array}    [description]
  */
 Index.prototype.getPosts = function(i) {
   if (!this.isSorted) {
@@ -133,7 +117,7 @@ Index.prototype.getPosts = function(i) {
 
 /**
  * [getTags description]
- * @return {[type]} [description]
+ * @return {Array} [description]
  */
 Index.prototype.getTags = function() {
   if (!this.isSorted) {
@@ -156,7 +140,7 @@ Index.prototype.getTags = function() {
 
 /**
  * [getAuthors description]
- * @return {[type]} [description]
+ * @return {Array} [description]
  */
 Index.prototype.getAuthors = function() {
   if (!this.isSorted) {
@@ -180,9 +164,9 @@ Index.prototype.getAuthors = function() {
 
 /**
  * Get whole index, split up into separate pages.
- * @param  {[type]} itemsPerPage [description]
- * @param  {[type]} reverse      [description]
- * @return {[type]}              [description]
+ * @param  {Number}  itemsPerPage [description]
+ * @param  {Boolean} reverse      [description]
+ * @return {Array}                [description]
  */
 Index.prototype.getPagedPosts = function(itemsPerPage, reverse) {
   if (!this.isSorted) {
@@ -224,5 +208,26 @@ Index.prototype.getPageData = function(curPage, maxPage, reverse, path) {
     maxPages: maxPage
   };
 };
+
+/**
+ * Get filename of current page.
+ * @param  {Number}  curPage [description]
+ * @param  {Number}  maxPage [description]
+ * @param  {Boolean} reverse [description]
+ * @param  {String}  path    [description]
+ * @return {String}          [description]
+ */
+Index.prototype.getPageName = function(curPage, maxPage, reverse, path) {
+  curPage ++;
+  if (curPage <= 0 || curPage > maxPage) {
+    return null;
+  } else if ((!reverse && curPage === 1) || (reverse && curPage === maxPage)) {
+    return path + 'index.html';
+  } else {
+    return path + 'index-' + curPage + '.html';
+  }
+};
+
+
 
 module.exports = Index;

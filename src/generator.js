@@ -65,6 +65,7 @@ Generator.prototype.getArticles = function() {
 
 /**
  * Get all {Post} from `index` and generate HTML pages.
+ * @param  {Boolean} force [description]
  * @return {Promise} with first parameter of `resolve` being the list of files generated.
  */
 Generator.prototype.buildAllArticles = function(force) {
