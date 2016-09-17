@@ -49,7 +49,7 @@ Teaser text
 
 The most simple way to provide a teaser text for index pages is to set it via the **YAML block**.
 
-Another way to generated a teaser text ist to **split your article text** via a single line `===`. The first part above the `===` will be used as description, and both parts for the full version of the text:
+Another way to generate a teaser text is to **split your article text** via a single line `===`. The first part above the `===` will be used as description, and both parts for the full version of the text:
 
 ```markdown
 
