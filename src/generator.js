@@ -66,15 +66,16 @@ Generator.prototype.getArticles = function() {
 /**
  * Get all {Post} from `index` and generate HTML pages.
  * @param  {Boolean} force    [description]
- * @return {Promise} with first parameter of `resolve` being the list of files generated.
+ * @param  {Boolean} keepOld  If set to `true`, the articles will not be deleted before being rebuild
+ * @return {Promise}          with first parameter of `resolve` being the list of files generated.
  */
-Generator.prototype.buildAllArticles = function(force) {
+Generator.prototype.buildAllArticles = function(force, keepOld) {
   var that     = this;
   var allPosts = this.currentIndex.getPosts();
   var skipped  = 0;
   var generatedArticles = [];
 
-  if (force) {
+  if (force && !keepOld) {
     fs.removeSync(this.config.directories.htdocs + '/posts/*');
   }
 
@@ -438,7 +439,7 @@ Generator.prototype.buildAll = function(force, noimages) {
   return new Promise (
     function(resolve, reject) {
       that
-        .buildAllArticles(force)
+        .buildAllArticles(force, noimages)
         .then(function(generatedArticles) {
           var promises = [];
           if (!noimages) {
