@@ -10,7 +10,8 @@
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
   <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
   <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
-  <link rel="alternate" type="application/json" title="{{meta.title}} JSON" href="{{meta.absoluteUrlDirname}}/rss.json" />
+  <link rel="alternate" type="application/json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
+  <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{>meta}}
 </head>
 <body class="index">
@@ -82,7 +83,8 @@
           <ul>
             <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
             <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
-            <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">RSS-JS / JSON: {{meta.title}}</a></li>
+            <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
+            <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
           </ul>
         </section>
       </aside>
