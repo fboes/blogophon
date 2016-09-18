@@ -20,6 +20,10 @@ var RssJs = function(index, pubDate, config, title) {
             return t.title;
           });
         }
+        item.meta.LatLong = null;
+        if (item.meta.Latitude || item.meta.Longitude) {
+          item.meta.LatLong = item.meta.Latitude +' '+ item.meta.Longitude;
+        }
         return {
           title: item.meta.Title,
           description: item.safeHtmlTeaser || item.htmlTeaser,
@@ -27,7 +31,8 @@ var RssJs = function(index, pubDate, config, title) {
           link: item.meta.AbsoluteUrl,
           pubDate: item.meta.Created.rfc,
           guid: item.meta.AbsoluteUrl,
-          categories: tags
+          categories: tags,
+          georssPoint: item.meta.LatLong
         };
       })
     }
