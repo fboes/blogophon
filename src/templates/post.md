@@ -1,12 +1,12 @@
 ---
-Date:     {{date}}
+Date:      {{date}}
 {{#keywords}}
-Keywords: {{keywords}}
+Keywords:  {{keywords}}
 {{/keywords}}
 {{#classes}}
-Classes:  {{classes}}
+Classes:   {{classes}}
 {{/classes}}
-Twitter:  {{title}}
+Twitter:   {{title}}
 ---
 
 {{title}}
