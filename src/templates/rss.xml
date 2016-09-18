@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xml:base="{{config.absoluteBasePath}}" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0"
+  xml:base="{{config.absoluteBasePath}}"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:georss="http://www.georss.org/georss"
+  xmlns:gml="http://www.opengis.net/gml">
   <channel>
     <title>{{config.name}} | {{title}}</title>
     <link>{{config.absoluteBasePath}}</link>
@@ -18,6 +23,9 @@
         {{#meta.Tags}}
           <category>{{title}}</category>
         {{/meta.Tags}}
+        {{#meta.Latitude}}
+          <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
+        {{/meta.Latitude}}
       </item>
     {{/index}}
   </channel>

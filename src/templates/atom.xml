@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{{config.language}}">
+<feed xml:lang="{{config.language}}"
+  xmlns="http://www.w3.org/2005/Atom"
+  xmlns:georss="http://www.georss.org/georss"
+  xmlns:gml="http://www.opengis.net/gml">
   <title>{{config.name}} | {{title}}</title>
   <link href="{{config.absoluteBasePath}}" />
   <id>{{config.absoluteBasePath}}</id>
@@ -19,6 +22,9 @@
       {{#meta.Tags}}
         <category term="{{title}}" />
       {{/meta.Tags}}
+      {{#meta.Latitude}}
+        <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
+      {{/meta.Latitude}}
     </entry>
   {{/index}}
 </feed>
