@@ -163,6 +163,18 @@ Index.prototype.getAuthors = function() {
 };
 
 /**
+ * [getGeo description]
+ * @return {Number}      [description]
+ */
+Index.prototype.getGeo = function () {
+  //return new Index().pushArray(
+    return this.index.filter(function(post) {
+      return (post.meta.Latitude || post.meta.Longitude);
+    });
+  //);
+};
+
+/**
  * Get whole index, split up into separate pages.
  * @param  {Number}  itemsPerPage [description]
  * @param  {Boolean} reverse      [description]

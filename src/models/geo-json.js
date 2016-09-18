@@ -27,7 +27,7 @@ var GeoJson = function(index) {
         geometry: {
           type: 'Point',
           coordinates: [
-            item.meta.Latitude, item.meta.Longitude
+            item.meta.Longitude, item.meta.Latitude
           ]
         }
       };

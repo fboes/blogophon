@@ -1,6 +1,6 @@
 exports.testBasicProperties = function(test) {
   'use strict';
-  test.expect(8);
+  test.expect(10);
 
   var config = require('../src/config');
   var item = {
@@ -26,6 +26,8 @@ exports.testBasicProperties = function(test) {
   test.ok(geojson.features[0].geometry !== undefined);
   test.ok(geojson.features[0].geometry.type !== undefined);
   test.ok(geojson.features[0].geometry.coordinates !== undefined);
+  test.ok(geojson.features[0].geometry.coordinates[0] === 8);
+  test.ok(geojson.features[0].geometry.coordinates[1] === 9);
 
   test.done();
 };

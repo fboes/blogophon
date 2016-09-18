@@ -9,6 +9,7 @@ var dateFormat     = require('dateformat');
 var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
+var geoJson        = require('./models/geo-json');
 var Translations   = require('./helpers/translations');
 var IndexUrl       = require('./helpers/index-url');
 var Index          = require('./index');
@@ -178,6 +179,7 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
         var urls = {
           rss   : new IndexUrl(path + 'posts.rss'),
           rssjs : new IndexUrl(path + 'rss.json'),
+          geojs : new IndexUrl(path + 'geo.json'),
           atom  : new IndexUrl(path + 'posts.atom')
         };
 
@@ -191,6 +193,8 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
           })),
 
           fs.writeFile( urls.rssjs.filename(), JSON.stringify(rssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), that.config, title), undefined, 2)),
+
+          fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeo()), undefined, 2)),
 
           fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
             index: index.getPosts(10),
