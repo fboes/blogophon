@@ -166,10 +166,10 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
   path  = path  || '/';
   title = title || this.strings.index;
 
-  return new Promise (
-    function(resolve, reject) {
-      fs.ensureDirSync(that.config.directories.htdocs + path);
-      fs.remove(that.config.directories.htdocs + path + 'index*', function(err) {
+  fs.ensureDirSync(that.config.directories.htdocs + path);
+  fs.remove(that.config.directories.htdocs + path + 'index*', function(err) {
+    return new Promise (
+      function(resolve, reject) {
         if (err) {
           reject(err);
         }
@@ -224,9 +224,9 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
           })
           .catch(reject)
         ;
-      });
-    }
-  );
+      }
+    );
+  });
 };
 
 /**
@@ -235,17 +235,17 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
  */
 Generator.prototype.buildTagPages = function() {
   var that = this;
-  return new Promise (
-    function(resolve, reject) {
-      var tags = that.currentIndex.getTags();
-      var tagPages = Object.keys(tags).sort().map(function(key) {
-        return {
-          title: tags[key].title,
-          url  : tags[key].urlObj.relativeUrl()
-        };
-      });
+  var tags = that.currentIndex.getTags();
+  var tagPages = Object.keys(tags).sort().map(function(key) {
+    return {
+      title: tags[key].title,
+      url  : tags[key].urlObj.relativeUrl()
+    };
+  });
 
-      fs.remove(that.config.directories.htdocs + '/tagged', function(err) {
+  fs.remove(that.config.directories.htdocs + '/tagged', function(err) {
+    return new Promise (
+      function(resolve, reject) {
         if (err) {
           reject(err);
         }
@@ -271,9 +271,9 @@ Generator.prototype.buildTagPages = function() {
           })
           .catch(reject)
         ;
-      });
-    }
-  );
+      }
+    );
+  });
 };
 
 /**
@@ -282,17 +282,17 @@ Generator.prototype.buildTagPages = function() {
  */
 Generator.prototype.buildAuthorPages = function() {
   var that = this;
-  return new Promise (
-    function(resolve, reject) {
-      var authors = that.currentIndex.getAuthors();
-      var authorPages = Object.keys(authors).sort().map(function(name) {
-        return {
-          title: name,
-          url  : authors[name].urlObj.relativeUrl()
-        };
-      });
+  var authors = that.currentIndex.getAuthors();
+  var authorPages = Object.keys(authors).sort().map(function(name) {
+    return {
+      title: name,
+      url  : authors[name].urlObj.relativeUrl()
+    };
+  });
 
-      fs.remove(that.config.directories.htdocs + '/authored-by', function(err) {
+  fs.remove(that.config.directories.htdocs + '/authored-by', function(err) {
+    return new Promise (
+      function(resolve, reject) {
         if (err) {
           reject(err);
         }
@@ -318,9 +318,9 @@ Generator.prototype.buildAuthorPages = function() {
           })
           .catch(reject)
         ;
-      });
-    }
-  );
+      }
+    );
+  });
 };
 
 /**
