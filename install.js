@@ -13,7 +13,7 @@ if (themesAvailable.length < 1) {
   throw new Error('No themes found');
 }
 
-if (args['only-new'] && ! defaultValues.notInitialized) {
+if (args.onlynew && ! defaultValues.notInitialized) {
   console.log('`config.json` already present, start without `--only-new` to overwrite configuration.');
   process.exit(0);
 }
