@@ -44,6 +44,11 @@ Youtube & Vimeo
 
 For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
 
+Giphy
+-----
+
+For displaying a Giphy imgae, just put a linkt to the Giphy page into a single line. This will be converted to the corresponding image.
+
 Teaser text
 -----------
 
