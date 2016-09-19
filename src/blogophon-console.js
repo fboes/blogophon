@@ -125,6 +125,14 @@ var BlogophonConsole = function() {
             return v.trim();
           }
         },{
+          type: 'input',
+          name: 'author',
+          message: 'Author <E-Mail-Address>',
+          default: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+          when: function() {
+            return config.specialFeatures.multipleauthors;
+          }
+        },{
           type: 'confirm',
           name: 'draft',
           message: 'Is this a draft?',
@@ -160,6 +168,7 @@ var BlogophonConsole = function() {
             title: answers.title,
             keywords: answers.keywords,
             classes: answers.classes,
+            author: answers.author,
             lead: answers.lead || 'Lorem ipsum…',
             mainText: answers.mainText || 'Lorem ipsum…',
             date: new Date()

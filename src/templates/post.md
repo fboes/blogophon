@@ -1,21 +1,24 @@
 ---
-Date:      {{date}}
+Date:      {{{date}}}
 {{#keywords}}
-Keywords:  {{keywords}}
+Keywords:  {{{keywords}}}
 {{/keywords}}
 {{#classes}}
-Classes:   {{classes}}
+Classes:   {{{classes}}}
 {{/classes}}
-Twitter:   {{title}}
+{{#author}}
+Author:    {{{author}}}
+{{/author}}
+Twitter:   {{{title}}}
 ---
 
-{{title}}
+{{{title}}}
 =========
 
 {{#lead}}
-{{lead}}
+{{{lead}}}
 
 ===
 
 {{/lead}}
-{{mainText}}
+{{{mainText}}}

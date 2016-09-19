@@ -191,10 +191,12 @@ var questions = [
     message: 'Do you want to use the following special features?',
     default: defaultValues.useSpecialFeature,
     choices: [
+      "Multiple authors",
       "RSS",
       "ATOM",
       "JSON-RSS",
       //"Apple News",
+      "Microsoft tiles",
       "GeoJSON"
     ]
   }

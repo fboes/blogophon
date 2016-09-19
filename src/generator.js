@@ -147,13 +147,18 @@ Generator.prototype.buildSpecialPages = function() {
   var that = this;
   return new Promise (
     function(resolve, reject) {
+      var promises = [
+        that.buildIndexFiles(),
+        that.buildTagPages(),
+        that.buildMetaFiles()
+      ];
+
+      if (that.config.specialFeatures.multipleauthors) {
+        promises.push(that.buildAuthorPages());
+      }
+
       Promise
-        .all([
-          that.buildIndexFiles(),
-          that.buildTagPages(),
-          that.buildAuthorPages(),
-          that.buildMetaFiles()
-        ])
+        .all(promises)
         .then(resolve)
         .catch(reject)
       ;
@@ -367,14 +372,17 @@ Generator.prototype.buildMetaFiles = function() {
         }))
       ];
 
-      fs.ensureDirSync(that.config.directories.htdocs + '/notifications');
-      that.currentIndex.getPosts(5).forEach(function(post,index) {
-        promises.push(
-          fs.writeFile( new IndexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
-            post: post
-          }))
-        );
-      });
+      if (that.config.specialFeatures.microsofttiles) {
+        fs.ensureDirSync(that.config.directories.htdocs + '/notifications');
+        that.currentIndex.getPosts(5).forEach(function(post,index) {
+          promises.push(
+            fs.writeFile( new IndexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
+              post: post
+            }))
+          );
+        });
+      }
+
 
       Promise
         .all(promises)
