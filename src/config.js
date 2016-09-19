@@ -71,6 +71,11 @@ config.imageSizes = config.imageSizes.map(function(size) {
   return size;
 });
 
+config.specialFeatures = {};
+config.useSpecialFeature.forEach(function(v) {
+  config.specialFeatures[v.toLowerCase().replace(/[^a-z]/g,'')] = true;
+});
+
 if (config.deployCmd && config.deployCmd.match(/^#/)) {
   // delete deployment command with `#` at beginning
   config.deployCmd = null;

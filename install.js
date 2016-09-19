@@ -185,6 +185,18 @@ var questions = [
     name: 'deployCmd',
     message: 'CLI command to copy files to your live server (optional)',
     default: defaultValues.deployCmd
+  },{
+    type: 'checkbox',
+    name: 'useSpecialFeature',
+    message: 'Do you want to use the following special features?',
+    default: defaultValues.useSpecialFeature,
+    choices: [
+      "RSS",
+      "ATOM",
+      "JSON-RSS",
+      //"Apple News",
+      "GeoJSON"
+    ]
   }
 ];
 

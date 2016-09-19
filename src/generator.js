@@ -5,7 +5,7 @@ var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
 var glob           = require("glob");
 var gm             = require('gm').subClass({imageMagick: true});
-var dateFormat     = require('dateformat');
+var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
 var rssJs          = require('./models/rss-js');
@@ -14,6 +14,7 @@ var Translations   = require('./helpers/translations');
 var IndexUrl       = require('./helpers/index-url');
 var Index          = require('./index');
 var hashes         = require('./models/hashes');
+// var AppleNewsFormat = require('./models/apple-news-format');
 
 /**
  * Generator used for creating the blog.
@@ -118,6 +119,9 @@ Generator.prototype.buildSingleArticle = function(post) {
   return new Promise (
     function(resolve, reject) {
       fs.ensureDir(that.config.directories.htdocs + post.meta.Url, function() {
+        if (that.config.specialFeatures.applenews) {
+          // console.log(new AppleNewsFormat(post));
+        }
         fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
           post: post,
           config: that.config
@@ -182,28 +186,34 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
           geojs : new IndexUrl(path + 'geo.json'),
           atom  : new IndexUrl(path + 'posts.atom')
         };
+        var promises = [];
+        var pubDate = blogophonDate(index.pubDate);
 
-        var promises = [
-          fs.writeFile( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
+
+        if (that.config.specialFeatures.rss) {
+          promises.push(fs.writeFile( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index: index.getPosts(10),
-            pubDate: dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'),
+            pubDate: pubDate.rfc,
             config: that.config,
             absoluteUrl : urls.rss.absoluteUrl(),
             title: title
-          })),
-
-          fs.writeFile( urls.rssjs.filename(), JSON.stringify(rssJs(index.getPosts(20), dateFormat(index.pubDate, 'ddd, dd mmm yyyy hh:MM:ss o'), that.config, title), undefined, 2)),
-
-          fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeo()), undefined, 2)),
-
-          fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
+          })));
+        }
+        if (that.config.specialFeatures.atom) {
+          promises.push(fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
             index: index.getPosts(10),
-            pubDate: dateFormat(index.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
+            pubDate: pubDate.iso,
             config: that.config,
             absoluteUrl : urls.atom.absoluteUrl(),
             title: title
-          }))
-        ];
+          })));
+        }
+        if (that.config.specialFeatures.jsonrss) {
+          promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(rssJs(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
+        }
+        if (that.config.specialFeatures.geojson) {
+          promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeo()), undefined, 2)));
+        }
 
         for (page = 0; page < pagedPosts.length; page ++) {
           var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
@@ -352,7 +362,7 @@ Generator.prototype.buildMetaFiles = function() {
         fs.writeFile( new IndexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
           index: that.currentIndex.getPosts(),
           tagPages: tagPages,
-          pubDate: dateFormat(that.currentIndex.pubDate, 'isoDateTime').replace(/(\d\d)(\d\d)$/, '$1:$2'),
+          pubDate: blogophonDate(that.currentIndex.pubDate).iso,
           config: that.config
         }))
       ];

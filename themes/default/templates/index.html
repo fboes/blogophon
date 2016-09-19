@@ -8,10 +8,18 @@
   <meta property="og:title" name="title" content="{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}" />
   <meta property="og:description" name="description" content="{{config.description}}" />
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
-  <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
-  <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
-  <link rel="alternate" type="application/json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
-  <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
+  {{#config.specialFeatures.rss}}
+    <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
+  {{/config.specialFeatures.rss}}
+  {{#config.specialFeatures.atom}}
+    <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
+  {{/config.specialFeatures.atom}}
+  {{#config.specialFeatures.jsonrss}}
+    <link rel="alternate" type="application/json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
+  {{/config.specialFeatures.jsonrss}}
+  {{#config.specialFeatures.geojson}}
+    <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
+  {{/config.specialFeatures.geojson}}
   {{>meta}}
 </head>
 <body class="index">
@@ -81,10 +89,18 @@
           <h3>Abonnement</h3>
           <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
           <ul>
-            <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
-            <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
-            <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
-            <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
+            {{#config.specialFeatures.rss}}
+              <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
+            {{/config.specialFeatures.rss}}
+            {{#config.specialFeatures.atom}}
+              <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
+            {{/config.specialFeatures.atom}}
+            {{#config.specialFeatures.jsonrss}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
+            {{/config.specialFeatures.jsonrss}}
+            {{#config.specialFeatures.geojson}}
+              <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
+            {{/config.specialFeatures.geojson}}
           </ul>
         </section>
       </aside>
