@@ -2,6 +2,7 @@
 
 /**
  * Returns a GeoJson object. See http://geojson.org/
+ * @see  https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0
  * @constructor
  */
 var GeoJson = function(index) {
@@ -19,7 +20,7 @@ var GeoJson = function(index) {
         id: item.meta.AbsoluteUrl,
         properties: {
           title: item.meta.Title,
-          description: item.safeHtmlTeaser || item.htmlTeaser,
+          description: item.meta.Description,
           link: item.meta.AbsoluteUrl,
           pubDate: item.meta.Created.rfc,
           categories: tags
