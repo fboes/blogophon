@@ -5,7 +5,7 @@
  * @constructor
  */
 var Translations = function (language) {
-  // Todo: Move languages to separate files
+  // TODO: Move languages to separate files
   this.translations = {
     en: {
       'index': 'Home',

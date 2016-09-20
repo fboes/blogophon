@@ -196,6 +196,7 @@ var questions = [
       "ATOM",
       "JSON-RSS",
       //"Apple News",
+      //"Accelerated Mobile Pages",
       "Microsoft tiles",
       "GeoJSON"
     ]

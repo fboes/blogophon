@@ -120,7 +120,11 @@ Generator.prototype.buildSingleArticle = function(post) {
     function(resolve, reject) {
       fs.ensureDir(that.config.directories.htdocs + post.meta.Url, function() {
         if (that.config.specialFeatures.applenews) {
+          // TODO: Add AppleNewsFormat here
           // console.log(new AppleNewsFormat(post));
+        }
+        if (that.config.specialFeatures.acceleratedmobilepages) {
+          // TODO: Generate AMP pages here
         }
         fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
           post: post,
