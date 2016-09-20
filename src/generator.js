@@ -45,7 +45,7 @@ Generator.prototype.getArticles = function() {
         if (err) {
           reject(err);
         }
-       // Making promises
+        // Making promises
         var promises = files.map(function(i) {
           return PostReader(i);
         });
