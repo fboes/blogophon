@@ -123,9 +123,11 @@ MarkyMark.prototype.convertText = function (string) {
  */
 MarkyMark.prototype.convertCode = function (string) {
   return string
-    .replace(/(\b)(var|function|method|class)(\b)/g, '$1<i class="reserved">$2</i>$3')
+    .replace(/(\b)(var|function|method|class)(\b)/gi, '$1<i class="c1">$2</i>$3')
+    .replace(/(\b)(length|map|foreach|array|case|if|switch|break|else|elseif|new|return)(\b)/gi, '$1<i class="c2">$2</i>$3')
+    .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
+    .replace(/([\s|=|;])(\d+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
     .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
-    .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="string">$2$3$4</i>')
   ;
 };
 
