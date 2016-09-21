@@ -3,6 +3,7 @@
 var SuperString     = require('../helpers/super-string');
 var config          = require('../config');
 var markdownConvert = require('marked');
+var MarkyMark       = require('../helpers/marky-mark');
 var crypto          = require('crypto');
 var PostUrl         = require('../helpers/post-url');
 var TagUrl          = require('../helpers/tag-url');
@@ -150,34 +151,8 @@ Post.prototype.markyMark = function(html, relUrl) {
   if (relUrl) {
     html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
   }
-  var entityMap = {
-    '...': '…',
-    '… …': '…',
-    '(C)': '©',
-    '(R)': '®',
-    '(TM)': '™',
-    '(+-)': '±',
-    '(1/4)': '¼',
-    '(1/2)': '½',
-    '(3/4)': '¾',
-    '->': '→',
-    //'=>': '⇒',
-    '<-': '←',
-    //'<=': '⇐'
-  };
-  html = html.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|->|=>|<-|<=)/g, function(s) {
-    return entityMap[s];
-  });
-  html = html
-    .replace(/\s--\s/g, ' — ')
-    .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
-    .replace(/(\s)-(\s)/g,'$1–$2')
-    //.replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
-    .replace(/([^\S])"(\S.*?\S)"([^\S])/g,'$1„$2“$3')
-    .replace(/([^\S])'(\S.*?\S)'([^\S])/g,'$1‚$2‘$3')
-  ;
-
-  return markdownConvert(html)
+  html = new MarkyMark(markdownConvert(html)).toString();
+  return html
     .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
     .replace(/(<\/?h)3/g,'$14')
     .replace(/(<\/?h)2/g,'$13')
