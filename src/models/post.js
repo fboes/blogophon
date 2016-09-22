@@ -49,11 +49,11 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     meta.Language = config.language;
   }
 
-  this.urlObj = new PostUrl(filename);
-  if (this.urlObj) {
-    meta.Url         = this.urlObj.relativeUrl();
-    meta.AbsoluteUrl = this.urlObj.absoluteUrl();
-    meta.Filename    = this.urlObj.filename();
+  meta.urlObj = new PostUrl(filename);
+  if (meta.urlObj) {
+    meta.Url         = meta.urlObj.relativeUrl();
+    meta.AbsoluteUrl = meta.urlObj.absoluteUrl();
+    meta.Filename    = meta.urlObj.filename();
   }
 
   meta.Created     = blogophonDate(meta.Date, meta.Language);
@@ -220,7 +220,8 @@ Post.prototype.ampifyHtml = function(html) {
  * @return {String} [description]
  */
 Post.prototype.ampHtml = function() {
-  return this.ampifyHtml(this.html);
+  return Object.keys(this); // TODO: In Mustache `this` is the complete data object, not _this_ object.
+  //return this.ampifyHtml(this.html);
 };
 
 /**

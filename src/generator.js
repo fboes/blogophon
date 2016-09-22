@@ -14,7 +14,7 @@ var Translations   = require('./helpers/translations');
 var IndexUrl       = require('./helpers/index-url');
 var Index          = require('./index');
 var hashes         = require('./models/hashes');
-// var AppleNewsFormat = require('./models/apple-news-format');
+var AppleNewsFormat = require('./models/apple-news-format');
 
 /**
  * Generator used for creating the blog.
@@ -118,27 +118,35 @@ Generator.prototype.buildSingleArticle = function(post) {
   }
   return new Promise (
     function(resolve, reject) {
-      fs.ensureDir(that.config.directories.htdocs + post.meta.Url, function() {
-        if (that.config.specialFeatures.applenews) {
-          // TODO: Add AppleNewsFormat here
-          // console.log(new AppleNewsFormat(post));
-        }
-        if (that.config.specialFeatures.acceleratedmobilepages) {
-          // TODO: Generate AMP pages here
-        }
-        fs.writeFile(post.meta.Filename, Mustache.render(Mustache.templates.post, {
+      fs.ensureDirSync(that.config.directories.htdocs + post.meta.Url);
+      var promises = [];
+      if (that.config.specialFeatures.applenews) {
+        promises.push(fs.writeFile( post.meta.urlObj.dirname() + '/article.json', JSON.stringify(new AppleNewsFormat(post), undefined, 2)));
+      }
+      if (that.config.specialFeatures.acceleratedmobilepages) {
+        promises.push(fs.writeFile( post.meta.urlObj.dirname() + '/amp.html', Mustache.render(Mustache.templates.amp, {
           post: post,
           config: that.config
-        },Mustache.partials), function(err) {
-          if (err) {
-            reject(err);
-          }
-          if (that.hashes) {
-            that.hashes.update(post.meta.Url, post.hash);
-          }
-          resolve(post.meta.Filename);
-        });
-      });
+        },Mustache.partials)));
+      }
+      Promise
+        .all(promises)
+        .then(function() {
+          fs.writeFile(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
+            post: post,
+            config: that.config
+          },Mustache.partials), function(err) {
+            if (err) {
+              reject(err);
+            }
+            if (that.hashes) {
+              that.hashes.update(post.meta.Url, post.hash);
+            }
+            resolve(post.meta.Filename);
+          });
+        })
+        .catch(reject)
+      ;
     }
   );
 };

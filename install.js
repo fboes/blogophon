@@ -195,8 +195,8 @@ var questions = [
       "RSS",
       "ATOM",
       "JSON-RSS",
-      //"Apple News",
-      //"Accelerated Mobile Pages",
+      "Apple News",
+      "Accelerated Mobile Pages",
       "Microsoft tiles",
       "GeoJSON"
     ]
