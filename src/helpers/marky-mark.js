@@ -70,9 +70,21 @@ MarkyMark.prototype._pushChunk = function (chunk, newMode) {
       case '<code>':
         chunk = this._convertCode(chunk);
         break;
+      case '<css>':
+        chunk = this._convertCss(chunk);
+        break;
+      case '<html>':
+        chunk = this._convertHtml(chunk);
+        break;
       case '<>':
         if (chunk.match(/<code class/)) {
-          newMode = '<code>';
+          var lang = chunk.match(/(css|html)/);
+          if (lang && lang[1]) {
+            newMode = '<'+lang[1]+'>';
+          }
+          else {
+            newMode = '<code>';
+          }
         }
         break;
     }
@@ -126,9 +138,33 @@ MarkyMark.prototype._convertCode = function (string) {
     .replace(/(\b)(var|function|method|class)(\b)/gi, '$1<i class="c1">$2</i>$3')
     .replace(/(\b)(length|map|foreach|array|case|if|switch|break|else|elseif|new|return|this|self)(\b)/gi, '$1<i class="c2">$2</i>$3')
     .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
-    .replace(/([\s|=|;])(\d+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
+    .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
     .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
   ;
+};
+
+/**
+ * Convert code text node
+ * @param {String} string
+ * @return {String}
+ */
+MarkyMark.prototype._convertCss = function (string) {
+  return string
+    .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/gi, '$1<i class="c1">$2</i>$3')
+    .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/gi, '$1<i class="c2">$2</i>$3')
+    .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
+    .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c4">$2</i>$3')
+    .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
+    ;
+};
+
+/**
+ * Convert code text node
+ * @param {String} string
+ * @return {String}
+ */
+MarkyMark.prototype._convertHtml = function (string) {
+  return this._convertCode(string);
 };
 
 module.exports = MarkyMark;
