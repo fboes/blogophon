@@ -7,9 +7,9 @@ var Mustache       = require('mustache');
 var fs             = require('fs');
 
 /**
- * [getTemplates description]
- * @param  {[type]} path [description]
- * @return {[type]}      [description]
+ * Load all templates from themes folder. Prime `this.templates` and `this.partials`.
+ * @param  {String} path [description]
+ * @return {Mustache}    [description]
  */
 Mustache.getTemplates = function(path) {
   Mustache.themePath = path;
@@ -23,7 +23,7 @@ Mustache.getTemplates = function(path) {
     atom:    fs.readFileSync('./src/templates/atom.xml', 'utf8'),
     sitemap: fs.readFileSync('./src/templates/sitemap.xml', 'utf8'),
     robots:  fs.readFileSync('./src/templates/robots.txt', 'utf8'),
-    htaccess:  fs.readFileSync('./src/templates/.htaccess', 'utf8'),
+    htaccess:fs.readFileSync('./src/templates/.htaccess', 'utf8'),
     livetile:fs.readFileSync('./src/templates/livetile.xml', 'utf8'),
     browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
   };
