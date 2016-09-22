@@ -3,6 +3,7 @@
 /**
  * Represents an index of all posts.
  * @constructor
+ * @return {Index}
  */
 var Index = function() {
   this.index    = [];
@@ -163,10 +164,10 @@ Index.prototype.getAuthors = function() {
 };
 
 /**
- * [getGeo description]
- * @return {Number}      [description]
+ * [getGeoArticles description]
+ * @return {Array}      [description]
  */
-Index.prototype.getGeo = function () {
+Index.prototype.getGeoArticles = function () {
   //return new Index().pushArray(
     return this.index.filter(function(post) {
       return (post.meta.Latitude || post.meta.Longitude);

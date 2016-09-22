@@ -3,7 +3,7 @@
 /**
  * Convert HTML in even better HTML.
  * @param {String} string
- * @returns {String}
+ * @return {String}
  * @constructor
  */
 var MarkyMark = function (string) {
@@ -16,7 +16,7 @@ var MarkyMark = function (string) {
 /**
  * Do actual conversion
  * @param {String} string
- * @returns {String}
+ * @return {String}
  */
 MarkyMark.prototype.convert = function (string) {
   this.chunks = [];
@@ -57,7 +57,7 @@ MarkyMark.prototype.toString = function () {
  * Push a single chunk to the chunk array, but convert chunks by looking at the current mode
  * @param {String} chunk
  * @param {String} mode
- * @returns {Boolean}
+ * @return {Boolean}
  */
 MarkyMark.prototype._pushChunk = function (chunk, newMode) {
   newMode = newMode || '';
@@ -65,10 +65,10 @@ MarkyMark.prototype._pushChunk = function (chunk, newMode) {
     switch (this.mode) {
       case '':
         // Text node
-        chunk = this.convertText(chunk);
+        chunk = this._convertText(chunk);
         break;
       case '<code>':
-        chunk = this.convertCode(chunk);
+        chunk = this._convertCode(chunk);
         break;
       case '<>':
         if (chunk.match(/<code class/)) {
@@ -87,7 +87,7 @@ MarkyMark.prototype._pushChunk = function (chunk, newMode) {
  * @param {String} string
  * @return {String}
  */
-MarkyMark.prototype.convertText = function (string) {
+MarkyMark.prototype._convertText = function (string) {
   var entityMap = {
     '...': '…',
     '… …': '…',
@@ -121,7 +121,7 @@ MarkyMark.prototype.convertText = function (string) {
  * @param {String} string
  * @return {String}
  */
-MarkyMark.prototype.convertCode = function (string) {
+MarkyMark.prototype._convertCode = function (string) {
   return string
     .replace(/(\b)(var|function|method|class)(\b)/gi, '$1<i class="c1">$2</i>$3')
     .replace(/(\b)(length|map|foreach|array|case|if|switch|break|else|elseif|new|return)(\b)/gi, '$1<i class="c2">$2</i>$3')

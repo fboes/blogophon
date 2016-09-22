@@ -221,7 +221,7 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
           promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(rssJs(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
         }
         if (that.config.specialFeatures.geojson) {
-          promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeo()), undefined, 2)));
+          promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
         }
 
         for (page = 0; page < pagedPosts.length; page ++) {
