@@ -3,11 +3,17 @@
 /**
  * Returns RSS as a javascript object.
  * @constructor
+ * @return {AppleNewsFormat}
  */
 var AppleNewsFormat = function(post) {
   return this.init(post);
 };
 
+/**
+ * Convert a post into Apple News JSON
+ * @param {Post} post
+ * @return {Object}
+ */
 AppleNewsFormat.prototype.init = function(post) {
   return {
     version: 1.2,
