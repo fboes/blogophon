@@ -10,7 +10,7 @@ exports.testSimpleString = function(test) {
   test.ok(m.toString() !== undefined);
 
   m = new MarkyMark('<p>&quot;Meine vierjährige Tochter hat gesagt, dass sie sofort alle Buchstaben lernen will.&quot;</p>'+'    <p>&quot;Na, dann gib ihr mal eine <a href="http://www.fileformat.info/info/charset/UTF-8/list.htm">UTF-8-Tabelle</a>.&quot;</p>');
-  console.log(m.toString());
+  //console.log(m.toString());
   test.ok(m.toString() !== undefined);
   test.done();
 };

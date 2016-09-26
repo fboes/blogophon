@@ -5,21 +5,6 @@
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "NewsArticle",
-      "headline": "{{post.meta.Title}}",
- {{#config.ogImage}}
-  {{^post.meta.Image}}
-     "image": [
-        "{{post.meta.Image}}"
-      ]
-    },
-  {{/post.meta.Image}}
-{{/config.ogImage}}
-      "datePublished": "{{post.meta.Created.iso}}"
-  </script>
   <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
   <script async src="https://cdn.ampproject.org/v0.js"></script>
   <style amp-custom>
@@ -44,20 +29,23 @@
   <div id="container">
     {{>header}}
     <main>
-      <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
-        <header>
-          <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
-          <h2 itemprop="name headline">{{post.meta.Title}}</h2>
-        </header>
-        <div itemprop="articleBody">
-          {{{ampHtml}}}
-        </div>
-        <footer class="meta">
-          {{#meta.AuthorName}}
-          <address class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></address>
-          {{/meta.AuthorName}}
-        </footer>
-      </article>
+      {{#post}}
+        <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
+          <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
+          <header>
+            <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
+            <h2 itemprop="name headline">{{post.meta.Title}}</h2>
+          </header>
+          <div itemprop="articleBody">
+            {{{ampHtml}}}
+          </div>
+          <footer class="meta">
+            {{#meta.AuthorName}}
+            <address class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></address>
+            {{/meta.AuthorName}}
+          </footer>
+        </article>
+      {{/post}}
       <p class="back">
         <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
       </p>
