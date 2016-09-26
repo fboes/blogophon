@@ -123,8 +123,8 @@ MarkyMark.prototype._convertText = function (string) {
     .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
     .replace(/(\s)-(\s)/g,'$1–$2')
     .replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
-    .replace(/([^\S])&quot;(\S.*?\S)&quot;([^\S]|$)/g,'$1„$2“$3')
-    .replace(/([^\S])(?:'|&#39;)(\S.*?\S)(?:'|&#39;)([^\S]|$)/g,'$1‚$2‘$3')
+    .replace(/(^|[^\S])&quot;(\S.*?\S)&quot;([^\S]|$)/g,'$1„$2“$3')
+    .replace(/(^|[^\S])(?:'|&#39;)(\S.*?\S)(?:'|&#39;)([^\S]|$)/g,'$1‚$2‘$3')
   ;
 };
 
@@ -140,6 +140,7 @@ MarkyMark.prototype._convertCode = function (string) {
     .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
     .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
     .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
+    .replace(/(\/\*[\s\S]+\*\/)/g, '<i class="comment">$1</i>')
   ;
 };
 
@@ -155,6 +156,7 @@ MarkyMark.prototype._convertCss = function (string) {
     .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
     .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c4">$2</i>$3')
     .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
+    .replace(/(\/\*[\s\S]+\*\/)/g, '<i class="comment">$1</i>')
     ;
 };
 
@@ -164,7 +166,12 @@ MarkyMark.prototype._convertCss = function (string) {
  * @return {String}
  */
 MarkyMark.prototype._convertHtml = function (string) {
-  return this._convertCode(string);
+  return string
+    .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i class="c1">$2</i>')
+    .replace(/(&amp;[a-z0-9]+?;)/g, '<i class="c4">$1</i>')
+    .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/gi, '$1<i class="c2">$2</i>$3<i class="c3">$4</i>$5')
+    .replace(/(&lt;--.+?--&gt;)/g, '<i class="comment">$1</i>')
+  ;
 };
 
 module.exports = MarkyMark;

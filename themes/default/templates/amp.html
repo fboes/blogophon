@@ -28,21 +28,35 @@
     #header { font-size: 1em; padding: 1em; margin:0; border-bottom: 1px solid #888; background: #74AEEE; text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.5); }
     #header a { display: block; color: white; text-align: right; font-family: Georgia, serif; height: 100%; }
     main {padding:1em;}
+    .date { float: right; color: gray; font-size: 0.6em; font-weight: normal; margin-left: 0.5em; }
     #footer { text-align: center; clear: both; border-top: 1px dotted #cccccc; font-size: 0.8em; color: gray; margin-top: 3em; }
     .back {text-align:center; margin-top:1em;}
+    .meta {display:none;}
     amp-img {
       background-color: gray;
       border: 1px solid black;
     }
   </style>
+  <link rel="shortcut icon" type="image/x-icon" href="//cdn.3960.org/css/favicon.ico" />
+  <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
 </head>
 <body>
   <div id="container">
     {{>header}}
     <main>
-      <article>
-        <h2>{{post.meta.Title}}</h2>
-        {{{ampHtml}}}
+      <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
+        <header>
+          <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
+          <h2 itemprop="name headline">{{post.meta.Title}}</h2>
+        </header>
+        <div itemprop="articleBody">
+          {{{ampHtml}}}
+        </div>
+        <footer class="meta">
+          {{#meta.AuthorName}}
+          <address class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></address>
+          {{/meta.AuthorName}}
+        </footer>
       </article>
       <p class="back">
         <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
