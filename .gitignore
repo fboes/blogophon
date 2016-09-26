@@ -8,3 +8,4 @@
 /themes/*
 !/themes/default
 /.idea
+/npm-debug.log

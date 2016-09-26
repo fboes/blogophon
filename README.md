@@ -15,7 +15,7 @@ A small and simple [Static Site Generator](https://davidwalsh.name/introduction-
 * Scale images and remove unneccessary cruft.
 * Puts all relevant meta stuff into `<head>` for SEO and social sharing.
 * Publish files to remote server.
-* Generate RSS newsfeed, ATOM newsfeed, RSS-JS newsfeed, GeoJSON files.
+* A ton of [special features](docs/special-features.md) like ATOM, RSS, AMP, etc.
 
 Installation
 ------------

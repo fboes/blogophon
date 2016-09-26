@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ⚡ lang="{{config.language}}">
+<head>
+  <meta charset="utf-8">
+  <title>{{post.meta.Title}} | {{config.name}}</title>
+  <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "headline": "{{post.meta.Title}}",
+ {{#config.ogImage}}
+  {{^post.meta.Image}}
+     "image": [
+        "{{post.meta.Image}}"
+      ]
+    },
+  {{/post.meta.Image}}
+{{/config.ogImage}}
+      "datePublished": "{{post.meta.Created.iso}}"
+  </script>
+  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+  <script async src="https://cdn.ampproject.org/v0.js"></script>
+  <style amp-custom>
+    body { font: 80% Tahoma, sans-serif; padding:0; }
+    a { color:maroon; }
+    #header { font-size: 1em; padding: 1em; margin:0; border-bottom: 1px solid #888; background: #74AEEE; text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.5); }
+    #header a { display: block; color: white; text-align: right; font-family: Georgia, serif; height: 100%; }
+    main {padding:1em;}
+    #footer { text-align: center; clear: both; border-top: 1px dotted #cccccc; font-size: 0.8em; color: gray; margin-top: 3em; }
+    .back {text-align:center; margin-top:1em;}
+    amp-img {
+      background-color: gray;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    {{>header}}
+    <main>
+      <article>
+        <h2>{{post.meta.Title}}</h2>
+        {{{ampHtml}}}
+      </article>
+      <p class="back">
+        <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
+      </p>
+    </main>
+    {{>footer}}
+  </div>
+</body>
+</html>
