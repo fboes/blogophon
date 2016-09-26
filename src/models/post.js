@@ -220,8 +220,7 @@ Post.prototype.ampifyHtml = function(html) {
  * @return {String} [description]
  */
 Post.prototype.ampHtml = function() {
-  return Object.keys(this); // TODO: In Mustache `this` is the complete data object, not _this_ object.
-  //return this.ampifyHtml(this.html);
+  return this.ampifyHtml(this.html);
 };
 
 /**

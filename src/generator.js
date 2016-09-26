@@ -126,6 +126,7 @@ Generator.prototype.buildSingleArticle = function(post) {
       if (that.config.specialFeatures.acceleratedmobilepages) {
         promises.push(fs.writeFile( post.meta.urlObj.dirname() + '/amp.html', Mustache.render(Mustache.templates.amp, {
           post: post,
+          ampHtml: post.ampHtml(),
           config: that.config
         },Mustache.partials)));
       }
