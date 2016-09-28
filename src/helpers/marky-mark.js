@@ -155,8 +155,11 @@ MarkyMark.prototype._convertCss = function (string) {
   return string
     .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/gi, '$1<i class="c1">$2</i>$3')
     .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/gi, '$1<i class="c2">$2</i>$3')
-    .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
-    .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c4">$2</i>$3')
+    .replace(/(\b)((?:\.|#)[a-z0-9_\-]+)(\b)/gi, '$1<i class="c2">$2</i>$3')
+    .replace(/(\b)((?:$)[a-z0-9_\-]+)(\b)/gi, '$1<i class="c3">$2</i>$3')
+    .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/gi, '$1<i class="c1">$2</i>$3')
+    .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c5">$2$3$4</i>')
+    .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c6">$2</i>$3')
     .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
     .replace(/(\/\*[\s\S]+\*\/)/g, '<i class="comment">$1</i>')
     ;
