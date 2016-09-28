@@ -79,6 +79,17 @@ var questions = [
       return v.toLowerCase();
     }
   },{
+    type: 'list',
+    name: 'postPathMode',
+    message: 'Choose URL path pattern for your posts:',
+    default: defaultValues.postPathMode,
+    choices: [
+      'Static path',
+      'Year',
+      'Year/Month',
+      'Year/Month/Day'
+    ]
+  },{
     type: 'input',
     name: 'itemsPerPage',
     message: 'How many articles per page?',

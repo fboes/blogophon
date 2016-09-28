@@ -48,16 +48,34 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
   if (!meta.Language) {
     meta.Language = config.language;
   }
+  if (!meta.Id) {
+    meta.Id = filename;
+  }
 
-  meta.urlObj = new PostUrl(filename);
+  meta.Created     = blogophonDate(meta.Date, meta.Language);
+  meta.Modified    = blogophonDate(meta.DateModified, meta.Language);
+
+  var path = 'posts';
+  if (config.postPathMode){
+    switch (config.postPathMode) {
+      case 'Year':
+        path = meta.Created.year;
+        break;
+      case 'Year/Month':
+        path = meta.Created.year + '/' + meta.Created.month;
+        break;
+      case 'Year/Month/Day':
+        path = meta.Created.year + '/' + meta.Created.month + '/' + meta.Created.day;
+        break;
+    }
+  }
+
+  meta.urlObj = new PostUrl(filename, path);
   if (meta.urlObj) {
     meta.Url         = meta.urlObj.relativeUrl();
     meta.AbsoluteUrl = meta.urlObj.absoluteUrl();
     meta.Filename    = meta.urlObj.filename();
   }
-
-  meta.Created     = blogophonDate(meta.Date, meta.Language);
-  meta.Modified    = blogophonDate(meta.DateModified, meta.Language);
 
   var htmlTeaser   = this.markyMark(meta.Description.trim(), meta.Url);
   var html         = this.markyMark(markdown, meta.Url);
@@ -130,6 +148,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     }
   }
 
+  this.filename       = filename;
   this.markdown       = markdown;
   this.meta           = meta;
   this.html           = html;

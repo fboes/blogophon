@@ -19,7 +19,7 @@
         <link>{{meta.AbsoluteUrl}}?utm_campaign=newsfeed</link>
         <pubDate>{{meta.Created.rfc}}</pubDate>
         <content:encoded><![CDATA[{{{safeHtml}}}]]></content:encoded>
-        <guid isPermaLink="true">{{meta.AbsoluteUrl}}</guid>
+        <guid isPermaLink="false">{{meta.Id}}</guid>
         {{#meta.Tags}}
           <category>{{title}}</category>
         {{/meta.Tags}}

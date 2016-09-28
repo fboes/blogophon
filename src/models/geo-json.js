@@ -17,7 +17,7 @@ var GeoJson = function(index) {
       }
       return {
         type: 'Feature',
-        id: item.meta.AbsoluteUrl,
+        id: item.meta.Id || item.meta.AbsoluteUrl,
         properties: {
           title: item.meta.Title,
           description: item.meta.Description,

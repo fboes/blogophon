@@ -88,7 +88,7 @@ Generator.prototype.buildAllArticles = function(force, keepOld) {
         if (!force && that.hashes.isHashed(post.meta.Url, post.hash)) {
           skipped++;
         } else {
-          generatedArticles.push(post.meta.Url);
+          generatedArticles.push([post.meta.Url, post.filename]);
           return that.buildSingleArticle(post);
         }
       });
@@ -121,10 +121,10 @@ Generator.prototype.buildSingleArticle = function(post) {
       fs.ensureDirSync(that.config.directories.htdocs + post.meta.Url);
       var promises = [];
       if (that.config.specialFeatures.applenews) {
-        promises.push(fs.writeFile( post.meta.urlObj.dirname() + '/article.json', JSON.stringify(new AppleNewsFormat(post), undefined, 2)));
+        promises.push(fs.writeFile( post.meta.urlObj.filename('article','json'), JSON.stringify(new AppleNewsFormat(post), undefined, 2)));
       }
       if (that.config.specialFeatures.acceleratedmobilepages) {
-        promises.push(fs.writeFile( post.meta.urlObj.dirname() + '/amp.html', Mustache.render(Mustache.templates.amp, {
+        promises.push(fs.writeFile( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
           post: post,
           ampHtml: post.ampHtml(),
           config: that.config
@@ -413,18 +413,23 @@ Generator.prototype.buildMetaFiles = function() {
  * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
  * @return {Promise} with first parameter of `resolve` being the number of files converted.
  */
-Generator.prototype.copyImages = function(article) {
-  article = article.replace(/\/$/, '').replace(/^.+\//,'') || '**';
-
+Generator.prototype.copyImages = function(targetDirectory, articleFilename) {
+  if (!targetDirectory || !articleFilename) {
+    return false;
+  }
   var that = this;
   var i;
   var j;
   var processed = 0;
   var maxProcessed = -1;
 
+  // Target directory
+  var sourceDirectory = articleFilename.replace(/\.md$/, '') + "/"; // Source directory
+  var sourceReg = new RegExp(sourceDirectory);
+
   return new Promise (
     function(resolve, reject) {
-      glob(that.config.directories.data + "/" + article + "/*.{png,jpg,gif}", function(er, files) {
+      glob(sourceDirectory + "*.{png,jpg,gif}", function(er, files) {
         maxProcessed = files.length * (that.config.imageSizes.length + 1);
         if (files.length === 0) {
           resolve( processed );
@@ -439,7 +444,7 @@ Generator.prototype.copyImages = function(article) {
           }
         };
         for (i = 0; i < files.length; i++) {
-          var targetFile = files[i].replace(/^user\//, that.config.directories.htdocs + '/');
+          var targetFile = files[i].replace(sourceReg, that.config.directories.htdocs + targetDirectory);
           fs.ensureDirSync(targetFile.replace(/(\/).+?$/, '$1'));
           gm(files[i])
             .noProfile()
@@ -479,7 +484,7 @@ Generator.prototype.buildAll = function(force, noimages) {
           var promises = [];
           if (!noimages) {
             promises = generatedArticles.map(function(article) {
-              return that.copyImages( article );
+              return that.copyImages( article[0], article[1] );
             });
           }
           if (generatedArticles.length) {
