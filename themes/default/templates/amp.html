@@ -32,6 +32,11 @@
       {{#post}}
         <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
           <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
+          {{#config.ogImage}}
+            {{^post.meta.Image}}
+              <link itemprop="image" href="{{config.ogImage}}" />
+            {{/post.meta.Image}}
+          {{/config.ogImage}}
           <header>
             <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
             <h2 itemprop="name headline">{{post.meta.Title}}</h2>
@@ -41,7 +46,7 @@
           </div>
           <footer class="meta">
             {{#meta.AuthorName}}
-            <address class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{meta.AuthorName}}</span></address>
+            <address class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><amp-img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
             {{/meta.AuthorName}}
           </footer>
         </article>
