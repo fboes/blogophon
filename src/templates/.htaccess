@@ -8,6 +8,6 @@ DirectoryIndex index.html
 
 # General Blogophon redirects
 RedirectMatch 301 ^/htdocs/(.*)$ /$1
-RedirectMatch 301 ^/posts/?$ /
+RedirectMatch 301 ^/(posts|\d+(/\d+(/\d+)?)?)/?$ /
 
 # Add your stuff here
