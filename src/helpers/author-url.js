@@ -13,8 +13,10 @@ var AuthorUrl = function (identifier) {
 };
 AuthorUrl.prototype = Object.create(Url.prototype);
 AuthorUrl.prototype.constructor = AuthorUrl;
-AuthorUrl.prototype.convert = function () {
-  return !this.identifier ? null : 'authored-by/' + new SuperString(this.identifier).asciify() + '/index.html';
+AuthorUrl.prototype.convert = function (base, type) {
+  base = base || 'index';
+  type = type || 'html';
+  return !this.identifier ? null : 'authored-by/' + new SuperString(this.identifier).asciify() + '/' + base + '.' + type;
 };
 
 module.exports = AuthorUrl;

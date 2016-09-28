@@ -10,33 +10,41 @@ var path           = require('path');
  * @return {Url}    [description]
  */
 var Url = function (identifier) {
-  this.identifier = identifier? identifier.replace(/^\/+/, '') : null;
+  this.identifier = identifier ? identifier.replace(/^\/+/, '') : null;
   return this;
 };
 
 /**
  * [convert description]
+ * @params {String} base Filename of file
+ * @params {String} type File type
  * @return {String} [description]
  */
-Url.prototype.convert = function () {
-  return !this.identifier ? null : new SuperString(this.identifier).asciify() + '/index.html';
+Url.prototype.convert = function (base, type) {
+  base = base || 'index';
+  type = type || 'html';
+  return !this.identifier ? null : new SuperString(this.identifier).asciify() + '/' + base + '.' + type;
 };
 
 /**
  * [relativeUrl description]
+ * @params {String} base Filename of file
+ * @params {String} type File type
  * @return {String} [description]
  */
-Url.prototype.relativeUrl = function () {
-  var url = this.convert();
+Url.prototype.relativeUrl = function (base, type) {
+  var url = this.convert(base, type);
   return !url ? null : config.basePath + url.replace(/\/index\.html$/, '/');
 };
 
 /**
  * [absoluteUrl description]
+ * @params {String} base Filename of file
+ * @params {String} type File type
  * @return {String} [description]
  */
-Url.prototype.absoluteUrl = function () {
-  var url = this.relativeUrl();
+Url.prototype.absoluteUrl = function (base, type) {
+  var url = this.relativeUrl(base, type);
   return !url ? null : config.baseUrl + url;
 };
 
@@ -51,10 +59,12 @@ Url.prototype.absoluteUrlDirname = function () {
 
 /**
  * [filename description]
+ * @params {String} base Filename of file
+ * @params {String} type File type
  * @return {String} [description]
  */
-Url.prototype.filename = function () {
-  var url = this.relativeUrl();
+Url.prototype.filename = function (base, type) {
+  var url = this.relativeUrl(base, type);
   return !url ? null : path.join(process.cwd(), config.directories.htdocs, url.replace(/(\/)$/, '$1index.html'));
 };
 

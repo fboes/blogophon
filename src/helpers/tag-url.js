@@ -13,8 +13,10 @@ var TagUrl = function (identifier) {
 };
 TagUrl.prototype = Object.create(Url.prototype);
 TagUrl.prototype.constructor = TagUrl;
-TagUrl.prototype.convert = function () {
-  return !this.identifier ? null : 'tagged/' + new SuperString(this.identifier).asciify() + '/index.html';
+TagUrl.prototype.convert = function (base, type) {
+  base = base || 'index';
+  type = type || 'html';
+  return !this.identifier ? null : 'tagged/' + new SuperString(this.identifier).asciify() + '/' + base + '.' + type;
 };
 
 module.exports = TagUrl;
