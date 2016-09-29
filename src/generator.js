@@ -8,7 +8,7 @@ var gm             = require('gm').subClass({imageMagick: true});
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
-var rssJs          = require('./models/rss-js');
+var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
 var Translations   = require('./helpers/translations');
 var IndexUrl       = require('./helpers/index-url');
@@ -227,7 +227,7 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
           })));
         }
         if (that.config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(rssJs(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
+          promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
         }
         if (that.config.specialFeatures.geojson) {
           promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
