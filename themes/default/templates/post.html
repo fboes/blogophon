@@ -64,8 +64,9 @@
             </div>
             <footer class="meta">
               {{#meta.AuthorName}}
-                <address class="author" itemprop="author publisher" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
+                <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
               {{/meta.AuthorName}}
+              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="//cdn.3960.org/css/iphone.png" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
               {{#meta.Tags.length}}
                 <span class="tags">
                   Andere Artikel zum Thema
