@@ -14,7 +14,7 @@ var Manifest = function(config) {
       return i;
     }),
     scope: config.basePath,
-    start_url: config.basePath+'index.html?utm_source=manifest',
+    start_url: config.basePath+'index.html?utm_medium=manifest',
     theme_color: config.themeColor,
     background_color: '#ffffff'
   };
