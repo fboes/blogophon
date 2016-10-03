@@ -4,7 +4,7 @@
  * List of arguments from command line
  * @constructor
  */
-var Arguments = function() {
+var argumentsObject = function() {
   var obj = {};
   if (process.argv && process.argv.length > 1) {
     process.argv.forEach(function(arg, i) {
@@ -17,4 +17,4 @@ var Arguments = function() {
   return obj;
 };
 
-module.exports = Arguments;
+module.exports = argumentsObject;

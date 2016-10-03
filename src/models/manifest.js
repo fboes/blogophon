@@ -4,7 +4,7 @@
  * Represents all posts
  * @constructor
  */
-var Manifest = function(config) {
+var manifest = function(config) {
   return {
     lang: config.language,
     name: config.name || '',
@@ -20,4 +20,4 @@ var Manifest = function(config) {
   };
 };
 
-module.exports = Manifest;
+module.exports = manifest;

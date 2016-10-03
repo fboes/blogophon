@@ -4,7 +4,7 @@
  * Returns RSS as a javascript object.
  * @constructor
  */
-var JsonRss = function(index, pubDate, config, title) {
+var jsonRss = function(index, pubDate, config, title) {
   return {
     version: 2.0,
     channel: {
@@ -39,4 +39,4 @@ var JsonRss = function(index, pubDate, config, title) {
   };
 };
 
-module.exports = JsonRss;
+module.exports = jsonRss;

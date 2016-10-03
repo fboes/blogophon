@@ -14,7 +14,7 @@ var Translations   = require('./helpers/translations');
 var IndexUrl       = require('./helpers/index-url');
 var Index          = require('./index');
 var hashes         = require('./models/hashes');
-var AppleNewsFormat = require('./models/apple-news-format');
+var appleNewsFormat = require('./models/apple-news-format');
 
 /**
  * Generator used for creating the blog.
@@ -121,7 +121,7 @@ Generator.prototype.buildSingleArticle = function(post) {
       fs.ensureDirSync(that.config.directories.htdocs + post.meta.Url);
       var promises = [];
       if (that.config.specialFeatures.applenews) {
-        promises.push(fs.writeFile( post.meta.urlObj.filename('article','json'), JSON.stringify(new AppleNewsFormat(post), undefined, 2)));
+        promises.push(fs.writeFile( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
       }
       if (that.config.specialFeatures.acceleratedmobilepages) {
         promises.push(fs.writeFile( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {

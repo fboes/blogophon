@@ -3,7 +3,7 @@
 var SuperString     = require('../helpers/super-string');
 var config          = require('../config');
 var markdownConvert = require('marked');
-var MarkyMark       = require('../helpers/marky-mark');
+var markyMark       = require('../helpers/marky-mark');
 var crypto          = require('crypto');
 var PostUrl         = require('../helpers/post-url');
 var TagUrl          = require('../helpers/tag-url');
@@ -170,7 +170,7 @@ Post.prototype.markyMark = function(html, relUrl) {
   if (relUrl) {
     html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
   }
-  html = new MarkyMark(markdownConvert(html)).toString();
+  html = markyMark(markdownConvert(html)).toString();
   return html
     .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
     .replace(/(<\/?h)3/g,'$14')
