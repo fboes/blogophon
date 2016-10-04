@@ -231,6 +231,10 @@ Post.prototype.makeSafeHtml = function(html) {
 Post.prototype.ampifyHtml = function(html) {
   return html
     .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
+    .replace(/(amp-(?:video|iframe))/g, '$1 width="640" height="360"')
+    .replace(/(amp-(?:video|iframe)[^>]+) allowfullscreen=".+?"/g, '$1')
+    .replace(/(amp-(?:audio))/g, '$1 width="640" height="60"')
+    .replace(/(<amp-(?:video|audio|iframe).+?>).+(<\/amp-(?:video|iframe))/g, '$1$2')
   ;
 };
 
