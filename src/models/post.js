@@ -83,7 +83,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
   if (!meta.Title) {
     meta.Title = markdown.split(/\n/)[0];
   }
-  if (meta.Keywords !== undefined) {
+  if (meta.Keywords) {
     meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
       var tagUrlObj = new TagUrl(tag);
       return {
@@ -104,7 +104,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     htmlTeaser   = this.galleryHtml(htmlTeaser);
     html         = this.galleryHtml(html);
   }
-  if (meta.Description !== undefined) {
+  if (meta.Description) {
     meta.Description = meta.Description
       .replace(/>/g,' ')
       .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')

@@ -93,7 +93,7 @@ SuperString.prototype.paramsToObject = function(splitter) {
   parts = this.string.replace(/^\?/,'').split(splitter);
   for (i=0; i < parts.length; i++) {
     currItem = parts[i].split('=');
-    obj[currItem[0]] = (currItem[1] !== undefined) ? decodeURIComponent(currItem[1]) : true;
+    obj[currItem[0]] = (currItem[1]) ? decodeURIComponent(currItem[1]) : true;
   }
   return obj;
 };

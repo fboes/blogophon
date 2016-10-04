@@ -18,7 +18,7 @@ var hashes = function() {
 
   return {
     isHashed: function(url, hash) {
-      return (hashes[url] !== undefined && hashes[url] === hash);
+      return (hashes[url] && hashes[url] === hash);
     },
     update: function(url, hash) {
       hashes[url] = hash;

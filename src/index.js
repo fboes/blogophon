@@ -128,7 +128,7 @@ Index.prototype.getTags = function() {
   this.index.forEach(function(post){
     if (post.meta.Tags) {
       post.meta.Tags.forEach(function(tag){
-        if (tags[tag.id] === undefined) {
+        if (!tags[tag.id]) {
           tags[tag.id] = tag;
           tags[tag.id].index = new Index();
         }
@@ -150,7 +150,7 @@ Index.prototype.getAuthors = function() {
   var authors = {};
   this.index.forEach(function(post){
     if (post.meta.AuthorName) {
-      if (authors[post.meta.AuthorName] === undefined) {
+      if (!authors[post.meta.AuthorName]) {
         authors[post.meta.AuthorName] = {
           name:   post.meta.AuthorName,
           urlObj: post.meta.AuthorUrlObj,

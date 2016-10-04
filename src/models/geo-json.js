@@ -10,7 +10,7 @@ var geoJson = function(index) {
     type: 'FeatureCollection',
     features: index.map(function(item){
       var tags = [];
-      if (item.meta.Tags !== undefined) {
+      if (item.meta.Tags) {
         tags = item.meta.Tags.map(function(t){
           return t.title;
         });
