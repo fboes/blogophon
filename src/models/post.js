@@ -1,13 +1,13 @@
 'use strict';
 
-var SuperString     = require('../helpers/super-string');
-var config          = require('../config');
 var markdownConvert = require('marked');
-var markyMark       = require('../helpers/marky-mark');
 var crypto          = require('crypto');
-var PostUrl         = require('../helpers/post-url');
-var TagUrl          = require('../helpers/tag-url');
-var AuthorUrl       = require('../helpers/author-url');
+var config          = require('../config');
+var SuperString     = require('../helpers/super-string');
+var markyMark       = require('../helpers/marky-mark');
+var postUrl         = require('../helpers/post-url');
+var tagUrl          = require('../helpers/tag-url');
+var authorUrl       = require('../helpers/author-url');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
 
@@ -70,7 +70,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     }
   }
 
-  meta.urlObj = new PostUrl(filename, path);
+  meta.urlObj = postUrl(filename, path);
   if (meta.urlObj) {
     meta.Url         = meta.urlObj.relativeUrl();
     meta.AbsoluteUrl = meta.urlObj.absoluteUrl();
@@ -85,7 +85,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
   }
   if (meta.Keywords) {
     meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
-      var tagUrlObj = new TagUrl(tag);
+      var tagUrlObj = tagUrl(tag);
       return {
         title: tag,
         id: new SuperString(tag).asciify(),
@@ -122,7 +122,7 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     meta.AuthorEmail  = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
     meta.Gravatar     = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
   }
-  meta.AuthorUrlObj = new AuthorUrl(meta.AuthorName);
+  meta.authorUrlObj = authorUrl(meta.AuthorName);
   if (!meta.Image) {
     var match = html.match(/<img.+?src="(.+?)"/);
     if (match) {

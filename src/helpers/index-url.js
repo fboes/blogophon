@@ -1,32 +1,32 @@
 'use strict';
 
-var Url       = require('../helpers/url');
+var url       = require('../helpers/url');
 
 /**
- * [IndexUrl description]
+ * [indexUrl description]
  * @param {[type]} identifier [description]
  */
-var IndexUrl = function (identifier) {
-  Url.call(this, identifier);
-  return this;
-};
-IndexUrl.prototype = Object.create(Url.prototype);
-IndexUrl.prototype.constructor = IndexUrl;
-IndexUrl.prototype.convert = function (base, type) {
-  base = base || 'index';
-  type = type || 'html';
-  if (!this.identifier) {
-    return null;
-  } else {
-    var u = this.identifier.trim().toLowerCase().replace(/\s/g, '');
-    if (base !== 'index') {
-      u = u.replace(/\/index/, '/' + base);
+var indexUrl = function (identifier) {
+  var external = url(identifier);
+
+  external.convert = function (base, type) {
+    base = base || 'index';
+    type = type || 'html';
+    if (!external.identifier) {
+      return null;
+    } else {
+      var u = external.identifier.trim().toLowerCase().replace(/\s/g, '');
+      if (base !== 'index') {
+        u = u.replace(/\/index/, '/' + base);
+      }
+      if (type !== 'html') {
+        u = u.replace(/\.html$/, '.' + type);
+      }
+      return u;
     }
-    if (type !== 'html') {
-      u = u.replace(/\.html$/, '.' + type);
-    }
-    return u;
-  }
+  };
+  return external;
 };
 
-module.exports = IndexUrl;
+
+module.exports = indexUrl;

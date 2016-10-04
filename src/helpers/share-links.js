@@ -8,7 +8,7 @@
  * @param  {String} siteName    [description]
  * @return {Object} [description]
  */
-var ShareLinks = function(title, link, description, siteName) {
+var shareLinks = function(title, link, description, siteName) {
   if (!link) {
     throw new Error("Missing required URL for share link");
   }
@@ -25,4 +25,4 @@ var ShareLinks = function(title, link, description, siteName) {
   };
 };
 
-module.exports = ShareLinks;
+module.exports = shareLinks;

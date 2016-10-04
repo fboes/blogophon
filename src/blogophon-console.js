@@ -1,13 +1,13 @@
 'use strict';
 
-var SuperString    = require('./helpers/super-string');
-var config         = require('./config');
 var inquirer       = require('inquirer');
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
-var shell          = require('shelljs');
-var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var chalk          = require('chalk');
+var shell          = require('shelljs');
+var SuperString    = require('./helpers/super-string');
+var config         = require('./config');
+var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var Generator      = require('./generator');
 
 /**

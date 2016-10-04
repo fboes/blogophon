@@ -153,7 +153,7 @@ Index.prototype.getAuthors = function() {
       if (!authors[post.meta.AuthorName]) {
         authors[post.meta.AuthorName] = {
           name:   post.meta.AuthorName,
-          urlObj: post.meta.AuthorUrlObj,
+          urlObj: post.meta.authorUrlObj,
           index:  new Index()
         };
       }

@@ -11,7 +11,7 @@ var PostReader     = require('./post-reader');
 var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
 var Translations   = require('./helpers/translations');
-var IndexUrl       = require('./helpers/index-url');
+var indexUrl       = require('./helpers/index-url');
 var Index          = require('./index');
 var hashes         = require('./models/hashes');
 var appleNewsFormat = require('./models/apple-news-format');
@@ -199,10 +199,10 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
         var page;
         var pagedPosts = index.getPagedPosts(that.config.itemsPerPage);
         var urls = {
-          rss   : new IndexUrl(path + 'posts.rss'),
-          rssjs : new IndexUrl(path + 'rss.json'),
-          geojs : new IndexUrl(path + 'geo.json'),
-          atom  : new IndexUrl(path + 'posts.atom')
+          rss   : indexUrl(path + 'posts.rss'),
+          rssjs : indexUrl(path + 'rss.json'),
+          geojs : indexUrl(path + 'geo.json'),
+          atom  : indexUrl(path + 'posts.atom')
         };
         var promises = [];
         var pubDate = blogophonDate(index.pubDate);
@@ -235,7 +235,7 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
 
         for (page = 0; page < pagedPosts.length; page ++) {
           var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
-          var curUrlObj     = new IndexUrl(curPageObj.currentUrl);
+          var curUrlObj     = indexUrl(curPageObj.currentUrl);
           curPageObj.index  = pagedPosts[page];
           curPageObj.config = that.config;
           curPageObj.meta   = {
@@ -244,9 +244,9 @@ Generator.prototype.buildIndexFiles = function(index, path, title) {
             absoluteUrl: curUrlObj.absoluteUrl(),
             absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
           };
-          curPageObj.prevUrl = new IndexUrl(curPageObj.prevUrl).relativeUrl();
-          curPageObj.nextUrl = new IndexUrl(curPageObj.nextUrl).relativeUrl();
-          promises.push(fs.writeFile(new IndexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+          curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
+          curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();
+          promises.push(fs.writeFile(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
         }
         Promise
           .all(promises)
@@ -291,7 +291,7 @@ Generator.prototype.buildTagPages = function() {
           );
         });
 
-        promises.push(fs.writeFile( new IndexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
+        promises.push(fs.writeFile( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
           index: tagPages,
           config: that.config
         }, Mustache.partials)));
@@ -338,7 +338,7 @@ Generator.prototype.buildAuthorPages = function() {
           );
         });
 
-        promises.push(fs.writeFile( new IndexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
+        promises.push(fs.writeFile( indexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
           index: authorPages,
           config: that.config
         }, Mustache.partials)));
@@ -372,12 +372,12 @@ Generator.prototype.buildMetaFiles = function() {
       });
 
       var promises = [
-        fs.writeFile( new IndexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
+        fs.writeFile( indexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
           index: that.currentIndex.getPosts(5),
           config: that.config
         }, Mustache.partials)),
 
-        fs.writeFile( new IndexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
+        fs.writeFile( indexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
           index: that.currentIndex.getPosts(),
           tagPages: tagPages,
           pubDate: blogophonDate(that.currentIndex.pubDate).iso,
@@ -389,7 +389,7 @@ Generator.prototype.buildMetaFiles = function() {
         fs.ensureDirSync(that.config.directories.htdocs + '/notifications');
         that.currentIndex.getPosts(5).forEach(function(post,index) {
           promises.push(
-            fs.writeFile( new IndexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
+            fs.writeFile( indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
               post: post
             }))
           );

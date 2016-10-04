@@ -1,23 +1,23 @@
 'use strict';
 
-var Url         = require('../helpers/url');
+var url         = require('../helpers/url');
 var SuperString = require('../helpers/super-string');
 
 /**
- * [PostUrl description]
+ * [postUrl description]
  * @param {[type]} identifier [description]
  */
-var PostUrl = function (identifier, path) {
-  this.path = path || 'posts';
-  Url.call(this, identifier);
-  return this;
-};
-PostUrl.prototype = Object.create(Url.prototype);
-PostUrl.prototype.constructor = PostUrl;
-PostUrl.prototype.convert = function (base, type) {
-  base = base || 'index';
-  type = type || 'html';
-  return !this.identifier ? null : this.path + '/' + new SuperString(this.identifier.replace(/\.[^\.]+$/,'').replace(/.+\//,'')).asciify() + '/' + base + '.' + type;
+var postUrl = function (identifier, path) {
+  var external = url(identifier);
+  external.path = path || 'posts';
+
+  external.convert = function (base, type) {
+    base = base || 'index';
+    type = type || 'html';
+    return !external.identifier ? null : external.path + '/' + new SuperString(external.identifier.replace(/\.[^\.]+$/,'').replace(/.+\//,'')).asciify() + '/' + base + '.' + type;
+  }
+
+  return external;
 };
 
-module.exports = PostUrl;
+module.exports = postUrl;

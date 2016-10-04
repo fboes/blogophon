@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * [Url description]
+ * [url description]
  * @param  {String} identifier [description]
- * @return {Url}    [description]
+ * @return {url}    [description]
  */
 var SuperString = function (string) {
   this.string = String(string);
