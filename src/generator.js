@@ -10,7 +10,7 @@ var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
 var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
-var Translations   = require('./helpers/translations');
+var translations   = require('./helpers/translations');
 var indexUrl       = require('./helpers/index-url');
 var blogophonIndex = require('./blogophon-index');
 var hashes         = require('./models/hashes');
@@ -25,7 +25,7 @@ var Generator = function (config) {
     throw new Error('config is empty');
   }
   this.config       = config;
-  this.strings      = new Translations(config.language).getAll();
+  this.strings      = translations(config.language).getAll();
   this.currentIndex = null;
   this.hashes       = hashes();
   Mustache = Mustache.getTemplates(config.directories.currentTheme + '/templates');

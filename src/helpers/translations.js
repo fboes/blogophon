@@ -4,9 +4,10 @@
  * Translate strings.
  * @constructor
  */
-var Translations = function (language) {
+var translations = function (language) {
   // TODO: Move languages to separate files
-  this.translations = {
+  var external = {};
+  external.translations = {
     en: {
       'index': 'Home',
       'page': 'Page %d/%d',
@@ -39,42 +40,44 @@ var Translations = function (language) {
     }
   };
 
-  if (!this.translations[language]) {
+  if (!external.translations[language]) {
     throw new Error("Missing locale "+language);
   }
 
-  this.language = language;
-  this.currentLanguage = this.translations[language];
+  external.language = language;
+  external.currentLanguage = external.translations[language];
 
-  return this;
+
+  /**
+   * [availableLanguageCodes description]
+   * @return {[type]} [description]
+   */
+  external.availableLanguageCodes = function() {
+    return Object.keys(external.translations);
+  };
+
+  /**
+   * [getAll description]
+   * @return {[type]} [description]
+   */
+  external.getAll = function() {
+    return external.currentLanguage;
+  };
+
+  /**
+   * [getString description]
+   * @param  {[type]} key [description]
+   * @return {[type]}     [description]
+   */
+  external.getString = function(key) {
+      if (!external.currentLanguage[key]) {
+        throw new Error("Missing string key "+key+" in locale "+external.language);
+      }
+      return external.currentLanguage[key];
+  };
+
+  return external;
+
 };
 
-/**
- * [availableLanguageCodes description]
- * @return {[type]} [description]
- */
-Translations.prototype.availableLanguageCodes = function() {
-  return Object.keys(this.translations);
-};
-
-/**
- * [getAll description]
- * @return {[type]} [description]
- */
-Translations.prototype.getAll = function() {
-  return this.currentLanguage;
-};
-
-/**
- * [getString description]
- * @param  {[type]} key [description]
- * @return {[type]}     [description]
- */
-Translations.prototype.getString = function(key) {
-    if (!this.currentLanguage[key]) {
-      throw new Error("Missing string key "+key+" in locale "+this.language);
-    }
-    return this.currentLanguage[key];
-};
-
-module.exports = Translations;
+module.exports = translations;
