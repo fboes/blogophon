@@ -15,7 +15,7 @@ var postUrl = function (identifier, path) {
     base = base || 'index';
     type = type || 'html';
     return !external.identifier ? null : external.path + '/' + new SuperString(external.identifier.replace(/\.[^\.]+$/,'').replace(/.+\//,'')).asciify() + '/' + base + '.' + type;
-  }
+  };
 
   return external;
 };

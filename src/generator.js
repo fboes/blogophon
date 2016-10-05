@@ -1,10 +1,10 @@
 'use strict';
 
-var SuperString    = require('./helpers/super-string');
-var Promise        = require('promise/lib/es6-extensions');
-var fs             = require('fs-extra-promise');
 var glob           = require("glob");
 var gm             = require('gm').subClass({imageMagick: true});
+var Promise        = require('promise/lib/es6-extensions');
+var fs             = require('fs-extra-promise');
+var SuperString    = require('./helpers/super-string');
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
 var PostReader     = require('./post-reader');
@@ -12,7 +12,7 @@ var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
 var Translations   = require('./helpers/translations');
 var indexUrl       = require('./helpers/index-url');
-var Index          = require('./index');
+var blogophonIndex = require('./blogophon-index');
 var hashes         = require('./models/hashes');
 var appleNewsFormat = require('./models/apple-news-format');
 
@@ -38,7 +38,7 @@ var Generator = function (config) {
  */
 Generator.prototype.getArticles = function() {
   var that = this;
-  this.currentIndex = new Index();
+  this.currentIndex = blogophonIndex();
   return new Promise (
     function(resolve, reject) {
       glob(that.config.directories.data + "/**/*.md", function(err, files) {
