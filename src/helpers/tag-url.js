@@ -13,7 +13,7 @@ var tagUrl = function (identifier) {
   external.convert = function (base, type) {
     base = base || 'index';
     type = type || 'html';
-    return !this.identifier ? null : 'tagged/' + new SuperString(this.identifier).asciify() + '/' + base + '.' + type;
+    return !this.identifier ? null : 'tagged/' + SuperString(this.identifier).asciify() + '/' + base + '.' + type;
   };
 
   return external;

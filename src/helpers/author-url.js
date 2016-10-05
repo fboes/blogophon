@@ -12,7 +12,7 @@ var authorUrl = function (identifier) {
   external.convert = function (base, type) {
     base = base || 'index';
     type = type || 'html';
-    return !external.identifier ? null : 'authored-by/' + new SuperString(external.identifier).asciify() + '/' + base + '.' + type;
+    return !external.identifier ? null : 'authored-by/' + SuperString(external.identifier).asciify() + '/' + base + '.' + type;
   };
   return external;
 };

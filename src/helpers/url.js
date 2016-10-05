@@ -23,7 +23,7 @@ var url = function (identifier) {
   external.convert = function convert(base, type) {
     base = base || 'index';
     type = type || 'html';
-    return !external.identifier ? null : new SuperString(external.identifier).asciify() + '/' + base + '.' + type;
+    return !external.identifier ? null : SuperString(external.identifier).asciify() + '/' + base + '.' + type;
   };
 
   /**

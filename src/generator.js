@@ -239,7 +239,7 @@ var Generator = function (config) {
             curPageObj.config = that.config;
             curPageObj.meta   = {
               title      : title,
-              subtitle   : (curPageObj.currentPage === 1) ? '' : new SuperString(that.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
+              subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(that.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
               absoluteUrl: curUrlObj.absoluteUrl(),
               absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
             };
@@ -286,7 +286,7 @@ var Generator = function (config) {
             return that.buildIndexFiles(
               tags[key].index,
               tags[key].urlObj.relativeUrl(),
-              new SuperString(that.strings.tag).sprintf(tags[key].title)
+              SuperString(that.strings.tag).sprintf(tags[key].title)
             );
           });
 
@@ -333,7 +333,7 @@ var Generator = function (config) {
             return that.buildIndexFiles(
               authors[name].index,
               authors[name].urlObj.relativeUrl(),
-              new SuperString(that.strings.author).sprintf(name)
+              SuperString(that.strings.author).sprintf(name)
             );
           });
 

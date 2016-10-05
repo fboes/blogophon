@@ -87,7 +87,7 @@ var Post = function (filename, markdown, meta) {
         var tagUrlObj = tagUrl(tag);
         return {
           title: tag,
-          id: new SuperString(tag).asciify(),
+          id: SuperString(tag).asciify(),
           url: tagUrlObj.relativeUrl(),
           urlObj: tagUrlObj
         };
@@ -97,7 +97,7 @@ var Post = function (filename, markdown, meta) {
       meta.Classes = 'Normal article';
     }
     meta.Classes = meta.Classes.trim().split(/,\s*/).map(function(c) {
-      return new SuperString(c).asciify();
+      return SuperString(c).asciify();
     });
     if (meta.Classes.indexOf('images') >= 0) {
       htmlTeaser   = external.galleryHtml(htmlTeaser);
@@ -110,7 +110,7 @@ var Post = function (filename, markdown, meta) {
         .replace(/\s\s+/g, ' ')
         .replace(/http(s)?:\S+/g, '')
       ;
-      meta.Description = new SuperString(meta.Description).niceShorten(320);
+      meta.Description = SuperString(meta.Description).niceShorten(320);
     }
     if (!meta.Author) {
       meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';

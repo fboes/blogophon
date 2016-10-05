@@ -58,7 +58,7 @@ var BlogophonConsole = function() {
      * @return {String}       [description]
      */
     shortfilenameFromTitle: function(title) {
-      return new SuperString(title.trim().toLowerCase())
+      return SuperString(title.trim().toLowerCase())
         .asciify()
         .replace(/(^|\-)(der|die|d(a|o|e)s|eine?|a|the|el|las?|los)\-/g,'$1')
         .replace(/(^[\-]+|[\-]+$)/g,'')
