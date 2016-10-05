@@ -62,7 +62,13 @@
         </article>
       {{/post}}
       <p class="back">
+        {{#post.prev.AbsoluteUrlAmp}}
+          <a href="{{post.prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{post.prev.Title}}">&laquo; <span>Vor</span></a>
+        {{/post.prev.AbsoluteUrlAmp}}
         <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
+        {{#post.next.AbsoluteUrlAmp}}
+          <a href="{{post.next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{post.next.Title}}"><span>Zurück</span> &raquo;</a>
+        {{/post.next.AbsoluteUrlAmp}}
       </p>
     </main>
     {{>footer}}

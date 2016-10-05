@@ -4,6 +4,9 @@
   <url><loc>{{config.absoluteBasePath}}tagged/</loc><lastmod>{{pubDate}}</lastmod><changefreq>daily</changefreq><priority>0.3</priority></url>
   {{#index}}
     <url><loc>{{meta.AbsoluteUrl}}</loc><lastmod>{{meta.Created.iso}}</lastmod></url>
+    {{#config.specialFeatures.acceleratedmobilepages}}
+      <url><loc>{{meta.AbsoluteUrlAmp}}</loc><lastmod>{{meta.Created.iso}}</lastmod></url>
+    {{#/config.specialFeatures.acceleratedmobilepages}}
   {{/index}}
   {{#tagPages}}
     <url><loc>{{config.baseUrl}}{{url}}</loc><lastmod>{{pubDate}}</lastmod><changefreq>daily</changefreq><priority>0.2</priority></url>

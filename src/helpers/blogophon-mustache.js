@@ -15,7 +15,7 @@ Mustache.getTemplates = function(path) {
   Mustache.themePath = path;
   Mustache.templates = {
     post:    fs.readFileSync(Mustache.themePath + '/post.html', 'utf8'),
-    amp:     fs.readFileSync(Mustache.themePath + '/amp.html', 'utf8'),
+    amp:     fs.readFileSync(Mustache.themePath + '/amp-post.html', 'utf8'),
     index:   fs.readFileSync(Mustache.themePath + '/index.html', 'utf8'),
     tags:    fs.readFileSync(Mustache.themePath + '/tags.html', 'utf8'),
     authors: fs.readFileSync(Mustache.themePath + '/authors.html', 'utf8'),

@@ -75,6 +75,9 @@ Post.prototype.makeMeta = function (filename, markdown, meta) {
     meta.Url         = meta.urlObj.relativeUrl();
     meta.AbsoluteUrl = meta.urlObj.absoluteUrl();
     meta.Filename    = meta.urlObj.filename();
+    if (config.specialFeatures.acceleratedmobilepages) {
+      meta.AbsoluteUrlAmp = meta.urlObj.absoluteUrl('amp');
+    }
   }
 
   var htmlTeaser   = this.markyMark(meta.Description.trim(), meta.Url);
