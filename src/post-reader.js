@@ -4,7 +4,7 @@ var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs');
 var readline       = require("readline");
 var yamljs         = require('yamljs');
-var Post           = require('./models/post');
+var post           = require('./models/post');
 
 /**
  * This class reads Markdown files into an object.
@@ -80,7 +80,7 @@ var PostReader = function(file) {
         }
 
         //console.log(exports);
-        resolve( new Post(file, exports.markdown, exports.meta) );
+        resolve( post(file, exports.markdown, exports.meta) );
       });
     }
   );
