@@ -9,7 +9,7 @@ if (args.log) {
   console.log('---- ' + new Date() + ' -----');
 }
 
-var generator = new Generator(config);
+var generator = Generator(config);
 generator
   .getArticles()
   .then(function () {

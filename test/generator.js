@@ -2,9 +2,9 @@ exports.testCompilability = function(test) {
   'use strict';
   //test.expect(2);
 
-  var Generator = require('../src/generator');
+  var generator = require('../src/generator');
 
-  test.throws(function() {new Generator();}, Error);
+  test.throws(function() {generator();}, Error);
 
   test.done();
 };

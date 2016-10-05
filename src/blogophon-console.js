@@ -330,7 +330,7 @@ var BlogophonConsole = function() {
           }
         }
       ];
-      var generator = new Generator(config);
+      var generator = Generator(config);
       inquirer
         .prompt(questions)
         .then(
