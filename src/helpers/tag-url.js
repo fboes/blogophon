@@ -1,22 +1,22 @@
 'use strict';
 
-var Url         = require('../helpers/url');
+var url         = require('../helpers/url');
 var SuperString = require('../helpers/super-string');
 
 /**
- * [TagUrl description]
+ * [tagUrl description]
  * @param {[type]} identifier [description]
  */
-var TagUrl = function (identifier) {
-  Url.call(this, identifier);
-  return this;
-};
-TagUrl.prototype = Object.create(Url.prototype);
-TagUrl.prototype.constructor = TagUrl;
-TagUrl.prototype.convert = function (base, type) {
-  base = base || 'index';
-  type = type || 'html';
-  return !this.identifier ? null : 'tagged/' + new SuperString(this.identifier).asciify() + '/' + base + '.' + type;
+var tagUrl = function (identifier) {
+  var external = url(identifier);
+
+  external.convert = function (base, type) {
+    base = base || 'index';
+    type = type || 'html';
+    return !this.identifier ? null : 'tagged/' + SuperString(this.identifier).asciify() + '/' + base + '.' + type;
+  };
+
+  return external;
 };
 
-module.exports = TagUrl;
+module.exports = tagUrl;

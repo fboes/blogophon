@@ -8,13 +8,13 @@
  * @param  {String} siteName    [description]
  * @return {Object} [description]
  */
-var ShareLinks = function(title, link, description, siteName) {
-  if (link === undefined) {
+var shareLinks = function(title, link, description, siteName) {
+  if (!link) {
     throw new Error("Missing required URL for share link");
   }
-  title       = (title !== undefined)       ? title       : '';
-  description = (description !== undefined) ? description : title;
-  siteName    = (siteName !== undefined)    ? siteName    : title;
+  title       = title       || '';
+  description = description || title;
+  siteName    = siteName    || title;
 
   return {
     twitter: "https://twitter.com/intent/tweet?original_referer="+encodeURIComponent(link)+"&source=tweetbutton&text="+encodeURIComponent(description+' '+link)+"&link="+encodeURIComponent(link),
@@ -25,4 +25,4 @@ var ShareLinks = function(title, link, description, siteName) {
   };
 };
 
-module.exports = ShareLinks;
+module.exports = shareLinks;

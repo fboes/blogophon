@@ -9,7 +9,7 @@ exports.testExtender = function(test) {
   'use strict';
   test.expect(7);
 
-  var url = new Url('test');
+  var url = Url('test');
 
   test.ok(url.relativeUrl());
   test.ok(url.absoluteUrl());
@@ -29,22 +29,22 @@ exports.testBasicTransformation = function(test) {
 
   var url;
 
-  url = new PostUrl('ich-und-du.md');
+  url = PostUrl('ich-und-du.md');
   test.strictEqual(url.relativeUrl(), '/posts/ich-und-du/');
   test.ok(url.absoluteUrl().match(/^\S+\/posts\/ich-und-du\/$/));
   test.ok(url.filename().match(/^\S+\/posts\/ich-und-du\/index\.html$/));
 
-  url = new IndexUrl('Tag');
+  url = IndexUrl('Tag');
   test.strictEqual(url.relativeUrl(), '/tag');
   test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
   test.ok(url.filename().match(/^\S+\/tag$/));
 
-  url = new TagUrl('Tag');
+  url = TagUrl('Tag');
   test.strictEqual(url.relativeUrl(), '/tagged/tag/');
   test.ok(url.absoluteUrl().match(/^\S+\/tagged\/tag\/$/));
   test.ok(url.filename().match(/^\S+\/tagged\/tag\/index\.html$/));
 
-  url = new AuthorUrl('Paul Wischwedel');
+  url = AuthorUrl('Paul Wischwedel');
   test.strictEqual(url.relativeUrl(), '/authored-by/paul-wischwedel/');
   test.ok(url.absoluteUrl().match(/^\S+\/authored\-by\/paul\-wischwedel\/$/));
   test.ok(url.filename().match(/^\S+\/authored\-by\/paul\-wischwedel\/index\.html$/));
@@ -58,22 +58,22 @@ exports.testSpecialTransformation = function(test) {
 
   var url;
 
-  url = new PostUrl('Ich-ünd-Dü.md');
+  url = PostUrl('Ich-ünd-Dü.md');
   test.strictEqual(url.relativeUrl(), '/posts/ich-uend-due/');
   test.ok(url.absoluteUrl().match(/^\S+\/posts\/ich-uend-due\/$/));
   test.ok(url.filename().match(/^\S+\/posts\/ich-uend-due\/index\.html$/));
 
-  url = new TagUrl('Ich bin ein merkwürdiges Tag');
+  url = TagUrl('Ich bin ein merkwürdiges Tag');
   test.strictEqual(url.relativeUrl(), '/tagged/ich-bin-ein-merkwuerdiges-tag/');
   test.ok(url.absoluteUrl().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
   test.ok(url.filename().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/index\.html$/));
 
-  url = new IndexUrl('/Tag');
+  url = IndexUrl('/Tag');
   test.strictEqual(url.relativeUrl(), '/tag');
   test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
   test.ok(url.filename().match(/^\S+\/tag$/));
 
-  url = new IndexUrl('////Tag');
+  url = IndexUrl('////Tag');
   test.strictEqual(url.relativeUrl(), '/tag');
   test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
   test.ok(url.filename().match(/^\S+\/tag$/));
@@ -85,8 +85,8 @@ exports.testPosts = function(test) {
   'use strict';
   test.expect(2);
 
-  test.strictEqual(new PostUrl('users/posts/ich-und-du.md').relativeUrl(), '/posts/ich-und-du/');
-  test.strictEqual(new PostUrl('/users/posts/ich-und-du.md').relativeUrl(), '/posts/ich-und-du/');
+  test.strictEqual(PostUrl('users/posts/ich-und-du.md').relativeUrl(), '/posts/ich-und-du/');
+  test.strictEqual(PostUrl('/users/posts/ich-und-du.md').relativeUrl(), '/posts/ich-und-du/');
 
   test.done();
 };
@@ -95,17 +95,17 @@ exports.testEmptyTransformation = function(test) {
   'use strict';
   test.expect(9);
 
-  test.strictEqual(new PostUrl(null).relativeUrl(), null);
-  test.strictEqual(new PostUrl(null).absoluteUrl(), null);
-  test.strictEqual(new PostUrl(null).filename(), null);
+  test.strictEqual(PostUrl(null).relativeUrl(), null);
+  test.strictEqual(PostUrl(null).absoluteUrl(), null);
+  test.strictEqual(PostUrl(null).filename(), null);
 
-  test.strictEqual(new IndexUrl(null).relativeUrl(), null);
-  test.strictEqual(new IndexUrl(null).absoluteUrl(), null);
-  test.strictEqual(new IndexUrl(null).filename(), null);
+  test.strictEqual(IndexUrl(null).relativeUrl(), null);
+  test.strictEqual(IndexUrl(null).absoluteUrl(), null);
+  test.strictEqual(IndexUrl(null).filename(), null);
 
-  test.strictEqual(new TagUrl(null).relativeUrl(), null);
-  test.strictEqual(new TagUrl(null).absoluteUrl(), null);
-  test.strictEqual(new TagUrl(null).filename(), null);
+  test.strictEqual(TagUrl(null).relativeUrl(), null);
+  test.strictEqual(TagUrl(null).absoluteUrl(), null);
+  test.strictEqual(TagUrl(null).filename(), null);
 
   test.done();
 };

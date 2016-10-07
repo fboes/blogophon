@@ -1,15 +1,15 @@
-var Post = require('../src/models/post');
+var post = require('../src/models/post');
 
 exports.testErrors = function(test) {
   'use strict';
   test.expect(5);
 
 
-  test.throws(function() {new Post();}, Error);
-  test.throws(function() {new Post('test.md');}, Error);
-  test.throws(function() {new Post('test.md', 'Test');}, Error);
-  test.throws(function() {new Post('test.md', 'Test', {});}, Error);
-  test.doesNotThrow(function() {new Post('test.md', 'Test', {
+  test.throws(function() {post();}, Error);
+  test.throws(function() {post('test.md');}, Error);
+  test.throws(function() {post('test.md', 'Test');}, Error);
+  test.throws(function() {post('test.md', 'Test', {});}, Error);
+  test.doesNotThrow(function() {post('test.md', 'Test', {
     Description: 'Description',
     Date: new Date()
   });}, Error);
@@ -21,7 +21,7 @@ exports.testStructure = function(test) {
   'use strict';
   test.expect(20+3);
 
-  var testPost = new Post('test.md', 'Test', {
+  var testPost = post('test.md', 'Test', {
     Description: 'Description',
     Date: new Date()
   });

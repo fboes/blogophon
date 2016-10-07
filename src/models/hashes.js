@@ -6,7 +6,7 @@ var fs             = require('fs');
  * Represents all posts.
  * @constructor
  */
-var Hashes = function() {
+var hashes = function() {
   var hashes = {};
   var hashFilename = './user/hashes.json';
 
@@ -18,7 +18,7 @@ var Hashes = function() {
 
   return {
     isHashed: function(url, hash) {
-      return (hashes[url] !== undefined && hashes[url] === hash);
+      return (hashes[url] && hashes[url] === hash);
     },
     update: function(url, hash) {
       hashes[url] = hash;
@@ -29,4 +29,4 @@ var Hashes = function() {
   };
 };
 
-module.exports = Hashes;
+module.exports = hashes;

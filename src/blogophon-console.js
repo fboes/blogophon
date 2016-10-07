@@ -1,13 +1,13 @@
 'use strict';
 
-var SuperString    = require('./helpers/super-string');
-var config         = require('./config');
 var inquirer       = require('inquirer');
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
-var shell          = require('shelljs');
-var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var chalk          = require('chalk');
+var shell          = require('shelljs');
+var SuperString    = require('./helpers/super-string');
+var config         = require('./config');
+var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
 var Generator      = require('./generator');
 
 /**
@@ -58,7 +58,7 @@ var BlogophonConsole = function() {
      * @return {String}       [description]
      */
     shortfilenameFromTitle: function(title) {
-      return new SuperString(title.trim().toLowerCase())
+      return SuperString(title.trim().toLowerCase())
         .asciify()
         .replace(/(^|\-)(der|die|d(a|o|e)s|eine?|a|the|el|las?|los)\-/g,'$1')
         .replace(/(^[\-]+|[\-]+$)/g,'')
@@ -330,7 +330,7 @@ var BlogophonConsole = function() {
           }
         }
       ];
-      var generator = new Generator(config);
+      var generator = Generator(config);
       inquirer
         .prompt(questions)
         .then(
