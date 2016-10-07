@@ -133,8 +133,8 @@ var markyMark = function markyMark (string) {
       .replace(/(\b)(and|array|break|case|die|do|echo|else(if)?|elsif|final|for(each)?|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/gi, '$1<i class="c2">$2</i>$3')
       .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
       .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
-      .replace(/((?:\/\/|#).+?(?:\n|$))/g, '<i class="comment">$1</i>')
-      .replace(/(\/\*[\s\S]+\*\/)/g, '<i class="comment">$1</i>')
+      .replace(/((?:\/\/|\s#).+?(?:\n|$))/g, '<i class="comment">$1</i>')
+      .replace(/(\/\*[\s\S]+?\*\/)/g, '<i class="comment">$1</i>')
     ;
   };
 
@@ -153,7 +153,7 @@ var markyMark = function markyMark (string) {
       .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c5">$2$3$4</i>')
       .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c6">$2</i>$3')
       .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
-      .replace(/(\/\*[\s\S]+\*\/)/g, '<i class="comment">$1</i>')
+      .replace(/(\/\*[\s\S]+?\*\/)/g, '<i class="comment">$1</i>')
       ;
   };
 
