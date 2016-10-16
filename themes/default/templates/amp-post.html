@@ -36,11 +36,9 @@
       {{#post}}
         <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
           <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
-          {{#config.ogImage}}
-            {{^post.meta.Image}}
-              <link itemprop="image" href="{{config.ogImage}}" />
-            {{/post.meta.Image}}
-          {{/config.ogImage}}
+          {{#post.meta.Image}}
+            <link itemprop="image" href="{{post.meta.Image}}" />
+          {{/post.meta.Image}}
           <header>
             <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
             <h2 itemprop="name headline">{{post.meta.Title}}</h2>
