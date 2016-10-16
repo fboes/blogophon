@@ -189,85 +189,81 @@ var Generator = function (config) {
     title = title || external.strings.index;
 
     fs.ensureDirSync(that.config.directories.htdocs + path);
-    fs.remove(that.config.directories.htdocs + path + 'index*', function(err) {
-      return new Promise (
-        function(resolve, reject) {
-          if (err) {
-            reject(err);
-          }
-          var page;
-          var pagedPosts = index.getPagedPosts(that.config.itemsPerPage);
-          var urls = {
-            rss   : indexUrl(path + 'posts.rss'),
-            rssjs : indexUrl(path + 'rss.json'),
-            geojs : indexUrl(path + 'geo.json'),
-            atom  : indexUrl(path + 'posts.atom'),
-            ics   : indexUrl(path + 'posts.ics')
-          };
-          var promises = [];
-          var pubDate = blogophonDate(index.pubDate);
+    fs.removeSync(that.config.directories.htdocs + path + 'index*');
+    return new Promise (
+      function(resolve, reject) {
+        var page;
+        var pagedPosts = index.getPagedPosts(that.config.itemsPerPage);
+        var urls = {
+          rss   : indexUrl(path + 'posts.rss'),
+          rssjs : indexUrl(path + 'rss.json'),
+          geojs : indexUrl(path + 'geo.json'),
+          atom  : indexUrl(path + 'posts.atom'),
+          ics   : indexUrl(path + 'posts.ics')
+        };
+        var promises = [];
+        var pubDate = blogophonDate(index.pubDate);
 
 
-          if (that.config.specialFeatures.rss) {
-            promises.push(fs.writeFile( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
-              index: index.getPosts(10),
-              pubDate: pubDate.rfc,
-              config: that.config,
-              absoluteUrl : urls.rss.absoluteUrl(),
-              title: title
-            })));
-          }
-          if (that.config.specialFeatures.atom) {
-            promises.push(fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
-              index: index.getPosts(10),
-              pubDate: pubDate.iso,
-              config: that.config,
-              absoluteUrl : urls.atom.absoluteUrl(),
-              title: title
-            })));
-          }
-          if (that.config.specialFeatures.icscalendar) {
-            promises.push(fs.writeFile( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
-              index: index.getPosts(),
-              pubDate: pubDate.ics,
-              config: that.config,
-              absoluteUrl : urls.ics.absoluteUrl(),
-              title: title
-            })));
-          }
-          if (that.config.specialFeatures.jsonrss) {
-            promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
-          }
-          if (that.config.specialFeatures.geojson) {
-            promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
-          }
-
-          for (page = 0; page < pagedPosts.length; page ++) {
-            var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
-            var curUrlObj     = indexUrl(curPageObj.currentUrl);
-            curPageObj.index  = pagedPosts[page];
-            curPageObj.config = that.config;
-            curPageObj.meta   = {
-              title      : title,
-              subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(that.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
-              absoluteUrl: curUrlObj.absoluteUrl(),
-              absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
-            };
-            curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
-            curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();
-            promises.push(fs.writeFile(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
-          }
-          Promise
-            .all(promises)
-            .then(function() {
-              console.log("Wrote "+promises.length+" files for '"+title+"'");
-              return resolve(promises.length); // TODO: Something is wrong here
-            })
-            .catch(reject)
-          ;
+        if (that.config.specialFeatures.rss) {
+          promises.push(fs.writeFile( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
+            index: index.getPosts(10),
+            pubDate: pubDate.rfc,
+            config: that.config,
+            absoluteUrl : urls.rss.absoluteUrl(),
+            title: title
+          })));
         }
-      );
-    });
+        if (that.config.specialFeatures.atom) {
+          promises.push(fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
+            index: index.getPosts(10),
+            pubDate: pubDate.iso,
+            config: that.config,
+            absoluteUrl : urls.atom.absoluteUrl(),
+            title: title
+          })));
+        }
+        if (that.config.specialFeatures.icscalendar) {
+          promises.push(fs.writeFile( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
+            index: index.getPosts(),
+            pubDate: pubDate.ics,
+            config: that.config,
+            absoluteUrl : urls.ics.absoluteUrl(),
+            title: title
+          })));
+        }
+        if (that.config.specialFeatures.jsonrss) {
+          promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
+        }
+        if (that.config.specialFeatures.geojson) {
+          promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
+        }
+
+        for (page = 0; page < pagedPosts.length; page ++) {
+          var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
+          var curUrlObj     = indexUrl(curPageObj.currentUrl);
+          curPageObj.index  = pagedPosts[page];
+          curPageObj.config = that.config;
+          curPageObj.meta   = {
+            title      : title,
+            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(that.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            absoluteUrl: curUrlObj.absoluteUrl(),
+            absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
+          };
+          curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
+          curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();
+          promises.push(fs.writeFile(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+        }
+        Promise
+          .all(promises)
+          .then(function() {
+            console.log("Wrote "+promises.length+" files for '"+title+"'");
+            return resolve(promises.length); // TODO: Something is wrong here
+          })
+          .catch(reject)
+        ;
+      }
+    );
   };
 
   /**
@@ -284,37 +280,33 @@ var Generator = function (config) {
       };
     });
 
-    fs.remove(that.config.directories.htdocs + '/tagged', function(err) {
-      return new Promise (
-        function(resolve, reject) {
-          if (err) {
-            reject(err);
-          }
-          fs.ensureDirSync(that.config.directories.htdocs + '/tagged');
+    fs.removeSync(that.config.directories.htdocs + '/tagged');
+    fs.ensureDirSync(that.config.directories.htdocs + '/tagged');
 
-          var promises = Object.keys(tags).map(function(key) {
-            return that.buildIndexFiles(
-              tags[key].index,
-              tags[key].urlObj.relativeUrl(),
-              SuperString(that.strings.tag).sprintf(tags[key].title)
-            );
-          });
+    return new Promise (
+      function(resolve, reject) {
+        var promises = Object.keys(tags).map(function(key) {
+          return that.buildIndexFiles(
+            tags[key].index,
+            tags[key].urlObj.relativeUrl(),
+            SuperString(that.strings.tag).sprintf(tags[key].title)
+          );
+        });
 
-          promises.push(fs.writeFile( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
-            index: tagPages,
-            config: that.config
-          }, Mustache.partials)));
+        promises.push(fs.writeFile( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
+          index: tagPages,
+          config: that.config
+        }, Mustache.partials)));
 
-          Promise
-            .all(promises)
-            .then(function() {
-              return resolve(promises.length);
-            })
-            .catch(reject)
-          ;
-        }
-      );
-    });
+        Promise
+          .all(promises)
+          .then(function() {
+            return resolve(promises.length);
+          })
+          .catch(reject)
+        ;
+      }
+    );
   };
 
   /**
