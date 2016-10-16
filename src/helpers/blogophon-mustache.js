@@ -26,6 +26,7 @@ Mustache.getTemplates = function(path) {
     robots:  fs.readFileSync('./src/templates/robots.txt', 'utf8'),
     htaccess:fs.readFileSync('./src/templates/.htaccess', 'utf8'),
     livetile:fs.readFileSync('./src/templates/livetile.xml', 'utf8'),
+    calendar:fs.readFileSync('./src/templates/calendar.ics', 'utf8'),
     browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
   };
 

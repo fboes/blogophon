@@ -201,7 +201,8 @@ var Generator = function (config) {
             rss   : indexUrl(path + 'posts.rss'),
             rssjs : indexUrl(path + 'rss.json'),
             geojs : indexUrl(path + 'geo.json'),
-            atom  : indexUrl(path + 'posts.atom')
+            atom  : indexUrl(path + 'posts.atom'),
+            ics   : indexUrl(path + 'posts.ics')
           };
           var promises = [];
           var pubDate = blogophonDate(index.pubDate);
@@ -222,6 +223,15 @@ var Generator = function (config) {
               pubDate: pubDate.iso,
               config: that.config,
               absoluteUrl : urls.atom.absoluteUrl(),
+              title: title
+            })));
+          }
+          if (that.config.specialFeatures.icscalendar) {
+            promises.push(fs.writeFile( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
+              index: index.getPosts(),
+              pubDate: pubDate.ics,
+              config: that.config,
+              absoluteUrl : urls.ics.absoluteUrl(),
               title: title
             })));
           }

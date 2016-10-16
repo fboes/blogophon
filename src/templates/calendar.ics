@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+X-WR-CALNAME;CHARSET=UTF-8:{{{config.name}}} | {{{title}}}
+PRODID:-//3960.org//CSVCONV//DE
+X-WR-TIMEZONE;VALUE=TEXT:Europe/Berlin
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+{{#index}}
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:{{{meta.Created.icsDay}}}
+DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
+URL:{{{meta.AbsoluteUrl}}}
+SUMMARY;CHARSET=UTF-8:{{{meta.Title}}}
+DESCRIPTION;CHARSET=UTF-8:{{{meta.Description}}}
+DTSTAMP:{{{pubDate}}}
+UID:
+END:VEVENT
+{{/index}}
+END:VCALENDAR

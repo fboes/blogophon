@@ -18,7 +18,7 @@ exports.testSimpleString = function(test) {
 
 exports.testCodeHighlighting = function(test) {
   'use strict';
-  test.expect(2);
+  test.expect(3);
 
   var m;
 
@@ -27,12 +27,13 @@ exports.testCodeHighlighting = function(test) {
   test.ok(m !== undefined);
 
   m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
+  test.ok(m !== undefined);
 
   m = markyMark('<pre><code class="lang-markdown">'+
      "H1\n=====\n\nH2\n-----"+
     '</code></pre>'
   );
-  console.log(m);
+  //console.log(m);
   test.ok(m !== undefined);
 
   test.done();

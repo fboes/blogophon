@@ -20,6 +20,9 @@
   {{#config.specialFeatures.geojson}}
     <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{/config.specialFeatures.geojson}}
+  {{#config.specialFeatures.icscalendar}}
+    <link rel="alternate" type="text/calendar" title="{{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
+  {{/config.specialFeatures.icscalendar}}
   {{>meta}}
 </head>
 <body class="index">
