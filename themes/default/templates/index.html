@@ -41,6 +41,9 @@
                 {{#meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
                 {{/meta.Image}}
+                {{^meta.Image}}
+                  <link itemprop="image" href="{{config.ogImage}}" />
+                {{/meta.Image}}
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
                   <h4 itemprop="name headline"><a href="{{meta.Url}}" rel="bookmark">{{meta.Title}}</a></h4>
