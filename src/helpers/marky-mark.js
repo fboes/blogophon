@@ -68,9 +68,12 @@ var markyMark = function markyMark (string) {
         case '<html>':
           chunk = internal.convertHtml(chunk);
           break;
+        case '<markdown>':
+          chunk = internal.convertMarkdown(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html)/);
+            var lang = chunk.match(/(css|html|markdown)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             }
@@ -115,9 +118,7 @@ var markyMark = function markyMark (string) {
       .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
       .replace(/(\s)-(\s)/g,'$1–$2')
       .replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
-      .replace(/(^|[^\S])&quot;(\S.*?\S)&quot;([^\S]|$)/g,'$1„$2“$3')
-      .replace(/^&quot;/, '„')
-      .replace(/&quot;$/, '“')
+      .replace(/(^|[^\S])&quot;(\S.*?\S)&quot;([^\S]|$)/g,'$1„$2“$3') // TODO: Fix quotation with inline tags
       .replace(/(^|[^\S])(?:'|&#39;)(\S.*?\S)(?:'|&#39;)([^\S]|$)/g,'$1‚$2‘$3')
     ;
   };
@@ -168,6 +169,18 @@ var markyMark = function markyMark (string) {
       .replace(/(&amp;[a-z0-9]+?;)/g, '<i class="c4">$1</i>')
       .replace(/(\s)([a-z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/gi, '$1<i class="c2">$2</i>$3<i class="c3">$4</i>$5')
       .replace(/(&lt;--.+?--&gt;)/g, '<i class="comment">$1</i>')
+    ;
+  };
+
+  /**
+   * Convert Markdown code text node
+   * @param {String}
+   * @return {String}
+   */
+  internal.convertMarkdown = function convertMarkdown(string) {
+    return string
+      .replace(/(^|\n|\r)([=\-]{3,})(\n|\r|$)/g, '$1<i class="c1">$2</i>')
+      .replace(/(#+.+?(?:\n|$))/g, '<i class="c2">$1</i>')
     ;
   };
 

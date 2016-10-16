@@ -27,7 +27,12 @@ exports.testCodeHighlighting = function(test) {
   test.ok(m !== undefined);
 
   m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
-  //console.log(m);
+
+  m = markyMark('<pre><code class="lang-markdown">'+
+     "H1\n=====\n\nH2\n-----"+
+    '</code></pre>'
+  );
+  console.log(m);
   test.ok(m !== undefined);
 
   test.done();
