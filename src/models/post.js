@@ -196,6 +196,8 @@ var Post = function (filename, markdown, meta) {
       .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
       .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
       .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
+      .replace(/(<(?:img)[^>]*[^/])(>)/g,'$1 /$2')
+      .replace(/(<(?:hr|br)[^/])(>)/g,'$1 /$2')
       .trim()
     ;
   };

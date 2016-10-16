@@ -261,7 +261,7 @@ var Generator = function (config) {
             .all(promises)
             .then(function() {
               console.log("Wrote "+promises.length+" files for '"+title+"'");
-              return resolve(promises.length);
+              return resolve(promises.length); // TODO: Something is wrong here
             })
             .catch(reject)
           ;
