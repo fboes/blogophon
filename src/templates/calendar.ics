@@ -1,7 +1,7 @@
 BEGIN:VCALENDAR
 VERSION:2.0
+PRODID:-//3960.org//BLOGOPHON//DE
 X-WR-CALNAME;CHARSET=UTF-8:{{{config.name}}} | {{{title}}}
-PRODID:-//3960.org//CSVCONV//DE
 X-WR-TIMEZONE;VALUE=TEXT:Europe/Berlin
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
@@ -13,7 +13,7 @@ URL:{{{meta.AbsoluteUrl}}}
 SUMMARY;CHARSET=UTF-8:{{{meta.Title}}}
 DESCRIPTION;CHARSET=UTF-8:{{{meta.Description}}}
 DTSTAMP:{{{pubDate}}}
-UID:
+UID:{{{meta.Id}}}
 END:VEVENT
 {{/index}}
 END:VCALENDAR
