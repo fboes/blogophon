@@ -528,12 +528,6 @@ var Generator = function (config) {
     fs.ensureDirSync(that.config.directories.data);
     fs.ensureDirSync(that.config.directories.htdocs);
 
-    ['/css', '/js'].forEach(function(link) {
-      fs.unlink(that.config.directories.htdocs + link, function() {
-        fs.linkSync(that.config.directories.theme + '/' + answers.theme + link,that.config.directories.htdocs + link);
-      });
-    });
-
     var promises = [
       fs.writeFile(that.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
       fs.writeFile(that.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {

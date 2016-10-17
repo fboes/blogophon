@@ -43,7 +43,7 @@
     "user": "user",
     "data": "user/posts",
     "htdocs": "htdocs",
-    "theme": "themes"
+    "theme": "htdocs/themes"
   },
   "author": "Frank Boës",
   "license": "MIT",

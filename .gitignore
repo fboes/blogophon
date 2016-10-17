@@ -1,11 +1,12 @@
 /htdocs/*
+!/htdocs/themes/
+/htdocs/themes/*
+!/htdocs/themes/default
 /log
 /logs
 /node_modules
 /test/*.xml
 /tmp
 /user
-/themes/*
-!/themes/default
 /.idea
 /npm-debug.log
