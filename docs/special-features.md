@@ -60,3 +60,10 @@ For every index page (start page, tag pages, author pages) there will be a corre
 All required links will be added to your page.
 
 GeoJson will have all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). GeoJSON can be digestet by Google Maps or Leaflet.js.
+
+ICS-Calendar
+------------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding ICS calendar `calendar.ics`.
+
+ICS calendards can be subscribed to with any calendar software. This results in a calendar with all your blog posts being daily events.
