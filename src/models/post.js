@@ -232,10 +232,14 @@ var Post = function (filename, markdown, meta) {
    * @return {String}      [description]
    */
   external.ampifyHtml = function(html) {
+    // <amp-youtube data-videoid="mGENRKrdoGY" layout="responsive" width="480" height="270"></amp-youtube>
+    // <amp-iframe width="640" height="360" src="https://www.youtube.com/embed/WfQfYe7-V1A?enablejsapi=1"></amp-iframe>
     return html
       .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
-      .replace(/(<amp-(?:video|iframe))/g, '$1 width="640" height="360"')
+      .replace(/(<amp-img[^>]+)\/>/g,'$1></amp-img>')
+      .replace(/(<amp-(?:video|iframe))/g, '$1 width="640" height="360" layout="responsive"')
       .replace(/(<amp-(?:video|iframe)[^>]+) allowfullscreen=".+?"/g, '$1')
+      .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)>(.*?)<\/amp-iframe>/g,'<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
       .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
       .replace(/(<amp-(?:video|audio|iframe).+?>).+(<\/amp-(?:video|iframe))/g, '$1$2')
     ;
