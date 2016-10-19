@@ -232,8 +232,6 @@ var Post = function (filename, markdown, meta) {
    * @return {String}      [description]
    */
   external.ampifyHtml = function(html) {
-    // <amp-youtube data-videoid="mGENRKrdoGY" layout="responsive" width="480" height="270"></amp-youtube>
-    // <amp-iframe width="640" height="360" src="https://www.youtube.com/embed/WfQfYe7-V1A?enablejsapi=1"></amp-iframe>
     return html
       .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
       .replace(/(<amp-img[^>]+)\/>/g,'$1></amp-img>')
