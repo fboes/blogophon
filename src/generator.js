@@ -120,10 +120,10 @@ var Generator = function (config) {
         fs.ensureDirSync(that.config.directories.htdocs + post.meta.Url);
         var promises = [];
         if (that.config.specialFeatures.applenews) {
-          promises.push(fs.writeFile( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
+          promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
         if (that.config.specialFeatures.acceleratedmobilepages) {
-          promises.push(fs.writeFile( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
+          promises.push(fs.writeFileAsync( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
             post: post,
             ampHtml: post.ampHtml(),
             config: that.config
@@ -132,7 +132,7 @@ var Generator = function (config) {
         Promise
           .all(promises)
           .then(function() {
-            fs.writeFile(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
+            fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
               post: post,
               config: that.config
             },Mustache.partials), function(err) {
@@ -206,7 +206,7 @@ var Generator = function (config) {
 
 
         if (that.config.specialFeatures.rss) {
-          promises.push(fs.writeFile( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
+          promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index: index.getPosts(10),
             pubDate: pubDate.rfc,
             config: that.config,
@@ -215,7 +215,7 @@ var Generator = function (config) {
           })));
         }
         if (that.config.specialFeatures.atom) {
-          promises.push(fs.writeFile( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
+          promises.push(fs.writeFileAsync( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
             index: index.getPosts(10),
             pubDate: pubDate.iso,
             config: that.config,
@@ -224,7 +224,7 @@ var Generator = function (config) {
           })));
         }
         if (that.config.specialFeatures.icscalendar) {
-          promises.push(fs.writeFile( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
+          promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
             index: index.getPosts(),
             pubDate: pubDate.ics,
             config: that.config,
@@ -233,10 +233,10 @@ var Generator = function (config) {
           })));
         }
         if (that.config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFile( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
+          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
         }
         if (that.config.specialFeatures.geojson) {
-          promises.push(fs.writeFile( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
+          promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
         }
 
         for (page = 0; page < pagedPosts.length; page ++) {
@@ -252,7 +252,7 @@ var Generator = function (config) {
           };
           curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
           curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();
-          promises.push(fs.writeFile(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
         }
         Promise
           .all(promises)
@@ -293,7 +293,7 @@ var Generator = function (config) {
           );
         });
 
-        promises.push(fs.writeFile( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
+        promises.push(fs.writeFileAsync( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
           index: tagPages,
           config: that.config
         }, Mustache.partials)));
@@ -339,7 +339,7 @@ var Generator = function (config) {
             );
           });
 
-          promises.push(fs.writeFile( indexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
+          promises.push(fs.writeFileAsync( indexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
             index: authorPages,
             config: that.config
           }, Mustache.partials)));
@@ -373,12 +373,12 @@ var Generator = function (config) {
         });
 
         var promises = [
-          fs.writeFile( indexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
+          fs.writeFileAsync( indexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
             index: that.currentIndex.getPosts(5),
             config: that.config
           }, Mustache.partials)),
 
-          fs.writeFile( indexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
+          fs.writeFileAsync( indexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
             index: that.currentIndex.getPosts(),
             tagPages: tagPages,
             pubDate: blogophonDate(that.currentIndex.pubDate).iso,
@@ -390,7 +390,7 @@ var Generator = function (config) {
           fs.ensureDirSync(that.config.directories.htdocs + '/notifications');
           that.currentIndex.getPosts(5).forEach(function(post,index) {
             promises.push(
-              fs.writeFile( indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
+              fs.writeFileAsync( indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
                 post: post
               }))
             );
@@ -529,17 +529,17 @@ var Generator = function (config) {
     fs.ensureDirSync(that.config.directories.htdocs);
 
     var promises = [
-      fs.writeFile(that.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
-      fs.writeFile(that.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
+      fs.writeFileAsync(that.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
+      fs.writeFileAsync(that.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
         config: that.config
       })),
-      fs.writeFile(that.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
+      fs.writeFileAsync(that.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
         config: that.config
       })),
-      fs.writeFile(that.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
+      fs.writeFileAsync(that.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
         config: that.config
       })),
-      fs.writeFile( that.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(that.config), undefined, 2))
+      fs.writeFileAsync( that.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(that.config), undefined, 2))
     ];
     return Promise
       .all(promises)

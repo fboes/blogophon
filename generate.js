@@ -19,7 +19,9 @@ generator
         if(args.deploy || args.publish) {
           generator.deploy();
         }
-        console.log('Done');
+        else {
+          console.log('Done');
+        }
       })
       .catch(function(err) {
         console.error(err); process.exit(1);
