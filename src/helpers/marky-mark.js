@@ -130,10 +130,11 @@ var markyMark = function markyMark (string) {
    */
   internal.convertCode = function convertCode(string) {
     return string
-      .replace(/(\s)(var|function|method|class|const|external|internal|protected|use|null|undefined|true|false|public|private)(\b)/gi, '$1<i class="c1">$2</i>$3')
+      .replace(/(\s)(var|function|method|class|const|external|internal|protected|use|public|private)(\b)/gi, '$1<i class="c1">$2</i>$3')
       .replace(/(\s)(and|array|break|case|die|do|echo|else(if)?|elsif|final|for(each)?|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/gi, '$1<i class="c2">$2</i>$3')
-      .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c3">$2$3$4</i>')
       .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
+      .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c5">$2$3$4</i>')
+      .replace(/(\s)(null|undefined|true|false)(\b)/gi, '$1<i class="c1">$2</i>$3')
       .replace(/((?:\/\/|\s#).+?(?:\n|$))/g, '<i class="comment">$1</i>')
       .replace(/(\/\*[\s\S]+?\*\/)/g, '<i class="comment">$1</i>')
     ;
