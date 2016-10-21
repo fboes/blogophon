@@ -181,7 +181,7 @@ var Post = function (filename, markdown, meta) {
       .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
       .replace(
         /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="http://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
+        '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="https://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
       )
       .replace(
         /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
@@ -237,7 +237,7 @@ var Post = function (filename, markdown, meta) {
       .replace(/(<amp-img[^>]+)\/>/g,'$1></amp-img>')
       .replace(/(<amp-(?:video|iframe))/g, '$1 width="640" height="360" layout="responsive"')
       .replace(/(<amp-(?:video|iframe)[^>]+) allowfullscreen=".+?"/g, '$1')
-      .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)>(.*?)<\/amp-iframe>/g,'<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
+      .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^\.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)>(.*?)<\/amp-iframe>/g,'<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
       .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
       .replace(/(<amp-(?:video|audio|iframe).+?>).+(<\/amp-(?:video|iframe))/g, '$1$2')
     ;
