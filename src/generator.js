@@ -123,9 +123,11 @@ var Generator = function (config) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
         if (that.config.specialFeatures.acceleratedmobilepages) {
+          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(Mustache.themePath + '/../css/amp.css', 'utf8').replace(/\s*[\n\r]+\s*/g,'');
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
             post: post,
             ampHtml: post.ampHtml(),
+            ampCss: Mustache.ampCss,
             config: that.config
           },Mustache.partials)));
         }
