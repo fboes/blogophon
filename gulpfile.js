@@ -79,7 +79,7 @@ gulp.task('build-sass', function() {
     .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
-        browsers: ['last 3 versions', '> 0.5%', 'ie 8', 'ie 9']
+        browsers: ['last 2 versions', '> 0.5%', 'ie 8-11']
       })
     ]))
     .pipe(rename(function(path){
