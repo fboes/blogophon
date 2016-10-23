@@ -18,10 +18,6 @@ if (args.onlynew && ! defaultValues.notInitialized) {
   process.exit(0);
 }
 
-defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
-  return i[0] + 'x' + i[1];
-});
-
 var questions = [
   {
     type: 'input',
@@ -100,28 +96,6 @@ var questions = [
     filter: function(v) {
       return Number(v);
     }
-  },{
-    type: 'checkbox',
-    name: 'imageSizes',
-    message: 'What image sizes will be used?',
-    default: defaultValues.imageSizes,
-    choices: [
-      "180x180",
-      "240x240",
-      "320x320",
-      "640x640",
-      new inquirer.Separator(),
-      "320x240",
-      "640x480",
-      "1024x768",
-      "1280x1024",
-      new inquirer.Separator(),
-      "400x225",
-      "800x450",
-      "1024x576",
-      "1280x720",
-      new inquirer.Separator()
-    ]
   },{
     type: 'input',
     name: 'defaultAuthor',
@@ -218,14 +192,23 @@ var questions = [
 inquirer.prompt(questions).then(
   function (answers) {
     answers.theme = defaultValues.theme ? defaultValues.theme : themesAvailable[0];
+    answers.imageStyles = defaultValues.imageStyles ? defaultValues.imageStyles : {
+      "default": {
+        "srcset": [
+          [1024,768]
+        ]
+      },
+      "openGraph": {
+        "srcset": [
+          [600,600]
+        ]
+      }
+    };
     answers.defaultAuthor = {
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
     };
     delete answers.defaultAuthorEmail;
-    answers.imageSizes = answers.imageSizes.map(function(i) {
-      return i.split(/x/);
-    });
 
     var ogImage = null;
     if (answers.faviconBaseUrl) {
