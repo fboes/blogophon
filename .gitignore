@@ -11,3 +11,4 @@
 /.idea
 /npm-debug.log
 /.sublime*
+/yarn*
