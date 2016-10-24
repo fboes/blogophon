@@ -1,5 +1,6 @@
 'use strict';
 
+//var path           = require('path');
 var pkg            = require('../package.json');
 
 /**
@@ -7,7 +8,7 @@ var pkg            = require('../package.json');
  */
 var config = {};
 try {
-  config = require(process.env.PWD + '/user/config.json');
+  config = require(__dirname + '/../user/config.json');
 } catch (e) {
   var os = require("os");
   config = {
@@ -40,31 +41,11 @@ if (!config.baseUrl) {
 if (!config.basePath) {
   config.basePath = "/";
 }
-if (!config.imageStyles) {
-  config.imageStyles = {
-    "default": {
-      "srcset": [
-        [1024,768]
-      ],
-      "sizes": [
-        "100vw"
-      ]
-    },
-    "quad": {
-      "srcset": [
-        [240,240],
-        [480,480]
-      ],
-      "sizes": [
-        "33vw"
-      ]
-    },
-    "openGraph": {
-      "srcset": [
-        [600,600]
-      ]
-    }
-  };
+
+try {
+  config.themeConf = require(__dirname + '/../' + config.directories.currentTheme + '/theme.json');
+} catch (e) {
+  config.themeConf = {};
 }
 
 if (config.deployCmd && config.deployCmd.match(/^#/)) {

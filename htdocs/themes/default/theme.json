@@ -1,0 +1,44 @@
+{
+  "name":"3960!",
+  "themeColor": "#94c6ff",
+  "imageStyles": {
+    "quad": {
+      "srcset": [
+        [
+          240,
+          240
+        ],
+        [
+          480,
+          480
+        ]
+      ],
+      "sizes": [
+        "33vw"
+      ]
+    },
+    "openGraph": {
+      "srcset": [
+        [
+          600,
+          600
+        ]
+      ]
+    }
+  },
+  "icons": [
+    {
+      "src": "http://cdn.3960.org/favicon-96x96.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "http://cdn.3960.org/favicon-144x144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "http://cdn.3960.org/favicon-196x196.png",
+      "sizes": "196x196"
+    }
+  ],
+  "ogImage": "http://cdn.3960.org/favicon-196x196.png"
+}

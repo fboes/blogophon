@@ -114,56 +114,11 @@ var questions = [
     }
   },{
     type: 'input',
-    name: 'faviconBaseUrl',
-    message: 'Base-URL of favicons (optional)',
-    default: defaultValues.faviconBaseUrl,
-    validate: function(v) {
-      return (!v || v.match(/^http(s)?:\/\/\S+\/$/)) ? true : 'Please supply a valid url, starting with `http://` and ending with `/` - or leave field empty.';
-    }
-  },{
-    type: 'checkbox',
-    name: 'faviconSizes',
-    message: 'What favicon sizes will be used?',
-    default: defaultValues.faviconSizes,
-    choices: [
-      "96x96",
-      "128x128",
-      "144x144",
-      "196x196",
-      "256x256"
-    ],
-    when: function(answers) {
-      return (answers.faviconBaseUrl);
-    }
-  },{
-    type: 'input',
-    name: 'ogImage',
-    message: 'URL of standard teaser image (optional)',
-    default: defaultValues.ogImage,
-    validate: function(v) {
-      return (!v || v.match(/^http(s)?:\/\/\S+$/)) ? true : 'Please supply a valid url, starting with `http://` or leave field empty.';
-    },
-    when: function(answers) {
-      return (!answers.faviconBaseUrl);
-    }
-  },{
-    type: 'input',
     name: 'twitterAccount',
     message: 'Twitter account name (optional)',
     default: defaultValues.twitterAccount,
     validate: function(v) {
       return (!v || v.match(/^[a-zA-z0-9_-]+$/)) ? true : 'Please supply a Twitter account name or leave field empty.';
-    }
-  },{
-    type: 'input',
-    name: 'themeColor',
-    message: 'Basic color of your theme as hexcode (optional)',
-    default: defaultValues.themeColor,
-    validate: function(v) {
-      return (!v || v.match(/^#[a-zA-z0-9]{3,6}$/)) ? true : 'Please supply a hex color code like `#fa647a`.';
-    },
-    filter: function(v) {
-      return v.toLowerCase();
     }
   },{
     type: 'input',
@@ -192,37 +147,11 @@ var questions = [
 inquirer.prompt(questions).then(
   function (answers) {
     answers.theme = defaultValues.theme ? defaultValues.theme : themesAvailable[0];
-    answers.imageStyles = defaultValues.imageStyles ? defaultValues.imageStyles : {
-      "default": {
-        "srcset": [
-          [1024,768]
-        ]
-      },
-      "openGraph": {
-        "srcset": [
-          [600,600]
-        ]
-      }
-    };
     answers.defaultAuthor = {
       "email": answers.defaultAuthorEmail,
       "name": answers.defaultAuthor
     };
     delete answers.defaultAuthorEmail;
-
-    var ogImage = null;
-    if (answers.faviconBaseUrl) {
-      answers.icons = answers.faviconSizes.map(function(i) {
-        ogImage = answers.faviconBaseUrl + 'favicon-'+i+'.png';
-        return {
-          src: ogImage,
-          sizes: i,
-        };
-      });
-    }
-    if (!answers.ogImage && ogImage) {
-      answers.ogImage = ogImage;
-    }
 
     var generator = new Generator(defaultValues);
     generator.buildBasicFiles(answers);
