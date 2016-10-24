@@ -4,7 +4,7 @@ exports.testGeneralFunctionality = function(test) {
 
   var index = require('../src/blogophon-index');
 
-  test.ok(index());
+  test.ok(index(), 'Index does compile');
 
   //test.throws(function() {translations('xx');}, Error);
   //test.throws(function() {translations('de').getString('xx');}, Error);

@@ -11,14 +11,14 @@ var SuperString = function (string) {
 
   /**
    * Replace `%s`, `%d`, `%f` in given string with parameters.
-   * @param  {scalar}  args One or morge arguments
-   * @return {String}         [description]
+   * @param  {scalar}  args One or more arguments
+   * @return {String}       [description]
    */
   external.sprintf = function() {
-    var i, that = external;
+    var i;
     if (arguments) {
       for (i = 0; i < arguments.length; ++i) {
-        switch (that.string.match(/%([sdfF])/)[1]) {
+        switch (external.string.match(/%([sdfF])/)[1]) {
           case 'd':
             arguments[i] = parseInt(arguments[i]);
             break;
@@ -30,10 +30,10 @@ var SuperString = function (string) {
             arguments[i] = String(arguments[i]);
             break;
         }
-        that.string = that.string.replace(/%[sdfF]/,arguments[i]);
+        external.string = external.string.replace(/%[sdfF]/,arguments[i]);
       }
     }
-    return that.string;
+    return external.string;
   };
 
   /**

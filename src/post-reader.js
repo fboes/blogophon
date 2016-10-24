@@ -12,19 +12,19 @@ var post           = require('./models/post');
  */
 var PostReader = function(file) {
   if (!file) {
-    throw new Error('file is empty');
+    throw new Error('File '+file+' is empty');
   }
 
-  var readYaml = true,
-    yamlBuffer = '',
-    descriptionBuffer = '',
-    startDescriptionBuffer = false,
-    fileStat,
-    exports = {
-      meta : {},
-      markdown : ''
-    }
-  ;
+  var readYaml = true;
+  var yamlBuffer = '';
+  var descriptionBuffer = '';
+  var startDescriptionBuffer = false;
+  var fileStat;
+  var exports = {
+    meta : {},
+    markdown : ''
+  };
+
   return new Promise (
     function(resolve, reject) {
       fs.stat(file, function(err, stats) {
@@ -78,8 +78,6 @@ var PostReader = function(file) {
         if (!exports.meta.Date && exports.meta.DateModified) {
           exports.meta.Date = exports.meta.DateModified;
         }
-
-        //console.log(exports);
         resolve( post(file, exports.markdown, exports.meta) );
       });
     }
