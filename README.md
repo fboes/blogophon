@@ -12,7 +12,7 @@ A small and simple [Static Site Generator](https://davidwalsh.name/introduction-
 * Simple and fast templating via Mustache.
 * Generate all required teaser pages.
 * Generate all required tag pages.
-* Scale images and remove unneccessary cruft.
+* Scale images and implement them responsively.
 * Puts all relevant meta stuff into `<head>` for SEO and social sharing.
 * Publish files to remote server.
 * A ton of [special features](docs/special-features.md) like ATOM, RSS, AMP, etc.

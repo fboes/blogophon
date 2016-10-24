@@ -1,7 +1,6 @@
 'use strict';
 
 var glob           = require("glob");
-var gm             = require('gm').subClass({imageMagick: true});
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
 var SuperString    = require('./helpers/super-string');
@@ -15,6 +14,7 @@ var indexUrl       = require('./helpers/index-url');
 var blogophonIndex = require('./blogophon-index');
 var hashes         = require('./models/hashes');
 var appleNewsFormat = require('./models/apple-news-format');
+var imageStyles    = require('./helpers/image-styles');
 
 /**
  * Generator used for creating the blog.
@@ -31,16 +31,18 @@ var Generator = function (config) {
   external.hashes       = hashes();
   Mustache = Mustache.getTemplates(config.directories.currentTheme + '/templates');
 
+  var internal = {};
+  internal.imageStyles  = imageStyles(config);
+
   /**
    * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.getArticles = function() {
-    var that = external;
     external.currentIndex = blogophonIndex();
     return new Promise (
       function(resolve, reject) {
-        glob(that.config.directories.data + "/**/*.md", function(err, files) {
+        glob(external.config.directories.data + "/**/*.md", function(err, files) {
           if (err) {
             reject(err);
           }
@@ -52,9 +54,9 @@ var Generator = function (config) {
           Promise
             .all(promises)
             .then(function(posts) {
-              that.currentIndex.pushArray(posts);
-              console.log('Removed ' + that.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
-              that.currentIndex.makeNextPrev();
+              external.currentIndex.pushArray(posts);
+              console.log('Removed ' + external.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
+              external.currentIndex.makeNextPrev();
               resolve( files.length );
             })
             .catch(reject)
@@ -71,7 +73,6 @@ var Generator = function (config) {
    * @return {Promise}          with first parameter of `resolve` being the list of files generated.
    */
   external.buildAllArticles = function(force, keepOld) {
-    var that     = external;
     var allPosts = external.currentIndex.getPosts();
     var skipped  = 0;
     var generatedArticles = [];
@@ -84,18 +85,18 @@ var Generator = function (config) {
       function(resolve, reject) {
         // Making promises
         var promises = allPosts.map(function(post) {
-          if (!force && that.hashes.isHashed(post.meta.Url, post.hash)) {
+          if (!force && external.hashes.isHashed(post.meta.Url, post.hash)) {
             skipped++;
           } else {
             generatedArticles.push([post.meta.Url, post.filename]);
-            return that.buildSingleArticle(post);
+            return external.buildSingleArticle(post);
           }
         });
         // Checking promises
         Promise
           .all(promises)
           .then(function() {
-            that.hashes.save();
+            external.hashes.save();
             console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
             resolve(generatedArticles);
           })
@@ -111,24 +112,23 @@ var Generator = function (config) {
    * @return {Promise}  with first parameter being the filename
    */
   external.buildSingleArticle = function(post) {
-    var that     = external;
     if (!post) {
       throw new Error('Empty post');
     }
     return new Promise (
       function(resolve, reject) {
-        fs.ensureDirSync(that.config.directories.htdocs + post.meta.Url);
+        fs.ensureDirSync(external.config.directories.htdocs + post.meta.Url);
         var promises = [];
-        if (that.config.specialFeatures.applenews) {
+        if (external.config.specialFeatures.applenews) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
-        if (that.config.specialFeatures.acceleratedmobilepages) {
+        if (external.config.specialFeatures.acceleratedmobilepages) {
           Mustache.ampCss = Mustache.ampCss || fs.readFileSync(Mustache.themePath + '/../css/amp.css', 'utf8').replace(/\s*[\n\r]+\s*/g,'');
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
             post: post,
             ampHtml: post.ampHtml(),
             ampCss: Mustache.ampCss,
-            config: that.config
+            config: external.config
           },Mustache.partials)));
         }
         Promise
@@ -136,13 +136,13 @@ var Generator = function (config) {
           .then(function() {
             fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
               post: post,
-              config: that.config
+              config: external.config
             },Mustache.partials), function(err) {
               if (err) {
                 reject(err);
               }
-              if (that.hashes) {
-                that.hashes.update(post.meta.Url, post.hash);
+              if (external.hashes) {
+                external.hashes.update(post.meta.Url, post.hash);
               }
               resolve(post.meta.Filename);
             });
@@ -158,17 +158,16 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being an array with the numbers of files converted.
    */
   external.buildSpecialPages = function() {
-    var that = external;
     return new Promise (
       function(resolve, reject) {
         var promises = [
-          that.buildIndexFiles(),
-          that.buildTagPages(),
-          that.buildMetaFiles()
+          external.buildIndexFiles(),
+          external.buildTagPages(),
+          external.buildMetaFiles()
         ];
 
-        if (that.config.specialFeatures.multipleauthors) {
-          promises.push(that.buildAuthorPages());
+        if (external.config.specialFeatures.multipleauthors) {
+          promises.push(external.buildAuthorPages());
         }
 
         Promise
@@ -185,17 +184,16 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildIndexFiles = function(index, path, title) {
-    var that = external;
     index = index || external.currentIndex;
     path  = path  || '/';
     title = title || external.strings.index;
 
-    fs.ensureDirSync(that.config.directories.htdocs + path);
-    fs.removeSync(that.config.directories.htdocs + path + 'index*');
+    fs.ensureDirSync(external.config.directories.htdocs + path);
+    fs.removeSync(external.config.directories.htdocs + path + 'index*');
     return new Promise (
       function(resolve, reject) {
         var page;
-        var pagedPosts = index.getPagedPosts(that.config.itemsPerPage);
+        var pagedPosts = index.getPagedPosts(external.config.itemsPerPage);
         var urls = {
           rss   : indexUrl(path + 'posts.rss'),
           rssjs : indexUrl(path + 'rss.json'),
@@ -207,37 +205,37 @@ var Generator = function (config) {
         var pubDate = blogophonDate(index.pubDate);
 
 
-        if (that.config.specialFeatures.rss) {
+        if (external.config.specialFeatures.rss) {
           promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index: index.getPosts(10),
             pubDate: pubDate.rfc,
-            config: that.config,
+            config: external.config,
             absoluteUrl : urls.rss.absoluteUrl(),
             title: title
           })));
         }
-        if (that.config.specialFeatures.atom) {
+        if (external.config.specialFeatures.atom) {
           promises.push(fs.writeFileAsync( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
             index: index.getPosts(10),
             pubDate: pubDate.iso,
-            config: that.config,
+            config: external.config,
             absoluteUrl : urls.atom.absoluteUrl(),
             title: title
           })));
         }
-        if (that.config.specialFeatures.icscalendar) {
+        if (external.config.specialFeatures.icscalendar) {
           promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
             index: index.getPosts(),
             pubDate: pubDate.ics,
-            config: that.config,
+            config: external.config,
             absoluteUrl : urls.ics.absoluteUrl(),
             title: title
           })));
         }
-        if (that.config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, that.config, title), undefined, 2)));
+        if (external.config.specialFeatures.jsonrss) {
+          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, external.config, title), undefined, 2)));
         }
-        if (that.config.specialFeatures.geojson) {
+        if (external.config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
         }
 
@@ -245,10 +243,10 @@ var Generator = function (config) {
           var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
           var curUrlObj     = indexUrl(curPageObj.currentUrl);
           curPageObj.index  = pagedPosts[page];
-          curPageObj.config = that.config;
+          curPageObj.config = external.config;
           curPageObj.meta   = {
             title      : title,
-            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(that.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(external.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: curUrlObj.absoluteUrl(),
             absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
           };
@@ -273,8 +271,7 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildTagPages = function() {
-    var that = external;
-    var tags = that.currentIndex.getTags();
+    var tags = external.currentIndex.getTags();
     var tagPages = Object.keys(tags).sort().map(function(key) {
       return {
         title: tags[key].title,
@@ -282,22 +279,22 @@ var Generator = function (config) {
       };
     });
 
-    fs.removeSync(that.config.directories.htdocs + '/tagged');
-    fs.ensureDirSync(that.config.directories.htdocs + '/tagged');
+    fs.removeSync(external.config.directories.htdocs + '/tagged');
+    fs.ensureDirSync(external.config.directories.htdocs + '/tagged');
 
     return new Promise (
       function(resolve, reject) {
         var promises = Object.keys(tags).map(function(key) {
-          return that.buildIndexFiles(
+          return external.buildIndexFiles(
             tags[key].index,
             tags[key].urlObj.relativeUrl(),
-            SuperString(that.strings.tag).sprintf(tags[key].title)
+            SuperString(external.strings.tag).sprintf(tags[key].title)
           );
         });
 
         promises.push(fs.writeFileAsync( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
           index: tagPages,
-          config: that.config
+          config: external.config
         }, Mustache.partials)));
 
         Promise
@@ -316,8 +313,7 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildAuthorPages = function() {
-    var that = external;
-    var authors = that.currentIndex.getAuthors();
+    var authors = external.currentIndex.getAuthors();
     var authorPages = Object.keys(authors).sort().map(function(name) {
       return {
         title: name,
@@ -325,25 +321,25 @@ var Generator = function (config) {
       };
     });
 
-    fs.remove(that.config.directories.htdocs + '/authored-by', function(err) {
+    fs.remove(external.config.directories.htdocs + '/authored-by', function(err) {
       return new Promise (
         function(resolve, reject) {
           if (err) {
             reject(err);
           }
-          fs.ensureDirSync(that.config.directories.htdocs + '/authored-by');
+          fs.ensureDirSync(external.config.directories.htdocs + '/authored-by');
 
           var promises = Object.keys(authors).map(function(name) {
-            return that.buildIndexFiles(
+            return external.buildIndexFiles(
               authors[name].index,
               authors[name].urlObj.relativeUrl(),
-              SuperString(that.strings.author).sprintf(name)
+              SuperString(external.strings.author).sprintf(name)
             );
           });
 
           promises.push(fs.writeFileAsync( indexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
             index: authorPages,
-            config: that.config
+            config: external.config
           }, Mustache.partials)));
 
           Promise
@@ -359,14 +355,13 @@ var Generator = function (config) {
   };
 
   /**
-   * Build 404 pages, sitemaps, newsfeeds an stuff like that
+   * Build 404 pages, sitemaps, newsfeeds an stuff like external
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildMetaFiles = function() {
-    var that = external;
     return new Promise (
       function(resolve, reject) {
-        var tags = that.currentIndex.getTags();
+        var tags = external.currentIndex.getTags();
         var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
@@ -376,21 +371,21 @@ var Generator = function (config) {
 
         var promises = [
           fs.writeFileAsync( indexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
-            index: that.currentIndex.getPosts(5),
-            config: that.config
+            index: external.currentIndex.getPosts(5),
+            config: external.config
           }, Mustache.partials)),
 
           fs.writeFileAsync( indexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
-            index: that.currentIndex.getPosts(),
+            index: external.currentIndex.getPosts(),
             tagPages: tagPages,
-            pubDate: blogophonDate(that.currentIndex.pubDate).iso,
-            config: that.config
+            pubDate: blogophonDate(external.currentIndex.pubDate).iso,
+            config: external.config
           }))
         ];
 
-        if (that.config.specialFeatures.microsofttiles) {
-          fs.ensureDirSync(that.config.directories.htdocs + '/notifications');
-          that.currentIndex.getPosts(5).forEach(function(post,index) {
+        if (external.config.specialFeatures.microsofttiles) {
+          fs.ensureDirSync(external.config.directories.htdocs + '/notifications');
+          external.currentIndex.getPosts(5).forEach(function(post,index) {
             promises.push(
               fs.writeFileAsync( indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
                 post: post
@@ -414,59 +409,39 @@ var Generator = function (config) {
 
   /**
    * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
+   * @param  {[type]}  targetDirectory [description]
+   * @param  {[type]}  articleFilename [description]
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.copyImages = function(targetDirectory, articleFilename) {
     if (!targetDirectory || !articleFilename) {
       return false;
     }
-    var that = external;
-    var i;
-    var j;
-    var processed = 0;
-    var maxProcessed = -1;
-
     // Target directory
     var sourceDirectory = articleFilename.replace(/\.md$/, '') + "/"; // Source directory
     var sourceReg = new RegExp(sourceDirectory);
 
     return new Promise (
       function(resolve, reject) {
-        glob(sourceDirectory + "*.{png,jpg,gif}", function(er, files) {
-          maxProcessed = files.length * (that.config.imageSizes.length + 1);
-          if (files.length === 0) {
-            resolve( processed );
-          }
-          var checkProcessed = function(err) {
-            if (err) {
-              reject(err);
-            }
-            if (++processed === maxProcessed) {
-              console.log("Converted " + processed + " images");
-              resolve( processed );
-            }
-          };
-          for (i = 0; i < files.length; i++) {
-            var targetFile = files[i].replace(sourceReg, that.config.directories.htdocs + targetDirectory);
-            fs.ensureDirSync(targetFile.replace(/(\/).+?$/, '$1'));
-            gm(files[i])
-              .noProfile()
-              .interlace('Line')
-              .write(targetFile,checkProcessed)
-            ;
-            for (j = 0; j < that.config.imageSizes.length; j++) {
-              var imageSize = that.config.imageSizes[j];
-              gm(files[i])
-                .noProfile()
-                .geometry(imageSize[0], imageSize[1], "^")
-                .gravity('Center')
-                .crop(imageSize[0], imageSize[1])
-                .interlace('Line')
-                .write(targetFile.replace(/(\.[a-z]+$)/,'-'+imageSize[0]+'x'+imageSize[1]+'$1'),checkProcessed)
-              ;
-            }
-          }
+        var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(file) {
+          var targetFile = file.replace(sourceReg, external.config.directories.htdocs + targetDirectory);
+          fs.copySync(file, targetFile);
+          return internal.imageStyles.generateImages(targetFile);
         });
+        Promise
+          .all(promises)
+          .then(function(generatedImages) {
+            var processed = 0;
+            if (promises.length > 0) {
+              generatedImages.forEach(function(generatedImage) {
+                processed += generatedImage;
+              });
+              console.log("Resized "+processed+" images");
+            }
+            return resolve(processed);
+          })
+          .catch(reject)
+        ;
       }
     );
   };
@@ -478,20 +453,19 @@ var Generator = function (config) {
    * @return {Promise} [description]
    */
   external.buildAll = function(force, noimages) {
-    var that = external;
     return new Promise (
       function(resolve, reject) {
-        that
+        external
           .buildAllArticles(force, noimages)
           .then(function(generatedArticles) {
             var promises = [];
             if (!noimages) {
               promises = generatedArticles.map(function(article) {
-                return that.copyImages( article[0], article[1] );
+                return external.copyImages( article[0], article[1] );
               });
             }
             if (generatedArticles.length) {
-              promises.push(that.buildSpecialPages());
+              promises.push(external.buildSpecialPages());
             }
             Promise
               .all(promises)
@@ -524,24 +498,23 @@ var Generator = function (config) {
    * @return {Promise} [description]
    */
   external.buildBasicFiles = function(answers) {
-    var that = external;
     var manifest = require('./models/manifest');
 
-    fs.ensureDirSync(that.config.directories.data);
-    fs.ensureDirSync(that.config.directories.htdocs);
+    fs.ensureDirSync(external.config.directories.data);
+    fs.ensureDirSync(external.config.directories.htdocs);
 
     var promises = [
-      fs.writeFileAsync(that.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
-      fs.writeFileAsync(that.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
-        config: that.config
+      fs.writeFileAsync(external.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
+      fs.writeFileAsync(external.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
+        config: external.config
       })),
-      fs.writeFileAsync(that.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
-        config: that.config
+      fs.writeFileAsync(external.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
+        config: external.config
       })),
-      fs.writeFileAsync(that.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
-        config: that.config
+      fs.writeFileAsync(external.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
+        config: external.config
       })),
-      fs.writeFileAsync( that.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(that.config), undefined, 2))
+      fs.writeFileAsync( external.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(external.config), undefined, 2))
     ];
     return Promise
       .all(promises)

@@ -4,25 +4,22 @@
   "imageStyles": {
     "quad": {
       "srcset": [
-        [
-          240,
-          240
-        ],
-        [
-          480,
-          480
-        ]
+        [480,480],
+        [240,240]
       ],
       "sizes": [
-        "33vw"
+        "(min-width: 580px) 33.3vw",
+        "50vw"
       ]
     },
-    "openGraph": {
+    "default": {
       "srcset": [
-        [
-          600,
-          600
-        ]
+        [640,360],
+        [400,225]
+      ],
+      "sizes": [
+        "(min-width: 580px) 66.6vw",
+        "100vw"
       ]
     }
   },
