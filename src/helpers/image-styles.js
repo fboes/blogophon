@@ -38,7 +38,10 @@ var imageStyles = function (config) {
             gm(filename)
               .noProfile()
               .interlace('Line')
-              .write(filename,function () {
+              .write(filename,function (err) {
+                if (err) {
+                  reject(err);
+                }
                 processed++;
                 resolve( processed );
               })
