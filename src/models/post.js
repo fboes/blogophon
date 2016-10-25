@@ -10,6 +10,7 @@ var tagUrl          = require('../helpers/tag-url');
 var authorUrl       = require('../helpers/author-url');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
+var imageStyles     = require('../helpers/image-styles')(config);
 
 /**
  * This class holds Markdown and converts it into a proper post.
@@ -69,15 +70,15 @@ var Post = function (filename, markdown, meta) {
       }
     }
 
-  meta.urlObj = postUrl(filename, path);
-  if (meta.urlObj) {
-    meta.Url = meta.urlObj.relativeUrl();
-    meta.AbsoluteUrl = meta.urlObj.absoluteUrl();
-    meta.Filename = meta.urlObj.filename();
-    if (config.specialFeatures.acceleratedmobilepages) {
-      meta.AbsoluteUrlAmp = meta.urlObj.absoluteUrl('amp');
+    meta.urlObj = postUrl(filename, path);
+    if (meta.urlObj) {
+      meta.Url = meta.urlObj.relativeUrl();
+      meta.AbsoluteUrl = meta.urlObj.absoluteUrl();
+      meta.Filename = meta.urlObj.filename();
+      if (config.specialFeatures.acceleratedmobilepages) {
+        meta.AbsoluteUrlAmp = meta.urlObj.absoluteUrl('amp');
+      }
     }
-  }
 
     var htmlTeaser   = external.markyMark(meta.Description.trim(), meta.Url);
     var html         = external.markyMark(markdown, meta.Url);
@@ -173,6 +174,7 @@ var Post = function (filename, markdown, meta) {
       html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
     }
     html = markyMark(markdownConvert(html)).toString();
+    html = imageStyles.replaceImgHtml(html);
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
       .replace(/(<\/?h)3/g,'$14')
@@ -192,7 +194,6 @@ var Post = function (filename, markdown, meta) {
         '<img src="https://i.giphy.com/$1.gif" alt="" />'
       )
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
-      // <img src="images/articles-1280/article.jpg" srcset="images/articles-640/article.jpg 640w, images/articles-1280/article.jpg 1280w" sizes="100vw" alt="" />
       .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
       .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
       .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')

@@ -77,3 +77,16 @@ Special markdown
 * [X] <-- Produces a checked checkbox
 
 ```
+
+Images
+------
+
+```markdown
+
+![I am an alternative text in case the image goes missing](image.jpg) <-- produces an unscaled image
+![I am an alternative text in case the image goes missing](image.jpg#default) <-- produces an image, which will be scaled to match the `default` style
+![I am an alternative text in case the image goes missing](image.jpg#quad) <-- produces an image, which will be scaled to match the `quad` style
+
+```
+
+It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.

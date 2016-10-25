@@ -18,10 +18,6 @@ if (args.onlynew && ! defaultValues.notInitialized) {
   process.exit(0);
 }
 
-defaultValues.imageSizes = defaultValues.imageSizes.map(function(i){
-  return i[0] + 'x' + i[1];
-});
-
 var questions = [
   {
     type: 'input',
@@ -101,28 +97,6 @@ var questions = [
       return Number(v);
     }
   },{
-    type: 'checkbox',
-    name: 'imageSizes',
-    message: 'What image sizes will be used?',
-    default: defaultValues.imageSizes,
-    choices: [
-      "180x180",
-      "240x240",
-      "320x320",
-      "640x640",
-      new inquirer.Separator(),
-      "320x240",
-      "640x480",
-      "1024x768",
-      "1280x1024",
-      new inquirer.Separator(),
-      "400x225",
-      "800x450",
-      "1024x576",
-      "1280x720",
-      new inquirer.Separator()
-    ]
-  },{
     type: 'input',
     name: 'defaultAuthor',
     message: 'Default name of author',
@@ -140,56 +114,11 @@ var questions = [
     }
   },{
     type: 'input',
-    name: 'faviconBaseUrl',
-    message: 'Base-URL of favicons (optional)',
-    default: defaultValues.faviconBaseUrl,
-    validate: function(v) {
-      return (!v || v.match(/^http(s)?:\/\/\S+\/$/)) ? true : 'Please supply a valid url, starting with `http://` and ending with `/` - or leave field empty.';
-    }
-  },{
-    type: 'checkbox',
-    name: 'faviconSizes',
-    message: 'What favicon sizes will be used?',
-    default: defaultValues.faviconSizes,
-    choices: [
-      "96x96",
-      "128x128",
-      "144x144",
-      "196x196",
-      "256x256"
-    ],
-    when: function(answers) {
-      return (answers.faviconBaseUrl);
-    }
-  },{
-    type: 'input',
-    name: 'ogImage',
-    message: 'URL of standard teaser image (optional)',
-    default: defaultValues.ogImage,
-    validate: function(v) {
-      return (!v || v.match(/^http(s)?:\/\/\S+$/)) ? true : 'Please supply a valid url, starting with `http://` or leave field empty.';
-    },
-    when: function(answers) {
-      return (!answers.faviconBaseUrl);
-    }
-  },{
-    type: 'input',
     name: 'twitterAccount',
     message: 'Twitter account name (optional)',
     default: defaultValues.twitterAccount,
     validate: function(v) {
       return (!v || v.match(/^[a-zA-z0-9_-]+$/)) ? true : 'Please supply a Twitter account name or leave field empty.';
-    }
-  },{
-    type: 'input',
-    name: 'themeColor',
-    message: 'Basic color of your theme as hexcode (optional)',
-    default: defaultValues.themeColor,
-    validate: function(v) {
-      return (!v || v.match(/^#[a-zA-z0-9]{3,6}$/)) ? true : 'Please supply a hex color code like `#fa647a`.';
-    },
-    filter: function(v) {
-      return v.toLowerCase();
     }
   },{
     type: 'input',
@@ -223,23 +152,6 @@ inquirer.prompt(questions).then(
       "name": answers.defaultAuthor
     };
     delete answers.defaultAuthorEmail;
-    answers.imageSizes = answers.imageSizes.map(function(i) {
-      return i.split(/x/);
-    });
-
-    var ogImage = null;
-    if (answers.faviconBaseUrl) {
-      answers.icons = answers.faviconSizes.map(function(i) {
-        ogImage = answers.faviconBaseUrl + 'favicon-'+i+'.png';
-        return {
-          src: ogImage,
-          sizes: i,
-        };
-      });
-    }
-    if (!answers.ogImage && ogImage) {
-      answers.ogImage = ogImage;
-    }
 
     var generator = new Generator(defaultValues);
     generator.buildBasicFiles(answers);

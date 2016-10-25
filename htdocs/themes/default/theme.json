@@ -1,0 +1,41 @@
+{
+  "name":"3960!",
+  "themeColor": "#94c6ff",
+  "imageStyles": {
+    "quad": {
+      "srcset": [
+        [480,480],
+        [240,240]
+      ],
+      "sizes": [
+        "(min-width: 580px) 33.3vw",
+        "50vw"
+      ]
+    },
+    "default": {
+      "srcset": [
+        [640,360],
+        [400,225]
+      ],
+      "sizes": [
+        "(min-width: 580px) 66.6vw",
+        "100vw"
+      ]
+    }
+  },
+  "icons": [
+    {
+      "src": "http://cdn.3960.org/favicon-96x96.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "http://cdn.3960.org/favicon-144x144.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "http://cdn.3960.org/favicon-196x196.png",
+      "sizes": "196x196"
+    }
+  ],
+  "ogImage": "http://cdn.3960.org/favicon-196x196.png"
+}

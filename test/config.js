@@ -1,14 +1,14 @@
 var config = require('../src/config');
 
-exports.testConfigProperties = function(test) {
+exports.testConfigProperties = function testConfigProperties(test) {
   'use strict';
   test.expect(5);
 
-  test.ok(config.language);
-  test.ok(config.baseUrl);
-  test.ok(config.basePath);
-  test.ok(config.imageSizes);
-  test.ok(config.directories);
+  test.ok(config.language,    'config.language is present');
+  test.ok(config.baseUrl,     'config.baseUrl is present');
+  test.ok(config.basePath,    'config.basePath is present');
+  test.ok(config.themeConf,   'config.themeConf is present');
+  test.ok(config.directories, 'config.directoreis is present');
 
   test.done();
 };

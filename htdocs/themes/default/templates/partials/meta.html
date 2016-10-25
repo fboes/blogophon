@@ -1,9 +1,9 @@
 <meta property="og:site_name" name="application-name" content="{{config.name}}" />
-{{#config.ogImage}}
+{{#config.themeConf.ogImage}}
   {{^post.meta.Image}}
-    <meta property="og:image" content="{{config.ogImage}}" />
+    <meta property="og:image" content="{{config.themeConf.ogImage}}" />
   {{/post.meta.Image}}
-{{/config.ogImage}}
+{{/config.themeConf.ogImage}}
 {{#config.twitterAccount}}
   {{#post.meta.Image}}
     <meta name="twitter:card" content="summary_large_image">
@@ -14,16 +14,16 @@
   <meta name="twitter:site" content="@{{config.twitterAccount}}" />
   <meta name="twitter:creator" content="@{{config.twitterAccount}}" />
 {{/config.twitterAccount}}
-{{#config.themeColor}}
-  <meta name="theme-color" content="{{config.themeColor}}">
-{{/config.themeColor}}
+{{#config.themeConf.themeColor}}
+  <meta name="theme-color" content="{{config.themeConf.themeColor}}">
+{{/config.themeConf.themeColor}}
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="msapplication-config" content="{{config.absoluteBasePath}}browserconfig.xml" />
 <link rel="me" title="fbo&euml;s" href="http://3960.org/" />
 <link rel="stylesheet" href="//cdn.3960.org/css/styles.css" />
-{{#config.icons}}
+{{#config.themeConf.icons}}
 <link rel="icon" href="{{src}}" sizes="{{sizes}}" />
-{{/config.icons}}
+{{/config.themeConf.icons}}
 <link rel="apple-touch-icon" href="//cdn.3960.org/css/iphone.png" />
 <link rel="shortcut icon" type="image/x-icon" href="//cdn.3960.org/css/favicon.ico" />
 <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
