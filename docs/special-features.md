@@ -13,7 +13,7 @@ For each article with an author different from the set default auhtor, just [add
 RSS
 ----------------
 
-For every index page (start page, tag pages, author pages) there will be a corresponding RSS newsfeed.
+For every index page (start page, tag pages, author pages) there will be a corresponding RSS newsfeed. This is also a good start for [Facebook Instant Articles](https://developers.facebook.com/docs/instant-articles/publishing/setup-rss-feed).
 
 All required links will be added to your page.
 
@@ -36,14 +36,14 @@ This is like a RSS newsfeed, but in JSON. This will help parsers to digest infor
 Apple News
 ----------------
 
-For every article there will be a corresponding `article.json`, to be digested by Apple News.
+For every article there will be a corresponding `article.json`, to be digested by [Apple News](https://developer.apple.com/library/content/documentation/General/Conceptual/Apple_News_Format_Ref/AppleNewsFormat.html#//apple_ref/doc/uid/TP40015408-CH79-SW1).
 
 You still have to push these JSON files to Apple.
 
 Accelerated Mobile Pages
 ----------------
 
-For every article there will be a corresponding `amp.html`, to be found by Google Search Bot and indexed as a special page for mobile users.
+For every article there will be a corresponding [Accelerated Mobile Page](https://www.ampproject.org/) by the name of `amp.html`, to be found by Google Search Bot and indexed as a special page for mobile users.
 
 All required links will be added to your page.
 
