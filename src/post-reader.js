@@ -2,7 +2,7 @@
 
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs');
-var readline       = require("readline");
+var readline       = require('readline');
 var yamljs         = require('yamljs');
 var post           = require('./models/post');
 
@@ -20,7 +20,7 @@ var PostReader = function(file) {
   var descriptionBuffer = '';
   var startDescriptionBuffer = false;
   var fileStat;
-  var exports = {
+  var postData = {
     meta : {},
     markdown : ''
   };
@@ -41,44 +41,44 @@ var PostReader = function(file) {
         } else {
           if (readYaml) {
             readYaml = false;
-            exports.meta = yamljs.parse(yamlBuffer);
-            if (!exports.meta) {
-              exports.meta = {};
+            postData.meta = yamljs.parse(yamlBuffer);
+            if (!postData.meta) {
+              postData.meta = {};
             }
           } else {
-            if (!exports.meta.Title && line !== '') {
-              exports.meta.Title = line;
+            if (!postData.meta.Title && line !== '') {
+              postData.meta.Title = line;
             }
-            if (!exports.meta.Description) {
+            if (!postData.meta.Description) {
               if (line.match(/^={3}/) && !startDescriptionBuffer) {
                 startDescriptionBuffer = true;
               } else if (line.match(/^={3}/) && startDescriptionBuffer) {
                 startDescriptionBuffer = false;
-                exports.meta.Description = descriptionBuffer;
+                postData.meta.Description = descriptionBuffer;
               } else if (startDescriptionBuffer) {
                 descriptionBuffer += line+"\n";
               }
             }
-            exports.markdown += line + "\n";
+            postData.markdown += line + "\n";
           }
         }
       })
       .once('close',function() {
-        if (!exports.meta || !exports.markdown) {
+        if (!postData.meta || !postData.markdown) {
           reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
         }
-        exports.meta.noLinkNeeded = false;
-        if (!exports.meta.Description && descriptionBuffer) {
-          exports.meta.Description = descriptionBuffer;
-          exports.meta.noLinkNeeded = true;
+        postData.meta.noLinkNeeded = false;
+        if (!postData.meta.Description && descriptionBuffer) {
+          postData.meta.Description = descriptionBuffer;
+          postData.meta.noLinkNeeded = true;
         }
         if (fileStat.mtime) {
-          exports.meta.DateModified = fileStat.mtime;
+          postData.meta.DateModified = fileStat.mtime;
         }
-        if (!exports.meta.Date && exports.meta.DateModified) {
-          exports.meta.Date = exports.meta.DateModified;
+        if (!postData.meta.Date && postData.meta.DateModified) {
+          postData.meta.Date = postData.meta.DateModified;
         }
-        resolve( post(file, exports.markdown, exports.meta) );
+        resolve( post(file, postData.markdown, postData.meta) );
       });
     }
   );

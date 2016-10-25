@@ -215,7 +215,7 @@ var Post = function (filename, markdown, meta) {
   };
 
   /**
-   * [makeSafeHtml description]
+   * Remove HTML parts which may be considered unsafe for syndication.
    * @param  {String} html [description]
    * @return {String}      [description]
    */
@@ -228,7 +228,8 @@ var Post = function (filename, markdown, meta) {
   };
 
   /**
-   * [ampifyHtml description]
+   * Convert regular HTML in AMP-HTML.
+   * @see    https://www.ampproject.org/
    * @param  {String} html [description]
    * @return {String}      [description]
    */
@@ -245,7 +246,7 @@ var Post = function (filename, markdown, meta) {
   };
 
   /**
-   * [ampHtml description]
+   * Return post.html as AMP-compatible HTML.
    * @return {String} [description]
    */
   external.ampHtml = function() {
@@ -253,7 +254,7 @@ var Post = function (filename, markdown, meta) {
   };
 
   /**
-   * [ampHtmlTeaser description]
+   * Return post.htmlTeaser as AMP-compatible HTML.
    * @return {String} [description]
    */
   external.ampHtmlTeaser = function() {
