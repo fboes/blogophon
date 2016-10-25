@@ -49,7 +49,7 @@
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/post.meta.Image}}
             <header>
-              <time datetime="{{meta.Created.iso}}" itemprop="datePublished dateModified" class="date">{{meta.Created.locale}}</time>
+              <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
               <h2 itemprop="name headline">{{meta.Title}}</h2>
             </header>
             <div itemprop="articleBody">
@@ -64,6 +64,7 @@
               {{/meta.RatingObj}}
             </div>
             <footer class="meta">
+              <p>Zuletzt bearbeitet: <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
               {{#meta.AuthorName}}
                 <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
               {{/meta.AuthorName}}

@@ -9,6 +9,7 @@ All Blogophon articles are written in [Markdown](https://daringfireball.net/proj
 ---
 
 {{Your text, written in Markdown…}}
+
 ```
 
 Metadata and YAML
@@ -22,6 +23,7 @@ Each YAML declaration starts with the declaration **key**, followed by `:`, and 
 Title:     Title                                    # Title of document. If not set the first line of your Markdown will be used as title.
 Description: Some nice text                         # Teaser text. If not set will be generated from article text. For details see below.
 Date:      Wed Aug 25 2016 19:13:32 GMT+0200 (CEST) # Publishing date. If not set this will be taken from the file date.
+Modified:  Wed Aug 25 2016 19:18:32 GMT+0200 (CEST) # Last modified date. If not set this will be taken from the publishing date.
 Keywords:  Tag, Tag                                 # Comma-separated list of keywords / tags.
 Twitter:   \#Hashtag and some text                  # This text will be used on Twitter. If not set will default to title of document.
 Classes:   Images                                   # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
