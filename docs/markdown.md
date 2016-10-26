@@ -35,22 +35,6 @@ Image:     /post/image/image.png                    # Image URL used for sharing
 Rating:    1/5                                      # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
 ```
 
-You may use even more metadata and use these in your theme's template accordingly.
-
-```html
-  <p>{{ post.meta.Description }}</p>
-```
-
-Youtube & Vimeo
----------------
-
-For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
-
-Giphy
------
-
-For displaying a Giphy imgae, just put a linkt to the Giphy page into a single line. This will be converted to the corresponding image.
-
 Teaser text
 -----------
 
@@ -70,8 +54,40 @@ And this part will only be shown on article pages.
 
 If you do not use both methods, the Blogophon will build a ***teaser text from article text** by using the first 160 characters.
 
-Special markdown
-----------------
+Images
+------
+
+Put images for your articles into a folder having the same name as the corresponding Markdown file:
+
+```
+example.md         # Markdown file
+example/image.jpg  # Image folder with example image
+```
+
+Link these images into your Markdown file like this:
+
+```markdown
+
+![Image description](image.jpg)         <-- produces an unscaled image
+![Image description](image.jpg#default) <-- produces an image, which will be scaled to match the `default` style
+![Image description](image.jpg#quad)    <-- produces an image, which will be scaled to match the `quad` style
+
+```
+
+It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.
+
+Youtube & Vimeo
+---------------
+
+For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
+
+Giphy
+-----
+
+For displaying a Giphy image, just put a linkt to the Giphy page into a single line. This will be converted to the corresponding image.
+
+Checkboxes
+-----------
 
 ```markdown
 
@@ -79,16 +95,3 @@ Special markdown
 * [X] <-- Produces a checked checkbox
 
 ```
-
-Images
-------
-
-```markdown
-
-![I am an alternative text in case the image goes missing](image.jpg) <-- produces an unscaled image
-![I am an alternative text in case the image goes missing](image.jpg#default) <-- produces an image, which will be scaled to match the `default` style
-![I am an alternative text in case the image goes missing](image.jpg#quad) <-- produces an image, which will be scaled to match the `quad` style
-
-```
-
-It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.
