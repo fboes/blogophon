@@ -64,7 +64,9 @@
               {{/meta.RatingObj}}
             </div>
             <footer class="meta">
-              <p>Zuletzt bearbeitet: <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+              {{#meta.Modified.locale}}
+                <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+              {{/meta.Modified.locale}}
               {{#meta.AuthorName}}
                 <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
               {{/meta.AuthorName}}
