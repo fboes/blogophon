@@ -8,8 +8,8 @@
         [240,240]
       ],
       "sizes": [
-        "(min-width: 580px) 33.3vw",
-        "50vw"
+        "(min-width: 580px) 32vw",
+        "240px"
       ]
     },
     "default": {
@@ -18,8 +18,8 @@
         [400,225]
       ],
       "sizes": [
-        "(min-width: 580px) 66.6vw",
-        "100vw"
+        "(min-width: 580px) 64vw",
+        "96vw"
       ]
     }
   },

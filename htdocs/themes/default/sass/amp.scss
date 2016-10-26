@@ -58,8 +58,9 @@ main {
   }
 }
 amp-img {
-  background-color: gray;
-
-  border: 1px solid black;
-
+  &.quad {
+    float:left;
+    display: inline-block;
+    margin: 0 1em 1em 0;
+  }
 }

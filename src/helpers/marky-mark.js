@@ -130,8 +130,8 @@ var markyMark = function markyMark (string) {
    */
   internal.convertCode = function convertCode(string) {
     return string
-      .replace(/(\b)(var|function|method|class|const|external|internal|protected|use|public|private)(\b)/gi, '$1<i class="c1">$2</i>$3')
-      .replace(/(\b)(and|array|break|case|die|do|echo|else(if)?|elsif|final|for(each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/gi, '$1<i class="c2">$2</i>$3')
+      .replace(/(\b)(var|function|method|class|const|external|internal|protected|use|public|private)(\b)/g, '$1<i class="c1">$2</i>$3')
+      .replace(/(\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i class="c2">$2</i>$3')
       .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
       .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c5">$2$3$4</i>')
       .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<i class="c1">$2</i>$3')
@@ -147,11 +147,11 @@ var markyMark = function markyMark (string) {
    */
   internal.convertCss = function convertCss(string) {
     return string
-      .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/gi, '$1<i class="c1">$2</i>$3')
-      .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/gi, '$1<i class="c2">$2</i>$3')
-      .replace(/(\b)((?:\.|#)[a-z0-9_\-]+)(\b)/gi, '$1<i class="c2">$2</i>$3')
-      .replace(/(\b)((?:$)[a-z0-9_\-]+)(\b)/gi, '$1<i class="c3">$2</i>$3')
-      .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/gi, '$1<i class="c1">$2</i>$3')
+      .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<i class="c1">$2</i>$3')
+      .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i class="c2">$2</i>$3')
+      .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i class="c2">$2</i>$3')
+      .replace(/(\b)((?:$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i class="c3">$2</i>$3')
+      .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<i class="c1">$2</i>$3')
       .replace(/([^\\])(&quot;|'|&#39;)(.*?)(&quot;|'|&#39;)/g,'$1<i class="c5">$2$3$4</i>')
       .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c6">$2</i>$3')
       .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
@@ -168,7 +168,7 @@ var markyMark = function markyMark (string) {
     return string
       .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i class="c1">$2</i>')
       .replace(/(&amp;[a-z0-9]+?;)/g, '<i class="c4">$1</i>')
-      .replace(/(\s)([a-z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/gi, '$1<i class="c2">$2</i>$3<i class="c3">$4</i>$5')
+      .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/g, '$1<i class="c2">$2</i>$3<i class="c3">$4</i>$5')
       .replace(/(&lt;--.+?--&gt;)/g, '<i class="comment">$1</i>')
     ;
   };
