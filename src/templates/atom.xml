@@ -17,7 +17,8 @@
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
       <link href="{{meta.AbsoluteUrl}}?utm_medium=newsfeed" />
-      <updated>{{meta.Created.iso}}</updated>
+      <published>{{meta.Created.iso}}</published>
+      <updated>{{meta.Modified.iso}}</updated>
       <id>{{meta.Id}}</id>
       {{#meta.Tags}}
         <category term="{{title}}" />

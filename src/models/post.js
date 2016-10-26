@@ -54,6 +54,9 @@ var Post = function (filename, markdown, meta) {
 
     meta.Created     = blogophonDate(meta.Date, meta.Language);
     meta.Modified    = blogophonDate(meta.DateModified, meta.Language);
+    if (meta.Created.timestamp > meta.Modified.timestamp) {
+      meta.Modified  = meta.Created;
+    }
 
     var path = 'posts';
     if (config.postPathMode){
