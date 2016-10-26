@@ -22,4 +22,4 @@ main { padding: 1em; }
 
 .meta .author, .meta .publisher { display: none; }
 
-amp-img { background-color: gray; border: 1px solid black; }
+amp-img.quad { float: left; display: inline-block; margin: 0 1em 1em 0; }

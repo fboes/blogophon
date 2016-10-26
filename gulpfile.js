@@ -102,6 +102,6 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default',     ['jshint','nodeunit']);
+gulp.task('default',     ['jshint','nodeunit','build-js','build-sass']);
 gulp.task('test',        ['jshint','nodeunit']);
 gulp.task('generate',    shell.task(['npm run generate']));
