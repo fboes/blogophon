@@ -248,6 +248,16 @@ var blogophonIndex = function() {
     }
   };
 
+  /**
+   * [toJSON description]
+   * @return {Array} [description]
+   */
+  external.toJSON = function() {
+    return external.index.map(function(item) {
+      return item.meta.urlObj.relativeUrl('index','json');
+    });
+  }
+
   return external;
 };
 

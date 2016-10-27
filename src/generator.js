@@ -131,6 +131,9 @@ var Generator = function (config) {
             config: external.config
           },Mustache.partials)));
         }
+        if (external.config.specialFeatures.ajax) {
+          promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index','json'), JSON.stringify(post, undefined, 2)));
+        }
         Promise
           .all(promises)
           .then(function() {
@@ -199,7 +202,8 @@ var Generator = function (config) {
           rssjs : indexUrl(path + 'rss.json'),
           geojs : indexUrl(path + 'geo.json'),
           atom  : indexUrl(path + 'posts.atom'),
-          ics   : indexUrl(path + 'posts.ics')
+          ics   : indexUrl(path + 'posts.ics'),
+          ajax  : indexUrl(path + 'index.json')
         };
         var promises = [];
         var pubDate = blogophonDate(index.pubDate);
@@ -237,6 +241,9 @@ var Generator = function (config) {
         }
         if (external.config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
+        }
+        if (external.config.specialFeatures.ajax) {
+          promises.push(fs.writeFileAsync( urls.ajax.filename(), JSON.stringify(index, undefined, 2)));
         }
 
         for (page = 0; page < pagedPosts.length; page ++) {

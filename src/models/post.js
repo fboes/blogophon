@@ -272,6 +272,21 @@ var Post = function (filename, markdown, meta) {
     return external.hash;
   };
 
+  /**
+   * [toJSON description]
+   * @return {Object} [description]
+   */
+  external.toJSON = function() {
+    var json = external;
+    if (json.next && json.next.Id) {
+      json.next = json.next.urlObj.relativeUrl('index','json');
+    }
+    if (json.prev && json.prev.Id) {
+      json.prev = json.prev.urlObj.relativeUrl('index','json');
+    }
+    return json;
+  }
+
   return external.makeMeta(filename, markdown, meta);
 };
 

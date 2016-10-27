@@ -67,3 +67,10 @@ ICS-Calendar
 For every index page (start page, tag pages, author pages) there will be a corresponding ICS calendar `calendar.ics`.
 
 ICS calendards can be subscribed to with any calendar software. This results in a calendar with all your blog posts being daily events.
+
+AJAX
+-----
+
+Exports all articles as `index.json`. These files may be used for AJAX loading of articles.
+
+Exports all indexes as `index.json`, containing references to the AJAX articles.

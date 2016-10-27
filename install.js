@@ -139,7 +139,8 @@ var questions = [
       "Accelerated Mobile Pages",
       "Microsoft tiles",
       "ICS-Calendar",
-      "GeoJSON"
+      "GeoJSON",
+      "AJAX"
     ]
   }
 ];
