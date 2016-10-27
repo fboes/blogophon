@@ -224,8 +224,7 @@ var Post = function (filename, markdown, meta) {
    */
   external.makeSafeHtml = function(html) {
     return html
-      .replace(/\s(itemprop|itemscope|allowfullscreen)(="[^"]*?")?/g,'')
-      .replace(/(<\/?)iframe/g,'$1a')
+      .replace(/(<\/?)iframe[^>]*>/g,'')
       .replace(/((?:src|href)=")(\/)/g,'$1' + config.baseUrl +'$2')
     ;
   };
@@ -285,7 +284,7 @@ var Post = function (filename, markdown, meta) {
       json.prev = json.prev.urlObj.relativeUrl('index','json');
     }
     return json;
-  }
+  };
 
   return external.makeMeta(filename, markdown, meta);
 };

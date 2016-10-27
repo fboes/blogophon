@@ -256,7 +256,7 @@ var blogophonIndex = function() {
     return external.index.map(function(item) {
       return item.meta.urlObj.relativeUrl('index','json');
     });
-  }
+  };
 
   return external;
 };
