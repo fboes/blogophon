@@ -113,6 +113,12 @@ var markyMark = function markyMark (string) {
       '=&gt;': '⇒',
       '&lt;-': '←',
       '&lt;=': '⇐',
+    };
+    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=)/g, function(s) {
+      return entityMap[s];
+    });
+
+    entityMap = {
       ':)': '&#x1F60A;',
       ':(': '&#x1F615;',
       ':|': '&#x1F610;',
@@ -122,8 +128,8 @@ var markyMark = function markyMark (string) {
       ';)': '&#x1F609;',
       '8)': '&#x1F60E;',
     };
-    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|:(?:\(|\)|\||D|P|O)|(?:;|8)\))/g, function(s) {
-      return entityMap[s];
+    string = string.replace(/(\W|^)(:(?:\(|\)|\||D|P|O)|(?:;|8)\))(\W|$)/g, function(all, before, s, after) {
+      return before + entityMap[s] + after;
     });
 
     return string
