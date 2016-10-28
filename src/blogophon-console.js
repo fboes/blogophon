@@ -166,7 +166,7 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
-        var filename = internal.dirnameFromFilename(markdownFilename);
+        var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         fs.writeFile(markdownFilename, Mustache.render(template, {
           title: answers.title,
           keywords: answers.keywords,

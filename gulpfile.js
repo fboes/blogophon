@@ -45,7 +45,6 @@ gulp.task('nodeunit', function() {
   ;
 });
 
-
 // Lint Task
 gulp.task('build-js', function() {
   return gulp.src([
@@ -89,7 +88,6 @@ gulp.task('build-sass', function() {
     .pipe(gulp.dest(pkg.directories.theme))
   ;
 });
-
 
 // Watch Files For Changes
 gulp.task('watch', function() {
