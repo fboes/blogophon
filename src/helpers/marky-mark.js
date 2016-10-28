@@ -81,6 +81,9 @@ var markyMark = function markyMark (string) {
               newMode = '<code>';
             }
           }
+          else if (chunk === '<code>') {
+              newMode = '<no>';
+          }
           break;
       }
       external.chunks.push(chunk);
@@ -90,8 +93,9 @@ var markyMark = function markyMark (string) {
   };
 
   /**
-   * Convert text node
-   * @param {String} string
+   * Convert text node. Will do some pretty clever UTF-8 emoji stunts as well.
+   * @see    http://apps.timwhitlock.info/emoji/tables/unicode
+   * @param  {String} string
    * @return {String}
    */
   internal.convertText = function convertText(string) {
@@ -108,11 +112,20 @@ var markyMark = function markyMark (string) {
       '-&gt;': '→',
       '=&gt;': '⇒',
       '&lt;-': '←',
-      '&lt;=': '⇐'
+      '&lt;=': '⇐',
+      ':)': '&#x1F60A;',
+      ':(': '&#x1F615;',
+      ':|': '&#x1F610;',
+      ':D': '&#x1F604;',
+      ':P': '&#x1F60B;',
+      ':O': '&#x1F62F;',
+      ';)': '&#x1F609;',
+      '8)': '&#x1F60E;',
     };
-    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=)/g, function(s) {
+    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|:(?:\(|\)|\||D|P|O)|(?:;|8)\))/g, function(s) {
       return entityMap[s];
     });
+
     return string
       .replace(/\s--\s/g, ' — ')
       .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
@@ -167,7 +180,7 @@ var markyMark = function markyMark (string) {
   internal.convertHtml = function convertHtml(string) {
     return string
       .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i class="c1">$2</i>')
-      .replace(/(&amp;[a-z0-9]+?;)/g, '<i class="c4">$1</i>')
+      .replace(/(&amp;(?:#x)?[a-zA-F0-9]+?;)/g, '<i class="c4">$1</i>')
       .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/g, '$1<i class="c2">$2</i>$3<i class="c3">$4</i>$5')
       .replace(/(&lt;--.+?--&gt;)/g, '<i class="comment">$1</i>')
     ;
