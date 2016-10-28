@@ -125,10 +125,12 @@ var markyMark = function markyMark (string) {
       ':D': '&#x1F604;',
       ':P': '&#x1F60B;',
       ':O': '&#x1F62F;',
+      ':*': '&#x1F618;',
       ';)': '&#x1F609;',
       '8)': '&#x1F60E;',
+      'XP': '&#x1F61D;'
     };
-    string = string.replace(/(\W|^)(:(?:\(|\)|\||D|P|O)|(?:;|8)\))(\W|$)/g, function(all, before, s, after) {
+    string = string.replace(/(\W|^)(:(?:\(|\)|\||D|P|O|\*)|(?:;|8)\)|XP)(\W|$)/g, function(all, before, s, after) {
       return before + entityMap[s] + after;
     });
 
