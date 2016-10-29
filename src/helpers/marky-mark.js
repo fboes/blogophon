@@ -120,18 +120,26 @@ var markyMark = function markyMark (string) {
 
     entityMap = {
       ':)': '&#x1F60A;',
+      ':))':'&#x1F682;',
       ':(': '&#x1F629;',
+      ':\'(': '&#x1F622;',
       ':|': '&#x1F610;',
       ':/': '&#x1F612;',
       ':D': '&#x1F604;',
       ':P': '&#x1F60B;',
       ':O': '&#x1F632;',
+      ':o': '&#x1F632;',
+      ':?': '&#x1F914;',
+      ':@': '&#x1F620;',
       ':*': '&#x1F618;',
       ';)': '&#x1F609;',
       'B)': '&#x1F60E;',
-      'XP': '&#x1F61D;'
+      'XP': '&#x1F61D;',
+      '8o': '&#x1F628;',
+      '+1': '&#x1F44D;',
+      '-1': '&#x1F44E;'
     };
-    string = string.replace(/(\W|^)(:(?:\(|\)|\||\/|D|P|O|\*)|(?:;|B)\)|XP)(\W|$)/g, function(all, before, s, after) {
+    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|(?:\+|\-)1)(\W|$)/g, function(all, before, s, after) {
       return before + entityMap[s] + after;
     });
 
