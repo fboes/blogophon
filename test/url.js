@@ -32,22 +32,22 @@ exports.testBasicTransformation = function(test) {
   url = PostUrl('ich-und-du.md');
   test.strictEqual(url.relativeUrl(), '/posts/ich-und-du/');
   test.ok(url.absoluteUrl().match(/^\S+\/posts\/ich-und-du\/$/));
-  test.ok(url.filename().match(/^\S+\/posts\/ich-und-du\/index\.html$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-und-du(\/|\\)index\.html$/), 'Filename matching');
 
   url = IndexUrl('Tag');
   test.strictEqual(url.relativeUrl(), '/tag');
   test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
-  test.ok(url.filename().match(/^\S+\/tag$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)tag$/));
 
   url = TagUrl('Tag');
   test.strictEqual(url.relativeUrl(), '/tagged/tag/');
   test.ok(url.absoluteUrl().match(/^\S+\/tagged\/tag\/$/));
-  test.ok(url.filename().match(/^\S+\/tagged\/tag\/index\.html$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)tag(\/|\\)index\.html$/));
 
   url = AuthorUrl('Paul Wischwedel');
   test.strictEqual(url.relativeUrl(), '/authored-by/paul-wischwedel/');
   test.ok(url.absoluteUrl().match(/^\S+\/authored\-by\/paul\-wischwedel\/$/));
-  test.ok(url.filename().match(/^\S+\/authored\-by\/paul\-wischwedel\/index\.html$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)authored\-by(\/|\\)paul\-wischwedel(\/|\\)index\.html$/));
 
   test.done();
 };
@@ -61,22 +61,22 @@ exports.testSpecialTransformation = function(test) {
   url = PostUrl('Ich-ünd-Dü.md');
   test.strictEqual(url.relativeUrl(), '/posts/ich-uend-due/');
   test.ok(url.absoluteUrl().match(/^\S+\/posts\/ich-uend-due\/$/));
-  test.ok(url.filename().match(/^\S+\/posts\/ich-uend-due\/index\.html$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-uend-due(\/|\\)index\.html$/), 'Filename matching Umlauts');
 
   url = TagUrl('Ich bin ein merkwürdiges Tag');
   test.strictEqual(url.relativeUrl(), '/tagged/ich-bin-ein-merkwuerdiges-tag/');
   test.ok(url.absoluteUrl().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
-  test.ok(url.filename().match(/^\S+\/tagged\/ich-bin-ein-merkwuerdiges-tag\/index\.html$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)ich-bin-ein-merkwuerdiges-tag(\/|\\)index\.html$/));
 
   url = IndexUrl('/Tag');
   test.strictEqual(url.relativeUrl(), '/tag');
   test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
-  test.ok(url.filename().match(/^\S+\/tag$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)tag$/));
 
   url = IndexUrl('////Tag');
   test.strictEqual(url.relativeUrl(), '/tag');
   test.ok(url.absoluteUrl().match(/^\S+\/tag$/));
-  test.ok(url.filename().match(/^\S+\/tag$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)tag$/));
 
   test.done();
 };
