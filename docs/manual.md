@@ -30,6 +30,6 @@ If you want to write an article without publishing it, you can append a `~` to y
 
 ## Delete articles
 
-If you want to completly delete an article, you will have to delete all HTML- and Markdown files as well as any images associated with the selected article.
+If you want to completely delete an article, you will have to delete all HTML- and Markdown files as well as any images associated with the selected article.
 
 After that you will have to generate all pages anew, as the index pages will still link to the deleted article.

@@ -1,7 +1,7 @@
 Markdown
 ========
 
-All Blogophon articles are written in [Markdown](https://daringfireball.net/projects/markdown/syntax). At the beginning of each Markdown file you cann add a [YAML frontmatter](https://jekyllrb.com/docs/frontmatter/) section for meta information. A typical Markdown document may look like this:
+All Blogophon articles are written in [Markdown](https://daringfireball.net/projects/markdown/syntax). At the beginning of each Markdown file you can add a [YAML frontmatter](https://jekyllrb.com/docs/frontmatter/) section for meta information. A typical Markdown document may look like this:
 
 ```markdown
 ---
@@ -28,7 +28,7 @@ Keywords:  Tag, Tag                                 # Comma-separated list of ke
 Twitter:   \#Hashtag and some text                  # This text will be used on Twitter. If not set will default to title of document.
 Classes:   Images                                   # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
 Latitude:  58.109285                                # Geolocation decimal latitude in WGS84, ranging from -90 to 90.
-Longitude: 6.5664576                                # Geolocation decimal longitude in WGS84, rangin from -180 to 180.
+Longitude: 6.5664576                                # Geolocation decimal longitude in WGS84, ranging from -180 to 180.
 Language:  en                                       # Language of current article, given in ISO 639-1 or RFC1766.
 Author:    Example <example@example.org>            # Author name and email.
 Image:     /post/image/image.png                    # Image URL used for sharing. It is best to make this URL absolute.
@@ -84,7 +84,7 @@ For displaying a embedded video player for Youtube or Vimeo, just put a link to 
 Giphy
 -----
 
-For displaying a Giphy image, just put a linkt to the Giphy page into a single line. This will be converted to the corresponding image.
+For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
 
 Checkboxes
 -----------

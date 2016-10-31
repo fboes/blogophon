@@ -11,7 +11,7 @@ Gulp
 Cronjob
 -------
 
-As the Blogophon will ignore articles with a publising date set into the future, you may want to build some mechanism for generating your unpublished pages automatically. Here is how:
+As the Blogophon will ignore articles with a publishing date set into the future, you may want to build some mechanism for generating your unpublished pages automatically. Here is how:
 
 Get the path to your `generate.js` by typing `pwd`. Then edit your Crontab: `crontab -e`
 

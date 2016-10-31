@@ -8,7 +8,7 @@ Multiple authors
 
 If this feature is activated, there will be index pages generated for every author, so you can see all pages written by a single author.
 
-For each article with an author different from the set default auhtor, just [add the author name](markdown.md).
+For each article with an author different from the set default author, just [add the author name](markdown.md).
 
 RSS
 ----------------
@@ -59,14 +59,14 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 All required links will be added to your page.
 
-GeoJson will have all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). GeoJSON can be digestet by Google Maps or Leaflet.js.
+GeoJson will have all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). GeoJSON can be digested by Google Maps or Leaflet.js.
 
 ICS-Calendar
 ------------
 
 For every index page (start page, tag pages, author pages) there will be a corresponding ICS calendar `calendar.ics`.
 
-ICS calendards can be subscribed to with any calendar software. This results in a calendar with all your blog posts being daily events.
+ICS calendars can be subscribed to with any calendar software. This results in a calendar with all your blog posts being daily events.
 
 AJAX
 -----
