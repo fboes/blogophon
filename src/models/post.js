@@ -135,7 +135,7 @@ var Post = function (filename, markdown, meta) {
         meta.Image = match[1];
       }
     }
-    if (!meta.Image) {
+    if (!meta.Image && config.themeConf.ogImage) {
       meta.Image = config.themeConf.ogImage;
     }
     if (meta.Image && !meta.Image.match(/^http/)) {
