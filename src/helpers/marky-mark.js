@@ -153,6 +153,15 @@ var markyMark = function markyMark (string) {
     ;
   };
 
+  /*
+    &.c1 {color:#66D9EF;} // blue
+    &.c2 {color:#F92672;} // red
+    &.c3 {color:#A6E22E;} // green
+    &.c4 {color:#FD971F;} // orange
+    &.c5 {color:#E6DB74;} // yellow
+    &.c6 {color:#AE81FF;} // purple
+   */
+
   /**
    * Convert code text node
    * @param {String} string
@@ -196,9 +205,9 @@ var markyMark = function markyMark (string) {
    */
   internal.convertHtml = function convertHtml(string) {
     return string
-      .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i class="c1">$2</i>')
-      .replace(/(&amp;(?:#x)?[a-zA-F0-9]+?;)/g, '<i class="c4">$1</i>')
-      .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/g, '$1<i class="c2">$2</i>$3<i class="c3">$4</i>$5')
+      .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i class="c2">$2</i>')
+      .replace(/(&amp;(?:#x)?[a-zA-F0-9]+?;)/g, '<i class="c6">$1</i>')
+      .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?)(&quot;)/g, '$1<i class="c3">$2</i>$3<i class="c5">$4</i>$5')
       .replace(/(&lt;--.+?--&gt;)/g, '<i class="comment">$1</i>')
     ;
   };
