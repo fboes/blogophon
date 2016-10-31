@@ -1,9 +1,9 @@
 <meta property="og:site_name" name="application-name" content="{{config.name}}" />
-{{#config.themeConf.ogImage}}
-  {{^post.meta.Image}}
+{{^post.meta.Image}}
+  {{#config.themeConf.ogImage}}
     <meta property="og:image" content="{{config.themeConf.ogImage}}" />
-  {{/post.meta.Image}}
-{{/config.themeConf.ogImage}}
+  {{/config.themeConf.ogImage}}
+{{/post.meta.Image}}
 {{#config.twitterAccount}}
   {{#post.meta.Image}}
     <meta name="twitter:card" content="summary_large_image">
