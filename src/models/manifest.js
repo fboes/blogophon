@@ -13,8 +13,8 @@ var manifest = function(config) {
     icons: !config.themeConf.icons ? [] : config.themeConf.icons.map(function(i) {
       return i;
     }),
-    scope: config.basePath,
-    start_url: config.basePath+'index.html?utm_medium=manifest',
+    scope: config.absoluteBasePath,
+    start_url: config.absoluteBasePath+'index.html?utm_medium=manifest',
     theme_color: config.themeConf.themeColor,
     background_color: '#ffffff'
   };
