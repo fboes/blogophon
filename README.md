@@ -1,8 +1,5 @@
-Blogophon
+![](docs/blogophon.svg) Blogophon
 =========
-
-[![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
-[![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
 
 A small and simple [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) for blogs. A live example of this blog generator can be found at [3960! Journal](http://journal.3960.org).
 
@@ -38,6 +35,9 @@ If you do not want to use [`node ./index.js`](index.js), [read the manual](docs/
 
 Version
 -------
+
+[![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
+[![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
 
 Version: 0.5.0 (2016-10-17)
 
