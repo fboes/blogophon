@@ -501,7 +501,7 @@ var Generator = function (config) {
   };
 
   /**
-   * Writes static files which will only be needed anwed if the blog gets a new URL
+   * Writes static files which will only be needed anew when the blog gets a new URL
    * @return {Promise} [description]
    */
   external.buildBasicFiles = function(answers) {

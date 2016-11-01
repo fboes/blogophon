@@ -106,7 +106,7 @@ var BlogophonConsole = function() {
         type: 'list',
         name: 'classes',
         message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link'],
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote'],
         default: 'Normal article',
         filter: function(v) {
           return (v === 'Normal article') ? null : v;
@@ -167,7 +167,7 @@ var BlogophonConsole = function() {
       function(answers) {
         var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
-        fs.writeFile(markdownFilename, Mustache.render(template, {
+        var templateData = {
           title: answers.title,
           keywords: answers.keywords,
           classes: answers.classes,
@@ -175,7 +175,22 @@ var BlogophonConsole = function() {
           lead: answers.lead || 'Lorem ipsum…',
           mainText: answers.mainText || 'Lorem ipsum…',
           date: new Date()
-        }), function(err) {
+        };
+        switch (answers.classes) {
+          case 'Images':
+            templateData.lead = "![](image.jpg#default)\n\nLorem ipsum…";
+            break;
+          case 'Video':
+            templateData.lead = "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+            break;
+          case 'Link':
+            templateData.mainText = "[Lorem ipsum…](http://www.example.com)";
+            break;
+          case 'Quote':
+            templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";
+            break;
+        }
+        fs.writeFile(markdownFilename, Mustache.render(template, templateData), function(err) {
           if (err) {
             console.error(chalk.red( markdownFilename + ' could not be written' ));
           } else {
