@@ -1,4 +1,4 @@
-![](docs/blogophon.svg) Blogophon
+![](docs/blogophon.png) Blogophon
 =========
 
 A small and simple [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) for blogs. A live example of this blog generator can be found at [3960! Journal](http://journal.3960.org).
