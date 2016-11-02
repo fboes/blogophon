@@ -13,7 +13,14 @@ if (themesAvailable.length < 1) {
   throw new Error('No themes found');
 }
 
-if (args.onlynew && ! defaultValues.notInitialized) {
+if (args.help) {
+  console.log('Usage:');
+  console.log('  node setup.js [options]');
+  console.log('Options:');
+  console.log('  --only-new      Only run installer if no configuration is present');
+  console.log('  --help          Display this help and exit');
+  process.exit(0);
+} else if (args.onlynew && ! defaultValues.notInitialized) {
   console.log('`config.json` already present, start without `--only-new` to overwrite configuration.');
   process.exit(0);
 }

@@ -8,11 +8,11 @@
     "url": "git@github.com:fboes/blogophon.git"
   },
   "scripts": {
-    "install": "node ./install.js --only-new",
+    "setup": "node ./setup.js --only-new",
     "start": "node ./index.js",
     "generate": "node ./generate.js",
-    "precommit": "gulp jshint && npm test",
-    "test": "nodeunit test"
+    "precommit": "npm test",
+    "test": "jshint src && nodeunit test"
   },
   "keywords": [
     "blog",
