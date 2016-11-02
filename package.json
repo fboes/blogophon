@@ -8,7 +8,6 @@
     "url": "git@github.com:fboes/blogophon.git"
   },
   "scripts": {
-    "setup": "node ./setup.js --only-new",
     "start": "node ./index.js",
     "generate": "node ./generate.js",
     "precommit": "npm test",

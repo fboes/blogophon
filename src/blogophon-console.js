@@ -11,7 +11,7 @@ var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config
 var Generator      = require('./generator');
 
 /**
- * Represents the Inquirer dialogue with which to edit articles.
+ * Represents the Inquirer dialog with which to edit articles.
  * @constructor
  */
 var BlogophonConsole = function() {
@@ -24,6 +24,7 @@ var BlogophonConsole = function() {
     'Rename article',
     'Delete article',
     'Generate & publish articles',
+    'Change settings',
     'Exit'
   ];
 
@@ -38,11 +39,15 @@ var BlogophonConsole = function() {
       return v.replace(/^.+\/(.+?)$/,'$1');
     });
     files.push(new inquirer.Separator());
-    var choices = [choicesStr[0]];
-    if (files.length > 0) {
-      choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
+    var choices = [];
+    if (!config.notInitialized) {
+      choices.push(choicesStr[0]);
+      if (files.length > 0) {
+        choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
+      }
+      choices.push(new inquirer.Separator());
     }
-    choices.push(new inquirer.Separator(), choicesStr[5]);
+    choices.push(choicesStr[5], new inquirer.Separator(), choicesStr[6]);
     return choices;
   };
 
@@ -81,9 +86,165 @@ var BlogophonConsole = function() {
   };
 
   /**
-   * This is the Inquirer dialogue for creating a new articles. Will call external.init() on finish.
+   * Display the setup dialog.
+   * @return {[type]} [description]
    */
-  external.createArticleDialogue = function() {
+  external.setupDialog = function () {
+    var themesAvailable= fs.readdirSync(config.directories.theme);
+    var questions = [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'The name of your site',
+        default: config.name,
+        validate: function(v) {
+          return v ? true : 'Please supply at least a short name for your site.';
+        }
+      },{
+        type: 'list',
+        name: 'theme',
+        message: 'Choose theme',
+        default: config.theme,
+        choices: themesAvailable,
+        when: function() {
+          return (themesAvailable.length > 1);
+        }
+      },{
+        type: 'input',
+        name: 'baseUrl',
+        message: 'Domain of your site, starting with `http`',
+        default: config.baseUrl,
+        validate: function(v) {
+          return v.match(/^http(s)?:\/\/\S+$/) ? true : 'Please supply a valid url, starting with `http://`.';
+        },
+        filter: function(v) {
+          return v.replace(/\/$/,'');
+        }
+      },{
+        type: 'input',
+        name: 'basePath',
+        message: 'Base URL path, usually just `/`',
+        default: config.basePath,
+        validate: function(v) {
+          return v.match(/^[a-zA-Z0-9\.\/_-]+$/) ? true : 'Please supply a valid path, at least `/`.';
+        },
+        filter: function(v) {
+          return v.replace(/^([^\/])/,'/$1').replace(/([^\/])$/,'$1/');
+        }
+      },{
+        type: 'input',
+        name: 'description',
+        message: 'A short description of your blog (optional)',
+        default: config.description
+      },{
+        type: 'input',
+        name: 'language',
+        message: 'Standard language of your blog, like `en` for English',
+        default: config.language,
+        validate: function(v) {
+          return v.match(/^[a-zA-Z\-]+$/) ? true : 'Please supply a valid two-letter language code like `en`, `es`, `fr` or `de`.';
+        },
+        filter: function(v) {
+          return v.toLowerCase();
+        }
+      },{
+        type: 'list',
+        name: 'postPathMode',
+        message: 'Choose URL path pattern for your posts:',
+        default: config.postPathMode,
+        choices: [
+          'Static path',
+          'Year',
+          'Year/Month',
+          'Year/Month/Day'
+        ]
+      },{
+        type: 'input',
+        name: 'itemsPerPage',
+        message: 'How many articles per page?',
+        default: config.itemsPerPage,
+        validate: function(v) {
+          return Number(v)> 0 ? true : 'Please supply a positive number.';
+        },
+        filter: function(v) {
+          return Number(v);
+        }
+      },{
+        type: 'input',
+        name: 'defaultAuthor',
+        message: 'Default name of author',
+        default: config.defaultAuthor.name,
+        validate: function(v) {
+          return v ? true : 'Please supply at least a short name for your site.';
+        }
+      },{
+        type: 'input',
+        name: 'defaultAuthorEmail',
+        message: 'Default email address of author',
+        default: config.defaultAuthor.email,
+        validate: function(v) {
+          return (v.match(/^\S+@\S+$/)) ? true : 'Please supply a valid email address.';
+        }
+      },{
+        type: 'input',
+        name: 'twitterAccount',
+        message: 'Twitter account name (optional)',
+        default: config.twitterAccount,
+        validate: function(v) {
+          return (!v || v.match(/^[a-zA-z0-9_-]+$/)) ? true : 'Please supply a Twitter account name or leave field empty.';
+        }
+      },{
+        type: 'input',
+        name: 'deployCmd',
+        message: 'CLI command to copy files to your live server (optional)',
+        default: config.deployCmd
+      },{
+        type: 'checkbox',
+        name: 'useSpecialFeature',
+        message: 'Do you want to use the following special features?',
+        default: config.useSpecialFeature,
+        choices: [
+          "Multiple authors",
+          "RSS",
+          "ATOM",
+          "JSON-RSS",
+          "Apple News",
+          "Accelerated Mobile Pages",
+          "Microsoft tiles",
+          "ICS-Calendar",
+          "GeoJSON",
+          "AJAX"
+        ]
+      }
+    ];
+
+    inquirer.prompt(questions).then(
+      function (answers) {
+        answers.theme = config.theme ? config.theme : themesAvailable[0];
+        answers.defaultAuthor = {
+          "email": answers.defaultAuthorEmail,
+          "name": answers.defaultAuthor
+        };
+        delete answers.defaultAuthorEmail;
+
+        var generator = new Generator(config);
+        generator
+          .buildBasicFiles(answers)
+          .then(function() {
+            console.log("Settings changed, please restart the Blogophon.");
+            // TODO: reload config and return to main menu
+            // external.init();
+          })
+        ;
+      },
+      function(err) { console.error(err); process.exit(1); }
+    );
+  };
+
+  /**
+   * This is the Inquirer dialog for creating a new articles. Will call external.init() on finish.
+   */
+  external.createArticleDialog = function() {
     var questions    = [
       {
         type: 'input',
@@ -212,9 +373,9 @@ var BlogophonConsole = function() {
   };
 
   /**
-   * This is the Inquirer dialogue for editing an existing article. Will call external.init() on finish.
+   * This is the Inquirer dialog for editing an existing article. Will call external.init() on finish.
    */
-  external.editArticleDialogue = function() {
+  external.editArticleDialog = function() {
     var questions = [
       {
         type: 'list',
@@ -236,9 +397,9 @@ var BlogophonConsole = function() {
   };
 
   /**
-   * This is the Inquirer dialogue for renaming an existing article. Will call external.init() on finish.
+   * This is the Inquirer dialog for renaming an existing article. Will call external.init() on finish.
    */
-  external.renameArticleDialogue = function() {
+  external.renameArticleDialog = function() {
     var questions = [
       {
         type: 'list',
@@ -287,9 +448,9 @@ var BlogophonConsole = function() {
   };
 
   /**
-   * This is the Inquirer dialogue for deleting an existing article. Will call external.init() on finish.
+   * This is the Inquirer dialog for deleting an existing article. Will call external.init() on finish.
    */
-  external.deleteArticleDialogue = function() {
+  external.deleteArticleDialog = function() {
     var questions = [
       {
         type: 'list',
@@ -329,9 +490,9 @@ var BlogophonConsole = function() {
   };
 
   /**
-   * This is the Inquirer dialogue for generating all HTML files. Will call external.init() on finish.
+   * This is the Inquirer dialog for generating all HTML files. Will call external.init() on finish.
    */
-  external.generateDialogue = function() {
+  external.generateDialog = function() {
     var questions = [
       {
         type: 'confirm',
@@ -375,45 +536,52 @@ var BlogophonConsole = function() {
   };
 
   /**
-   * This is the Inquirer dialogue for showing the main menu. This will be called in a loop until `Exit` is selected.
+   * This is the Inquirer dialog for showing the main menu. This will be called in a loop until `Exit` is selected.
    */
   external.init = function() {
-    var questions = [
-      {
-        type: 'list',
-        name: 'action',
-        message: 'Select action',
-        choices: internal.makeChoices()
-      }
-    ];
-    inquirer.prompt(questions).then(
-      function(answers) {
-        switch (answers.action) {
-          case choicesStr[0]:
-            external.createArticleDialogue();
-            break;
-          case choicesStr[1]:
-            external.editArticleDialogue();
-            break;
-          case choicesStr[2]:
-            external.renameArticleDialogue();
-            break;
-          case choicesStr[3]:
-            external.deleteArticleDialogue();
-            break;
-          case choicesStr[4]:
-            external.generateDialogue();
-            break;
-          case choicesStr[choicesStr.length -1]:
-            console.log("Good bye");
-            break;
-          default:
-            external.init();
-            break;
+    if (config.notInitialized) {
+      external.setupDialog();
+    } else {
+      var questions = [
+        {
+          type: 'list',
+          name: 'action',
+          message: 'Select action',
+          choices: internal.makeChoices()
         }
-      },
-      function(err) { console.error(err); }
-    );
+      ];
+      inquirer.prompt(questions).then(
+        function(answers) {
+          switch (answers.action) {
+            case choicesStr[0]:
+              external.createArticleDialog();
+              break;
+            case choicesStr[1]:
+              external.editArticleDialog();
+              break;
+            case choicesStr[2]:
+              external.renameArticleDialog();
+              break;
+            case choicesStr[3]:
+              external.deleteArticleDialog();
+              break;
+            case choicesStr[4]:
+              external.generateDialog();
+              break;
+            case choicesStr[5]:
+              external.setupDialog();
+              break;
+            case choicesStr[choicesStr.length -1]:
+              console.log("Good bye");
+              break;
+            default:
+              external.init();
+              break;
+          }
+        },
+        function(err) { console.error(err); }
+      );
+    }
   };
   return external;
 };
