@@ -1,35 +1,37 @@
 Markdown
 ========
 
-All Blogophon articles are written in [Markdown](https://daringfireball.net/projects/markdown/syntax). At the beginning of each Markdown file you can add a [YAML frontmatter](https://jekyllrb.com/docs/frontmatter/) section for meta information. A typical Markdown document may look like this:
+All Blogophon articles are written in [Markdown](https://daringfireball.net/projects/markdown/syntax). At the beginning of each Markdown file you can add an optional [YAML front matter](https://jekyllrb.com/docs/frontmatter/) section for meta information. A typical Blogophon-Markdown document may look like this:
 
 ```markdown
 ---
-{{YAML}}
+{{YAML front matter}}
 ---
 
 {{Your text, written in Markdown…}}
 
 ```
 
-Metadata and YAML
------------------
+Metadata via YAML front matter
+-----------------------------
 
-At the beginning of each post there is a YAML block for metadata. All of these are optional.
+At the beginning of each post there is a YAML block for metadata. This block will not be shown in your article, but will contain extra data for your article.
 
 Each YAML declaration starts with the declaration **key**, followed by `:`, and a declaration **value**. Please note the uppercased first letter in each declaration key.
+
+All of these declarations are optional.
 
 ```yaml
 Title:     Title                                    # Title of document. If not set the first line of your Markdown will be used as title.
 Description: Some nice text                         # Teaser text. If not set will be generated from article text. For details see below.
-Date:      Wed Aug 25 2016 19:13:32 GMT+0200 (CEST) # Publishing date. If not set this will be taken from the file date.
+Date:      Wed Aug 25 2016 19:13:32 GMT+0200 (CEST) # Publishing date. If not set this will be taken from the file date. If this date set into the future, the article will not be published until the date is reached.
 DateModified: Wed Aug 25 2016 19:18:32 GMT+0200 (CEST) # Last modified date. If not set this will be taken from the file date publishing date.
 Keywords:  Tag, Tag                                 # Comma-separated list of keywords / tags.
 Twitter:   \#Hashtag and some text                  # This text will be used on Twitter. If not set will default to title of document.
 Classes:   Images                                   # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
 Latitude:  58.109285                                # Geolocation decimal latitude in WGS84, ranging from -90 to 90.
 Longitude: 6.5664576                                # Geolocation decimal longitude in WGS84, ranging from -180 to 180.
-Language:  en                                       # Language of current article, given in ISO 639-1 or RFC1766.
+Language:  en                                       # Language of current article, given in ISO 639-1 or RFC1766. If not set will default to blog's language.
 Author:    Example <example@example.org>            # Author name and email.
 Image:     /post/image/image.png                    # Image URL used for sharing. It is best to make this URL absolute.
 Rating:    1/5                                      # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
@@ -38,7 +40,7 @@ Rating:    1/5                                      # Rating given in a review, 
 Teaser text
 -----------
 
-The most simple way to provide a teaser text for index pages is to set it via the **YAML block**.
+The most simple way to provide a teaser text for index pages is to set it via the **YAML front matter block**.
 
 Another way to generate a teaser text is to **split your article text** via a single line `===`. The first part above the `===` will be used as description, and both parts for the full version of the text:
 
@@ -52,7 +54,7 @@ And this part will only be shown on article pages.
 
 ```
 
-If you do not use both methods, the Blogophon will build a ***teaser text from article text** by using the first 160 characters.
+If you do not use both methods, the Blogophon will build a **teaser text from article text** by using the first 160 characters.
 
 Images
 ------
@@ -60,17 +62,17 @@ Images
 Put images for your articles into a folder having the same name as the corresponding Markdown file:
 
 ```
-example.md         # Markdown file
-example/image.jpg  # Image folder with example image
+/user/posts/example.md         # Markdown file
+/user/posts/example/image.jpg  # Image folder with example image
 ```
 
 Link these images into your Markdown file like this:
 
 ```markdown
 
-![Image description](image.jpg)         <-- produces an unscaled image
-![Image description](image.jpg#default) <-- produces an image, which will be scaled to match the `default` style
-![Image description](image.jpg#quad)    <-- produces an image, which will be scaled to match the `quad` style
+![Image description](image.jpg)         _produces an unscaled image_
+![Image description](image.jpg#default) _produces an image, which will be scaled to match the `default` style_
+![Image description](image.jpg#quad)    _produces an image, which will be scaled to match the `quad` style_
 
 ```
 
@@ -91,7 +93,7 @@ Checkboxes
 
 ```markdown
 
-* [ ] <-- Produces an empty checkbox
-* [X] <-- Produces a checked checkbox
+* [ ] _Produces an empty checkbox_
+* [X] _Produces a checked checkbox_
 
 ```
