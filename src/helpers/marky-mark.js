@@ -140,7 +140,7 @@ var markyMark = function markyMark (string) {
       '-1': '&#x1F44E;'
     };
     string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|(?:\+|\-)1)(\W|$)/g, function(all, before, s, after) {
-      return before + entityMap[s] + after;
+      return before + '<span class="emoji" title="'+s+'">' + entityMap[s] + '</span>' + after;
     });
 
     return string
