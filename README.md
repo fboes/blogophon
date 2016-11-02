@@ -37,10 +37,11 @@ If you do not want to use [`node index.js`](index.js), [read the manual](docs/ma
 Version
 -------
 
+[![Build Status](https://travis-ci.org/fboes/blogophon.svg?branch=master)](https://travis-ci.org/fboes/blogophon)
 [![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
 [![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
 
-Version: 0.5.0 (2016-10-17)
+Version: 0.6.0 (2016-11-02)
 
 Legal stuff
 -----------
