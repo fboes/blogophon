@@ -2,13 +2,14 @@
 
 //var path           = require('path');
 var pkg            = require('../package.json');
+var path           = require('path');
 
 /**
  * Returns an object with all configuration settings found in `package.json` and `config.json`.
  */
 var config = {};
 try {
-  config = require(__dirname + '/../user/config.json');
+  config = require(path.join(process.cwd(), 'user/config.json'));
 } catch (e) {
   var os = require("os");
   config = {
@@ -24,6 +25,13 @@ try {
 
 config.directories = pkg.directories;
 config.isWin = /^win/.test(process.platform);
+
+/*
+config.directories.user   = path.join(process.cwd(), config.directories.user);
+config.directories.data   = path.join(process.cwd(), config.directories.data);
+config.directories.htdocs = path.join(process.cwd(), config.directories.htdocs);
+config.directories.theme  = path.join(process.cwd(), config.directories.theme);
+*/
 
 config.directories.currentTheme = pkg.directories.theme + (config.theme ? '/' + config.theme : '/default');
 config.absoluteBasePath = config.baseUrl + config.basePath;
@@ -43,7 +51,7 @@ if (!config.basePath) {
 }
 
 try {
-  config.themeConf = require(__dirname + '/../' + config.directories.currentTheme + '/theme.json');
+  config.themeConf = require(path.join(process.cwd(), config.directories.currentTheme, 'theme.json'));
 } catch (e) {
   config.themeConf = {};
 }

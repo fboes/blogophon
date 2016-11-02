@@ -2,12 +2,18 @@
 
 'use strict';
 
-var fs             = require('fs');
+var fs             = require('fs-extra-promise');
 var inquirer       = require('inquirer');
 var defaultValues  = require('./src/config');
-var themesAvailable= fs.readdirSync(defaultValues.directories.theme);
 var args           = require('./src/helpers/arguments')();
 var Generator      = require('./src/generator');
+
+if (!fs.existsSync(defaultValues.directories.theme, fs.F_OK)) {
+  fs.copySync(__dirname + '/htdocs', 'htdocs');
+  //throw new Error('No theme directory found');
+}
+console.log(process.env.PWD);
+var themesAvailable= fs.readdirSync(defaultValues.directories.theme); // TODO: Get themes from global directory if local directory is empty
 
 if (themesAvailable.length < 1) {
   throw new Error('No themes found');
@@ -162,6 +168,7 @@ inquirer.prompt(questions).then(
     delete answers.defaultAuthorEmail;
 
     var generator = new Generator(defaultValues);
+    // TODO: setup directory, copy htdocs over
     generator.buildBasicFiles(answers);
   },
   function(err) { console.error(err); process.exit(1); }

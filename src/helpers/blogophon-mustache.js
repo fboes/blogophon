@@ -20,14 +20,14 @@ Mustache.getTemplates = function(path) {
     tags:    fs.readFileSync(Mustache.themePath + '/tags.html', 'utf8'),
     authors: fs.readFileSync(Mustache.themePath + '/authors.html', 'utf8'),
     four:    fs.readFileSync(Mustache.themePath + '/404.html', 'utf8'),
-    rss:     fs.readFileSync('./src/templates/rss.xml', 'utf8'),
-    atom:    fs.readFileSync('./src/templates/atom.xml', 'utf8'),
-    sitemap: fs.readFileSync('./src/templates/sitemap.xml', 'utf8'),
-    robots:  fs.readFileSync('./src/templates/robots.txt', 'utf8'),
-    htaccess:fs.readFileSync('./src/templates/.htaccess', 'utf8'),
-    livetile:fs.readFileSync('./src/templates/livetile.xml', 'utf8'),
-    calendar:fs.readFileSync('./src/templates/calendar.ics', 'utf8'),
-    browserconfig:fs.readFileSync('./src/templates/browserconfig.xml', 'utf8')
+    rss:     fs.readFileSync(__dirname + '/../templates/rss.xml', 'utf8'),
+    atom:    fs.readFileSync(__dirname + '/../templates/atom.xml', 'utf8'),
+    sitemap: fs.readFileSync(__dirname + '/../templates/sitemap.xml', 'utf8'),
+    robots:  fs.readFileSync(__dirname + '/../templates/robots.txt', 'utf8'),
+    htaccess:fs.readFileSync(__dirname + '/../templates/.htaccess', 'utf8'),
+    livetile:fs.readFileSync(__dirname + '/../templates/livetile.xml', 'utf8'),
+    calendar:fs.readFileSync(__dirname + '/../templates/calendar.ics', 'utf8'),
+    browserconfig:fs.readFileSync(__dirname + '/../templates/browserconfig.xml', 'utf8')
   };
 
   Mustache.partials = {};

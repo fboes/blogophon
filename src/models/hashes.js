@@ -1,6 +1,7 @@
 'use strict';
 
 var fs             = require('fs');
+var path           = require('path');
 
 /**
  * Represents all posts.
@@ -8,7 +9,7 @@ var fs             = require('fs');
  */
 var hashes = function() {
   var hashes = {};
-  var hashFilename = './user/hashes.json';
+  var hashFilename = path.join(process.env.PWD, 'user/hashes.json');
 
   try {
     hashes = JSON.parse(fs.readFileSync(hashFilename, 'utf8'));
