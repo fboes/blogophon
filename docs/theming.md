@@ -1,4 +1,4 @@
-Theming
+![Blogophon -](blogophon.png) Theming
 ========
 
 To develop a new theme follow these steps:

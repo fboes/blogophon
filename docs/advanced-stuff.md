@@ -1,7 +1,13 @@
-Advanced stuff
+![Blogophon -](blogophon.png) Advanced stuff
 ==============
 
 In this document you will find some stuff for hardcore CLI wizards.
+
+
+Other means of editing articles
+-------------------------------
+
+If you do not want to use [`node index.js`](index.js), [read the manual operations instructions](manual.md).
 
 Gulp
 -----

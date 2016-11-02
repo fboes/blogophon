@@ -32,8 +32,6 @@ Almost all stuff you will be doing with the Blogophon is done via command line. 
 
 Articles are written in [Markdown with some extra features](docs/markdown.md).
 
-If you do not want to use [`node index.js`](index.js), [read the manual](docs/manual.md).
-
 Version
 -------
 
