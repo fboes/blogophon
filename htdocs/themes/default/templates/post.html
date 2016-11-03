@@ -42,12 +42,12 @@
         {{#post}}
           <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
             <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
-            {{#post.meta.Image}}
-              <link itemprop="image" href="{{post.meta.Image}}" />
-            {{/post.meta.Image}}
-            {{^post.meta.Image}}
+            {{#meta.Image}}
+              <link itemprop="image" href="{{meta.Image}}" />
+            {{/meta.Image}}
+            {{^meta.Image}}
               <link itemprop="image" href="{{config.ogImage}}" />
-            {{/post.meta.Image}}
+            {{/meta.Image}}
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
               <h2 itemprop="name headline">{{meta.Title}}</h2>
@@ -92,18 +92,18 @@
               </span>
             </footer>
           </article>
+          <div id="prevnext">
+            <span style="display:inline-block;">
+              <a href="{{config.basePath}}" rel="contents" id="up">Zurück zur Übersichtsseite</a>
+            </span>
+            {{#prev.Url}}
+              <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
+            {{/prev.Url}}
+            {{#next.Url}}
+              <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}">&raquo;</a>
+            {{/next.Url}}
+          </div>
         {{/post}}
-        <div id="prevnext">
-          <span style="display:inline-block;">
-            <a href="{{config.basePath}}" rel="contents" id="up">Zurück zur Übersichtsseite</a>
-          </span>
-          {{#post.prev.Url}}
-            <a href="{{post.prev.Url}}" rel="prev" class="prev" title="{{post.prev.Title}}">&laquo;</a>
-          {{/post.prev.Url}}
-          {{#post.next.Url}}
-            <a href="{{post.next.Url}}" rel="next" class="next" title="{{post.next.Title}}">&raquo;</a>
-          {{/post.next.Url}}
-        </div>
       </main>
       <aside id="sidebar">
         {{>sidebar}}
