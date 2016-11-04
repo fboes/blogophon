@@ -7,7 +7,7 @@ var path           = require('path');
 /**
  * Returns an object with all configuration settings found in `package.json` and `config.json`.
  */
-var pkg    = JSON.parse(fs.readFileSync(path.join(process.env.PWD, 'package.json'), 'utf8'));
+var pkg    = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf8'));
 var config = {};
 try {
   config = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'user/config.json'), 'utf8'));

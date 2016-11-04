@@ -9,7 +9,7 @@ var path           = require('path');
  */
 var hashes = function() {
   var hashes = {};
-  var hashFilename = path.join(process.env.PWD, 'user/hashes.json');
+  var hashFilename = path.join(process.cwd(), 'user/hashes.json');
 
   try {
     hashes = JSON.parse(fs.readFileSync(hashFilename, 'utf8'));
