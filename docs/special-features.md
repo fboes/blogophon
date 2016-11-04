@@ -1,4 +1,4 @@
-Special features
+![Blogophon -](blogophon.png) Special features
 =================
 
 All features listed here can be activated during installation. Later on you can add features by calling `setup.js` again, or edit your `user/config.json`.

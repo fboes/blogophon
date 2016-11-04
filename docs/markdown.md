@@ -1,4 +1,4 @@
-Markdown
+![Blogophon -](blogophon.png) Markdown
 ========
 
 All Blogophon articles are written in [Markdown](https://daringfireball.net/projects/markdown/syntax). At the beginning of each Markdown file you can add an optional [YAML front matter](https://jekyllrb.com/docs/frontmatter/) section for meta information. A typical Blogophon-Markdown document may look like this:

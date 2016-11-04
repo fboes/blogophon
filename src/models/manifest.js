@@ -13,9 +13,9 @@ var manifest = function(config) {
     icons: !config.themeConf.icons ? [] : config.themeConf.icons.map(function(i) {
       return i;
     }),
-    scope: config.absoluteBasePath,
-    start_url: config.absoluteBasePath+'index.html?utm_medium=manifest',
-    theme_color: config.themeConf.themeColor,
+    scope: config.baseUrl + config.basePath,
+    start_url: config.baseUrl + config.basePath +'index.html?utm_medium=manifest',
+    theme_color: config.themeConf.themeColor || '#ffffff',
     background_color: '#ffffff'
   };
 };

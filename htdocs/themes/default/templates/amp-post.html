@@ -20,16 +20,16 @@
     <main>
       {{#post}}
         <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
-          <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
-          {{#post.meta.Image}}
-            <link itemprop="image" href="{{post.meta.Image}}" />
-          {{/post.meta.Image}}
-          {{^post.meta.Image}}
+          <link itemprop="mainEntityOfPage" href="{{meta.AbsoluteUrl}}" />
+          {{#meta.Image}}
+            <link itemprop="image" href="{{meta.Image}}" />
+          {{/meta.Image}}
+          {{^meta.Image}}
             <link itemprop="image" href="{{config.ogImage}}" />
-          {{/post.meta.Image}}
+          {{/meta.Image}}
           <header>
             <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
-            <h2 itemprop="name headline">{{post.meta.Title}}</h2>
+            <h2 itemprop="name headline">{{meta.Title}}</h2>
           </header>
           <div itemprop="articleBody">
             {{{ampHtml}}}
@@ -48,16 +48,16 @@
             </span>
           </footer>
         </article>
+        <p class="back">
+          {{#prev.AbsoluteUrlAmp}}
+            <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo; <span>Vorheriger Artikel</span></a>
+          {{/prev.AbsoluteUrlAmp}}
+          <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
+          {{#next.AbsoluteUrlAmp}}
+            <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}"><span>Nächster Artikel</span> &raquo;</a>
+          {{/next.AbsoluteUrlAmp}}
+        </p>
       {{/post}}
-      <p class="back">
-        {{#post.prev.AbsoluteUrlAmp}}
-          <a href="{{post.prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{post.prev.Title}}">&laquo; <span>Vor</span></a>
-        {{/post.prev.AbsoluteUrlAmp}}
-        <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
-        {{#post.next.AbsoluteUrlAmp}}
-          <a href="{{post.next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{post.next.Title}}"><span>Zurück</span> &raquo;</a>
-        {{/post.next.AbsoluteUrlAmp}}
-      </p>
     </main>
     {{>footer}}
   </div>
