@@ -93,9 +93,9 @@ gulp.task('build-sass', function() {
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(['gulpfile.js','package.json'], process.exit);
-  gulp.watch(['*.js',pkg.directories.src+'/**/*.js',pkg.directories.test+'/**/*.js'], ['default']);
-  gulp.watch([pkg.directories.data+'/**/*'], ['generate']);
-  gulp.watch(pkg.directories.theme + '/**/*.js', ['build-js']);
+  gulp.watch(['*.js',pkg.directories.src+'/**/*.js',pkg.directories.test+'/**/*.js'], ['test']);
+  gulp.watch([pkg.directories.data+'/**/*'],       ['generate']);
+  gulp.watch(pkg.directories.theme + '/**/*.js',   ['build-js']);
   gulp.watch(pkg.directories.theme + '/**/*.scss', ['build-sass']);
 });
 

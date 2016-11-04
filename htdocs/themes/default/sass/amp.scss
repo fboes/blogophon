@@ -31,9 +31,6 @@ main {
   font-weight: normal;
   margin-left: 0.5em;
 }
-.modified {
-  display:none;
-}
 #footer {
   text-align: center;
   clear: both;
@@ -62,5 +59,9 @@ amp-img {
     float:left;
     display: inline-block;
     margin: 0 1em 1em 0;
+  }
+  &.default {
+    width:100%;
+    clear:both;
   }
 }
