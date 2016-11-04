@@ -3,6 +3,7 @@
 var glob           = require("glob");
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
+var path           = require('path');
 var SuperString    = require('./helpers/super-string');
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
@@ -29,7 +30,7 @@ var Generator = function (config) {
   external.strings      = translations(config.language).getAll();
   external.currentIndex = null;
   external.hashes       = hashes();
-  Mustache = Mustache.getTemplates(config.directories.currentTheme + '/templates');
+  Mustache = Mustache.getTemplates(path.join(config.directories.currentTheme, 'templates'));
 
   var internal = {};
   internal.imageStyles  = imageStyles(config);
@@ -123,7 +124,7 @@ var Generator = function (config) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
         if (external.config.specialFeatures.acceleratedmobilepages) {
-          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(Mustache.themePath + '/../css/amp.css', 'utf8').replace(/\s*[\n\r]+\s*/g,'');
+          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g,'');
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
             post: post,
             ampHtml: post.ampHtml(),
@@ -494,7 +495,7 @@ var Generator = function (config) {
     var shell = require('shelljs');
     if (external.config.deployCmd) {
       console.log('Deploying...');
-      shell.exec(external.config.deployCmd);
+      shell.exec('cd '+path.join(__dirname,'..')+'; ' + external.config.deployCmd);
       console.log('Finished deploying');
     }
     return true;
