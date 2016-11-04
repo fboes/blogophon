@@ -24,7 +24,7 @@ var BlogophonConsole = function() {
     'Rename article',
     'Delete article',
     'Generate & publish articles',
-    'Change settings',
+    config.notInitialized ? 'Setup' : 'Change settings',
     'Exit'
   ];
 
@@ -42,7 +42,7 @@ var BlogophonConsole = function() {
     var choices = [];
     if (!config.notInitialized) {
       choices.push(choicesStr[0]);
-      if (files.length > 0) {
+      if (files.length > 1) {
         choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
       }
       choices.push(new inquirer.Separator());
