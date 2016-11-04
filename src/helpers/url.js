@@ -65,7 +65,7 @@ var url = function (identifier) {
    */
   external.filename = function filename(base, type) {
     var url = external.relativeUrl(base, type);
-    return !url ? null : path.join(process.cwd(), config.directories.htdocs, url.replace(/(\/)$/, '$1index.html'));
+    return !url ? null : path.join(config.directories.htdocs, url.replace(/(\/)$/, '$1index.html'));
   };
 
   /**

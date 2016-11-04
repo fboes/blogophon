@@ -3,6 +3,7 @@
 var inquirer       = require('inquirer');
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
+var path           = require('path');
 var chalk          = require('chalk');
 var shell          = require('shelljs');
 var SuperString    = require('./helpers/super-string');
@@ -28,7 +29,7 @@ var BlogophonConsole = function() {
     'Exit'
   ];
 
-  var template     = fs.readFileSync('./src/templates/post.md', 'utf8');
+  var template     = fs.readFileSync(path.join(__dirname, 'templates/post.md'), 'utf8');
 
   /**
    * Get all Markdown files as a simple array
@@ -57,7 +58,7 @@ var BlogophonConsole = function() {
    * @return {String}       [description]
    */
   internal.filenameFromTitle = function(title) {
-    return config.directories.data + '/' + internal.shortfilenameFromTitle(title);
+    return path.join(config.directories.data, internal.shortfilenameFromTitle(title));
   };
 
   /**
@@ -432,12 +433,23 @@ var BlogophonConsole = function() {
             }
           };
 
-          fs.move(config.directories.data + '/' + answers.file, config.directories.data + '/' + answers.fileNew, checkProcessed);
-          fs.move(config.directories.data + '/' + internal.dirnameFromFilename(answers.file), config.directories.data + '/' + internal.dirnameFromFilename(answers.fileNew), checkProcessed);
+          fs.move(
+            config.directories.data + '/' + answers.file,
+            config.directories.data + '/' + answers.fileNew,
+            checkProcessed
+          );
+          fs.move(
+            config.directories.data + '/' + internal.dirnameFromFilename(answers.file),
+            config.directories.data + '/' + internal.dirnameFromFilename(answers.fileNew),
+            checkProcessed
+          );
           if (! answers.file.match(/~$/)) {
             maxProcessed ++;
-            fs.move(config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file), config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.fileNew), checkProcessed);
-
+            fs.move(
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.fileNew),
+              checkProcessed
+            );
           }
         } else {
           external.init();
@@ -478,9 +490,9 @@ var BlogophonConsole = function() {
             }
           };
 
-          fs.remove(config.directories.data + '/' + answers.file, checkProcessed);
-          fs.remove(config.directories.data + '/' + internal.dirnameFromFilename(answers.file), checkProcessed);
-          fs.remove(config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file), checkProcessed);
+          fs.remove(path.join(config.directories.data, answers.file), checkProcessed);
+          fs.remove(path.join(config.directories.data, internal.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), internal.dirnameFromFilename(answers.file)), checkProcessed);
         } else {
           external.init();
         }
