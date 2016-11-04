@@ -512,17 +512,17 @@ var Generator = function (config) {
     fs.ensureDirSync(external.config.directories.htdocs);
 
     var promises = [
-      fs.writeFileAsync(external.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
-      fs.writeFileAsync(external.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
+      fs.writeFileAsync(path.join(external.config.directories.user,   'config.json'), JSON.stringify(answers, undefined, 2)),
+      fs.writeFileAsync(path.join(external.config.directories.htdocs, '.htaccess'), Mustache.render(Mustache.templates.htaccess, {
         config: external.config
       })),
-      fs.writeFileAsync(external.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
+      fs.writeFileAsync(path.join(external.config.directories.htdocs, 'robots.txt'), Mustache.render(Mustache.templates.robots, {
         config: external.config
       })),
-      fs.writeFileAsync(external.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
+      fs.writeFileAsync(path.join(external.config.directories.htdocs, 'browserconfig.xml'), Mustache.render( Mustache.templates.browserconfig, {
         config: external.config
       })),
-      fs.writeFileAsync( external.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(external.config), undefined, 2))
+      fs.writeFileAsync(path.join(external.config.directories.htdocs, 'manifest.json'), JSON.stringify(manifest(external.config), undefined, 2))
     ];
     return Promise
       .all(promises)
