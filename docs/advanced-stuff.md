@@ -38,3 +38,8 @@ Editor
 ------
 
 If you use Sublime Text for editing your markdown files, consider installing `Markdown Extended`. It supports YAML frontmatter and code block syntax highlighting in Markdown files.
+
+Multiple blogs & global installation
+------------------------------------
+
+See ["Multi-blog"](multi-blog.md) on how to set up multiple blogs on a single computer.
