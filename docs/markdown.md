@@ -111,3 +111,33 @@ Tables
 
 In this example the first line of the table will be treated as table header. The first column will be treated as row header, because its content is enclosed in `**`.
 
+Chess
+-----
+
+```chess
+br bk bb bx bq bb bk br
+bp bp bp bp bp bp bp bp
+
+
+
+
+wp wp wp wp wp wp wp wp
+wr wk wb wx wq wb wk wr
+```
+
+Each chessboard has to have 8 lines (being the rows 8 - 1). Every field is represented by to characters (either one combination of characters for a given piece, or two blanks for a blank field), dived by a blank spacer. A single line thus has 23 characters (columns A-H), 7 of which are spacers.
+
+The pieces are represented by two characters:
+
+The first letter denotes the color: `b` and `w` means `black` / `white`.
+
+The second letter says which piece it is:
+
+| Letter | Piece  |
+|--------|--------|
+| x      | King   |
+| q      | Queen  |
+| r      | Rook   |
+| b      | Bishop |
+| k      | Knight |
+| p      | Pawn   |

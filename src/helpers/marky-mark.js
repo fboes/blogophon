@@ -71,9 +71,12 @@ var markyMark = function markyMark (string) {
         case '<markdown>':
           chunk = internal.convertMarkdown(chunk);
           break;
+        case '<chess>':
+          chunk = internal.convertChess(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|markdown)/);
+            var lang = chunk.match(/(css|html|markdown|chess)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             }
@@ -223,6 +226,33 @@ var markyMark = function markyMark (string) {
       .replace(/(^|\n|\r)([=\-]{3,})(\n|\r|$)/g, '$1<i class="c1">$2</i>')
       .replace(/(#+.+?(?:\n|$))/g, '<i class="c2">$1</i>')
     ;
+  };
+
+  /**
+   * Convert chess set
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertChess = function convertChess(string) {
+    var entityMap = {
+      'wx': '&#9812;',
+      'wq': '&#9813;',
+      'wr': '&#9814;',
+      'wb': '&#9815;',
+      'wk': '&#9816;',
+      'wp': '&#9817;',
+      'bx': '&#9818;',
+      'bq': '&#9819;',
+      'br': '&#9820;',
+      'bb': '&#9821;',
+      'bk': '&#9822;',
+      'bp': '&#9823;'
+    };
+    string = string.replace(/(w|b)(x|q|r|b|k|p)/g, function(s) {
+      return '<span class="emoji chess-'+s+'">' + entityMap[s] + '</span>';
+    });
+
+    return string;
   };
 
   return external.convert(string);

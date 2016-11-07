@@ -38,3 +38,16 @@ exports.testCodeHighlighting = function(test) {
 
   test.done();
 };
+
+exports.testChess = function(test) {
+  'use strict';
+  test.expect(1);
+
+  var m;
+
+  m = markyMark('<pre><code class="language-chess">br bk bb bx bq bb bk br\nbp bp bp bp bp bp bp bp\n\n\n\n\nwp wp wp wp wp wp wp wp\nwr wk wb wx wq wb wk wr\n</code></pre>');
+  console.log(m);
+  test.ok(m !== undefined);
+
+  test.done();
+};
