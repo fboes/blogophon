@@ -205,6 +205,9 @@ var Post = function (filename, markdown, meta) {
       .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
       .replace(/(<(?:img)[^>]*[^/])(>)/g,'$1 /$2')
       .replace(/(<(?:hr|br)[^/])(>)/g,'$1 /$2')
+      .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before,content,after) {
+        return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g,'$1<th scope="row">$2</th>') + after;
+      })
       .trim()
     ;
   };
