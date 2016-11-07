@@ -36,7 +36,7 @@ if (config.useSpecialFeature) {
 }
 
 if (!config.baseUrl) {
-  config.baseUrl = "http://" + os.hostname();
+  config.baseUrl = "http://" + (os ? os.hostname() : 'example.com');
 }
 if (!config.basePath) {
   config.basePath = "/";
