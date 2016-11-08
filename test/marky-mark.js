@@ -30,7 +30,7 @@ exports.testCodeHighlighting = function(test) {
   test.ok(m !== undefined);
 
   m = markyMark('<pre><code class="lang-markdown">'+
-     "H1\n=====\n\nH2\n-----"+
+     "H1\n=====\n\nH2\n-----\n\n[Links](#) with some *italic* and **bold** text.\n\n### Headline\n"+
     '</code></pre>'
   );
   //console.log(m);

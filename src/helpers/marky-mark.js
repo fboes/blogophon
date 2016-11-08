@@ -220,8 +220,9 @@ var markyMark = function markyMark (string) {
    */
   internal.convertMarkdown = function convertMarkdown(string) {
     return string
-      .replace(/(^|\n|\r)([=\-]{3,})(\n|\r|$)/g, '$1<i class="c1">$2</i>')
-      .replace(/(#+.+?(?:\n|$))/g, '<i class="c2">$1</i>')
+      .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<i class="c1">$2</i>$3<i class="c3">$4</i>$5')
+      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<i class="c4">$2</i>$3')
+      .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<i class="c4">$2</i>$3')
     ;
   };
 
