@@ -114,7 +114,6 @@ Just enter ASCII smileys to produce Emojis:
 | :D | &#x1F604; |
 | :P | &#x1F60B; |
 | :O | &#x1F632; |
-| :o | &#x1F632; |
 | :? | &#x1F914; |
 | :@ | &#x1F620; |
 | :* | &#x1F618; |
