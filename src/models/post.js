@@ -49,7 +49,7 @@ var Post = function (filename, markdown, meta) {
       meta.Language = config.language;
     }
     if (!meta.Id) {
-      meta.Id = filename;
+      meta.Id = filename.replace(new RegExp('^' + process.cwd() + '/'), '');
     }
 
     meta.Created     = blogophonDate(meta.Date, meta.Language);
