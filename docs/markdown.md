@@ -109,7 +109,7 @@ Just enter ASCII smileys to produce Emojis:
 | :)) | &#x1F682; |
 | :( | &#x1F629; |
 | :'( | &#x1F622; |
-| :| | &#x1F610; |
+| :\| | &#x1F610; |
 | :/ | &#x1F612; |
 | :D | &#x1F604; |
 | :P | &#x1F60B; |
