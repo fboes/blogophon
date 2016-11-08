@@ -123,6 +123,8 @@ Just enter ASCII smileys to produce Emojis:
 | 8o | &#x1F628; |
 | +1 | &#x1F44D; |
 | -1 | &#x1F44E; |
+| <3 | &#x1F495; |
+| </3 | &#x1F494; |
 
 
 Tables

@@ -120,7 +120,7 @@ var markyMark = function markyMark (string) {
 
     entityMap = {
       ':)': '&#x1F60A;',
-      ':))':'&#x1F602;',
+      ':))': '&#x1F602;',
       ':(': '&#x1F629;',
       ':\'(': '&#x1F622;',
       ':|': '&#x1F610;',
@@ -138,9 +138,11 @@ var markyMark = function markyMark (string) {
       'XP': '&#x1F61D;',
       '8o': '&#x1F628;',
       '+1': '&#x1F44D;',
-      '-1': '&#x1F44E;'
+      '-1': '&#x1F44E;',
+      '<3': '&#x1F495;',
+      '</3': '&#x1F494;'
     };
-    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|(?:\+|\-)1)(\W|$)/g, function(all, before, s, after) {
+    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|(?:\+|\-)1|<\?3)(\W|$)/g, function(all, before, s, after) {
       return before + '<span class="emoji" title="'+s+'">' + entityMap[s] + '</span>' + after;
     });
 
