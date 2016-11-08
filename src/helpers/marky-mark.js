@@ -151,8 +151,8 @@ var markyMark = function markyMark (string) {
       .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
       .replace(/(\s)-(\s)/g,'$1–$2')
       .replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
-      .replace(/(^|[^\S])&quot;(\S.*?\S)&quot;([^\S]|$)/g,'$1„$2“$3') // TODO: Fix quotation with inline tags
-      .replace(/(^|[^\S])(?:'|&#39;)(\S.*?\S)(?:'|&#39;)([^\S]|$)/g,'$1‚$2‘$3')
+      .replace(/&quot;(.+?)&quot;/g,'„$1“') // TODO: Fix quotation with inline tags
+      .replace(/(?:'|&#39;)(.+?)(?:'|&#39;)/g,'‚$1‘')
     ;
   };
 
