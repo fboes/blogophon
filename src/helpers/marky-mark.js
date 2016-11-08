@@ -113,8 +113,9 @@ var markyMark = function markyMark (string) {
       '=&gt;': '⇒',
       '&lt;-': '←',
       '&lt;=': '⇐',
+      '--': '—'
     };
-    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=)/g, function(s) {
+    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|\-\-)/g, function(s) {
       return entityMap[s];
     });
 
@@ -147,7 +148,6 @@ var markyMark = function markyMark (string) {
     });
 
     return string
-      .replace(/\s--\s/g, ' — ')
       .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
       .replace(/(\s)-(\s)/g,'$1–$2')
       .replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
