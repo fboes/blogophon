@@ -3,6 +3,7 @@
 var glob           = require("glob");
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
+var path           = require('path');
 var SuperString    = require('./helpers/super-string');
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
@@ -25,13 +26,13 @@ var Generator = function (config) {
     throw new Error('config is empty');
   }
   var external = {};
-  external.config       = config;
-  external.strings      = translations(config.language).getAll();
-  external.currentIndex = null;
-  external.hashes       = hashes();
-  Mustache = Mustache.getTemplates(config.directories.currentTheme + '/templates');
-
   var internal = {};
+
+  Mustache = Mustache.getTemplates(path.join(config.directories.currentTheme, 'templates'));
+
+  internal.currentIndex = null;
+  internal.strings      = translations(config.language).getAll();
+  internal.hashes       = hashes();
   internal.imageStyles  = imageStyles(config);
 
   /**
@@ -39,10 +40,10 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.getArticles = function() {
-    external.currentIndex = blogophonIndex();
+    internal.currentIndex = blogophonIndex();
     return new Promise (
       function(resolve, reject) {
-        glob(external.config.directories.data + "/**/*.md", function(err, files) {
+        glob(config.directories.data + "/**/*.md", function(err, files) {
           if (err) {
             reject(err);
           }
@@ -54,9 +55,9 @@ var Generator = function (config) {
           Promise
             .all(promises)
             .then(function(posts) {
-              external.currentIndex.pushArray(posts);
-              console.log('Removed ' + external.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
-              external.currentIndex.makeNextPrev();
+              internal.currentIndex.pushArray(posts);
+              console.log('Removed ' + internal.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
+              internal.currentIndex.makeNextPrev();
               resolve( files.length );
             })
             .catch(reject)
@@ -73,19 +74,19 @@ var Generator = function (config) {
    * @return {Promise}          with first parameter of `resolve` being the list of files generated.
    */
   external.buildAllArticles = function(force, keepOld) {
-    var allPosts = external.currentIndex.getPosts();
+    var allPosts = internal.currentIndex.getPosts();
     var skipped  = 0;
     var generatedArticles = [];
 
     if (force && !keepOld) {
-      fs.removeSync(external.config.directories.htdocs + '/posts/*');
+      fs.removeSync(config.directories.htdocs + '/posts/*');
     }
 
     return new Promise (
       function(resolve, reject) {
         // Making promises
         var promises = allPosts.map(function(post) {
-          if (!force && external.hashes.isHashed(post.meta.Url, post.hash)) {
+          if (!force && internal.hashes.isHashed(post.meta.Url, post.hash)) {
             skipped++;
           } else {
             generatedArticles.push([post.meta.Url, post.filename]);
@@ -96,7 +97,7 @@ var Generator = function (config) {
         Promise
           .all(promises)
           .then(function() {
-            external.hashes.save();
+            internal.hashes.save();
             console.log("Created " + generatedArticles.length + " articles, skipped " +  skipped + " articles");
             resolve(generatedArticles);
           })
@@ -117,21 +118,21 @@ var Generator = function (config) {
     }
     return new Promise (
       function(resolve, reject) {
-        fs.ensureDirSync(external.config.directories.htdocs + post.meta.Url);
+        fs.ensureDirSync(config.directories.htdocs + post.meta.Url);
         var promises = [];
-        if (external.config.specialFeatures.applenews) {
+        if (config.specialFeatures.applenews) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
-        if (external.config.specialFeatures.acceleratedmobilepages) {
-          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(Mustache.themePath + '/../css/amp.css', 'utf8').replace(/\s*[\n\r]+\s*/g,'');
+        if (config.specialFeatures.acceleratedmobilepages) {
+          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g,'');
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
             post: post,
             ampHtml: post.ampHtml(),
             ampCss: Mustache.ampCss,
-            config: external.config
+            config: config
           },Mustache.partials)));
         }
-        if (external.config.specialFeatures.ajax) {
+        if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index','json'), JSON.stringify(post, undefined, 2)));
         }
         Promise
@@ -139,13 +140,13 @@ var Generator = function (config) {
           .then(function() {
             fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
               post: post,
-              config: external.config
+              config: config
             },Mustache.partials), function(err) {
               if (err) {
                 reject(err);
               }
-              if (external.hashes) {
-                external.hashes.update(post.meta.Url, post.hash);
+              if (internal.hashes) {
+                internal.hashes.update(post.meta.Url, post.hash);
               }
               resolve(post.meta.Filename);
             });
@@ -169,7 +170,7 @@ var Generator = function (config) {
           external.buildMetaFiles()
         ];
 
-        if (external.config.specialFeatures.multipleauthors) {
+        if (config.specialFeatures.multipleauthors) {
           promises.push(external.buildAuthorPages());
         }
 
@@ -187,16 +188,16 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildIndexFiles = function(index, path, title) {
-    index = index || external.currentIndex;
+    index = index || internal.currentIndex;
     path  = path  || '/';
-    title = title || external.strings.index;
+    title = title || internal.strings.index;
 
-    fs.ensureDirSync(external.config.directories.htdocs + path);
-    fs.removeSync(external.config.directories.htdocs + path + 'index*');
+    fs.ensureDirSync(config.directories.htdocs + path);
+    fs.removeSync(config.directories.htdocs + path + 'index*');
     return new Promise (
       function(resolve, reject) {
         var page;
-        var pagedPosts = index.getPagedPosts(external.config.itemsPerPage);
+        var pagedPosts = index.getPagedPosts(config.itemsPerPage);
         var urls = {
           rss   : indexUrl(path + 'posts.rss'),
           rssjs : indexUrl(path + 'rss.json'),
@@ -209,40 +210,40 @@ var Generator = function (config) {
         var pubDate = blogophonDate(index.pubDate);
 
 
-        if (external.config.specialFeatures.rss) {
+        if (config.specialFeatures.rss) {
           promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index: index.getPosts(10),
             pubDate: pubDate.rfc,
-            config: external.config,
+            config: config,
             absoluteUrl : urls.rss.absoluteUrl(),
             title: title
           })));
         }
-        if (external.config.specialFeatures.atom) {
+        if (config.specialFeatures.atom) {
           promises.push(fs.writeFileAsync( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
             index: index.getPosts(10),
             pubDate: pubDate.iso,
-            config: external.config,
+            config: config,
             absoluteUrl : urls.atom.absoluteUrl(),
             title: title
           })));
         }
-        if (external.config.specialFeatures.icscalendar) {
+        if (config.specialFeatures.icscalendar) {
           promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
             index: index.getPosts(),
             pubDate: pubDate.ics,
-            config: external.config,
+            config: config,
             absoluteUrl : urls.ics.absoluteUrl(),
             title: title
           })));
         }
-        if (external.config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, external.config, title), undefined, 2)));
+        if (config.specialFeatures.jsonrss) {
+          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, config, title), undefined, 2)));
         }
-        if (external.config.specialFeatures.geojson) {
+        if (config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
         }
-        if (external.config.specialFeatures.ajax) {
+        if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( urls.ajax.filename(), JSON.stringify(index, undefined, 2)));
         }
 
@@ -250,10 +251,10 @@ var Generator = function (config) {
           var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
           var curUrlObj     = indexUrl(curPageObj.currentUrl);
           curPageObj.index  = pagedPosts[page];
-          curPageObj.config = external.config;
+          curPageObj.config = config;
           curPageObj.meta   = {
             title      : title,
-            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(external.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(internal.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: curUrlObj.absoluteUrl(),
             absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
           };
@@ -278,7 +279,7 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildTagPages = function() {
-    var tags = external.currentIndex.getTags();
+    var tags = internal.currentIndex.getTags();
     var tagPages = Object.keys(tags).sort().map(function(key) {
       return {
         title: tags[key].title,
@@ -286,8 +287,8 @@ var Generator = function (config) {
       };
     });
 
-    fs.removeSync(external.config.directories.htdocs + '/tagged');
-    fs.ensureDirSync(external.config.directories.htdocs + '/tagged');
+    fs.removeSync(config.directories.htdocs + '/tagged');
+    fs.ensureDirSync(config.directories.htdocs + '/tagged');
 
     return new Promise (
       function(resolve, reject) {
@@ -295,13 +296,13 @@ var Generator = function (config) {
           return external.buildIndexFiles(
             tags[key].index,
             tags[key].urlObj.relativeUrl(),
-            SuperString(external.strings.tag).sprintf(tags[key].title)
+            SuperString(internal.strings.tag).sprintf(tags[key].title)
           );
         });
 
         promises.push(fs.writeFileAsync( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
           index: tagPages,
-          config: external.config
+          config: config
         }, Mustache.partials)));
 
         Promise
@@ -320,7 +321,7 @@ var Generator = function (config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildAuthorPages = function() {
-    var authors = external.currentIndex.getAuthors();
+    var authors = internal.currentIndex.getAuthors();
     var authorPages = Object.keys(authors).sort().map(function(name) {
       return {
         title: name,
@@ -328,25 +329,25 @@ var Generator = function (config) {
       };
     });
 
-    fs.remove(external.config.directories.htdocs + '/authored-by', function(err) {
+    fs.remove(config.directories.htdocs + '/authored-by', function(err) {
       return new Promise (
         function(resolve, reject) {
           if (err) {
             reject(err);
           }
-          fs.ensureDirSync(external.config.directories.htdocs + '/authored-by');
+          fs.ensureDirSync(config.directories.htdocs + '/authored-by');
 
           var promises = Object.keys(authors).map(function(name) {
             return external.buildIndexFiles(
               authors[name].index,
               authors[name].urlObj.relativeUrl(),
-              SuperString(external.strings.author).sprintf(name)
+              SuperString(internal.strings.author).sprintf(name)
             );
           });
 
           promises.push(fs.writeFileAsync( indexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
             index: authorPages,
-            config: external.config
+            config: config
           }, Mustache.partials)));
 
           Promise
@@ -368,7 +369,7 @@ var Generator = function (config) {
   external.buildMetaFiles = function() {
     return new Promise (
       function(resolve, reject) {
-        var tags = external.currentIndex.getTags();
+        var tags = internal.currentIndex.getTags();
         var tagPages = Object.keys(tags).sort().map(function(key) {
           return {
             title: tags[key].title,
@@ -378,21 +379,21 @@ var Generator = function (config) {
 
         var promises = [
           fs.writeFileAsync( indexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
-            index: external.currentIndex.getPosts(5),
-            config: external.config
+            index: internal.currentIndex.getPosts(5),
+            config: config
           }, Mustache.partials)),
 
           fs.writeFileAsync( indexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
-            index: external.currentIndex.getPosts(),
+            index: internal.currentIndex.getPosts(),
             tagPages: tagPages,
-            pubDate: blogophonDate(external.currentIndex.pubDate).iso,
-            config: external.config
+            pubDate: blogophonDate(internal.currentIndex.pubDate).iso,
+            config: config
           }))
         ];
 
-        if (external.config.specialFeatures.microsofttiles) {
-          fs.ensureDirSync(external.config.directories.htdocs + '/notifications');
-          external.currentIndex.getPosts(5).forEach(function(post,index) {
+        if (config.specialFeatures.microsofttiles) {
+          fs.ensureDirSync(config.directories.htdocs + '/notifications');
+          internal.currentIndex.getPosts(5).forEach(function(post,index) {
             promises.push(
               fs.writeFileAsync( indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
                 post: post
@@ -431,7 +432,7 @@ var Generator = function (config) {
     return new Promise (
       function(resolve, reject) {
         var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(file) {
-          var targetFile = file.replace(sourceReg, external.config.directories.htdocs + targetDirectory);
+          var targetFile = file.replace(sourceReg, config.directories.htdocs + targetDirectory);
           fs.copySync(file, targetFile);
           return internal.imageStyles.generateImages(targetFile);
         });
@@ -487,14 +488,14 @@ var Generator = function (config) {
   };
 
   /**
-   * Executes deployment command as given in `external.config.json`.
+   * Executes deployment command as given in `config.json`.
    * @return {Boolean} [description]
    */
   external.deploy = function() {
     var shell = require('shelljs');
-    if (external.config.deployCmd) {
+    if (config.deployCmd) {
       console.log('Deploying...');
-      shell.exec(external.config.deployCmd);
+      shell.exec('cd '+path.join(__dirname,'..')+'; ' + config.deployCmd);
       console.log('Finished deploying');
     }
     return true;
@@ -507,21 +508,21 @@ var Generator = function (config) {
   external.buildBasicFiles = function(answers) {
     var manifest = require('./models/manifest');
 
-    fs.ensureDirSync(external.config.directories.data);
-    fs.ensureDirSync(external.config.directories.htdocs);
+    fs.ensureDirSync(config.directories.data);
+    fs.ensureDirSync(config.directories.htdocs);
 
     var promises = [
-      fs.writeFileAsync(external.config.directories.user + '/config.json', JSON.stringify(answers, undefined, 2)),
-      fs.writeFileAsync(external.config.directories.htdocs+'/.htaccess', Mustache.render(Mustache.templates.htaccess, {
-        config: external.config
+      fs.writeFileAsync(path.join(config.directories.user,   'config.json'), JSON.stringify(answers, undefined, 2)),
+      fs.writeFileAsync(path.join(config.directories.htdocs, '.htaccess'), Mustache.render(Mustache.templates.htaccess, {
+        config: config
       })),
-      fs.writeFileAsync(external.config.directories.htdocs+'/robots.txt', Mustache.render(Mustache.templates.robots, {
-        config: external.config
+      fs.writeFileAsync(path.join(config.directories.htdocs, 'robots.txt'), Mustache.render(Mustache.templates.robots, {
+        config: config
       })),
-      fs.writeFileAsync(external.config.directories.htdocs+'/browserconfig.xml', Mustache.render( Mustache.templates.browserconfig, {
-        config: external.config
+      fs.writeFileAsync(path.join(config.directories.htdocs, 'browserconfig.xml'), Mustache.render( Mustache.templates.browserconfig, {
+        config: config
       })),
-      fs.writeFileAsync( external.config.directories.htdocs+'/manifest.json', JSON.stringify(manifest(external.config), undefined, 2))
+      fs.writeFileAsync(path.join(config.directories.htdocs, 'manifest.json'), JSON.stringify(manifest(config), undefined, 2))
     ];
     return Promise
       .all(promises)

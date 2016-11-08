@@ -7,6 +7,10 @@
     "type": "git",
     "url": "git@github.com:fboes/blogophon.git"
   },
+  "bin": {
+    "blogophon": "./index.js",
+    "blogophon-generate": "./generate.js"
+  },
   "scripts": {
     "start": "node ./index.js",
     "generate": "node ./generate.js",
