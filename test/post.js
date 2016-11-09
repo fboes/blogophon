@@ -51,3 +51,34 @@ exports.testStructure = function(test) {
   test.ok(String(testPost) === testPost.hash);
   test.done();
 };
+
+/**
+ * Find all image references to local images in Markdown and return this with corresponding styles.
+ * @param  {[type]} test [description]
+ */
+exports.testImageParser = function(test) {
+  'use strict';
+  test.expect(10);
+
+  var testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
+    Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
+    Date: new Date()
+  });
+
+  test.ok(testPost.markdown);
+  test.ok(testPost.meta.MarkdownDescription);
+
+  var imageStyles = testPost.getAllImagesWithStyle();
+
+  //console.log(imageStyles);
+  test.equal(imageStyles[0].filename, 'description.jpg');
+  test.equal(imageStyles[0].style,    'default');
+  test.equal(imageStyles[1].filename, 'description.jpg');
+  test.equal(imageStyles[1].style,    null);
+  test.equal(imageStyles[2].filename, 'markdown.jpg');
+  test.equal(imageStyles[2].style,    'default');
+  test.equal(imageStyles[3].filename, 'markdown.jpg');
+  test.equal(imageStyles[3].style,    null);
+
+  test.done();
+};

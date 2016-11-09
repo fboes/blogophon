@@ -111,6 +111,7 @@ var Post = function (filename, markdown, meta) {
       html         = external.galleryHtml(html);
     }
     if (meta.Description) {
+      meta.MarkdownDescription = meta.Description;
       meta.Description = meta.Description
         .replace(/>/g,' ')
         .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
@@ -298,9 +299,10 @@ var Post = function (filename, markdown, meta) {
    */
   external.getAllImagesWithStyle = function () {
     var singleImage;
-    var all = markdown.match(/!\[.*?\]\((\S+?)#(\S+)\)/g) || [];
+    var allMarkdown = external.meta.MarkdownDescription + "\n" + markdown;
+    var all = allMarkdown.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/g) || [];
     return all.map(function(i) {
-      singleImage = i.match(/!\[.*?\]\((\S+?)#(\S+)\)/);
+      singleImage = i.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/);
       return {
         filename: singleImage[1] || null,
         style: singleImage[2] || null
