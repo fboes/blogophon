@@ -108,7 +108,7 @@ var Generator = function (config) {
   };
 
   /**
-   * Build a single article
+   * Build a single article.
    * @param  {Post} post [description]
    * @return {Promise}  with first parameter being the filename
    */
@@ -434,7 +434,7 @@ var Generator = function (config) {
         var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(file) {
           var targetFile = file.replace(sourceReg, config.directories.htdocs + targetDirectory);
           fs.copySync(file, targetFile);
-          return internal.imageStyles.generateImages(targetFile);
+          return internal.imageStyles.generateImagesWithAllStyles(targetFile);
         });
         Promise
           .all(promises)

@@ -8,63 +8,97 @@ var imageStyles = function (config) {
   var internal = {};
 
   /**
-   * Cycle through all styles and indexes, generate alls variants fo the given image.
+   * Improve image without changing its dimensions.
    * @param  {String}  filename [description]
    * @return {Promise}          [description]
    */
-  external.generateImages = function(filename) {
-    var currentStyle;
-    var srcset = [];
-    var i;
-    var processed = 0;
-    var maxProcessed = 0;
-
-    Object.keys(config.themeConf.imageStyles).forEach(function(style) {
-      currentStyle = internal.getStyle(style);
-      for (i = 0; i < currentStyle.srcset.length; i++) {
-        maxProcessed ++;
-        srcset.push([style,i]);
+  external.generateNoStyleImage = function(filename) {
+    return new Promise (
+      function(resolve, reject) {
+        gm(filename)
+          .noProfile()
+          .interlace('Line')
+          .write(filename,function (err) {
+            if (err) {
+              reject(err);
+            }
+            resolve( 1 );
+          })
+        ;
       }
-    });
+    );
+  };
+
+  /**
+   * Convert image to all different images sizes for a given style.
+   * @param  {String}  filename [description]
+   * @param  {String}  style    [description]
+   * @return {Promise}          [description]
+   */
+  external.generateImagesFromStyle = function (filename, style) {
+    var styleData    = internal.getStyle(style);
+    var processed    = 0;
+    var maxProcessed = styleData.srcset.length;
 
     return new Promise (
       function(resolve, reject) {
-        var style;
         var checkProcessed = function(err) {
           if (err) {
             reject(err);
           }
           if (++processed === maxProcessed) {
-            gm(filename)
-              .noProfile()
-              .interlace('Line')
-              .write(filename,function (err) {
-                if (err) {
-                  reject(err);
-                }
-                processed++;
-                resolve( processed );
-              })
-            ;
+            resolve( processed );
           }
         };
-        srcset.forEach(function(src) {
-          style = src[0];
-          i     = src[1];
-          currentStyle = internal.getStyle(style);
+
+        styleData.srcset.forEach(function(currentSrcSet) {
           gm(filename)
             .noProfile()
-            .geometry(currentStyle.srcset[i][0], currentStyle.srcset[i][1], "^")
+            .geometry(currentSrcSet[0], currentSrcSet[1], "^")
             .gravity('Center')
-            .crop(currentStyle.srcset[i][0], currentStyle.srcset[i][1])
+            .crop(currentSrcSet[0], currentSrcSet[1])
             .interlace('Line')
-            .write(external.getFilename(filename, style, i), checkProcessed)
+            .write(external.getFilenameSrcset(filename, currentSrcSet), checkProcessed)
           ;
         });
       }
     );
   };
 
+  /**
+   * Cycle through all styles, generate all sizes for the given image.
+   * @param  {String}  filename [description]
+   * @return {Promise}          [description]
+   */
+  external.generateImagesWithAllStyles = function(filename) {
+    var allStyles = Object.keys(config.themeConf.imageStyles);
+    var processed = 0;
+
+    return new Promise (
+      function(resolve, reject) {
+        var promises = allStyles.map(function(style) {
+          return external.generateImagesFromStyle(filename, style);
+        });
+        //promises.push(external.generateNoStyleImage(filename));
+        Promise
+          .all(promises)
+          .then(function(generatedImages) {
+            if (promises.length > 0) {
+              generatedImages.forEach(function(generatedImage) {
+                processed += generatedImage;
+              });
+            }
+            return external.generateNoStyleImage(filename);
+          })
+          .then(function() {
+            processed++;
+            resolve(processed);
+          })
+          .catch(reject)
+        ;
+      }
+    );
+  };
 
   /**
    * Replace IMG-tags in HTML with HTML for their current style.
@@ -111,7 +145,17 @@ var imageStyles = function (config) {
     if (!currentStyle.srcset[index]) {
       throw new Error("Wrong image index in style: "+style + ', ' +index);
     }
-    return filename.replace(/^(.+)(\.[^\.]+)$/,'$1-'+currentStyle.srcset[index][0]+'x'+currentStyle.srcset[index][1]+'$2');
+    return external.getFilenameSrcset(filename, currentStyle.srcset[index]);
+  };
+
+  /**
+   * Get computed filename of image, given its srcset.
+   * @param  {String} filename [description]
+   * @param  {Array}  srcset   [description]
+   * @return {String}          [description]
+   */
+  external.getFilenameSrcset = function(filename, srcset) {
+    return filename.replace(/^(.+)(\.[^\.]+)$/,'$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
   };
 
   /**

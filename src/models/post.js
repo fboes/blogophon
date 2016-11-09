@@ -292,6 +292,22 @@ var Post = function (filename, markdown, meta) {
     return json;
   };
 
+  /**
+   * Get all images using image styles. This list may come in handy for the image resizer.
+   * @return {Array} of {filename, style}
+   */
+  external.getAllImagesWithStyle = function () {
+    var singleImage;
+    var all = markdown.match(/!\[.*?\]\((\S+?)#(\S+)\)/g) || [];
+    return all.map(function(i) {
+      singleImage = i.match(/!\[.*?\]\((\S+?)#(\S+)\)/);
+      return {
+        filename: singleImage[1] || null,
+        style: singleImage[2] || null
+      };
+    });
+  };
+
   return external.makeMeta(filename, markdown, meta);
 };
 
