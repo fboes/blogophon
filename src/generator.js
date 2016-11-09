@@ -142,7 +142,7 @@ var Generator = function (config) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index','json'), JSON.stringify(post, undefined, 2)));
         }
         if (!noimages) {
-          promises.push(external.copyImages( post.meta.Url, post.filename ));
+          promises.push(external.buildArticleImages(post));
         }
 
         Promise
@@ -152,6 +152,44 @@ var Generator = function (config) {
               internal.hashes.update(post.meta.Url, post.hash);
             }
             resolve(post.meta.Filename);
+          })
+          .catch(reject)
+        ;
+      }
+    );
+  };
+
+  /**
+   * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
+   * @param  {Post}    post [description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
+  external.buildArticleImages = function(post) {
+    if (!post.meta.Url || !post.filename) {
+      return false;
+    }
+    // Target directory
+    var sourceDirectory = post.filename.replace(/\.md$/, '') + "/"; // Source directory
+    var sourceReg = new RegExp(sourceDirectory);
+
+    return new Promise (
+      function(resolve, reject) {
+        var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(file) {
+          var targetFile = file.replace(sourceReg, config.directories.htdocs + post.meta.Url);
+          fs.copySync(file, targetFile);
+          return internal.imageStyles.generateImagesWithAllStyles(targetFile);
+        });
+        Promise
+          .all(promises)
+          .then(function(generatedImages) {
+            var processed = 0;
+            if (promises.length > 0) {
+              generatedImages.forEach(function(generatedImage) {
+                processed += generatedImage;
+              });
+              console.log("Resized "+processed+" images");
+            }
+            return resolve(processed);
           })
           .catch(reject)
         ;
@@ -410,45 +448,6 @@ var Generator = function (config) {
           .then(function() {
             console.log("Wrote "+promises.length+" meta files");
             return resolve(promises.length);
-          })
-          .catch(reject)
-        ;
-      }
-    );
-  };
-
-  /**
-   * Copy images from Markdown area to live `htdocs`, scaling and optimizing them.
-   * @param  {[type]}  targetDirectory [description]
-   * @param  {[type]}  articleFilename [description]
-   * @return {Promise} with first parameter of `resolve` being the number of files converted.
-   */
-  external.copyImages = function(targetDirectory, articleFilename) {
-    if (!targetDirectory || !articleFilename) {
-      return false;
-    }
-    // Target directory
-    var sourceDirectory = articleFilename.replace(/\.md$/, '') + "/"; // Source directory
-    var sourceReg = new RegExp(sourceDirectory);
-
-    return new Promise (
-      function(resolve, reject) {
-        var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(file) {
-          var targetFile = file.replace(sourceReg, config.directories.htdocs + targetDirectory);
-          fs.copySync(file, targetFile);
-          return internal.imageStyles.generateImagesWithAllStyles(targetFile);
-        });
-        Promise
-          .all(promises)
-          .then(function(generatedImages) {
-            var processed = 0;
-            if (promises.length > 0) {
-              generatedImages.forEach(function(generatedImage) {
-                processed += generatedImage;
-              });
-              console.log("Resized "+processed+" images");
-            }
-            return resolve(processed);
           })
           .catch(reject)
         ;
