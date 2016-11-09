@@ -469,8 +469,8 @@ var Generator = function (config) {
       function(resolve, reject) {
         external
           .buildAllArticles(force, noimages)
-          .then(function() {
-            return external.buildSpecialPages();
+          .then(function(generatedArticles) {
+            return generatedArticles.length ? external.buildSpecialPages() : true;
           })
           .then(resolve)
           .catch(reject)
