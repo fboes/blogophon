@@ -39,7 +39,10 @@
              <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
             {{/meta.Modified.locale}}
             {{#meta.AuthorName}}
-            <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><amp-img src="{{meta.Gravatar}}" alt="" itemprop="image" height="20" width="20" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
+            <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+              <link itemprop="image" href="{{meta.AuthorImage}}" />
+              <span itemprop="name">{{meta.AuthorName}}</span>
+            </address>
             {{/meta.AuthorName}}
             <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><amp-img src="//cdn.3960.org/css/iphone.png" alt="" itemprop="logo" height="20" width="20" /> <span itemprop="name">{{config.name}}</span></address>
             <span class="share">

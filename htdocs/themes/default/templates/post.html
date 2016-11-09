@@ -68,7 +68,10 @@
                 <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
               {{/meta.Modified.locale}}
               {{#meta.AuthorName}}
-                <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
+                <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <link itemprop="image" href="{{meta.AuthorImage}}" />
+                  <span itemprop="name">{{meta.AuthorName}}</span>
+                </address>
               {{/meta.AuthorName}}
               <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="//cdn.3960.org/css/iphone.png" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
               {{#meta.Tags.length}}

@@ -60,7 +60,10 @@
                 {{#meta.Tags.length}}
                   <footer class="meta">
                     {{#meta.AuthorName}}
-                      <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img src="{{meta.Gravatar}}" alt="" itemprop="image" /> <span itemprop="name">{{meta.AuthorName}}</span></address>
+                      <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                        <link itemprop="image" href="{{meta.AuthorImage}}" />
+                        <span itemprop="name">{{meta.AuthorName}}</span>
+                      </address>
                     {{/meta.AuthorName}}
                     {{#meta.Tags.length}}
                       <span class="tags">

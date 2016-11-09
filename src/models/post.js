@@ -127,7 +127,7 @@ var Post = function (filename, markdown, meta) {
     if (metaAuthor) {
       meta.AuthorName   = metaAuthor[1];
       meta.AuthorEmail  = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
-      meta.Gravatar     = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
+      meta.AuthorImage  = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
     }
     meta.authorUrlObj = authorUrl(meta.AuthorName);
     if (!meta.Image) {
