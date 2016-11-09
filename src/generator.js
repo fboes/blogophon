@@ -69,16 +69,16 @@ var Generator = function (config) {
 
   /**
    * Get all {Post} from `index` and generate HTML pages.
-   * @param  {Boolean} force    [description]
-   * @param  {Boolean} keepOld  If set to `true`, the articles will not be deleted before being rebuild
+   * @param  {Boolean} force    If set to `true`, all articles will be rebuilt. Otherwise, only changed articles will be build.
+   * @param  {Boolean} noimages If set to `true`, no images will be created
    * @return {Promise}          with first parameter of `resolve` being the list of files generated.
    */
-  external.buildAllArticles = function(force, keepOld) {
+  external.buildAllArticles = function(force, noimages) {
     var allPosts = internal.currentIndex.getPosts();
     var skipped  = 0;
     var generatedArticles = [];
 
-    if (force && !keepOld) {
+    if (force && !noimages) {
       fs.removeSync(config.directories.htdocs + '/posts/*');
     }
 
@@ -90,7 +90,7 @@ var Generator = function (config) {
             skipped++;
           } else {
             generatedArticles.push([post.meta.Url, post.filename]);
-            return external.buildSingleArticle(post);
+            return external.buildSingleArticle(post, noimages);
           }
         });
         // Checking promises
@@ -109,17 +109,23 @@ var Generator = function (config) {
 
   /**
    * Build a single article.
-   * @param  {Post} post [description]
-   * @return {Promise}  with first parameter being the filename
+   * @param  {Post}    post      [description]
+   * @param  {Boolean} noimages  If set to `true`, no images will be created
+   * @return {Promise} with first parameter being the filename
    */
-  external.buildSingleArticle = function(post) {
+  external.buildSingleArticle = function(post, noimages) {
     if (!post) {
       throw new Error('Empty post');
     }
     return new Promise (
       function(resolve, reject) {
         fs.ensureDirSync(config.directories.htdocs + post.meta.Url);
-        var promises = [];
+        var promises = [
+            fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
+              post: post,
+              config: config
+            },Mustache.partials))
+        ];
         if (config.specialFeatures.applenews) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article','json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
@@ -135,21 +141,17 @@ var Generator = function (config) {
         if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index','json'), JSON.stringify(post, undefined, 2)));
         }
+        if (!noimages) {
+          promises.push(external.copyImages( post.meta.Url, post.filename ));
+        }
+
         Promise
           .all(promises)
           .then(function() {
-            fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
-              post: post,
-              config: config
-            },Mustache.partials), function(err) {
-              if (err) {
-                reject(err);
-              }
-              if (internal.hashes) {
-                internal.hashes.update(post.meta.Url, post.hash);
-              }
-              resolve(post.meta.Filename);
-            });
+            if (internal.hashes) {
+              internal.hashes.update(post.meta.Url, post.hash);
+            }
+            resolve(post.meta.Filename);
           })
           .catch(reject)
         ;
@@ -465,22 +467,10 @@ var Generator = function (config) {
       function(resolve, reject) {
         external
           .buildAllArticles(force, noimages)
-          .then(function(generatedArticles) {
-            var promises = [];
-            if (!noimages) {
-              promises = generatedArticles.map(function(article) {
-                return external.copyImages( article[0], article[1] );
-              });
-            }
-            if (generatedArticles.length) {
-              promises.push(external.buildSpecialPages());
-            }
-            Promise
-              .all(promises)
-              .then(resolve)
-              .catch(reject)
-            ;
+          .then(function() {
+            return external.buildSpecialPages();
           })
+          .then(resolve)
           .catch(reject)
         ;
       }
