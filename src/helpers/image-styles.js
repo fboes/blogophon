@@ -7,6 +7,8 @@ var imageStyles = function (config) {
   var external = {};
   var internal = {};
 
+  internal.jpgQuality = 85;
+
   /**
    * Improve image without changing its dimensions.
    * @param  {String}  sourceFilename [description]
@@ -22,6 +24,7 @@ var imageStyles = function (config) {
         gm(sourceFilename)
           .noProfile()
           .interlace('Line')
+          .quality(internal.jpgQuality)
           .write(targetFilename,function (err) {
             if (err) {
               reject(err);
@@ -65,7 +68,9 @@ var imageStyles = function (config) {
             .geometry(currentSrcSet[0], currentSrcSet[1], "^")
             .gravity('Center')
             .crop(currentSrcSet[0], currentSrcSet[1])
+            .unsharp(2, 0.5, 0.5, 0)
             .interlace('Line')
+            .quality(internal.jpgQuality)
             .write(external.getFilenameSrcset(targetFilename, currentSrcSet), checkProcessed)
           ;
         });
