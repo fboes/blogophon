@@ -310,6 +310,22 @@ var Post = function (filename, markdown, meta) {
     });
   };
 
+  external.getAllImagesWithStyleObject = function () {
+    var styles = external.getAllImagesWithStyle();
+    var returnObject = {};
+    styles.forEach(function(s) {
+      if (s.style) {
+        if (!returnObject[s.filename]) {
+          returnObject[s.filename] = [];
+        }
+        if (returnObject[s.filename].indexOf(s.style) === -1) {
+          returnObject[s.filename].push(s.style);
+        }
+      }
+    });
+    return returnObject;
+  };
+
   return external.makeMeta(filename, markdown, meta);
 };
 

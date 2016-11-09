@@ -171,14 +171,16 @@ var Generator = function (config) {
     // Target directory
     var sourceDirectory = post.filename.replace(/\.md$/, '') + "/"; // Source directory
     var sourceReg = new RegExp(sourceDirectory);
+    var imageStyles = post.getAllImagesWithStyleObject();
+
 
     return new Promise (
       function(resolve, reject) {
         var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(sourceFile) {
           var targetFile = sourceFile.replace(sourceReg, config.directories.htdocs + post.meta.Url);
           fs.copySync(sourceFile, targetFile);
-          //console.log(path.basename(sourceFile));
-          return internal.imageStyles.generateImagesWithAllStyles(sourceFile, targetFile);
+          //console.log(imageStyles[path.basename(sourceFile)] || []);
+          return internal.imageStyles.generateImagesWithStyles(sourceFile, targetFile, imageStyles[path.basename(sourceFile)] || []);
         });
         Promise
           .all(promises)

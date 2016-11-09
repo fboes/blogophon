@@ -75,15 +75,16 @@ var imageStyles = function (config) {
 
   /**
    * Cycle through all styles, generate all sizes for the given image.
-   * @param  {String}  filename [description]
+   * @param  {String}  filename       [description]
    * @param  {String}  targetFilename [description]
-   * @return {Promise}          [description]
+   * @param  {Array }  allStyles      Optional, defaults to all styles
+   * @return {Promise}                [description]
    */
-  external.generateImagesWithAllStyles = function(sourceFilename, targetFilename) {
+  external.generateImagesWithStyles = function(sourceFilename, targetFilename, allStyles) {
     if (!targetFilename) {
       throw new Error('No target filename given for conversion');
     }
-    var allStyles = Object.keys(config.themeConf.imageStyles);
+    allStyles = allStyles || Object.keys(config.themeConf.imageStyles);
     var processed = 0;
 
     return new Promise (

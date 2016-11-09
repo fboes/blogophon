@@ -58,7 +58,7 @@ exports.testStructure = function(test) {
  */
 exports.testImageParser = function(test) {
   'use strict';
-  test.expect(10);
+  test.expect(12);
 
   var testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
     Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
@@ -69,7 +69,6 @@ exports.testImageParser = function(test) {
   test.ok(testPost.meta.MarkdownDescription);
 
   var imageStyles = testPost.getAllImagesWithStyle();
-
   //console.log(imageStyles);
   test.equal(imageStyles[0].filename, 'description.jpg');
   test.equal(imageStyles[0].style,    'default');
@@ -79,6 +78,11 @@ exports.testImageParser = function(test) {
   test.equal(imageStyles[2].style,    'default');
   test.equal(imageStyles[3].filename, 'markdown.jpg');
   test.equal(imageStyles[3].style,    null);
+
+  imageStyles = testPost.getAllImagesWithStyleObject();
+  //console.log(imageStyles);
+  test.ok(imageStyles['description.jpg']);
+  test.ok(imageStyles['markdown.jpg']);
 
   test.done();
 };
