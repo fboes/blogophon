@@ -9,16 +9,20 @@ var imageStyles = function (config) {
 
   /**
    * Improve image without changing its dimensions.
-   * @param  {String}  filename [description]
-   * @return {Promise}          [description]
+   * @param  {String}  sourceFilename [description]
+   * @param  {String}  targetFilename [description]
+   * @return {Promise}                [description]
    */
-  external.generateNoStyleImage = function(filename) {
+  external.generateNoStyleImage = function(sourceFilename, targetFilename) {
+    if (!targetFilename) {
+      throw new Error('No target filename given for conversion');
+    }
     return new Promise (
       function(resolve, reject) {
-        gm(filename)
+        gm(sourceFilename)
           .noProfile()
           .interlace('Line')
-          .write(filename,function (err) {
+          .write(targetFilename,function (err) {
             if (err) {
               reject(err);
             }
@@ -31,11 +35,15 @@ var imageStyles = function (config) {
 
   /**
    * Convert image to all different images sizes for a given style.
-   * @param  {String}  filename [description]
-   * @param  {String}  style    [description]
-   * @return {Promise}          [description]
+   * @param  {String}  sourceFilename [description]
+   * @param  {String}  targetFilename [description]
+   * @param  {String}  style          [description]
+   * @return {Promise}                [description]
    */
-  external.generateImagesFromStyle = function (filename, style) {
+  external.generateImagesFromStyle = function (sourceFilename, targetFilename, style) {
+    if (!targetFilename) {
+      throw new Error('No target filename given for conversion');
+    }
     var styleData    = internal.getStyle(style);
     var processed    = 0;
     var maxProcessed = styleData.srcset.length;
@@ -52,13 +60,13 @@ var imageStyles = function (config) {
         };
 
         styleData.srcset.forEach(function(currentSrcSet) {
-          gm(filename)
+          gm(sourceFilename)
             .noProfile()
             .geometry(currentSrcSet[0], currentSrcSet[1], "^")
             .gravity('Center')
             .crop(currentSrcSet[0], currentSrcSet[1])
             .interlace('Line')
-            .write(external.getFilenameSrcset(filename, currentSrcSet), checkProcessed)
+            .write(external.getFilenameSrcset(targetFilename, currentSrcSet), checkProcessed)
           ;
         });
       }
@@ -68,18 +76,21 @@ var imageStyles = function (config) {
   /**
    * Cycle through all styles, generate all sizes for the given image.
    * @param  {String}  filename [description]
+   * @param  {String}  targetFilename [description]
    * @return {Promise}          [description]
    */
-  external.generateImagesWithAllStyles = function(filename) {
+  external.generateImagesWithAllStyles = function(sourceFilename, targetFilename) {
+    if (!targetFilename) {
+      throw new Error('No target filename given for conversion');
+    }
     var allStyles = Object.keys(config.themeConf.imageStyles);
     var processed = 0;
 
     return new Promise (
       function(resolve, reject) {
         var promises = allStyles.map(function(style) {
-          return external.generateImagesFromStyle(filename, style);
+          return external.generateImagesFromStyle(sourceFilename, targetFilename, style);
         });
-        //promises.push(external.generateNoStyleImage(filename));
         Promise
           .all(promises)
           .then(function(generatedImages) {
@@ -88,7 +99,7 @@ var imageStyles = function (config) {
                 processed += generatedImage;
               });
             }
-            return external.generateNoStyleImage(filename);
+            return external.generateNoStyleImage(sourceFilename, targetFilename);
           })
           .then(function() {
             processed++;

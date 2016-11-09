@@ -174,10 +174,11 @@ var Generator = function (config) {
 
     return new Promise (
       function(resolve, reject) {
-        var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(file) {
-          var targetFile = file.replace(sourceReg, config.directories.htdocs + post.meta.Url);
-          fs.copySync(file, targetFile);
-          return internal.imageStyles.generateImagesWithAllStyles(targetFile);
+        var promises = glob.sync(sourceDirectory + "*.{png,jpg,gif}").map(function(sourceFile) {
+          var targetFile = sourceFile.replace(sourceReg, config.directories.htdocs + post.meta.Url);
+          fs.copySync(sourceFile, targetFile);
+          //console.log(path.basename(sourceFile));
+          return internal.imageStyles.generateImagesWithAllStyles(sourceFile, targetFile);
         });
         Promise
           .all(promises)
