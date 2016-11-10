@@ -3,6 +3,10 @@
 var gm             = require('gm').subClass({imageMagick: true});
 var Promise        = require('promise/lib/es6-extensions');
 
+/**
+ * Converts images and replaces HTML for image integration.
+ * @constructor
+ */
 var imageStyles = function (config) {
   var external = {};
   var internal = {};
@@ -79,22 +83,22 @@ var imageStyles = function (config) {
   };
 
   /**
-   * Cycle through all styles, generate all sizes for the given image.
-   * @param  {String}  filename       [description]
+   * Cycle through all styles, generate all sizes for the given image, including a conversion of the original file to an optimized copy of itself.
+   * @param  {String}  sourceFilename [description]
    * @param  {String}  targetFilename [description]
-   * @param  {Array }  allStyles      Optional, defaults to all styles
+   * @param  {Array }  styles         Optional, defaults to all styles
    * @return {Promise}                [description]
    */
-  external.generateImagesWithStyles = function(sourceFilename, targetFilename, allStyles) {
+  external.generateImagesWithStyles = function(sourceFilename, targetFilename, styles) {
     if (!targetFilename) {
       throw new Error('No target filename given for conversion');
     }
-    allStyles = allStyles || Object.keys(config.themeConf.imageStyles);
+    styles = styles || Object.keys(config.themeConf.imageStyles);
     var processed = 0;
 
     return new Promise (
       function(resolve, reject) {
-        var promises = allStyles.map(function(style) {
+        var promises = styles.map(function(style) {
           return external.generateImagesFromStyle(sourceFilename, targetFilename, style);
         });
         Promise
@@ -126,6 +130,13 @@ var imageStyles = function (config) {
     return html.replace(/(?:<img src=")([^"]+)#([^"]+)(?:")/g, internal.parseImagesReplace);
   };
 
+  /**
+   * Returns HTML for a given filename and image style. Uses by `external.replaceImgHtml()`.
+   * @param  {String} all      Will be ignored (as it comes from a `.replace` operation)
+   * @param  {String} filename Filename of image
+   * @param  {String} style    Style for image
+   * @return {String}          HTML for IMG-tag
+   */
   internal.parseImagesReplace = function(all, filename, style) {
     style = style || "default";
     var currentStyle = internal.getStyle(style);
@@ -133,12 +144,12 @@ var imageStyles = function (config) {
     var srcset = [];
     var i;
 
-    var html = '<img data-src="'+filename+'" src="'+external.getFilename(filename, style, dominantIndex)+'" class="'+style+'"';
+    var html = '<img data-src="'+filename+'" src="'+external.getFilenameSrcset(filename, currentStyle.srcset[dominantIndex])+'" class="'+style+'"';
     // html += ' width="'+currentStyle.srcset[dominantIndex][0]+'" height="'+currentStyle.srcset[dominantIndex][1]+'"';
 
     if (currentStyle.srcset.length > 1) {
       for (i = 0; i < currentStyle.srcset.length; i++) {
-        srcset.push(external.getFilename(filename, style, i) + ' '+currentStyle.srcset[i][0]+'w');
+        srcset.push(external.getFilenameSrcset(filename, currentStyle.srcset[i]) + ' '+currentStyle.srcset[i][0]+'w');
       }
       html += ' srcset="'+srcset.join(', ')+'"';
       if (currentStyle.sizes.length) {
@@ -151,10 +162,10 @@ var imageStyles = function (config) {
 
   /**
    * Get computed filename of image, given its style and index.
-   * @param  {String}  filename [description]
-   * @param  {String}  style    [description]
-   * @param  {Integer} index    [description], optional
-   * @return {String}           [description]
+   * @param  {String}  filename Original filename.
+   * @param  {String}  style    like `default`, `quad`
+   * @param  {Integer} index    Index of style, defaults to `0`.
+   * @return {String}           Converted filename for given style.
    */
   external.getFilename = function(filename, style, index) {
     var currentStyle = internal.getStyle(style);
@@ -167,9 +178,9 @@ var imageStyles = function (config) {
 
   /**
    * Get computed filename of image, given its srcset.
-   * @param  {String} filename [description]
-   * @param  {Array}  srcset   [description]
-   * @return {String}          [description]
+   * @param  {String} filename Original filename.
+   * @param  {Array}  srcset   with [width,height]
+   * @return {String}          Converted filename for given style.
    */
   external.getFilenameSrcset = function(filename, srcset) {
     return filename.replace(/^(.+)(\.[^\.]+)$/,'$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
