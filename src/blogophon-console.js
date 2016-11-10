@@ -8,8 +8,8 @@ var chalk          = require('chalk');
 var shell          = require('shelljs');
 var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
-var Mustache       = require('./helpers/blogophon-mustache').getTemplates(config.directories.currentTheme + '/templates');
-var Generator      = require('./generator');
+var Mustache       = require('./helpers/blogophon-mustache');
+var Generator      = config.notInitialized ? {} : require('./generator');
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -28,6 +28,10 @@ var BlogophonConsole = function() {
     config.notInitialized ? 'Setup' : 'Change settings',
     'Exit'
   ];
+
+  if (!config.notInitialized) {
+    Mustache.getTemplates(config.directories.currentTheme + '/templates');
+  }
 
   var template     = fs.readFileSync(path.join(__dirname, 'templates/post.md'), 'utf8');
 
@@ -552,6 +556,9 @@ var BlogophonConsole = function() {
    */
   external.init = function() {
     if (config.notInitialized) {
+      fs.ensureDirSync(config.directories.data);
+      fs.ensureDirSync(config.directories.htdocs);
+      fs.copySync(path.join(__dirname,'..', 'htdocs', 'themes'), config.directories.theme);
       external.setupDialog();
     } else {
       var questions = [

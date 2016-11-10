@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-var Generator = require('./src/generator');
-var args      = require('./src/helpers/arguments')();
-var config    = require('./src/config');
+var application = require('./src/helpers/application')();
+application.changeDirectory();
+
+var Generator   = require('./src/generator');
+var args        = require('./src/helpers/arguments')();
+var config      = require('./src/config');
 
 if (args.help) {
   console.log('Usage:');
