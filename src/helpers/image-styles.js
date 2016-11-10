@@ -86,7 +86,7 @@ var imageStyles = function (config) {
    * Cycle through all styles, generate all sizes for the given image, including a conversion of the original file to an optimized copy of itself.
    * @param  {String}  sourceFilename [description]
    * @param  {String}  targetFilename [description]
-   * @param  {Array }  styles         Optional, defaults to all styles
+   * @param  {Array}   styles         Optional, defaults to all styles
    * @return {Promise}                [description]
    */
   external.generateImagesWithStyles = function(sourceFilename, targetFilename, styles) {
