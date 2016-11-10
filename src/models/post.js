@@ -251,6 +251,7 @@ var Post = function (filename, markdown, meta) {
       .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^\.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)>(.*?)<\/amp-iframe>/g,'<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
       .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
       .replace(/(<amp-(?:video|audio|iframe).+?>).+(<\/amp-(?:video|iframe))/g, '$1$2')
+      .replace(/( style=".+?")/g, '')
     ;
   };
 
