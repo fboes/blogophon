@@ -18,7 +18,7 @@
 
 <section>
   <h3>Suche</h3>
-  <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.baseUrl}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
+  <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.domain}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
     <input type="search" name="q" title="Suchbegriff hier eingeben" placeholder="Suchbegriff…">
     <input type="submit" value="Suchen">
   </form>

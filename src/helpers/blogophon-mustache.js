@@ -28,6 +28,7 @@ Mustache.getTemplates = function(themePath) {
     htaccess:fs.readFileSync(path.join(__dirname, '/../templates/.htaccess'), 'utf8'),
     livetile:fs.readFileSync(path.join(__dirname, '/../templates/livetile.xml'), 'utf8'),
     calendar:fs.readFileSync(path.join(__dirname, '/../templates/calendar.ics'), 'utf8'),
+    opensearch   :fs.readFileSync(path.join(__dirname, '/../templates/opensearch.xml'), 'utf8'),
     browserconfig:fs.readFileSync(path.join(__dirname, '/../templates/browserconfig.xml'), 'utf8')
   };
 

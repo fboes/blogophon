@@ -511,6 +511,9 @@ var Generator = function (config) {
       fs.writeFileAsync(path.join(config.directories.htdocs, 'robots.txt'), Mustache.render(Mustache.templates.robots, {
         config: config
       })),
+      fs.writeFileAsync(path.join(config.directories.htdocs, 'opensearch.xml'), Mustache.render( Mustache.templates.opensearch, {
+        config: config
+      })),
       fs.writeFileAsync(path.join(config.directories.htdocs, 'browserconfig.xml'), Mustache.render( Mustache.templates.browserconfig, {
         config: config
       })),

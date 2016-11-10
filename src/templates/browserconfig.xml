@@ -6,7 +6,7 @@
         <square150x150logo src="http://cdn.3960.org/images/tile-270x270.png"/>
         <wide310x150logo src="http://cdn.3960.org/images/tile-558x270.png"/>
         <square310x310logo src="http://cdn.3960.org/images/tile-558x558.png"/>
-        <TileColor>{{config.themeColor}}</TileColor>
+        <TileColor>{{config.themeConf.themeColor}}</TileColor>
      </tile>
     {{#config.specialFeatures.microsofttiles}}
        <notification>

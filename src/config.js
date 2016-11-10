@@ -46,6 +46,7 @@ if (config.useSpecialFeature) {
 if (!config.baseUrl) {
   config.baseUrl = "http://" + (os ? os.hostname() : 'example.com');
 }
+config.domain = config.baseUrl.replace(/^[a-z]+:\/\//,'');
 if (!config.basePath) {
   config.basePath = "/";
 }
