@@ -58,7 +58,7 @@ var Post = function (filename, markdown, meta) {
       meta.Modified  = meta.Created;
     }
 
-    var path = 'posts';
+    var path = config.htdocs.posts;
     if (config.postPathMode){
       switch (config.postPathMode) {
         case 'Year':
@@ -91,7 +91,7 @@ var Post = function (filename, markdown, meta) {
     }
     if (meta.Keywords) {
       meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
-        var tagUrlObj = tagUrl(tag);
+        var tagUrlObj = tagUrl(tag, config.htdocs.tag);
         return {
           title: tag,
           id: SuperString(tag).asciify(),
@@ -129,7 +129,7 @@ var Post = function (filename, markdown, meta) {
       meta.AuthorEmail  = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
       meta.AuthorImage  = 'https://www.gravatar.com/avatar/' + crypto.createHash('md5').update(meta.AuthorEmail.toLowerCase()).digest('hex');
     }
-    meta.authorUrlObj = authorUrl(meta.AuthorName);
+    meta.authorUrlObj = authorUrl(meta.AuthorName, config.htdocs.author);
     if (!meta.Image) {
       var match = html.match(/<img.+?src="(.+?)"/);
       if (match) {
@@ -201,7 +201,7 @@ var Post = function (filename, markdown, meta) {
         '<img src="https://i.giphy.com/$1.gif" alt="" />'
       )
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
-      .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + 'posts/$2/$3')
+      .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
       .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
       .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
       .replace(/(<(?:img)[^>]*[^/])(>)/g,'$1 /$2')

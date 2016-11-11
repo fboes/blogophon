@@ -79,7 +79,7 @@ var Generator = function (config) {
     var generatedArticles = [];
 
     if (force && !noimages) {
-      fs.removeSync(config.directories.htdocs + '/posts/*');
+      fs.removeSync(path.join(config.directories.htdocs, config.htdocs.posts, '*'));
     }
 
     return new Promise (
@@ -330,8 +330,8 @@ var Generator = function (config) {
       };
     });
 
-    fs.removeSync(config.directories.htdocs + '/tagged');
-    fs.ensureDirSync(config.directories.htdocs + '/tagged');
+    fs.removeSync(path.join(config.directories.htdocs, config.htdocs.tag));
+    fs.ensureDirSync(path.join(config.directories.htdocs, config.htdocs.tag));
 
     return new Promise (
       function(resolve, reject) {
@@ -343,7 +343,7 @@ var Generator = function (config) {
           );
         });
 
-        promises.push(fs.writeFileAsync( indexUrl('tagged/index.html').filename(), Mustache.render(Mustache.templates.tags, {
+        promises.push(fs.writeFileAsync( indexUrl(config.htdocs.tag + '/index.html').filename(), Mustache.render(Mustache.templates.tags, {
           index: tagPages,
           config: config
         }, Mustache.partials)));
@@ -372,13 +372,13 @@ var Generator = function (config) {
       };
     });
 
-    fs.remove(config.directories.htdocs + '/authored-by', function(err) {
+    fs.remove(path.join(config.directories.htdocs, config.htdocs.author), function(err) {
       return new Promise (
         function(resolve, reject) {
           if (err) {
             reject(err);
           }
-          fs.ensureDirSync(config.directories.htdocs + '/authored-by');
+          fs.ensureDirSync(path.join(config.directories.htdocs, config.htdocs.author));
 
           var promises = Object.keys(authors).map(function(name) {
             return external.buildIndexFiles(
@@ -388,7 +388,7 @@ var Generator = function (config) {
             );
           });
 
-          promises.push(fs.writeFileAsync( indexUrl('authored-by/index.html').filename(), Mustache.render(Mustache.templates.authors, {
+          promises.push(fs.writeFileAsync( indexUrl(config.htdocs.author+'/index.html').filename(), Mustache.render(Mustache.templates.authors, {
             index: authorPages,
             config: config
           }, Mustache.partials)));

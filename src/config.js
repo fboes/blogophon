@@ -20,7 +20,8 @@ try {
     "themeColor": "#ffffff",
     "defaultAuthor": {},
     "deployCmd":"# rsync -az --delete htdocs HOST:PATH",
-    "notInitialized":true
+    "notInitialized":true,
+    "htdocs": {}
   };
 }
 
@@ -49,6 +50,18 @@ if (!config.baseUrl) {
 config.domain = config.baseUrl.replace(/^[a-z]+:\/\//,'');
 if (!config.basePath) {
   config.basePath = "/";
+}
+if (!config.htdocs) {
+  config.htdocs = {};
+}
+if (!config.htdocs.posts) {
+  config.htdocs.posts = 'posts';
+}
+if (!config.htdocs.tag) {
+  config.htdocs.tag = 'tagged';
+}
+if (!config.htdocs.author) {
+  config.htdocs.author = 'authored-by';
 }
 
 try {
