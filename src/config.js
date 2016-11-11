@@ -25,7 +25,7 @@ try {
   };
 }
 
-config.directories = pkg.directories;
+config.directories        = pkg.directories;
 config.directories.user   = path.join(process.cwd(), pkg.directories.user);
 config.directories.data   = path.join(process.cwd(), pkg.directories.data);
 config.directories.htdocs = path.join(process.cwd(), pkg.directories.htdocs);
@@ -33,9 +33,7 @@ config.directories.theme  = path.join(process.cwd(), pkg.directories.theme);
 
 config.isWin = /^win/.test(process.platform);
 
-
 config.directories.currentTheme = config.directories.theme + (config.theme ? '/' + config.theme : '/default');
-config.absoluteBasePath = config.baseUrl + config.basePath;
 
 config.specialFeatures = {};
 if (config.useSpecialFeature) {
@@ -44,25 +42,14 @@ if (config.useSpecialFeature) {
   });
 }
 
-if (!config.baseUrl) {
-  config.baseUrl = "http://" + (os ? os.hostname() : 'example.com');
-}
-config.domain = config.baseUrl.replace(/^[a-z]+:\/\//,'');
-if (!config.basePath) {
-  config.basePath = "/";
-}
-if (!config.htdocs) {
-  config.htdocs = {};
-}
-if (!config.htdocs.posts) {
-  config.htdocs.posts = 'posts';
-}
-if (!config.htdocs.tag) {
-  config.htdocs.tag = 'tagged';
-}
-if (!config.htdocs.author) {
-  config.htdocs.author = 'authored-by';
-}
+config.baseUrl       = config.baseUrl       ||  "http://" + (os ? os.hostname() : 'example.com');
+config.domain        = config.baseUrl.replace(/^[a-z]+:\/\//,'');
+config.basePath      = config.basePath      || "/";
+config.htdocs        = config.htdocs        || {};
+config.htdocs.posts  = config.htdocs.posts  || 'posts';
+config.htdocs.tag    = config.htdocs.tag    || 'tagged';
+config.htdocs.author = config.htdocs.author || 'authored-by';
+config.absoluteBasePath = config.baseUrl + config.basePath;
 
 try {
   config.themeConf = JSON.parse(fs.readFileSync(path.join(config.directories.currentTheme, 'theme.json'), 'utf8'));
