@@ -119,7 +119,7 @@ var Generator = function (config) {
     }
     return new Promise (
       function(resolve, reject) {
-        fs.ensureDirSync(config.directories.htdocs + post.meta.Url);
+        fs.ensureDirSync(post.meta.urlObj.dirname());
         var promises = [
             fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
               post: post,
