@@ -2,22 +2,24 @@
 
 var markdownConvert = require('marked');
 var crypto          = require('crypto');
-var config          = require('../config');
 var SuperString     = require('../helpers/super-string');
 var markyMark       = require('../helpers/marky-mark');
+var ampify          = require('../helpers/ampify')();
 var postUrl         = require('../helpers/post-url');
 var tagUrl          = require('../helpers/tag-url');
 var authorUrl       = require('../helpers/author-url');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
-var imageStyles     = require('../helpers/image-styles')(config);
+var imageStyles     = require('../helpers/image-styles');
 
 /**
  * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
-var Post = function (filename, markdown, meta) {
+var Post = function (filename, markdown, meta, config) {
+  config = config || require('../config');
   var external = {};
+  var internal = {};
 
   /**
    * Convert input data into final object
@@ -83,8 +85,8 @@ var Post = function (filename, markdown, meta) {
       }
     }
 
-    var htmlTeaser   = external.markyMark(meta.Description.trim(), meta.Url);
-    var html         = external.markyMark(markdown, meta.Url);
+    external.htmlTeaser   = internal.markyMark(meta.Description.trim(), meta.Url);
+    external.html         = internal.markyMark(markdown, meta.Url);
 
     if (!meta.Title) {
       meta.Title = markdown.split(/\n/)[0];
@@ -107,8 +109,8 @@ var Post = function (filename, markdown, meta) {
       return SuperString(c).asciify();
     });
     if (meta.Classes.indexOf('images') >= 0) {
-      htmlTeaser   = external.galleryHtml(htmlTeaser);
-      html         = external.galleryHtml(html);
+      external.htmlTeaser   = internal.galleryHtml(external.htmlTeaser);
+      external.html         = internal.galleryHtml(external.html);
     }
     if (meta.Description) {
       meta.MarkdownDescription = meta.Description;
@@ -131,7 +133,7 @@ var Post = function (filename, markdown, meta) {
     }
     meta.authorUrlObj = authorUrl(meta.AuthorName, config.htdocs.author);
     if (!meta.Image) {
-      var match = html.match(/<img.+?src="(.+?)"/);
+      var match = external.html.match(/<img.+?src="(.+?)"/);
       if (match) {
         meta.Image = match[1];
       }
@@ -161,12 +163,25 @@ var Post = function (filename, markdown, meta) {
     external.filename       = filename;
     external.markdown       = markdown;
     external.meta           = meta;
-    external.html           = html;
-    external.htmlTeaser     = htmlTeaser;
     external.share          = shareLinks( meta.Title, meta.AbsoluteUrl, meta.Twitter, config.name);
-    external.hash           = crypto.createHash('md5').update(JSON.stringify([external.markdown,external.share,external.meta,external.html,external.htmlTeaser])).digest('hex');
-    external.safeHtml       = external.makeSafeHtml(external.html);
-    external.safeHtmlTeaser = external.makeSafeHtml(external.htmlTeaser);
+    external.hash           = crypto.createHash('md5').update(JSON.stringify([
+      external.markdown,
+      external.share,
+      external.meta,
+      external.html,
+      external.htmlTeaser
+    ])).digest('hex');
+
+    // Add extra stuff
+    if (config.specialFeatures.jsonrss || config.specialFeatures.atom || config.specialFeatures.rss) {
+      external.safeHtml       = internal.makeSafeHtml(external.html);
+      external.safeHtmlTeaser = internal.makeSafeHtml(external.htmlTeaser);
+    }
+    if (config.specialFeatures.acceleratedmobilepages) {
+      external.ampHtml        = ampify.ampifyHtml(external.html);
+      external.ampHtmlTeaser  = ampify.ampifyHtml(external.htmlTeaser);
+    }
+
     return external;
   };
 
@@ -176,12 +191,12 @@ var Post = function (filename, markdown, meta) {
    * @param  {String} relUrl [description]
    * @return {String}        [description]
    */
-  external.markyMark = function(html, relUrl) {
+  internal.markyMark = function(html, relUrl) {
     if (relUrl) {
       html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
     }
     html = markyMark(markdownConvert(html)).toString();
-    html = imageStyles.replaceImgHtml(html);
+    html = imageStyles(config).replaceImgHtml(html);
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
       .replace(/(<\/?h)3/g,'$14')
@@ -218,7 +233,7 @@ var Post = function (filename, markdown, meta) {
    * @param  {String} html [description]
    * @return {String}      [description]
    */
-  external.galleryHtml = function(html) {
+  internal.galleryHtml = function(html) {
     return html
       .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g,'<a href="$2$3" class="image">$1</a>')
     ;
@@ -229,46 +244,11 @@ var Post = function (filename, markdown, meta) {
    * @param  {String} html [description]
    * @return {String}      [description]
    */
-  external.makeSafeHtml = function(html) {
+  internal.makeSafeHtml = function(html) {
     return html
       .replace(/(<\/?)iframe[^>]*>/g,'')
       .replace(/((?:src|href)=")(\/)/g,'$1' + config.baseUrl +'$2')
     ;
-  };
-
-  /**
-   * Convert regular HTML in AMP-HTML.
-   * @see    https://www.ampproject.org/
-   * @param  {String} html [description]
-   * @return {String}      [description]
-   */
-  external.ampifyHtml = function(html) {
-    return html
-      .replace(/(<\/?)(img|video|audio|iframe)/g, '$1amp-$2')
-      .replace(/(<amp-img[^>]+)\/>/g,'$1></amp-img>')
-      .replace(/(<amp-(?:video|iframe))/g, '$1 width="640" height="360" layout="responsive"')
-      .replace(/(<amp-(?:video|iframe)[^>]+) allowfullscreen=".+?"/g, '$1')
-      .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^\.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)>(.*?)<\/amp-iframe>/g,'<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
-      .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
-      .replace(/(<amp-(?:video|audio|iframe).+?>).+(<\/amp-(?:video|iframe))/g, '$1$2')
-      .replace(/( style=".+?")/g, '')
-    ;
-  };
-
-  /**
-   * Return post.html as AMP-compatible HTML.
-   * @return {String} [description]
-   */
-  external.ampHtml = function() {
-    return external.ampifyHtml(external.html);
-  };
-
-  /**
-   * Return post.htmlTeaser as AMP-compatible HTML.
-   * @return {String} [description]
-   */
-  external.ampHtmlTeaser = function() {
-    return external.ampifyHtml(external.htmlTeaser);
   };
 
   /**

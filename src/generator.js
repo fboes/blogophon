@@ -49,7 +49,7 @@ var Generator = function (config) {
           }
           // Making promises
           var promises = files.map(function(i) {
-            return PostReader(i);
+            return PostReader(i, config);
           });
           // Checking promises
           Promise
@@ -133,7 +133,6 @@ var Generator = function (config) {
           Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g,'');
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('amp') , Mustache.render(Mustache.templates.amp, {
             post: post,
-            ampHtml: post.ampHtml(),
             ampCss: Mustache.ampCss,
             config: config
           },Mustache.partials)));

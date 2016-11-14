@@ -10,7 +10,8 @@ var post           = require('./models/post');
  * This class reads Markdown files into an object.
  * @constructor
  */
-var PostReader = function(file) {
+var PostReader = function(file, config) {
+  config = config || require('../config');
   if (!file) {
     throw new Error('File '+file+' is empty');
   }
@@ -78,7 +79,7 @@ var PostReader = function(file) {
         if (!postData.meta.Date && postData.meta.DateModified) {
           postData.meta.Date = postData.meta.DateModified;
         }
-        resolve( post(file, postData.markdown, postData.meta) );
+        resolve( post(file, postData.markdown, postData.meta, config) );
       });
     }
   );

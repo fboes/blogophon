@@ -1,4 +1,5 @@
 var post = require('../src/models/post');
+var config = require('../src/config');
 
 exports.testErrors = function(test) {
   'use strict';
@@ -12,14 +13,14 @@ exports.testErrors = function(test) {
   test.doesNotThrow(function() {post('test.md', 'Test', {
     Description: 'Description',
     Date: new Date()
-  });}, Error);
+  }, config);}, Error);
 
   test.done();
 };
 
 exports.testStructure = function(test) {
   'use strict';
-  test.expect(20+3);
+  test.expect(17);
 
   var testPost = post('test.md', 'Test', {
     Description: 'Description',
@@ -39,16 +40,10 @@ exports.testStructure = function(test) {
   test.ok(testPost.hash);
   test.ok(testPost.hash.match(/^[a-z0-9]+$/));
   test.ok(testPost.html);
-  test.ok(testPost.html === '<p>Test</p>');
+  test.equal(testPost.html, '<p>Test</p>');
   test.ok(testPost.htmlTeaser);
-  test.ok(testPost.htmlTeaser === '<p>Description</p>');
-  test.ok(testPost.safeHtml);
-  test.ok(testPost.html === '<p>Test</p>');
-  test.ok(testPost.safeHtmlTeaser);
-  test.ok(testPost.safeHtmlTeaser === '<p>Description</p>');
-  test.ok(testPost.ampHtml());
-  test.ok(testPost.ampHtmlTeaser());
-  test.ok(String(testPost) === testPost.hash);
+  test.equal(testPost.htmlTeaser, '<p>Description</p>');
+  test.equal(String(testPost), testPost.hash);
   test.done();
 };
 
@@ -86,3 +81,25 @@ exports.testImageParser = function(test) {
 
   test.done();
 };
+
+/*
+exports.testSpecialProperties = function(test) {
+  'use strict';
+
+  var testPost = post('test.md', 'Test', {
+    Description: 'Description',
+    Date: new Date()
+  });
+
+  if (config.specialFeatures.acceleratedmobilepages) {
+    test.ok(testPost.safeHtmlTeaser);
+    test.ok(testPost.safeHtmlTeaser === '<p>Description</p>');
+  }
+  if (config.specialFeatures.jsonrss || config.specialFeatures.atom || config.specialFeatures.rss) {
+    test.ok(testPost.ampHtml);
+    test.ok(testPost.ampHtmlTeaser === '<p>Description</p>');
+  }
+
+  test.done();
+}
+*/
