@@ -86,7 +86,7 @@ var Generator = function (config) {
       function(resolve, reject) {
         // Making promises
         var promises = allPosts.map(function(post) {
-          if (!force && internal.hashes.isHashed(post.meta.Url, post.hash)) {
+          if (!force && internal.hashes.matchesHash(post.meta.Url, post.hash)) {
             skipped++;
           } else {
             generatedArticles.push([post.meta.Url, post.filename]);
