@@ -37,9 +37,9 @@ Mustache.getTemplates = function(themePath) {
     Mustache.partials[file.replace(/\.[a-z]+$/,'')] = fs.readFileSync(path.join(Mustache.themePath, '/partials/'+file), 'utf8');
   });
 
-  Object.keys(Mustache.templates).map(function(t) {
+  for (var t in Mustache.templates) {
     Mustache.parse(t);
-  });
+  }
   return this;
 };
 

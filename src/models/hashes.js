@@ -23,7 +23,7 @@ var hashes = function(hashFilename) {
   }
 
   /**
-   * Check if a has for `key` exists, and if it matches `hash`
+   * Check if a hash for `key` exists, and if it matches `hash`
    * @param  {String}  key  [description]
    * @param  {String}  hash [description]
    * @return {Boolean}      If `key` exists and matches `hash`.
