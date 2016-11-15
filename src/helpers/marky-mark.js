@@ -141,9 +141,10 @@ var markyMark = function markyMark (string) {
       '+1': '&#x1F44D;',
       '-1': '&#x1F44E;',
       '&lt;3': '&#x1F495;',
-      '&lt;/3': '&#x1F494;'
+      '&lt;/3': '&#x1F494;',
+      '(!)': '&#x26A0;'
     };
-    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|(?:\+|\-)1|&lt;\?3)(\W|$)/g, function(all, before, s, after) {
+    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|(?:\+|\-)1|&lt;\?3|\(!\))(\W|$)/g, function(all, before, s, after) {
       return before + '<span class="emoji" title="'+s+'">' + entityMap[s] + '</span>' + after;
     });
 

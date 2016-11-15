@@ -125,6 +125,7 @@ Just enter ASCII smileys to produce Emojis:
 | -1 | &#x1F44E; |
 | <3 | &#x1F495; |
 | </3 | &#x1F494; |
+| (!) | &#x26A0; |
 
 
 Tables
