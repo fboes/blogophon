@@ -48,4 +48,4 @@ If you use Sublime Text for editing your markdown files, consider installing `Ma
 Multiple blogs & global installation
 ------------------------------------
 
-See ["Multi-blog"](multi-blog.md) on how to set up multiple blogs on a single computer.
+There are setup instructions on [hot to use Blogophon globally / for multiple blogs on one machine](global-installation.md).
