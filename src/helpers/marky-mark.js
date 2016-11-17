@@ -68,12 +68,15 @@ var markyMark = function markyMark (string) {
         case '<html>':
           chunk = internal.convertHtml(chunk);
           break;
+        case '<xml>':
+          chunk = internal.convertHtml(chunk);
+          break;
         case '<markdown>':
           chunk = internal.convertMarkdown(chunk);
           break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|markdown)/);
+            var lang = chunk.match(/(css|html|xml|markdown)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             }
@@ -181,6 +184,8 @@ var markyMark = function markyMark (string) {
       .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<i class="c6">$1</i>')
       .replace(/((?:\/\/|\s#).+?(?:\n|$))/g, '<i class="comment">$1</i>')
       .replace(/(\/\*[\s\S]+?\*\/)/g, '<i class="comment">$1</i>')
+      .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
+      .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
     ;
   };
 
