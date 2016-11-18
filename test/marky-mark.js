@@ -13,7 +13,7 @@ exports.testSimpleString = function(test) {
     '<p>&quot;Meine vierjährige Tochter hat gesagt, dass sie sofort alle Buchstaben lernen will.&quot;</p>'+
     '<p>&quot;Na, dann gib ihr mal eine <a href="http://www.fileformat.info/info/charset/UTF-8/list.htm">UTF-8-Tabelle</a>.&quot;</p>'
   );
-  console.log(m);
+  //console.log(m);
   test.ok(m !== undefined);
   test.done();
 };
