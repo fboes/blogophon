@@ -42,7 +42,9 @@ var markyMark = function markyMark (string) {
       currentChunk += c;
     }
     internal.pushChunk(currentChunk);
-    return external.chunks.join('');
+    return external.chunks.join('').replace(/(<p|h\d|li>)([\s\S]+?)(<\/p|h\d|li>)/g,function(all, before, inline, after) {
+      return before + internal.convertTextBlock(inline) + after;
+    });
   };
 
   /**
@@ -155,7 +157,17 @@ var markyMark = function markyMark (string) {
       .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
       .replace(/(\s)-(\s)/g,'$1–$2')
       .replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
-      .replace(/&quot;(.+?)&quot;/g,'„$1“') // TODO: Fix quotation with inline tags
+    ;
+  };
+
+  /**
+   * [convertTextBlock description]
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertTextBlock = function convertTextBlock(string) {
+    return string
+      .replace(/&quot;(.+?)&quot;/g,'„$1“')
       .replace(/(?:'|&#39;)(.+?)(?:'|&#39;)/g,'‚$1‘')
     ;
   };
