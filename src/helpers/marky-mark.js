@@ -42,7 +42,7 @@ var markyMark = function markyMark (string) {
       currentChunk += c;
     }
     internal.pushChunk(currentChunk);
-    return external.chunks.join('').replace(/(<p|h\d|li>)([\s\S]+?)(<\/p|h\d|li>)/g,function(all, before, inline, after) {
+    return external.chunks.join('').replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g,function(all, before, inline, after) {
       return before + internal.convertTextBlock(inline) + after;
     });
   };
