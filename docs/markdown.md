@@ -137,6 +137,7 @@ Tables
 | **1** | X | X | X |
 | **2** | O | X |   |
 | **3** |   | O | O |
+
 ```
 
 In this example the first line of the table will be treated as table header. The first column will be treated as row header, because its content is enclosed in `**`.
