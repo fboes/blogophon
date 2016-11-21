@@ -234,6 +234,18 @@ var markyMark = function markyMark (string) {
    * @return {String}        [description]
    */
   internal.convertChess = function convertChess(string) {
+    var lines = string.split(/(?:\n|\r)/, 8).map(function(line, index) {
+      if (line.length < 24) {
+        line += Array(25 - line.length).join(' ');
+      }
+      return '<th scope="row">'+(8-index)+'</th><td>' + line.match(/(.{2})(?:.)/g, 8).join('</td><td>') + '</td>';
+    });
+    string =
+      '<table class="chess"><tbody>\n<tr>' + lines.join("</tr>\n<tr>") + '</tr>\n'+
+      '<tr><th></th><th scope="col">'+['A','B','C','D','E','F','G','H'].join('</th><th scope="col">')+'</th></tr>\n'+
+      '</tbody></table>'
+    ;
+
     var entityMap = {
       'wx': '&#9812;',
       'wq': '&#9813;',
@@ -248,9 +260,12 @@ var markyMark = function markyMark (string) {
       'bk': '&#9822;',
       'bp': '&#9823;'
     };
-    string = string.replace(/(w|b)(x|q|r|b|k|p)/g, function(s) {
-      return '<span class="emoji chess-'+s+'">' + entityMap[s] + '</span>';
-    });
+    string = string
+      .replace(/(w|b)(x|q|r|b|k|p)/g, function(s) {
+        return '<span class="emoji chess-'+s+'">' + entityMap[s] + '</span>';
+      })
+      .replace(/\s+(<\/)/g, '$1')
+    ;
 
     return string;
   };

@@ -45,8 +45,8 @@ exports.testChess = function(test) {
 
   var m;
 
-  m = markyMark('<pre><code class="language-chess">br bk bb bx bq bb bk br\nbp bp bp bp bp bp bp bp\n\n\n\n\nwp wp wp wp wp wp wp wp\nwr wk wb wx wq wb wk wr\n</code></pre>');
-  console.log(m);
+  m = markyMark('<pre><code class="language-chess">br bk bb bx bq bb bk br\nbp bp    bp bp bp bp bp\n      bp\n\n         wp\n\nwp wp wp    wp wp wp wp\nwr wk wb wx wq wb wk wr\n</code></pre>');
+  //console.log(m);
   test.ok(m !== undefined);
 
   test.done();
