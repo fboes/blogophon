@@ -138,6 +138,9 @@ var Post = function (filename, markdown, meta, config) {
         meta.Image = match[1];
       }
     }
+    if (meta.Image) {
+      meta.ProperImage = meta.Image;
+    }
     if (!meta.Image && config.themeConf.ogImage) {
       meta.Image = config.themeConf.ogImage;
     }
