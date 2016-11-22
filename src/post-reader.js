@@ -51,10 +51,11 @@ var PostReader = function(file, config) {
               postData.meta.Title = line;
             }
             if (!postData.meta.Description) {
-              if (line.match(/^={3}/) && !startDescriptionBuffer) {
+              if (line.match(/^(={3,})$/) && !startDescriptionBuffer) {
                 startDescriptionBuffer = true;
-              } else if (line.match(/^={3}/) && startDescriptionBuffer) {
+              } else if (line.match(/^(={3}|\*{3})$/) && startDescriptionBuffer) {
                 startDescriptionBuffer = false;
+                line = '===';
                 postData.meta.Description = descriptionBuffer;
               } else if (startDescriptionBuffer) {
                 descriptionBuffer += line+"\n";
@@ -69,8 +70,8 @@ var PostReader = function(file, config) {
           reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
         }
         postData.meta.noLinkNeeded = false;
-        if (!postData.meta.Description && descriptionBuffer) {
-          postData.meta.Description = descriptionBuffer;
+        if (!postData.meta.Description) {
+          postData.meta.Description = descriptionBuffer || postData.markdown;
           postData.meta.noLinkNeeded = true;
         }
         if (fileStat.mtime) {

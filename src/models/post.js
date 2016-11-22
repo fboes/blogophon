@@ -33,16 +33,16 @@ var Post = function (filename, markdown, meta, config) {
       throw new Error('filename is empty');
     }
     if (!meta) {
-      throw new Error('meta is empty in post');
+      throw new Error('meta is empty in post '+filename);
     }
     if (!markdown) {
-      throw new Error('markdown is empty in post');
-    }
-    if (!meta.Description) {
-      throw new Error('meta.Description not supplied in post');
+      throw new Error('markdown is empty in post '+filename);
     }
     if (!meta.Date) {
-      throw new Error('meta.Date not supplied in post');
+      throw new Error('meta.Date not supplied in post '+filename);
+    }
+    if (!meta.Description) {
+      meta.Description = markdown;
     }
     if (!meta.DateModified) {
       meta.DateModified = meta.Date;
