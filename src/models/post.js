@@ -189,45 +189,19 @@ var Post = function (filename, markdown, meta, config) {
   };
 
   /**
-   * [markyMark description]
-   * @param  {String} html   [description]
-   * @param  {String} relUrl [description]
-   * @return {String}        [description]
+   * Convert Markdown into some proper HTML.
+   * @param  {String} markdown [description]
+   * @param  {String} relUrl   [description]
+   * @return {String}          [description]
    */
-  internal.markyMark = function(html, relUrl) {
+  internal.markyMark = function(markdown, relUrl) {
+    var html = markyMark(markdownConvert(markdown)).toString();
     if (relUrl) {
-      html = html.replace(/(!\[.*?\]\()/g, '$1'+relUrl);
+      html = html.replace(/(<img[^>]+src=")/g, '$1'+relUrl);
     }
-    html = markyMark(markdownConvert(html)).toString();
-    html = imageStyles(config).replaceImgHtml(html);
-    return html
-      .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
-      .replace(/(<\/?h)3/g,'$14')
-      .replace(/(<\/?h)2/g,'$13')
-      .replace(/(<\/?h)1/g,'$12')
-      .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
-      .replace(
-        /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="https://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
-      )
-      .replace(
-        /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
-      )
-      .replace(
-        /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<img src="https://i.giphy.com/$1.gif" alt="" />'
-      )
-      .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
+    return imageStyles(config)
+      .replaceImgHtml(html)
       .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
-      .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
-      .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
-      .replace(/(<(?:img)[^>]*[^/])(>)/g,'$1 /$2')
-      .replace(/(<(?:hr|br)[^/])(>)/g,'$1 /$2')
-      .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before,content,after) {
-        return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g,'$1<th scope="row">$2</th>') + after;
-      })
-      .trim()
     ;
   };
 

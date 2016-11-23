@@ -10,28 +10,34 @@ var markyMark = function markyMark (string) {
   var internal = {};
   var external = {};
 
-  external.chunks = [];
-  internal.mode   = '';
+  external.output       = '';
+  internal.mode         = '';
+  internal.currentChunk = '';
 
   /**
-   * Do actual conversion
-   * @param {String} string
+   * Put a complete string thorugh the parser and return the results.
+   * @param  {String} string
    * @return {String}
    */
   external.convert = function convert (string) {
-    external.chunks = [];
-    internal.mode   = '';
-    var currentChunk = '';
+    external.output       = '';
+    internal.mode         = '';
+    internal.currentChunk = '';
     for (var i = 0, len = string.length; i < len; i++) {
-      var c = string[i];
+      external.pushCharacter(string[i]);
+    }
+    return external.getResults();
+  };
 
-      if (internal.mode === '<>' || internal.mode === '</>') {
-        internal.pushChunk(currentChunk, '');
-        currentChunk = '';
-      }
+  /**
+   * Push a single character into the parser.
+   * @param  {String}  c [description]
+   * @return {Boolean}   [description]
+   */
+  external.pushCharacter = function pushCharacter (c) {
       if (c === '<') {
-        internal.pushChunk(currentChunk, c);
-        currentChunk = '';
+        internal.pushChunk(internal.currentChunk, c);
+        internal.currentChunk = '';
       }
       else if (internal.mode === '<' && c === '/') {
         internal.mode += c;
@@ -39,19 +45,19 @@ var markyMark = function markyMark (string) {
       else if (c === '>') {
         internal.mode += c;
       }
-      currentChunk += c;
-    }
-    internal.pushChunk(currentChunk);
-    return external.chunks.join('').replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g,function(all, before, inline, after) {
-      return before + internal.convertTextBlock(inline) + after;
-    });
+      internal.currentChunk += c;
+      if (internal.mode === '<>' || internal.mode === '</>') {
+        internal.pushChunk(internal.currentChunk, '');
+        internal.currentChunk = '';
+      }
+      return true;
   };
 
   /**
-   * Push a single chunk to the chunk array, but convert chunks by looking at the current mode
-   * @param {String} chunk
-   * @param {String} mode
-   * @return {Boolean}
+   * Push a single chunk of characters into the chunk array, but convert chunks by looking at the current mode
+   * @param  {String} chunk    List of characters
+   * @param  {String} newMode
+   * @return {String}          Name of new mode
    */
   internal.pushChunk = function pushChunk (chunk, newMode) {
     newMode = newMode || '';
@@ -91,10 +97,19 @@ var markyMark = function markyMark (string) {
           }
           break;
       }
-      external.chunks.push(chunk);
+      external.output += chunk; // this is the perfect place for a result emitter
     }
     internal.mode = newMode;
     return newMode;
+  };
+
+  /**
+   * Get current state of parsed characters by joining all chunks.
+   * @return {String} [description]
+   */
+  external.getResults = function getResults () {
+    internal.pushChunk(internal.currentChunk);
+    return internal.convertResult(external.output);
   };
 
   /**
@@ -248,6 +263,45 @@ var markyMark = function markyMark (string) {
       .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<i class="c1">$2</i>$3<i class="c3">$4</i>$5')
       .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<i class="c4">$2</i>$3')
       .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<i class="c4">$2</i>$3')
+    ;
+  };
+
+  /**
+   * [convertResult description]
+   * @param  {String} html [description]
+   * @return {String}      [description]
+   */
+  internal.convertResult = function convertResult (html) {
+    return html
+      .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
+      .replace(/(<\/?h)3/g,'$14')
+      .replace(/(<\/?h)2/g,'$13')
+      .replace(/(<\/?h)1/g,'$12')
+      .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
+      .replace(
+        /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+        '<div class="video-player youtube"><iframe allowfullscreen="true" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="https://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
+      )
+      .replace(
+        /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+        '<div class="video-player vimeo"><iframe allowfullscreen="true" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
+      )
+      .replace(
+        /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+        '<img src="https://i.giphy.com/$1.gif" alt="" />'
+      )
+      .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
+      .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
+      .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
+      .replace(/(<(?:img)[^>]*[^/])(>)/g,'$1 /$2')
+      .replace(/(<(?:hr|br)[^/])(>)/g,'$1 /$2')
+      .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before,content,after) {
+        return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g,'$1<th scope="row">$2</th>') + after;
+      })
+      .replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g,function(all, before, inline, after) {
+        return before + internal.convertTextBlock(inline) + after;
+      })
+      .trim()
     ;
   };
 

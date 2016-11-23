@@ -47,6 +47,33 @@ exports.testStructure = function(test) {
   test.done();
 };
 
+exports.testReplacingMarkdown = function(test) {
+  'use strict';
+  test.expect(9);
+
+  var testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
+  var testMarkdownDescription = 'Description ![](some-image.jpg) and [some internal link](internal.md).';
+  var testMeta = {
+    Description: testMarkdownDescription,
+    Date: new Date()
+  };
+  var testPost = post('test.md', testMarkdown, testMeta);
+
+  //console.log(testPost);
+
+  test.equal(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
+  test.equal(testPost.meta.Description, 'Description and some internal link.', 'Description has no markdown');
+  test.equal(testPost.meta.MarkdownDescription, testMarkdownDescription, '...but there is a description with markdown');
+  test.ok(testPost.meta.Image.match(/some\-image.jpg/));
+  test.ok(testPost.meta.ProperImage.match(/some\-image.jpg/));
+  test.ok(testPost.html.match(/test\/some\-image.jpg/), 'Image has path added');
+  test.ok(testPost.htmlTeaser.match(/test\/some\-image.jpg/), 'Image has path added');
+  test.ok(!testPost.html.match(/internal\.md/), 'Internal links are converted');
+  test.ok(!testPost.htmlTeaser.match(/internal\.md/), 'Internal links are converted');
+
+  test.done();
+};
+
 /**
  * Find all image references to local images in Markdown and return this with corresponding styles.
  * @param  {[type]} test [description]
