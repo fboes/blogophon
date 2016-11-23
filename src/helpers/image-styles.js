@@ -105,8 +105,8 @@ var imageStyles = function (config) {
           .all(promises)
           .then(function(generatedImages) {
             if (promises.length > 0) {
-              generatedImages.forEach(function(generatedImage) {
-                processed += generatedImage;
+              processed = generatedImages.reduce(function(accumulatedValue, generatedImage) {
+                return accumulatedValue + generatedImage;
               });
             }
             return external.generateNoStyleImage(sourceFilename, targetFilename);

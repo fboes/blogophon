@@ -186,8 +186,8 @@ var Generator = function (config) {
           .then(function(generatedImages) {
             var processed = 0;
             if (promises.length > 0) {
-              generatedImages.forEach(function(generatedImage) {
-                processed += generatedImage;
+              processed = generatedImages.reduce(function(accumulatedValue, generatedImage) {
+                return accumulatedValue + generatedImage;
               });
               console.log("Resized "+processed+" images");
             }
