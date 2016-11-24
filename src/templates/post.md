@@ -18,7 +18,7 @@ Twitter:   {{{title}}}
 {{#lead}}
 {{{lead}}}
 
-===
+***
 
 {{/lead}}
 {{{mainText}}}
