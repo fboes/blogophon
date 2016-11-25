@@ -6,7 +6,7 @@ exports.testSimpleString = function(test) {
 
   var m;
 
-  m = markyMark('<a href="test">Test 12x24</a> - &quot;Test&quot;');
+  m = markyMark('<p><a href="test">Test 12x24</a> - &quot;Test&quot;</p>');
   test.ok(m.match(/Test 12/));
   test.ok(m !== undefined, 'String is not undefined');
 
@@ -64,6 +64,31 @@ exports.testDiffing = function(test) {
   test.ok(m !== undefined, 'String is not undefined');
   test.ok(m.match(/<ins>/));
   test.ok(m.match(/<del>/));
+
+  test.done();
+};
+
+exports.testQuotation = function(test) {
+  'use strict';
+
+  test.expect(1);
+
+  var m, x = '<p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
+
+  m = markyMark(x, {
+    quotation: {
+      primary:   ['«','»'],
+      secondary: ['“','”']
+    }
+  });
+  console.log(m);
+
+  test.ok(m !== markyMark(x, {
+    quotation: {
+      primary:   ['„','“'],
+      secondary: ['‚','‘']
+    }
+  }), 'Quotation changed');
 
   test.done();
 };

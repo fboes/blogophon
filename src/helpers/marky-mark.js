@@ -2,20 +2,57 @@
 
 /**
  * Convert HTML in even better HTML.
- * @param {String} string
+ * @param  {String}  string
+ * @param  {Object}  rules  Object with settings
  * @return {String}
  * @constructor
  */
-var markyMark = function markyMark (string) {
+var markyMark = function markyMark (string, rules) {
   var internal = {};
   var external = {};
 
   external.output       = '';
   internal.mode         = '';
   internal.currentChunk = '';
+  internal.rules           = rules || {};
+  internal.rules.language  = internal.rules.language  || 'en';
+  internal.rules.quotation = internal.rules.quotation || {};
+  // See https://en.wikipedia.org/wiki/Quotation_mark
+  switch (internal.rules.language) {
+    case 'fr':
+    case 'it':
+    case 'pt':
+    case 'no':
+    case 'ru':
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['«','»'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['“','”'];
+      break;
+    case 'dk':
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['»','«'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['›','‹'];
+      break;
+    case 'nl':
+    case 'de':
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['„','“'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['‚','‘'];
+      break;
+    case 'pl':
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['„','“'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['«','»'];
+      break;
+    case 'se':
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['”','”'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['’','’'];
+      break;
+    default:
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['“','”'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['‘','’'];
+      break;
+  }
+
 
   /**
-   * Put a complete string thorugh the parser and return the results.
+   * Put a complete string through the parser and return the results.
    * @param  {String} string
    * @return {String}
    */
@@ -116,7 +153,7 @@ var markyMark = function markyMark (string) {
    * Convert text node. Will do some pretty clever UTF-8 emoji stunts as well.
    * @see    http://apps.timwhitlock.info/emoji/tables/unicode
    * @param  {String} string
-   * @return {String}
+   * @return {String}x
    */
   internal.convertText = function convertText(string) {
     var entityMap = {
@@ -182,8 +219,8 @@ var markyMark = function markyMark (string) {
    */
   internal.convertTextBlock = function convertTextBlock(string) {
     return string
-      .replace(/&quot;(.+?)&quot;/g,'„$1“')
-      .replace(/(?:'|&#39;)(.+?)(?:'|&#39;)/g,'‚$1‘')
+      .replace(/&quot;(.+?)&quot;/g, internal.rules.quotation.primary[0] + '$1' + internal.rules.quotation.primary[1])
+      .replace(/(?:'|&#39;)(.+?)(?:'|&#39;)/g, internal.rules.quotation.secondary[0] + '$1' + internal.rules.quotation.secondary[1])
     ;
   };
 

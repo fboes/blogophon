@@ -195,7 +195,7 @@ var Post = function (filename, markdown, meta, config) {
    * @return {String}          [description]
    */
   internal.markyMark = function(markdown, relUrl) {
-    var html = markyMark(markdownConvert(markdown)).toString();
+    var html = markyMark(markdownConvert(markdown), {language: config.language}).toString();
     if (relUrl) {
       html = html.replace(/(<img[^>]+src=")/g, '$1'+relUrl);
     }
