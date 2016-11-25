@@ -8,35 +8,29 @@ var translations = function (language) {
   // TODO: Move languages to separate files
   var external = {};
   external.translations = {
-    en: {
-      'index': 'Home',
-      'page': 'Page %d/%d',
-      'author': 'Articles written by %s',
-      'tag': 'Articles with tag "%s"'
-    },
     de: {
-      'index': 'Startseite',
-      'page': 'Seite %d/%d',
-      'author': 'Artikel von %s',
-      'tag': 'Artikel mit dem Tag "%s"'
+      'Home': 'Startseite',
+      'Page %d/%d': 'Seite %d/%d',
+      'Articles written by %s': 'Artikel von %s',
+      'Articles with tag "%s"': 'Artikel mit dem Tag "%s"'
     },
     fr: {
-      'index': 'Page d\'accueil',
-      'page': 'Page %d/%d',
-      'author': 'Articles écrits par %s',
-      'tag': 'Articles avec le tag "%s"'
+      'Home': 'Page d\'accueil',
+      'Page %d/%d': 'Page %d/%d',
+      'Articles written by %s': 'Articles écrits par %s',
+      'Articles with tag "%s"': 'Articles avec le tag "%s"'
     },
     es: {
-      'index': 'Portada',
-      'page': 'Página %d/%d',
-      'author': 'Artículos escritos por %s',
-      'tag': 'Artículos con la etiqueta "%s"'
+      'Home': 'Portada',
+      'Page %d/%d': 'Página %d/%d',
+      'Articles written by %s': 'Artículos escritos por %s',
+      'Articles with tag "%s"': 'Artículos con la etiqueta "%s"'
     },
     ru: {
-      'index': 'Главная страница',
-      'page': 'Страница %d/%d',
-      'author': 'Статьи, написанные %s',
-      'tag': 'Статьи с тегом "%s"'
+      'Home': 'Главная страница',
+      'Page %d/%d': 'Страница %d/%d',
+      'Articles written by %s': 'Статьи, написанные %s',
+      'Articles with tag "%s"': 'Статьи с тегом "%s"'
     }
   };
 
@@ -70,10 +64,7 @@ var translations = function (language) {
    * @return {[type]}     [description]
    */
   external.getString = function(key) {
-      if (!external.currentLanguage[key]) {
-        throw new Error("Missing string key "+key+" in locale "+external.language);
-      }
-      return external.currentLanguage[key];
+      return (!external.currentLanguage[key]) ? key : external.currentLanguage[key];
   };
 
   return external;

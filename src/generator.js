@@ -31,7 +31,7 @@ var Generator = function (config) {
   Mustache = Mustache.getTemplates(path.join(config.directories.currentTheme, 'templates'));
 
   internal.currentIndex = null;
-  internal.strings      = translations(config.language).getAll();
+  internal.translation  = translations(config.language);
   internal.hashes       = hashes();
   internal.imageStyles  = imageStyles(config);
 
@@ -232,7 +232,7 @@ var Generator = function (config) {
   external.buildIndexFiles = function(index, path, title) {
     index = index || internal.currentIndex;
     path  = path  || '/';
-    title = title || internal.strings.index;
+    title = title || internal.translation.getString('Home');
 
     fs.ensureDirSync(config.directories.htdocs + path);
     fs.removeSync(config.directories.htdocs + path + 'index*');
@@ -296,7 +296,7 @@ var Generator = function (config) {
           curPageObj.config = config;
           curPageObj.meta   = {
             title      : title,
-            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(internal.strings.page).sprintf(curPageObj.currentPage, curPageObj.maxPages),
+            subtitle   : (curPageObj.currentPage === 1) ? '' : SuperString(internal.translation.getString('Page %d/%d')).sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: curUrlObj.absoluteUrl(),
             absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
           };
@@ -338,7 +338,7 @@ var Generator = function (config) {
           return external.buildIndexFiles(
             tags[key].index,
             tags[key].urlObj.relativeUrl(),
-            SuperString(internal.strings.tag).sprintf(tags[key].title)
+            SuperString(internal.translation.getString('Articles with tag "%s"')).sprintf(tags[key].title)
           );
         });
 
@@ -383,7 +383,7 @@ var Generator = function (config) {
             return external.buildIndexFiles(
               authors[name].index,
               authors[name].urlObj.relativeUrl(),
-              SuperString(internal.strings.author).sprintf(name)
+              SuperString(internal.translation.getString('Articles written by %s')).sprintf(name)
             );
           });
 
