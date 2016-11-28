@@ -95,7 +95,9 @@ var BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.setupDialog = function () {
-    var themesAvailable= fs.readdirSync(config.directories.theme);
+    var themesAvailable= fs.readdirSync(config.directories.theme).filter(function(file) {
+      return fs.statSync(path.join(config.directories.theme, file)).isDirectory();
+    });
     var questions = [
       {
         type: 'input',
@@ -120,7 +122,7 @@ var BlogophonConsole = function() {
         message: 'Domain of your site, starting with `http`',
         default: config.baseUrl,
         validate: function(v) {
-          return v.match(/^http(s)?:\/\/\S+$/) ? true : 'Please supply a valid url, starting with `http://`.';
+          return v.match(/^http(s)?:\/\/\S+[a-z]$/) ? true : 'Please supply a valid url, starting with `http://`, but without trailing `/`.';
         },
         filter: function(v) {
           return v.replace(/\/$/,'');
@@ -131,7 +133,7 @@ var BlogophonConsole = function() {
         message: 'Base URL path, usually just `/`',
         default: config.basePath,
         validate: function(v) {
-          return v.match(/^[a-zA-Z0-9\.\/_-]+$/) ? true : 'Please supply a valid path, at least `/`.';
+          return v.match(/^[a-zA-Z0-9\.\/_-]+\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
         },
         filter: function(v) {
           return v.replace(/^([^\/])/,'/$1').replace(/([^\/])$/,'$1/');
