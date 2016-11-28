@@ -149,15 +149,15 @@ Fenced code blocks
 
 Fenced code blocks are used for longer listing and are started like this:
 
-   ```
-   Your code here
-   ```
+    ```
+    Your code here
+    ```
 
 You can add an optional language identifier to enable syntax highlighting in your fenced code block by prepending a language identifier just after the opening ticks:
 
-   ```javascript
-   Your code here
-   ```
+    ```javascript
+    Your code here
+    ```
 
 The following identifiers are supported:
 
