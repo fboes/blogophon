@@ -37,10 +37,7 @@ gulp.task('nodeunit', function() {
   return gulp.src(pkg.directories.test + '/**/*.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(nodeunit({
-      reporter: 'junit',
-      reporterOptions: {
-        output: 'test'
-      }
+      reporter: 'minimal'
     }))
   ;
 });
