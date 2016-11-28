@@ -3,7 +3,8 @@
 var dateFormat      = require('dateformat');
 
 /**
- * Returns RSS as a javascript object.
+ * Returns lots of date formats as a javascript object.
+ * @see https://en.wikipedia.org/wiki/Date_format_by_country
  * @constructor
  */
 var blogophonDate = function(date, locale) {
