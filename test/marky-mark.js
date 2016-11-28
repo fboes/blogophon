@@ -47,6 +47,11 @@ exports.testCodeHighlighting = function(test) {
   test.done();
 };
 
+/**
+ * [testDiffing description]
+ * @param  {[type]} test [description]
+ * @return {[type]}      [description]
+ */
 exports.testDiffing = function(test) {
   'use strict';
 
@@ -68,6 +73,38 @@ exports.testDiffing = function(test) {
   test.done();
 };
 
+/**
+ * [testShell description]
+ * @param  {[type]} test [description]
+ * @return {[type]}      [description]
+ */
+exports.testShell = function(test) {
+  'use strict';
+
+  test.expect(3);
+
+  var m;
+
+  m = markyMark(
+    '<pre><code class="lang-shell">'+
+    "\n$ rm -rf ."+
+    "\n# Nasty nasty"+
+    "\nx files have been deleted"+
+    "\n</code></pre>"
+  );
+  //console.log(m);
+  test.ok(m !== undefined, 'String is not undefined');
+  test.ok(m.match(/<i class/));
+  test.ok(m.match(/comment/));
+
+  test.done();
+};
+
+/**
+ * [testQuotation description]
+ * @param  {[type]} test [description]
+ * @return {[type]}      [description]
+ */
 exports.testQuotation = function(test) {
   'use strict';
 
@@ -81,7 +118,7 @@ exports.testQuotation = function(test) {
       secondary: ['“','”']
     }
   });
-  console.log(m);
+  //console.log(m);
 
   test.ok(m !== markyMark(x, {
     quotation: {

@@ -119,9 +119,12 @@ var markyMark = function markyMark (string, rules) {
         case '<markdown>':
           chunk = internal.convertMarkdown(chunk);
           break;
+        case '<shell>':
+          chunk = internal.convertShell(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|xml|markdown)/);
+            var lang = chunk.match(/(css|html|xml|markdown|shell)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             }
@@ -300,6 +303,18 @@ var markyMark = function markyMark (string, rules) {
       .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<i class="c1">$2</i>$3<i class="c3">$4</i>$5')
       .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<i class="c4">$2</i>$3')
       .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<i class="c4">$2</i>$3')
+    ;
+  };
+
+  /**
+   * Convert bash / shell text node
+   * @param {String} string
+   * @return {String}
+   */
+  internal.convertShell = function convertShell(string) {
+    return string
+      .replace(/(\$.+?)(\n|$)/g, '<i class="c4">$1</i>$2')
+      .replace(/(#.+?)(\n|$)/g, '<i class="comment">$1</i>$2')
     ;
   };
 

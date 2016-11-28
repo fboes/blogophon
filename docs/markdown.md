@@ -144,3 +144,26 @@ In this example the first line of the table will be treated as table header. The
 
 [Colons can be used to align columns](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables).
 
+Fenced code blocks
+------------------
+
+Fenced code blocks are used for longer listing and are started like this:
+
+   ```
+   Your code here
+   ```
+
+You can add an optional language identifier to enable syntax highlighting in your fenced code block by prepending a language identifier just after the opening ticks:
+
+   ```javascript
+   Your code here
+   ```
+
+The following identifiers are supported:
+
+* `css`
+* `html` & `xml`
+* `markdown` to output Markdown examples.
+* `shell` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
+
+All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
