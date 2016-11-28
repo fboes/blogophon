@@ -64,5 +64,8 @@
     </main>
     {{>footer}}
   </div>
+  {{#post.urlEncoded.title}}
+    <amp-pixel src="//stats.3960.org/piwik.php?idsite=8&rec=1&action_name={{post.urlEncoded.title}}&url={{post.urlEncoded.absoluteUrl}}"></amp-pixel>
+  {{/post.urlEncoded.title}}
 </body>
 </html>

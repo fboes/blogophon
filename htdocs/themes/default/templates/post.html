@@ -135,5 +135,8 @@
     {{>footer}}
   </div>
   {{>closure}}
+  {{#post.urlEncoded.title}}
+    <noscript><img src="//stats.3960.org/piwik.php?idsite=8&rec=1&action_name={{post.urlEncoded.title}}&url={{post.urlEncoded.absoluteUrl}}" alt="" /></noscript>
+  {{/post.urlEncoded.title}}
 </body>
 </html>
