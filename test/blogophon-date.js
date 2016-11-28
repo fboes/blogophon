@@ -2,7 +2,7 @@ var blogophonDate = require('../src/models/blogophon-date');
 
 exports.basicTest = function basicTest(test) {
   'use strict';
-  test.expect(10+10+10);
+  test.expect(10+10+12);
 
   var germanDate  = blogophonDate('2016-12-31', 'de');
   var englishDate = blogophonDate('2016-12-31', 'en');
@@ -32,16 +32,33 @@ exports.basicTest = function basicTest(test) {
 
   test.ok(englishDate.locale !== germanDate.locale);
   test.equals(germanDate.iso, englishDate.iso);
+  test.ok(germanDate.iso.match(/[\+\-]\d+:\d+$/), 'Proper timezone at the end of string');
   test.equals(germanDate.rfc, englishDate.rfc);
+  test.ok(germanDate.rfc.match(/[\+\-]\d+$/), 'Proper timezone at the end of string');
   test.equals(germanDate.ics, englishDate.ics);
   test.ok(germanDate.ics.match(/^\d+T\d+.$/), 'String like 20060910T220000Z');
   test.ok(germanDate.icsDay.match(/^\d+$/), 'String like 20060910');
-  test.ok(germanDate.year.match(/^\d+$/), 'String like 2006');
-  test.ok(germanDate.month.match(/^\d+$/), 'String like 09');
-  test.ok(germanDate.day.match(/^\d+$/), 'String like 10');
+  test.equals(germanDate.year, '2016');
+  test.equals(germanDate.month, '12');
+  test.equals(germanDate.day, '31');
   test.equals(germanDate.timestamp, englishDate.timestamp);
 
   //console.log(englishDate);
+  //console.log(germanDate);
+
+  test.done();
+};
+
+exports.moreTests = function moreTests(test) {
+  'use strict';
+  test.expect(3);
+
+  var germanDate  = blogophonDate('2016-01-01 17:59:00 +00:00', 'de');
+
+  test.equals(germanDate.year, '2016');
+  test.equals(germanDate.month, '01');
+  test.equals(germanDate.day, '01');
+
   //console.log(germanDate);
 
   test.done();
