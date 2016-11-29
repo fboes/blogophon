@@ -174,10 +174,6 @@ var Post = function (filename, markdown, meta, config) {
       external.html,
       external.htmlTeaser
     ])).digest('hex');
-    external.urlEncoded     = {
-      title: encodeURIComponent(meta.Title),
-      absoluteUrl: encodeURIComponent(meta.AbsoluteUrl)
-    };
 
     // Add extra stuff
     if (config.specialFeatures.jsonrss || config.specialFeatures.atom || config.specialFeatures.rss) {
