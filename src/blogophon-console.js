@@ -133,7 +133,7 @@ var BlogophonConsole = function() {
         message: 'Base URL path, usually just `/`',
         default: config.basePath,
         validate: function(v) {
-          return v.match(/^[a-zA-Z0-9\.\/_-]+\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
+          return v.match(/^[a-zA-Z0-9\.\/_-]*\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
         },
         filter: function(v) {
           return v.replace(/^([^\/])/,'/$1').replace(/([^\/])$/,'$1/');
