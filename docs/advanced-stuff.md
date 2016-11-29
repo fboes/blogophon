@@ -1,8 +1,7 @@
 ![Blogophon -](blogophon.png) Advanced stuff
 ==============
 
-In this document you will find some stuff for hardcore CLI wizards.
-
+In this document you will find some stuff for hardcore CLI wizards and server gurus.
 
 Other means of editing articles
 -------------------------------
@@ -49,3 +48,14 @@ Multiple blogs & global installation
 ------------------------------------
 
 There are setup instructions on [hot to use Blogophon globally / for multiple blogs on one machine](global-installation.md).
+
+Server setup
+------------
+
+### Apache installation
+
+The Blogophon will generate a `.htaccess` file initially. If possible, move the contents of this file to your server configuration file. If you cannot modify your server configuration, but Apache executes `.htaccess`, Blogophon's `.htaccess` should be all you need.
+
+### nginx installation
+
+There is a [sample nginx configuration](nginx.conf) to use for your server.

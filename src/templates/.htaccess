@@ -1,3 +1,6 @@
+# ServerName {{config.domain}}
+# DocumentRoot {{config.directories.htdocs}}
+
 AddType text/xml xml rss atom
 AddType text/plain .md
 AddType application/json .json
