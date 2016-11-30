@@ -43,7 +43,7 @@ Version
 [![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
 [![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
 
-Version: [0.7.0](https://github.com/fboes/blogophon/releases) (2016-11-08)
+Version: [0.7.1](https://github.com/fboes/blogophon/releases) (2016-11-30)
 
 Legal stuff
 -----------
