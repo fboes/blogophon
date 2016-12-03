@@ -59,3 +59,13 @@ The Blogophon will generate a `.htaccess` file initially. If possible, move the 
 ### nginx installation
 
 There is a [sample nginx configuration](nginx.conf) to use for your server.
+
+Automatically publish to external services
+------------------------------------------
+
+The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used, to advertise for your articles on services like Twitter or Facebook.
+
+There are services which handle this re-pbulishing, like [If This Than That](https://ifttt.com). After registering an account you just copy your RSS feed url (`http://www.example.com/posts.rss`) to link it to the following services:
+
+* For Twitter use ["New entries to an RSS will be automatically tweeted"](https://ifttt.com/applets/5539p-new-entries-to-an-rss-will-be-automatically-tweeted).
+* For Facebook use ["Rss => Facebook page "](https://ifttt.com/applets/114206p-rss-facebook-page-with-description-thumbnail).
