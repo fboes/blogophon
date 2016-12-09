@@ -393,7 +393,7 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
-        var markdownFilename = config.directories.data + '/' + answers.file;
+        var markdownFilename = path.join(config.directories.data, answers.file);
         var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
         console.log(chalk.grey(cmd));
         shell.exec(cmd);
