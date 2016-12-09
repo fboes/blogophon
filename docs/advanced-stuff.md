@@ -69,3 +69,5 @@ There are services which handle this re-pbulishing, like [If This Than That](htt
 
 * For Twitter use ["New entries to an RSS will be automatically tweeted"](https://ifttt.com/applets/5539p-new-entries-to-an-rss-will-be-automatically-tweeted).
 * For Facebook use ["Rss => Facebook page "](https://ifttt.com/applets/114206p-rss-facebook-page-with-description-thumbnail).
+
+You may want to deactivate URL shortening in [IFTTT's settings](https://ifttt.com/settings).
