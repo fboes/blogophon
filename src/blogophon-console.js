@@ -178,7 +178,7 @@ var BlogophonConsole = function() {
         }
       },{
         type: 'input',
-        name: 'defaultAuthor',
+        name: 'defaultAuthor.name',
         message: 'Default name of author',
         default: config.defaultAuthor.name,
         validate: function(v) {
@@ -186,7 +186,7 @@ var BlogophonConsole = function() {
         }
       },{
         type: 'input',
-        name: 'defaultAuthorEmail',
+        name: 'defaultAuthor.email',
         message: 'Default email address of author',
         default: config.defaultAuthor.email,
         validate: function(v) {
@@ -228,12 +228,6 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function (answers) {
         answers.theme = config.theme ? config.theme : themesAvailable[0];
-        answers.defaultAuthor = {
-          "email": answers.defaultAuthorEmail,
-          "name": answers.defaultAuthor
-        };
-        delete answers.defaultAuthorEmail;
-
         var generator = new Generator(config);
         generator
           .buildBasicFiles(answers)
