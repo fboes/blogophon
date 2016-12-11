@@ -129,3 +129,40 @@ exports.testQuotation = function(test) {
 
   test.done();
 };
+
+exports.testPhp = function(test) {
+  'use strict';
+
+  test.expect(5);
+
+  var m, x = '              <p>Autoloading ist in PHP eine feine Sache. Statt jede einzelne Klasse mittels eigenem <code>require_once</code> einzubinden, kann man bei existierendem Autoloader einfach durch Aufruf der Klasse diese Laden.</p>'+"\n"+
+  '<!-- more -->'+"\n"+
+  '<p id="more">Eine Klasse legt man dabei einfach in einer Verzeichnisstruktur ab, z.B. unter <code>Example/Foo.php</code>. Das Innere der Datei sieht dann wie folgt aus:</p>'+"\n"+
+  '<pre><code class="lang-php">namespace Example;'+"\n"+
+  ''+"\n"+
+  'class Foo'+"\n"+
+  '{'+"\n"+
+  '  // Stuff here'+"\n"+
+  '}'+"\n"+
+  '</code></pre>'+"\n"+
+  '<p>Der kleinste Autoloader der Welt sieht dann wie folgt aus, und verarbeitet alle in PHP unbekannte Klassen:</p>'+"\n"+
+  '<pre><code class="lang-php">function __autoload($classname)'+"\n"+
+  '{  '+"\n"+
+  '  require_once($classname.<i class="c5">&#39;.php&#39;);'+"\n"+
+  '}'+"\n"+
+  '</code></pre>'+"\n"+
+  '<p>Und die Klasse setzt man dann nach eingeschalteten Autoloader wie folgt ein:</p>'+"\n"+
+  '<pre><code class="lang-php">$foo = new \Example\Foo();'+"\n"+
+  '</code></pre>';
+
+  m = markyMark(x);
+  //console.log(m);
+
+  test.ok(m);
+  test.ok(m.match(/<i class="comment">\/\//));
+  test.ok(m.match(/<i class="[^"]+">namespace<\/i>/));
+  test.ok(m.match(/<i class="[^"]+">\$classname<\/i>/));
+  test.ok(m.match(/<i class="[^"]+">\$foo<\/i>/));
+
+  test.done();
+};

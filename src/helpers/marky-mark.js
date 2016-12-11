@@ -243,15 +243,16 @@ var markyMark = function markyMark (string, rules) {
    */
   internal.convertCode = function convertCode(string) {
     return string
-      .replace(/(\b)(var|function|method|class|const|external|internal|protected|use|public|private)(\b)/g, '$1<i class="c1">$2</i>$3')
-      .replace(/(\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i class="c2">$2</i>$3')
+      .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<i class="c1">$2</i>$3')
+      .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i class="c2">$2</i>$3')
+      .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<i class="c3">$1</i>')
       .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
       .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g,'$1<i class="c5">$2$3$4</i>')
       .replace(/([^\\])(')(.*?[^\\])(')/g,'$1<i class="c5">$2$3$4</i>')
       .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g,'$1<i class="c5">$2$3$4</i>')
       .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<i class="c6">$2</i>$3')
       .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<i class="c6">$1</i>')
-      .replace(/((?:\/\/|\s#).+?(?:\n|$))/g, '<i class="comment">$1</i>')
+      .replace(/((?:\/\/|\s#).+?)(\n|$)/g, '<i class="comment">$1</i>$2')
       .replace(/(\/\*[\s\S]+?\*\/)/g, '<i class="comment">$1</i>')
       .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
       .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
