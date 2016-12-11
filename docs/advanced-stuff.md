@@ -67,7 +67,11 @@ The Blogophon RSS feed allows for other services to automatically re-publish new
 
 There are services which handle this re-pbulishing, like [If This Than That](https://ifttt.com). After registering an account you just copy your RSS feed url (`http://www.example.com/posts.rss`) to link it to the following services:
 
-* For Twitter use ["New entries to an RSS will be automatically tweeted"](https://ifttt.com/applets/5539p-new-entries-to-an-rss-will-be-automatically-tweeted).
-* For Facebook use ["Rss => Facebook page "](https://ifttt.com/applets/114206p-rss-facebook-page-with-description-thumbnail).
+1. Click on your user account and select "New applet".
+2. For `if [this]` select "Feed > New feed item".
+3. Add the feed URL of your blog. You may also choose to only use the RSS feed of a special tag.
+4. For `then [that]` select "Twitter > Post a tweet", "Facebbok > Create a link post", "Slack > Post to channel" or whatever service you want to use.
+5. Allow IFTTT to access the service you selected.
+6. Configure how your blog post`s URL and title will be posted to the service you selected.
 
 You may want to deactivate URL shortening in [IFTTT's settings](https://ifttt.com/settings).
