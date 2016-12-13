@@ -1,5 +1,3 @@
-'use strict';
-
 var url         = require('../helpers/url');
 var SuperString = require('../helpers/super-string');
 
@@ -8,6 +6,7 @@ var SuperString = require('../helpers/super-string');
  * @param {[type]} identifier [description]
  */
 var tagUrl = function (identifier, path) {
+  'use strict';
   var external = url(identifier);
   external.path = path || 'tagged';
 

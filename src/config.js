@@ -1,5 +1,3 @@
-'use strict';
-
 var fs             = require('fs');
 var path           = require('path');
 
@@ -12,7 +10,7 @@ try {
   config = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'user', 'config.json'), 'utf8'));
 } catch (e) {
   config = {
-    "notInitialized":true
+    notInitialized: true
   };
 }
 
@@ -26,7 +24,7 @@ config.isWin              = /^win/.test(process.platform);
 config.baseUrl            = config.baseUrl       || 'http://' + (require('os').hostname() || 'example.com');
 config.basePath           = config.basePath      || '/';
 config.absoluteBasePath   = config.baseUrl + config.basePath;
-config.domain             = config.baseUrl.replace(/^[a-z]+:\/\//,'');
+config.domain             = config.baseUrl.replace(/^[a-z]+:\/\//, '');
 config.language           = config.language      || 'en';
 config.itemsPerPage       = Number(config.itemsPerPage) || 5;
 config.defaultAuthor      = config.defaultAuthor        || {};
@@ -39,7 +37,8 @@ config.htdocs.author      = config.htdocs.author || 'authored-by';
 config.specialFeatures    = {};
 if (config.useSpecialFeature) {
   config.useSpecialFeature.forEach(function(v) {
-    config.specialFeatures[v.toLowerCase().replace(/[^a-z]/g,'')] = true;
+    'use strict';
+    config.specialFeatures[v.toLowerCase().replace(/[^a-z]/g, '')] = true;
   });
 }
 

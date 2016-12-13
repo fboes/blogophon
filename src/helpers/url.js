@@ -1,5 +1,3 @@
-'use strict';
-
 var path           = require('path');
 var SuperString    = require('../helpers/super-string');
 var config         = require('../config');
@@ -10,6 +8,7 @@ var config         = require('../config');
  * @return {url}    [description]
  */
 var url = function (identifier) {
+  'use strict';
   var external = {};
 
   external.identifier = identifier ? identifier.replace(/^\/+/, '') : null;

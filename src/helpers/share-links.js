@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Generate object of share links.
  * @param  {String} title       [description]
@@ -10,6 +8,7 @@
  * @return {Object} [description]
  */
 var shareLinks = function(title, link, description, siteName, image) {
+  'use strict';
   if (!link) {
     throw new Error('Missing required URL for share link');
   }
@@ -35,16 +34,16 @@ var shareLinks = function(title, link, description, siteName, image) {
       text: description+' '+link,
       link: link
     }),
-    pinterest:(!image ? null : 'http://pinterest.com/pin/create/button/?'+urlParameter({
-      url: link,
+    pinterest: (!image ? null : 'http://pinterest.com/pin/create/button/?'+urlParameter({
+      url:   link,
       media: image,
       description: description
     })),
     linkedin: 'https://www.linkedin.com/shareArticle?'+urlParameter({
-      mini:'true',
-      url:link,
-      title:title,
-      summary:description
+      mini:   'true',
+      url:     link,
+      title:   title,
+      summary: description
     }),
     whatsapp: 'whatsapp://send?text=' +encodeURIComponent(title + ' [' + link + ']'),
     email:    'mailto:?'+urlParameter({

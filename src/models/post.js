@@ -1,5 +1,3 @@
-'use strict';
-
 var markdownConvert = require('marked');
 var crypto          = require('crypto');
 var SuperString     = require('../helpers/super-string');
@@ -17,6 +15,7 @@ var imageStyles     = require('../helpers/image-styles');
  * @constructor
  */
 var Post = function (filename, markdown, meta, config) {
+  'use strict';
   config = config || require('../config');
   var external = {};
   var internal = {};
@@ -115,7 +114,7 @@ var Post = function (filename, markdown, meta, config) {
     if (meta.Description) {
       meta.MarkdownDescription = meta.Description;
       meta.Description = meta.Description
-        .replace(/>/g,' ')
+        .replace(/>/g, ' ')
         .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
         .replace(/\s\s+/g, ' ')
         .replace(/http(s)?:\S+/g, '')
@@ -150,7 +149,7 @@ var Post = function (filename, markdown, meta, config) {
     if (!meta.Twitter) {
       meta.Twitter = meta.Title;
     } else {
-      meta.Twitter = meta.Twitter.replace(/\\(#)/g,'$1');
+      meta.Twitter = meta.Twitter.replace(/\\(#)/g, '$1');
     }
     if (meta.Rating) {
       var match2 = meta.Rating.match(/^(\d)\/(\d)$/);
@@ -212,7 +211,7 @@ var Post = function (filename, markdown, meta, config) {
    */
   internal.galleryHtml = function(html) {
     return html
-      .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g,'<a href="$2$3" class="image">$1</a>')
+      .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="image">$1</a>')
     ;
   };
 
@@ -223,8 +222,8 @@ var Post = function (filename, markdown, meta, config) {
    */
   internal.makeSafeHtml = function(html) {
     return html
-      .replace(/(<\/?)iframe[^>]*>/g,'')
-      .replace(/((?:src|href)=")(\/)/g,'$1' + config.baseUrl +'$2')
+      .replace(/(<\/?)iframe[^>]*>/g, '')
+      .replace(/((?:src|href)=")(\/)/g, '$1' + config.baseUrl +'$2')
     ;
   };
 
@@ -243,10 +242,10 @@ var Post = function (filename, markdown, meta, config) {
   external.toJSON = function() {
     var json = external;
     if (json.next && json.next.Id) {
-      json.next = json.next.urlObj.relativeUrl('index','json');
+      json.next = json.next.urlObj.relativeUrl('index', 'json');
     }
     if (json.prev && json.prev.Id) {
-      json.prev = json.prev.urlObj.relativeUrl('index','json');
+      json.prev = json.prev.urlObj.relativeUrl('index', 'json');
     }
     return json;
   };

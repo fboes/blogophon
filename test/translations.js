@@ -4,7 +4,9 @@ exports.testTranslations = function(test) {
 
   var translations = require('../src/helpers/translations');
 
-  test.throws(function() {translations('xx');}, Error);
+  test.throws(function() {
+    translations('xx');
+  }, Error);
 
   // Fallback on unknown string
   test.equal(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Convert HTML in even better HTML.
  * @param  {String}  string
@@ -8,6 +6,7 @@
  * @constructor
  */
 var markyMark = function markyMark (string, rules) {
+  'use strict';
   var internal = {};
   var external = {};
 
@@ -24,29 +23,29 @@ var markyMark = function markyMark (string, rules) {
     case 'pt':
     case 'no':
     case 'ru':
-      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['«','»'];
-      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['“','”'];
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['«', '»'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['“', '”'];
       break;
     case 'dk':
-      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['»','«'];
-      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['›','‹'];
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['»', '«'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['›', '‹'];
       break;
     case 'nl':
     case 'de':
-      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['„','“'];
-      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['‚','‘'];
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['„', '“'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['‚', '‘'];
       break;
     case 'pl':
-      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['„','“'];
-      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['«','»'];
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['„', '“'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['«', '»'];
       break;
     case 'se':
-      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['”','”'];
-      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['’','’'];
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['”', '”'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['’', '’'];
       break;
     default:
-      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['“','”'];
-      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['‘','’'];
+      internal.rules.quotation.primary   = internal.rules.quotation.primary   || ['“', '”'];
+      internal.rules.quotation.secondary = internal.rules.quotation.secondary || ['‘', '’'];
       break;
   }
 
@@ -72,22 +71,20 @@ var markyMark = function markyMark (string, rules) {
    * @return {Boolean}   [description]
    */
   external.pushCharacter = function pushCharacter (c) {
-      if (c === '<') {
-        internal.pushChunk(internal.currentChunk, c);
-        internal.currentChunk = '';
-      }
-      else if (internal.mode === '<' && c === '/') {
-        internal.mode += c;
-      }
-      else if (c === '>') {
-        internal.mode += c;
-      }
-      internal.currentChunk += c;
-      if (internal.mode === '<>' || internal.mode === '</>') {
-        internal.pushChunk(internal.currentChunk, '');
-        internal.currentChunk = '';
-      }
-      return true;
+    if (c === '<') {
+      internal.pushChunk(internal.currentChunk, c);
+      internal.currentChunk = '';
+    } else if (internal.mode === '<' && c === '/') {
+      internal.mode += c;
+    } else if (c === '>') {
+      internal.mode += c;
+    }
+    internal.currentChunk += c;
+    if (internal.mode === '<>' || internal.mode === '</>') {
+      internal.pushChunk(internal.currentChunk, '');
+      internal.currentChunk = '';
+    }
+    return true;
   };
 
   /**
@@ -127,13 +124,11 @@ var markyMark = function markyMark (string, rules) {
             var lang = chunk.match(/(css|html|xml|markdown|shell)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
-            }
-            else {
+            } else {
               newMode = '<code>';
             }
-          }
-          else if (chunk === '<code>') {
-              newMode = '<no>';
+          } else if (chunk === '<code>') {
+            newMode = '<no>';
           }
           break;
       }
@@ -209,9 +204,9 @@ var markyMark = function markyMark (string, rules) {
     });
 
     return string
-      .replace(/(\d)\s*-\s*(\d)/g,'$1–$2')
-      .replace(/(\s)-(\s)/g,'$1–$2')
-      .replace(/(\d\s*)(x|\*)(\s*\d)/g,'$1×$3')
+      .replace(/(\d)\s*-\s*(\d)/g, '$1–$2')
+      .replace(/(\s)-(\s)/g, '$1–$2')
+      .replace(/(\d\s*)(x|\*)(\s*\d)/g, '$1×$3')
     ;
   };
 
@@ -247,9 +242,9 @@ var markyMark = function markyMark (string, rules) {
       .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i class="c2">$2</i>$3')
       .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<i class="c3">$1</i>')
       .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<i class="c4">$2</i>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g,'$1<i class="c5">$2$3$4</i>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g,'$1<i class="c5">$2$3$4</i>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g,'$1<i class="c5">$2$3$4</i>')
+      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<i class="c5">$2$3$4</i>')
+      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<i class="c5">$2$3$4</i>')
+      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<i class="c5">$2$3$4</i>')
       .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<i class="c6">$2</i>$3')
       .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<i class="c6">$1</i>')
       .replace(/((?:\/\/|\s#).+?)(\n|$)/g, '<i class="comment">$1</i>$2')
@@ -271,9 +266,9 @@ var markyMark = function markyMark (string, rules) {
       .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i class="c2">$2</i>$3')
       .replace(/(\b)((?:$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i class="c3">$2</i>$3')
       .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<i class="c1">$2</i>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g,'$1<i class="c5">$2$3$4</i>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g,'$1<i class="c5">$2$3$4</i>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g,'$1<i class="c5">$2$3$4</i>')
+      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<i class="c5">$2$3$4</i>')
+      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<i class="c5">$2$3$4</i>')
+      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<i class="c5">$2$3$4</i>')
       .replace(/([\d\.]+[a-z]+)/g, '$1<i class="c6">$2</i>$3')
       .replace(/(\/\/.+?(?:\n|$))/g, '<i class="comment">$1</i>')
       .replace(/(\/\*[\s\S]+?\*\/)/g, '<i class="comment">$1</i>')
@@ -326,11 +321,11 @@ var markyMark = function markyMark (string, rules) {
    */
   internal.convertResult = function convertResult (html) {
     return html
-      .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g,'<!-- more -->$1 id="more"$2')
-      .replace(/(<\/?h)3/g,'$14')
-      .replace(/(<\/?h)2/g,'$13')
-      .replace(/(<\/?h)1/g,'$12')
-      .replace(/(<h2.+?<\/h2>)/,'') // Remove title, will be put into meta.Title
+      .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
+      .replace(/(<\/?h)3/g, '$14')
+      .replace(/(<\/?h)2/g, '$13')
+      .replace(/(<\/?h)1/g, '$12')
+      .replace(/(<h2.+?<\/h2>)/, '') // Remove title, will be put into meta.Title
       .replace(
         /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
         '<div class="video-player youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="https://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
@@ -343,15 +338,15 @@ var markyMark = function markyMark (string, rules) {
         /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
         '<img src="https://i.giphy.com/$1.gif" alt="" />'
       )
-      .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g,'$1 width="$2" height="$3"')
-      .replace(/(>)\[ \](\s)/g,'$1<span class="checkbox"></span>$2')
-      .replace(/(>)\[[xX]\](\s)/g,'$1<span class="checkbox checkbox--checked"></span>$2')
-      .replace(/(<(?:img)[^>]*[^/])(>)/g,'$1 /$2')
-      .replace(/(<(?:hr|br)[^/])(>)/g,'$1 /$2')
-      .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before,content,after) {
-        return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g,'$1<th scope="row">$2</th>') + after;
+      .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
+      .replace(/(>)\[ \](\s)/g, '$1<span class="checkbox"></span>$2')
+      .replace(/(>)\[[xX]\](\s)/g, '$1<span class="checkbox checkbox--checked"></span>$2')
+      .replace(/(<(?:img)[^>]*[^/])(>)/g, '$1 /$2')
+      .replace(/(<(?:hr|br)[^/])(>)/g, '$1 /$2')
+      .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
+        return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row">$2</th>') + after;
       })
-      .replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g,function(all, before, inline, after) {
+      .replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g, function(all, before, inline, after) {
         return before + internal.convertTextBlock(inline) + after;
       })
       .trim()

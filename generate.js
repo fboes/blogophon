@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 
 var application = require('./src/helpers/application')();
 application.changeDirectory();
@@ -26,13 +25,13 @@ var generator = Generator(config);
 generator
   .getArticles()
   .then(function () {
+    'use strict';
     generator
       .buildAll(args.force, args.noimages)
       .then(function() {
         if(args.deploy || args.publish) {
           generator.deploy();
-        }
-        else {
+        } else {
           console.log('Done');
         }
       })
@@ -42,6 +41,7 @@ generator
     ;
   })
   .catch(function(err) {
+    'use strict';
     console.error(err); process.exit(1);
   })
 ;

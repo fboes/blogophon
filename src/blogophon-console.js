@@ -1,5 +1,3 @@
-'use strict';
-
 var inquirer       = require('inquirer');
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
@@ -16,6 +14,7 @@ var Generator      = config.notInitialized ? {} : require('./generator');
  * @constructor
  */
 var BlogophonConsole = function() {
+  'use strict';
   var external     = {};
   var internal     = {};
   var files        = [];
@@ -41,7 +40,7 @@ var BlogophonConsole = function() {
    */
   internal.makeChoices = function() {
     files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
-      return v.replace(/^.+\/(.+?)$/,'$1');
+      return v.replace(/^.+\/(.+?)$/, '$1');
     });
     files.push(new inquirer.Separator());
     var choices = [];
@@ -73,11 +72,11 @@ var BlogophonConsole = function() {
   internal.shortfilenameFromTitle = function(title) {
     return SuperString(title.trim().toLowerCase())
       .asciify()
-      .replace(/(^|\-)(de(r|n|m|s)|die(s|se|ser|ses|sen|sem)?|d(a|o|e)s|(m|s|d)ein(e|es|er|em|en)?|a|the|(e|a)l|l(a|o)s?|(i|o|a)(n|m))\-/g,'$1')
-      .replace(/(^[\-]+|[\-]+$)/g,'')
-      .replace(/([\-])[\-]+/g,'$1')
-      .replace(/\-(md~?)$/,'.$1')
-      .replace(/^(.{64}[^-]*).*?(\.md~?)?$/,'$1$2')
+      .replace(/(^|\-)(de(r|n|m|s)|die(s|se|ser|ses|sen|sem)?|d(a|o|e)s|(m|s|d)ein(e|es|er|em|en)?|a|the|(e|a)l|l(a|o)s?|(i|o|a)(n|m))\-/g, '$1')
+      .replace(/(^[\-]+|[\-]+$)/g, '')
+      .replace(/([\-])[\-]+/g, '$1')
+      .replace(/\-(md~?)$/, '.$1')
+      .replace(/^(.{64}[^-]*).*?(\.md~?)?$/, '$1$2')
     ;
   };
 
@@ -87,7 +86,7 @@ var BlogophonConsole = function() {
    * @return {String}          [description]
    */
   internal.dirnameFromFilename = function(filename) {
-    return filename.replace(/\.md~?$/,'');
+    return filename.replace(/\.md~?$/, '');
   };
 
   /**
@@ -107,7 +106,7 @@ var BlogophonConsole = function() {
         validate: function(v) {
           return v ? true : 'Please supply at least a short name for your site.';
         }
-      },{
+      }, {
         type: 'list',
         name: 'theme',
         message: 'Choose theme',
@@ -116,7 +115,7 @@ var BlogophonConsole = function() {
         when: function() {
           return (themesAvailable.length > 1);
         }
-      },{
+      }, {
         type: 'input',
         name: 'baseUrl',
         message: 'Domain of your site, starting with `http`',
@@ -125,9 +124,9 @@ var BlogophonConsole = function() {
           return v.match(/^http(s)?:\/\/\S+[a-z]$/) ? true : 'Please supply a valid url, starting with `http://`, but without trailing `/`.';
         },
         filter: function(v) {
-          return v.replace(/\/$/,'');
+          return v.replace(/\/$/, '');
         }
-      },{
+      }, {
         type: 'input',
         name: 'basePath',
         message: 'Base URL path, usually just `/`',
@@ -136,14 +135,14 @@ var BlogophonConsole = function() {
           return v.match(/^[a-zA-Z0-9\.\/_-]*\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
         },
         filter: function(v) {
-          return v.replace(/^([^\/])/,'/$1').replace(/([^\/])$/,'$1/');
+          return v.replace(/^([^\/])/, '/$1').replace(/([^\/])$/, '$1/');
         }
-      },{
+      }, {
         type: 'input',
         name: 'description',
         message: 'A short description of your blog (optional)',
         default: config.description
-      },{
+      }, {
         type: 'input',
         name: 'language',
         message: 'Standard language of your blog, like `en` for English',
@@ -154,7 +153,7 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return v.toLowerCase();
         }
-      },{
+      }, {
         type: 'list',
         name: 'postPathMode',
         message: 'Choose URL path pattern for your posts:',
@@ -165,7 +164,7 @@ var BlogophonConsole = function() {
           'Year/Month',
           'Year/Month/Day'
         ]
-      },{
+      }, {
         type: 'input',
         name: 'itemsPerPage',
         message: 'How many articles per page?',
@@ -176,7 +175,7 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return Number(v);
         }
-      },{
+      }, {
         type: 'input',
         name: 'defaultAuthor.name',
         message: 'Default name of author',
@@ -184,7 +183,7 @@ var BlogophonConsole = function() {
         validate: function(v) {
           return v ? true : 'Please supply at least a short name for your site.';
         }
-      },{
+      }, {
         type: 'input',
         name: 'defaultAuthor.email',
         message: 'Default email address of author',
@@ -192,7 +191,7 @@ var BlogophonConsole = function() {
         validate: function(v) {
           return (v.match(/^\S+@\S+$/)) ? true : 'Please supply a valid email address.';
         }
-      },{
+      }, {
         type: 'input',
         name: 'twitterAccount',
         message: 'Twitter account name (optional)',
@@ -200,12 +199,12 @@ var BlogophonConsole = function() {
         validate: function(v) {
           return (!v || v.match(/^[a-zA-z0-9_-]+$/)) ? true : 'Please supply a Twitter account name or leave field empty.';
         }
-      },{
+      }, {
         type: 'input',
         name: 'deployCmd',
         message: 'CLI command to copy files to your live server (optional)',
         default: config.deployCmd
-      },{
+      }, {
         type: 'checkbox',
         name: 'useSpecialFeature',
         message: 'Do you want to use the following special features?',
@@ -238,7 +237,10 @@ var BlogophonConsole = function() {
           })
         ;
       },
-      function(err) { console.error(err); process.exit(1); }
+      function(err) {
+        console.error(err);
+        process.exit(1);
+      }
     );
   };
 
@@ -264,7 +266,7 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return v.trim();
         }
-      },{
+      }, {
         type: 'list',
         name: 'classes',
         message: 'Type of article',
@@ -273,7 +275,7 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return (v === 'Normal article') ? null : v;
         }
-      },{
+      }, {
         type: 'confirm',
         name: 'images',
         message: 'But you do want to use images?',
@@ -281,7 +283,7 @@ var BlogophonConsole = function() {
         when: function(answers) {
           return answers.classes !== 'Images';
         }
-      },{
+      }, {
         type: 'input',
         name: 'keywords',
         message: 'Keywords, comma-separated',
@@ -289,7 +291,7 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return v.trim();
         }
-      },{
+      }, {
         type: 'input',
         name: 'author',
         message: 'Author <E-Mail-Address>',
@@ -297,17 +299,17 @@ var BlogophonConsole = function() {
         when: function() {
           return config.specialFeatures.multipleauthors;
         }
-      },{
+      }, {
         type: 'confirm',
         name: 'draft',
         message: 'Is this a draft?',
         default: false
-      },{
+      }, {
         type: 'confirm',
         name: 'edit',
         message: 'Open this in editor right away?',
         default: true
-      },{
+      }, {
         type: 'input',
         name: 'lead',
         message: 'Lead / teaser text',
@@ -315,7 +317,7 @@ var BlogophonConsole = function() {
         when: function(answers) {
           return !answers.edit && answers.classes !== 'Link';
         }
-      },{
+      }, {
         type: 'input',
         name: 'mainText',
         message: 'Main text',
@@ -369,7 +371,9 @@ var BlogophonConsole = function() {
           }
         });
       },
-      function(err) { console.error(err); }
+      function(err) {
+        console.error(err);
+      }
     );
   };
 
@@ -393,7 +397,9 @@ var BlogophonConsole = function() {
         shell.exec(cmd);
         external.init();
       },
-      function(err) { console.error(err); }
+      function(err) {
+        console.error(err);
+      }
     );
   };
 
@@ -407,7 +413,7 @@ var BlogophonConsole = function() {
         name: 'file',
         message: 'Select filen to rename ('+files.length+')',
         choices: files
-      },{
+      }, {
         type: 'input',
         name: 'fileNew',
         message: 'Please enter a new filename or leave empty to cancel',
@@ -455,7 +461,9 @@ var BlogophonConsole = function() {
           external.init();
         }
       },
-      function(err) { console.error(err); }
+      function(err) {
+        console.error(err);
+      }
     );
   };
 
@@ -469,7 +477,7 @@ var BlogophonConsole = function() {
         name: 'file',
         message: 'Select file to delete ('+files.length+')',
         choices: files
-      },{
+      }, {
         type: 'confirm',
         name: 'sure',
         message: 'Are you sure?',
@@ -497,7 +505,9 @@ var BlogophonConsole = function() {
           external.init();
         }
       },
-      function(err) { console.error(err); }
+      function(err) {
+        console.error(err);
+      }
     );
   };
 
@@ -511,7 +521,7 @@ var BlogophonConsole = function() {
         name: 'noforce',
         message: 'Only generate new files?',
         default: true
-      },{
+      }, {
         type: 'confirm',
         name: 'deploy',
         message: 'Do you want to publish all files?',
@@ -537,13 +547,19 @@ var BlogophonConsole = function() {
                   }
                   external.init();
                 })
-                .catch( function(err) { console.error(err); } )
+                .catch( function(err) {
+                  console.error(err);
+                } )
               ;
             })
-            .catch( function(err) { console.error(err); } )
+            .catch( function(err) {
+              console.error(err);
+            } )
           ;
         })
-      .catch( function(err) { console.error(err); } )
+      .catch( function(err) {
+        console.error(err);
+      } )
     ;
   };
 
@@ -554,7 +570,7 @@ var BlogophonConsole = function() {
     if (config.notInitialized) {
       fs.ensureDirSync(config.directories.data);
       fs.ensureDirSync(config.directories.htdocs);
-      fs.copySync(path.join(__dirname,'..', 'htdocs', 'themes'), config.directories.theme);
+      fs.copySync(path.join(__dirname, '..', 'htdocs', 'themes'), config.directories.theme);
       external.setupDialog();
     } else {
       var questions = [
@@ -594,7 +610,9 @@ var BlogophonConsole = function() {
               break;
           }
         },
-        function(err) { console.error(err); }
+        function(err) {
+          console.error(err);
+        }
       );
     }
   };

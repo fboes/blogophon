@@ -1,10 +1,9 @@
-'use strict';
-
 /**
  * Represents all posts
  * @constructor
  */
 var manifest = function(config) {
+  'use strict';
   return {
     lang: config.language,
     name: config.name || '',

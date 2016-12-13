@@ -1,16 +1,15 @@
-'use strict';
-
 /**
  * Returns RSS as a javascript object.
  * @constructor
  * @return {Object}
  */
 var appleNewsFormat = function(post) {
+  'use strict';
   return {
     version: 1.2,
     identifier: post.meta.AbsoluteUrl,
     title: post.meta.Title,
-    language: post.meta.Language.replace(/\-/,'_'),
+    language: post.meta.Language.replace(/\-/, '_'),
     layout: {
       columns: 7,
       width: 1024

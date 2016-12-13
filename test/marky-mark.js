@@ -114,16 +114,16 @@ exports.testQuotation = function(test) {
 
   m = markyMark(x, {
     quotation: {
-      primary:   ['«','»'],
-      secondary: ['“','”']
+      primary: ['«', '»'],
+      secondary: ['“', '”']
     }
   });
   //console.log(m);
 
   test.ok(m !== markyMark(x, {
     quotation: {
-      primary:   ['„','“'],
-      secondary: ['‚','‘']
+      primary: ['„', '“'],
+      secondary: ['‚', '‘']
     }
   }), 'Quotation changed');
 

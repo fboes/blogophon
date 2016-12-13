@@ -1,5 +1,3 @@
-'use strict';
-
 var fs             = require('fs');
 var path           = require('path');
 
@@ -10,6 +8,7 @@ var path           = require('path');
  * @constructor
  */
 var hashes = function(hashFilename) {
+  'use strict';
   hashFilename = hashFilename || path.join(process.cwd(), 'user/hashes.json');
 
   var external = {};

@@ -1,0 +1,22 @@
+{
+  "env": {
+    "node": true
+  },
+  "globals": {},
+  "rules": {
+    "curly": 2,
+    "no-undef": 2,
+    "no-unused-vars": 2,
+    "strict": [2,"function"],
+    "eqeqeq": 2,
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "brace-style": "error",
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "func-call-spacing": ["error", "never"],
+    "key-spacing": ["error", { "beforeColon": false, "mode": "minimum" }],
+    "linebreak-style": ["error", "unix"],
+    "no-console": 0,
+    "semi": ["error", "always"]
+  },
+  "extends": ["eslint:recommended"]
+}

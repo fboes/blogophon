@@ -1,11 +1,10 @@
-'use strict';
-
 /**
  * Returns a geoJson object. See http://geojson.org/
  * @see  https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0
  * @constructor
  */
 var geoJson = function(index) {
+  'use strict';
   return {
     type: 'FeatureCollection',
     features: index.map(function(item){

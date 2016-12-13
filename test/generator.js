@@ -4,7 +4,9 @@ exports.testCompilability = function(test) {
 
   var generator = require('../src/generator');
 
-  test.throws(function() {generator();}, Error);
+  test.throws(function() {
+    generator();
+  }, Error);
 
   test.done();
 };

@@ -6,14 +6,24 @@ exports.testErrors = function(test) {
   test.expect(5);
 
 
-  test.throws(function() {post();}, Error);
-  test.throws(function() {post('test.md');}, Error);
-  test.throws(function() {post('test.md', 'Test');}, Error);
-  test.throws(function() {post('test.md', 'Test', {});}, Error);
-  test.doesNotThrow(function() {post('test.md', 'Test', {
-    Description: 'Description',
-    Date: new Date()
-  }, config);}, Error);
+  test.throws(function() {
+    post();
+  }, Error);
+  test.throws(function() {
+    post('test.md');
+  }, Error);
+  test.throws(function() {
+    post('test.md', 'Test');
+  }, Error);
+  test.throws(function() {
+    post('test.md', 'Test', {});
+  }, Error);
+  test.doesNotThrow(function() {
+    post('test.md', 'Test', {
+      Description: 'Description',
+      Date: new Date()
+    }, config);
+  }, Error);
 
   test.done();
 };

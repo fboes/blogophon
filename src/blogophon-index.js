@@ -1,11 +1,10 @@
-'use strict';
-
 /**
  * Represents an index of all posts.
  * @constructor
  * @return {blogophonIndex}
  */
 var blogophonIndex = function() {
+  'use strict';
   var external = {};
   var internal = {};
 
@@ -51,7 +50,7 @@ var blogophonIndex = function() {
    * @return {blogophonIndex} [description]
    */
   external.sortblogophonIndex = function() {
-    external.index.sort(function(a,b){
+    external.index.sort(function(a, b){
       if (a.meta.Created.timestamp < b.meta.Created.timestamp) {
         return 1;
       } else if (a.meta.Created.timestamp > b.meta.Created.timestamp) {
@@ -81,7 +80,7 @@ var blogophonIndex = function() {
       }
     }
     if (count) {
-      external.index.splice(0,count);
+      external.index.splice(0, count);
     }
     return count;
   };
@@ -115,7 +114,7 @@ var blogophonIndex = function() {
     if (!internal.isSorted) {
       external.sortblogophonIndex();
     }
-    return i ? external.index.slice(0,i) : external.index;
+    return i ? external.index.slice(0, i) : external.index;
   };
 
   /**
@@ -171,9 +170,9 @@ var blogophonIndex = function() {
    */
   external.getGeoArticles = function () {
     //return blogophonIndex().pushArray(
-      return external.index.filter(function(post) {
-        return (post.meta.Latitude || post.meta.Longitude);
-      });
+    return external.index.filter(function(post) {
+      return (post.meta.Latitude || post.meta.Longitude);
+    });
     //);
   };
 
@@ -188,14 +187,16 @@ var blogophonIndex = function() {
       external.sortblogophonIndex();
     }
     itemsPerPage = Math.round(itemsPerPage);
-    if (!itemsPerPage) {itemsPerPage = 10;}
+    if (!itemsPerPage) {
+      itemsPerPage = 10;
+    }
     var pages = [], page = 0, newblogophonIndex = external.index, currentSlice = [];
     if (reverse) {
       newblogophonIndex = newblogophonIndex.reverse();
     }
     do {
       page ++;
-      currentSlice = newblogophonIndex.slice(itemsPerPage * (page-1),itemsPerPage * page);
+      currentSlice = newblogophonIndex.slice(itemsPerPage * (page-1), itemsPerPage * page);
       if (reverse) {
         currentSlice = currentSlice.reverse();
       }
@@ -254,7 +255,7 @@ var blogophonIndex = function() {
    */
   external.toJSON = function() {
     return external.index.map(function(item) {
-      return item.meta.urlObj.relativeUrl('index','json');
+      return item.meta.urlObj.relativeUrl('index', 'json');
     });
   };
 
