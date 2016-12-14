@@ -53,24 +53,21 @@ gulp.task('build-js', function() {
     ])
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint({
-      "env": {
-        "browser": true,
-        "jquery": true
-      },
-      "globals": {},
-      "rules": {
-        "strict": [
+      'env': [
+        'browser',
+        'jquery'
+      ],
+      'rules': {
+        'strict': [
           2,
-          "safe"
+          'safe'
         ],
-        "curly": 2,
-        "no-undef": 2
+        'curly': 2,
+        'no-undef': 2
       }
     }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-    .pipe(eslint.reporter('default'))
-    .pipe(eslint.reporter('fail'))
     .pipe(uglify({output: {
       max_line_len: 9000
     }}))
