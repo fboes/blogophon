@@ -20,6 +20,9 @@
   {{#config.specialFeatures.geojson}}
     <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{/config.specialFeatures.geojson}}
+  {{#config.specialFeatures.kml}}
+    <link rel="alternate" type="application/vnd.google-earth.kml+xml" title="{{meta.title}} KML" href="{{meta.absoluteUrlDirname}}/network.kml" />
+  {{/config.specialFeatures.kml}}
   {{#config.specialFeatures.icscalendar}}
     <link rel="alternate" type="text/calendar" title="{{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
   {{/config.specialFeatures.icscalendar}}
@@ -116,6 +119,9 @@
             {{#config.specialFeatures.geojson}}
               <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
             {{/config.specialFeatures.geojson}}
+            {{#config.specialFeatures.kml}}
+              <li><a type="application/vnd.google-earth.kml+xml" rel="alternate" href="{{config.absoluteUrlDirname}}network.kml">Google Earth KML: {{meta.title}}</a></li>
+            {{/config.specialFeatures.kml}}
           </ul>
         </section>
       </aside>

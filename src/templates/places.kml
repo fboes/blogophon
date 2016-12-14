@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <name>{{config.name}} | {{title}}</name>
+  <Folder>
+    {{#index}}
+      {{#meta.Latitude}}
+      <Placemark id="{{meta.Id}}">
+        <name>{{meta.Title}}</name>
+        <visibility>1</visibility>
+        <description><![CDATA[{{{safeHtmlTeaser}}}<a href="{{meta.AbsoluteUrl}}?utm_medium=kml">More...</a>]]></description>
+        <Point>
+          <coordinates>{{meta.Longitude}},{{meta.Latitude}}</coordinates>
+        </Point>
+        <TimeStamp>
+          <when>{{meta.Created.iso}}</when>
+        </TimeStamp>
+        <atom:link href="{{meta.AbsoluteUrl}}" />
+      </Placemark>
+      {{/meta.Latitude}}
+    {{/index}}
+  </Folder>
+</kml>

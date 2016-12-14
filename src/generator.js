@@ -244,6 +244,8 @@ var Generator = function (config) {
           rss:   indexUrl(path + 'posts.rss'),
           rssjs: indexUrl(path + 'rss.json'),
           geojs: indexUrl(path + 'geo.json'),
+          networkKml: indexUrl(path + 'network.kml'),
+          placesKml:  indexUrl(path + 'places.kml'),
           atom:  indexUrl(path + 'posts.atom'),
           ics:   indexUrl(path + 'posts.ics'),
           ajax:  indexUrl(path + 'index.json')
@@ -284,6 +286,22 @@ var Generator = function (config) {
         }
         if (config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
+        }
+        if (config.specialFeatures.kml) {
+          promises.push(fs.writeFileAsync( urls.networkKml.filename(), Mustache.render(Mustache.templates.networkKml, {
+            pubDate:     pubDate.iso,
+            config:      config,
+            absoluteUrl: urls.networkKml.absoluteUrl(),
+            title:       title,
+            link:        urls.placesKml.absoluteUrl()
+          })));
+          promises.push(fs.writeFileAsync( urls.placesKml.filename(), Mustache.render(Mustache.templates.placesKml, {
+            index:       index.getPosts(),
+            pubDate:     pubDate.iso,
+            config:      config,
+            absoluteUrl: urls.placesKml.absoluteUrl(),
+            title:       title
+          })));
         }
         if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( urls.ajax.filename(), JSON.stringify(index, undefined, 2)));

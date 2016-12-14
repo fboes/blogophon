@@ -220,6 +220,7 @@ var BlogophonConsole = function() {
           "Microsoft tiles",
           "ICS-Calendar",
           "GeoJSON",
+          "KML",
           "AJAX"
         ]
       }

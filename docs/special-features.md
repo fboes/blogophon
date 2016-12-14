@@ -59,7 +59,16 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 All required links will be added to your page.
 
-GeoJson will have all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). GeoJSON can be digested by Google Maps or Leaflet.js.
+GeoJson will show all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). GeoJSON can be digested by Google Maps or Leaflet.js.
+
+KML
+-------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding Keyhole Markup Language document.
+
+All required links will be added to your page.
+
+KML will show all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). KML can be digested by Google Earth.
 
 ICS-Calendar
 ------------
