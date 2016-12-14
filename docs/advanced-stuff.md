@@ -63,15 +63,21 @@ There is a [sample nginx configuration](nginx.conf) to use for your server.
 Automatically publish to external services
 ------------------------------------------
 
-The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used, to advertise for your articles on services like Twitter or Facebook.
+The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter or Facebook.
 
-There are services which handle this re-pbulishing, like [If This Than That](https://ifttt.com). After registering an account you just copy your RSS feed url (`http://www.example.com/posts.rss`) to link it to the following services:
+### IFTT
+
+[If This Than That](https://ifttt.com) handles republishing of RSS feeds to other services. After registering an account just follow these steps:
 
 1. Click on your user account and select "New applet".
 2. For `if [this]` select "Feed > New feed item".
-3. Add the feed URL of your blog. You may also choose to only use the RSS feed of a special tag.
-4. For `then [that]` select "Twitter > Post a tweet", "Facebbok > Create a link post", "Slack > Post to channel" or whatever service you want to use.
+3. Add the feed URL of your blog (e.g. `http://www.example.com/posts.rss`). You may also choose to use the RSS feed of a special tag (e.g. `http://www.example.com/tagged/…/posts.rss`).
+4. For `then [that]` select "Twitter > Post a tweet", "Facebook > Create a link post", "Slack > Post to channel", or whatever service you want to use.
 5. Allow IFTTT to access the service you selected.
-6. Configure how your blog post`s URL and title will be posted to the service you selected.
+6. Configure how your blog post's URL and title will be posted to the service you selected.
 
 You may want to deactivate URL shortening in [IFTTT's settings](https://ifttt.com/settings).
+
+### Slack
+
+Slack offers a plugin to import RSS feeds directly to a Slack channel. Just [follow the instructions on installing the RSS app into Slack](https://get.slack.help/hc/en-us/articles/218688467-Add-RSS-feeds-to-Slack).
