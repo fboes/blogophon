@@ -15,7 +15,7 @@
     "start": "node ./index.js",
     "generate": "node ./generate.js",
     "precommit": "npm test",
-    "test": "jshint src && nodeunit test"
+    "test": "eslint src && eslint *.js && nodeunit test"
   },
   "keywords": [
     "blog",
@@ -28,7 +28,7 @@
     "autoprefixer": "^6.5.1",
     "beepbeep": "^1.2.0",
     "gulp": "^3.9.1",
-    "gulp-jshint": "^2.0.1",
+    "gulp-eslint": "^3.0.1",
     "gulp-livereload": "^3.8.1",
     "gulp-nodeunit": "0.0.5",
     "gulp-plumber": "^1.1.0",
@@ -38,7 +38,6 @@
     "gulp-shell": "^0.5.2",
     "gulp-uglify": "^2.0.0",
     "husky": "^0.11.7",
-    "jshint": "^2.9.2",
     "nodeunit": "^0.10.2"
   },
   "directories": {

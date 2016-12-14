@@ -1,20 +1,21 @@
+'use strict';
+
 exports.testBasicProperties = function(test) {
-  'use strict';
   test.expect(10);
 
   var config = require('../src/config');
   var item = {
-      htmlTeaser: 1,
-      meta: {
-        AbsoluteUrl: 2,
-        Title: 3,
-        Created: {
-          rfc: 4
-        },
-        tags: [6,7],
-        Longitude: 8,
-        Latitude: 9
-      }
+    htmlTeaser: 1,
+    meta: {
+      AbsoluteUrl: 2,
+      Title: 3,
+      Created: {
+        rfc: 4
+      },
+      tags: [6, 7],
+      Longitude: 8,
+      Latitude: 9
+    }
   };
   var geojson = require('../src/models/geo-json')([item], new Date(), config);
 

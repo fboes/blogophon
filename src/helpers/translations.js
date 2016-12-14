@@ -64,7 +64,7 @@ var translations = function (language) {
    * @return {[type]}     [description]
    */
   external.getString = function(key) {
-      return (!external.currentLanguage[key]) ? key : external.currentLanguage[key];
+    return (!external.currentLanguage[key]) ? key : external.currentLanguage[key];
   };
 
   return external;

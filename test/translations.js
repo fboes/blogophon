@@ -1,10 +1,13 @@
+'use strict';
+
 exports.testTranslations = function(test) {
-  'use strict';
   test.expect(3);
 
   var translations = require('../src/helpers/translations');
 
-  test.throws(function() {translations('xx');}, Error);
+  test.throws(function() {
+    translations('xx');
+  }, Error);
 
   // Fallback on unknown string
   test.equal(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');

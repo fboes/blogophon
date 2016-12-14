@@ -1,0 +1,22 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Automatically set line endings
+# See https://help.github.com/articles/dealing-with-line-endings
+# In case of problems: http://stackoverflow.com/questions/11383094/unstaged-changes-left-after-git-reset-hard
+
+# Automatically solve merge conflicts
+# See http://stackoverflow.com/questions/27134100/whats-the-proper-usage-of-gitattributes-with-merge-ours
+
+*.css text eol=lf merge=ours
+*.html text eol=lf
+*.ics text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.php text eol=lf
+*.scss text eol=lf
+*.svg text eol=lf
+*.txt text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf

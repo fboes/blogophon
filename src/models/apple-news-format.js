@@ -10,7 +10,7 @@ var appleNewsFormat = function(post) {
     version: 1.2,
     identifier: post.meta.AbsoluteUrl,
     title: post.meta.Title,
-    language: post.meta.Language.replace(/\-/,'_'),
+    language: post.meta.Language.replace(/\-/, '_'),
     layout: {
       columns: 7,
       width: 1024

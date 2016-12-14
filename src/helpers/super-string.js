@@ -30,7 +30,7 @@ var SuperString = function (string) {
             arguments[i] = String(arguments[i]);
             break;
         }
-        external.string = external.string.replace(/%[sdfF]/,arguments[i]);
+        external.string = external.string.replace(/%[sdfF]/, arguments[i]);
       }
     }
     return external.string;
@@ -41,7 +41,7 @@ var SuperString = function (string) {
    * @return {String}           [description]
    */
   external.fromId = function() {
-    return external.string.replace(/^#/,'');
+    return external.string.replace(/^#/, '');
   };
 
   /**
@@ -50,19 +50,19 @@ var SuperString = function (string) {
    */
   external.asciify = function() {
     return external.string.toLowerCase().replace(/[äåæáàâãöøœóòôõüúùûëéèêïíìîÿýñß]/g, function(s) {
-      return s.replace(/[äåæ]/g,'ae')
-        .replace(/[áàâã]/,'a')
-        .replace(/[öøœ]/,'oe')
-        .replace(/[óòôõ]/,'o')
-        .replace(/[ü]/,'ue')
-        .replace(/[úùû]/,'u')
-        .replace(/[ëéèê]/,'e')
-        .replace(/[ïíìî]/,'i')
-        .replace(/[ÿý]/,'y')
-        .replace(/[ñ]/,'n')
-        .replace(/[ß]/,'ss')
+      return s.replace(/[äåæ]/g, 'ae')
+        .replace(/[áàâã]/, 'a')
+        .replace(/[öøœ]/, 'oe')
+        .replace(/[óòôõ]/, 'o')
+        .replace(/[ü]/, 'ue')
+        .replace(/[úùû]/, 'u')
+        .replace(/[ëéèê]/, 'e')
+        .replace(/[ïíìî]/, 'i')
+        .replace(/[ÿý]/, 'y')
+        .replace(/[ñ]/, 'n')
+        .replace(/[ß]/, 'ss')
       ;
-    }).replace(/[^a-z0-9\-]/g,'-');
+    }).replace(/[^a-z0-9\-]/g, '-');
   };
 
   /**
@@ -78,7 +78,7 @@ var SuperString = function (string) {
    * @return {String}           [description]
    */
   external.htmlEncode = function() {
-    return external.string.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return external.string.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   };
 
   /**
@@ -89,7 +89,7 @@ var SuperString = function (string) {
   external.paramsToObject = function(splitter) {
     var obj = {}, parts, i, currItem;
     splitter = splitter ? splitter : /&/;
-    parts = external.string.replace(/^\?/,'').split(splitter);
+    parts = external.string.replace(/^\?/, '').split(splitter);
     for (i=0; i < parts.length; i++) {
       currItem = parts[i].split('=');
       obj[currItem[0]] = (currItem[1]) ? decodeURIComponent(currItem[1]) : true;
@@ -100,7 +100,7 @@ var SuperString = function (string) {
   external.niceShorten = function(maxChars, replaceString) {
     replaceString = replaceString ? replaceString : '…';
     if (external.string.length > maxChars) {
-      return external.string.trim().replace(new RegExp('^(.{0,' + (maxChars-2) + '})(\\W.*?)$'),'$1') + replaceString;
+      return external.string.trim().replace(new RegExp('^(.{0,' + (maxChars-2) + '})(\\W.*?)$'), '$1') + replaceString;
     }
     return external.string.trim();
   };

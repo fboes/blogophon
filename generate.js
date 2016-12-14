@@ -31,8 +31,7 @@ generator
       .then(function() {
         if(args.deploy || args.publish) {
           generator.deploy();
-        }
-        else {
+        } else {
           console.log('Done');
         }
       })

@@ -30,7 +30,7 @@ var application = function() {
     dir = dir || process.cwd();
     if (dir === path.join(dir, '..')) {
       return null;
-    } else if (fs.existsSync(path.join(dir,'user','config.json'))) {
+    } else if (fs.existsSync(path.join(dir, 'user', 'config.json'))) {
       return dir;
     } else {
       return external.findDirectory(path.join(dir, '..'));

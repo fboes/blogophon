@@ -1,10 +1,11 @@
+'use strict';
+
 var shareLink = require('../src/helpers/share-links');
 
 exports.testBasicProperties = function(test) {
-  'use strict';
   test.expect(5);
 
-  var share = shareLink(1,2,3,4);
+  var share = shareLink(1, 2, 3, 4);
 
   test.ok(share.twitter);
   test.ok(share.facebook);
@@ -16,7 +17,6 @@ exports.testBasicProperties = function(test) {
 };
 
 exports.testBasicProperties = function(test) {
-  'use strict';
   test.expect(13);
 
   var testData = {
@@ -25,13 +25,21 @@ exports.testBasicProperties = function(test) {
     description: 'Mordor',
     siteName: 'MiddleEarth',
   };
-  var share = shareLink(testData.title,testData.link,testData.description,testData.siteName);
+  var share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
 
   var testMatch = {
-    title      : function(str) { return str.match(new RegExp(testData.title)); },
-    link       : function(str) { return str.match(new RegExp(testData.link)); },
-    description: function(str) { return str.match(new RegExp(testData.description)); },
-    siteName   : function(str) { return str.match(new RegExp(testData.siteName)); },
+    title: function(str) {
+      return str.match(new RegExp(testData.title));
+    },
+    link: function(str) {
+      return str.match(new RegExp(testData.link));
+    },
+    description: function(str) {
+      return str.match(new RegExp(testData.description));
+    },
+    siteName: function(str) {
+      return str.match(new RegExp(testData.siteName));
+    },
   };
 
   test.ok(share.twitter);

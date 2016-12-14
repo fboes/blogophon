@@ -22,11 +22,11 @@ var PostReader = function(file, config) {
   var startDescriptionBuffer = false;
   var fileStat;
   var postData = {
-    meta : {},
-    markdown : ''
+    meta:     {},
+    markdown: ''
   };
 
-  return new Promise (
+  return new Promise(
     function(resolve, reject) {
       fs.stat(file, function(err, stats) {
         fileStat = stats;
@@ -65,7 +65,7 @@ var PostReader = function(file, config) {
           }
         }
       })
-      .once('close',function() {
+      .once('close', function() {
         if (!postData.meta || !postData.markdown) {
           reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
         }

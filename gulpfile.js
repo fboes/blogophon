@@ -4,10 +4,12 @@
 var gulp = require('gulp');
 var pkg  = require('./package.json');
 var beep = require('beepbeep');
-var onError = function () { beep(); };
+var onError = function() {
+  beep();
+};
 
 // Include Our Plugins
-var jshint     = require('gulp-jshint');
+var eslint     = require('gulp-eslint');
 var nodeunit   = require('gulp-nodeunit');
 var livereload = require('gulp-livereload');
 var plumber    = require('gulp-plumber');
@@ -19,16 +21,17 @@ var postcss    = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 
 // Lint Task
-gulp.task('jshint', function() {
-  return gulp.src([
+gulp.task('eslint', function() {
+  return gulp.src(
+    [
       '*.js',
       pkg.directories.src+'/**/*.js',
       pkg.directories.test+'/**/*.js'
     ])
     .pipe(plumber({errorHandler: onError}))
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'))
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
   ;
 });
 
@@ -44,19 +47,30 @@ gulp.task('nodeunit', function() {
 
 // Lint Task
 gulp.task('build-js', function() {
-  return gulp.src([
+  return gulp.src(
+    [
       pkg.directories.theme + '/**/js-src/*.js'
     ])
     .pipe(plumber({errorHandler: onError}))
-    .pipe(jshint({ // see https://github.com/jshint/jshint/blob/master/examples/.jshintrc
-       browser: true,
-       jquery: true,
-       strict: true,
-       curly: true,
-       undef:true
+    .pipe(eslint({
+      "env": {
+        "browser": true,
+        "jquery": true
+      },
+      "globals": {},
+      "rules": {
+        "strict": [
+          2,
+          "safe"
+        ],
+        "curly": 2,
+        "no-undef": 2
+      }
     }))
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+    .pipe(eslint.reporter('default'))
+    .pipe(eslint.reporter('fail'))
     .pipe(uglify({output: {
       max_line_len: 9000
     }}))
@@ -89,14 +103,14 @@ gulp.task('build-sass', function() {
 // Watch Files For Changes
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch(['gulpfile.js','package.json'], process.exit);
-  gulp.watch(['*.js',pkg.directories.src+'/**/*.js',pkg.directories.test+'/**/*.js'], ['test']);
+  gulp.watch(['gulpfile.js', 'package.json'], process.exit);
+  gulp.watch(['*.js', pkg.directories.src+'/**/*.js', pkg.directories.test+'/**/*.js'], ['test']);
   gulp.watch([pkg.directories.data+'/**/*'],       ['generate']);
   gulp.watch(pkg.directories.theme + '/**/*.js',   ['build-js']);
   gulp.watch(pkg.directories.theme + '/**/*.scss', ['build-sass']);
 });
 
 // Default Task
-gulp.task('default',     ['jshint','nodeunit','build-js','build-sass']);
-gulp.task('test',        ['jshint','nodeunit']);
+gulp.task('default',     ['eslint', 'nodeunit', 'build-js', 'build-sass']);
+gulp.task('test',        ['eslint', 'nodeunit']);
 gulp.task('generate',    shell.task(['npm run generate']));

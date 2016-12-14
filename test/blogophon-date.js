@@ -1,7 +1,8 @@
+'use strict';
+
 var blogophonDate = require('../src/models/blogophon-date');
 
 exports.basicTest = function basicTest(test) {
-  'use strict';
   test.expect(10+10+12);
 
   var germanDate  = blogophonDate('2016-12-31', 'de');
@@ -50,7 +51,6 @@ exports.basicTest = function basicTest(test) {
 };
 
 exports.moreTests = function moreTests(test) {
-  'use strict';
   test.expect(3);
 
   var germanDate  = blogophonDate('2016-01-01 17:59:00 +00:00', 'de');

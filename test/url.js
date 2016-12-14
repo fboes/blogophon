@@ -1,3 +1,5 @@
+'use strict';
+
 var Url       = require('../src/helpers/url');
 var PostUrl   = require('../src/helpers/post-url');
 var AuthorUrl = require('../src/helpers/author-url');
@@ -6,7 +8,6 @@ var IndexUrl  = require('../src/helpers/index-url');
 
 
 exports.testExtender = function(test) {
-  'use strict';
   test.expect(7);
 
   var url = Url('test');
@@ -24,7 +25,6 @@ exports.testExtender = function(test) {
 };
 
 exports.testBasicTransformation = function(test) {
-  'use strict';
   test.expect(9+3);
 
   var url;
@@ -53,7 +53,6 @@ exports.testBasicTransformation = function(test) {
 };
 
 exports.testSpecialTransformation = function(test) {
-  'use strict';
   test.expect(12);
 
   var url;
@@ -82,7 +81,6 @@ exports.testSpecialTransformation = function(test) {
 };
 
 exports.testPosts = function(test) {
-  'use strict';
   test.expect(2);
 
   test.strictEqual(PostUrl('users/posts/ich-und-du.md').relativeUrl(), '/posts/ich-und-du/');
@@ -92,7 +90,6 @@ exports.testPosts = function(test) {
 };
 
 exports.testEmptyTransformation = function(test) {
-  'use strict';
   test.expect(9);
 
   test.strictEqual(PostUrl(null).relativeUrl(), null);

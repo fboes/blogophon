@@ -1,7 +1,8 @@
+'use strict';
+
 var hashes = require('../src/models/hashes')('test.json');
 
 exports.testHashesFunctionality = function testHashesFunctionality(test) {
-  'use strict';
   test.expect(6);
 
   test.ok(hashes, 'Hashes loaded on empty file');

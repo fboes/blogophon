@@ -23,13 +23,13 @@ var imageStyles = function (config) {
     if (!targetFilename) {
       throw new Error('No target filename given for conversion');
     }
-    return new Promise (
+    return new Promise(
       function(resolve, reject) {
         gm(sourceFilename)
           .noProfile()
           .interlace('Line')
           .quality(internal.jpgQuality)
-          .write(targetFilename,function (err) {
+          .write(targetFilename, function (err) {
             if (err) {
               reject(err);
             }
@@ -55,7 +55,7 @@ var imageStyles = function (config) {
     var processed    = 0;
     var maxProcessed = styleData.srcset.length;
 
-    return new Promise (
+    return new Promise(
       function(resolve, reject) {
         var checkProcessed = function(err) {
           if (err) {
@@ -96,7 +96,7 @@ var imageStyles = function (config) {
     styles = styles || Object.keys(config.themeConf.imageStyles);
     var processed = 0;
 
-    return new Promise (
+    return new Promise(
       function(resolve, reject) {
         var promises = styles.map(function(style) {
           return external.generateImagesFromStyle(sourceFilename, targetFilename, style);
@@ -183,7 +183,7 @@ var imageStyles = function (config) {
    * @return {String}          Converted filename for given style.
    */
   external.getFilenameSrcset = function(filename, srcset) {
-    return filename.replace(/^(.+)(\.[^\.]+)$/,'$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
+    return filename.replace(/^(.+)(\.[^\.]+)$/, '$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
   };
 
   /**

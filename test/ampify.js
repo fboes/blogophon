@@ -1,7 +1,8 @@
+'use strict';
+
 var ampify = require('../src/helpers/ampify')();
 
 exports.testAmpifyBasic = function testAmpifyBasic(test) {
-  'use strict';
   test.expect(2);
 
   var html = '<img src="#" alt="" />';
