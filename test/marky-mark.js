@@ -3,7 +3,7 @@
 var markyMark = require('../src/helpers/marky-mark');
 
 exports.testSimpleString = function(test) {
-  test.expect(6);
+  test.expect(9);
 
   var m;
 
@@ -20,6 +20,14 @@ exports.testSimpleString = function(test) {
   test.ok(m.match(/Tochter hat gesagt/));
   test.ok(m.match(/dann gib ihr mal eine/));
   test.ok(m.match(/www\.fileformat\.info/));
+
+  m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg">Dunkirk</a></p>');
+  test.ok(m.match(/embed\/VQ01tJ4EWeg/));
+
+  m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg?t=2m19s">Dunkirk</a></p>');
+  test.ok(m.match(/embed\/VQ01tJ4EWeg/));
+  test.ok(!m.match(/t=2m19s/));
+
   test.done();
 };
 

@@ -327,6 +327,7 @@ var markyMark = function markyMark (string, rules) {
       .replace(/(<\/?h)2/g, '$13')
       .replace(/(<\/?h)1/g, '$12')
       .replace(/(<h2.+?<\/h2>)/, '') // Remove title, will be put into meta.Title
+      .replace(/\/\/youtu\.be\/([a-zA-Z0-9\-_]+)/g, '//www.youtube.com/watch?v=$1')
       .replace(
         /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
         '<div class="video-player youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="https://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
