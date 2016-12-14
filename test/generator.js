@@ -1,5 +1,6 @@
+'use strict';
+
 exports.testCompilability = function(test) {
-  'use strict';
   //test.expect(2);
 
   var generator = require('../src/generator');

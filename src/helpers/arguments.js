@@ -1,9 +1,10 @@
+'use strict';
+
 /**
  * List of arguments from command line
  * @constructor
  */
 var args = function() {
-  'use strict';
   var external = {};
   if (process.argv && process.argv.length > 1) {
     process.argv.forEach(function(arg, i) {

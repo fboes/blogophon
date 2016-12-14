@@ -1,3 +1,5 @@
+'use strict';
+
 var glob           = require("glob");
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs-extra-promise');
@@ -20,7 +22,6 @@ var imageStyles    = require('./helpers/image-styles');
  * @constructor
  */
 var Generator = function (config) {
-  'use strict';
   if (!config) {
     throw new Error('config is empty');
   }

@@ -1,3 +1,5 @@
+'use strict';
+
 var fs   = require('fs');
 var path = require('path');
 
@@ -6,7 +8,6 @@ var path = require('path');
  * @constructor
  */
 var application = function() {
-  'use strict';
   var external = {};
 
   /**

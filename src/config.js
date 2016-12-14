@@ -1,3 +1,5 @@
+'use strict';
+
 var fs             = require('fs');
 var path           = require('path');
 
@@ -37,7 +39,6 @@ config.htdocs.author      = config.htdocs.author || 'authored-by';
 config.specialFeatures    = {};
 if (config.useSpecialFeature) {
   config.useSpecialFeature.forEach(function(v) {
-    'use strict';
     config.specialFeatures[v.toLowerCase().replace(/[^a-z]/g, '')] = true;
   });
 }

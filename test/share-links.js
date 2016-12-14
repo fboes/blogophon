@@ -1,7 +1,8 @@
+'use strict';
+
 var shareLink = require('../src/helpers/share-links');
 
 exports.testBasicProperties = function(test) {
-  'use strict';
   test.expect(5);
 
   var share = shareLink(1, 2, 3, 4);
@@ -16,7 +17,6 @@ exports.testBasicProperties = function(test) {
 };
 
 exports.testBasicProperties = function(test) {
-  'use strict';
   test.expect(13);
 
   var testData = {

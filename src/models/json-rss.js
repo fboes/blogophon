@@ -1,9 +1,10 @@
+'use strict';
+
 /**
  * Returns RSS as a javascript object.
  * @constructor
  */
 var jsonRss = function(index, pubDate, config, title) {
-  'use strict';
   return {
     version: "2.0",
     channel: {

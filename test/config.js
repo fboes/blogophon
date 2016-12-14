@@ -1,7 +1,8 @@
+'use strict';
+
 var config = require('../src/config');
 
 exports.testConfigProperties = function testConfigProperties(test) {
-  'use strict';
   test.expect(9);
 
   test.ok(config.language,      'config.language is present');

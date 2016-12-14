@@ -1,3 +1,5 @@
+'use strict';
+
 var url       = require('../helpers/url');
 
 /**
@@ -5,7 +7,6 @@ var url       = require('../helpers/url');
  * @param {[type]} identifier [description]
  */
 var indexUrl = function (identifier) {
-  'use strict';
   var external = url(identifier);
 
   external.convert = function (base, type) {

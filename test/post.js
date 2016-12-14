@@ -1,8 +1,9 @@
+'use strict';
+
 var post = require('../src/models/post');
 var config = require('../src/config');
 
 exports.testErrors = function(test) {
-  'use strict';
   test.expect(5);
 
 
@@ -29,7 +30,6 @@ exports.testErrors = function(test) {
 };
 
 exports.testStructure = function(test) {
-  'use strict';
   test.expect(17);
 
   var testPost = post('test.md', 'Test', {
@@ -58,7 +58,6 @@ exports.testStructure = function(test) {
 };
 
 exports.testReplacingMarkdown = function(test) {
-  'use strict';
   test.expect(9);
 
   var testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
@@ -89,7 +88,6 @@ exports.testReplacingMarkdown = function(test) {
  * @param  {[type]} test [description]
  */
 exports.testImageParser = function(test) {
-  'use strict';
   test.expect(12);
 
   var testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
@@ -121,7 +119,6 @@ exports.testImageParser = function(test) {
 
 /*
 exports.testSpecialProperties = function(test) {
-  'use strict';
 
   var testPost = post('test.md', 'Test', {
     Description: 'Description',

@@ -1,7 +1,8 @@
+'use strict';
+
 var markyMark = require('../src/helpers/marky-mark');
 
 exports.testSimpleString = function(test) {
-  'use strict';
   test.expect(6);
 
   var m;
@@ -23,7 +24,6 @@ exports.testSimpleString = function(test) {
 };
 
 exports.testCodeHighlighting = function(test) {
-  'use strict';
   test.expect(6);
 
   var m;
@@ -53,7 +53,6 @@ exports.testCodeHighlighting = function(test) {
  * @return {[type]}      [description]
  */
 exports.testDiffing = function(test) {
-  'use strict';
 
   test.expect(3);
 
@@ -79,7 +78,6 @@ exports.testDiffing = function(test) {
  * @return {[type]}      [description]
  */
 exports.testShell = function(test) {
-  'use strict';
 
   test.expect(3);
 
@@ -106,7 +104,6 @@ exports.testShell = function(test) {
  * @return {[type]}      [description]
  */
 exports.testQuotation = function(test) {
-  'use strict';
 
   test.expect(1);
 
@@ -131,7 +128,6 @@ exports.testQuotation = function(test) {
 };
 
 exports.testPhp = function(test) {
-  'use strict';
 
   test.expect(5);
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var dateFormat      = require('dateformat');
 
 /**
@@ -6,7 +8,6 @@ var dateFormat      = require('dateformat');
  * @constructor
  */
 var blogophonDate = function(date, locale) {
-  'use strict';
   if (!locale) {
     locale = 'de';
   }

@@ -1,10 +1,11 @@
+'use strict';
+
 /**
  * Represents an index of all posts.
  * @constructor
  * @return {blogophonIndex}
  */
 var blogophonIndex = function() {
-  'use strict';
   var external = {};
   var internal = {};
 

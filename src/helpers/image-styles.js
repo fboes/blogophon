@@ -1,3 +1,5 @@
+'use strict';
+
 var gm             = require('gm').subClass({imageMagick: true});
 var Promise        = require('promise/lib/es6-extensions');
 
@@ -6,7 +8,6 @@ var Promise        = require('promise/lib/es6-extensions');
  * @constructor
  */
 var imageStyles = function (config) {
-  'use strict';
   var external = {};
   var internal = {};
 

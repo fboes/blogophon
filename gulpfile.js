@@ -1,9 +1,10 @@
+'use strict';
+
 // Include gulp
 var gulp = require('gulp');
 var pkg  = require('./package.json');
 var beep = require('beepbeep');
 var onError = function() {
-  'use strict';
   beep();
 };
 
@@ -21,7 +22,6 @@ var autoprefixer = require('autoprefixer');
 
 // Lint Task
 gulp.task('eslint', function() {
-  'use strict';
   return gulp.src(
     [
       '*.js',
@@ -37,7 +37,6 @@ gulp.task('eslint', function() {
 
 // Node Unit
 gulp.task('nodeunit', function() {
-  'use strict';
   return gulp.src(pkg.directories.test + '/**/*.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(nodeunit({
@@ -48,13 +47,26 @@ gulp.task('nodeunit', function() {
 
 // Lint Task
 gulp.task('build-js', function() {
-  'use strict';
   return gulp.src(
     [
       pkg.directories.theme + '/**/js-src/*.js'
     ])
     .pipe(plumber({errorHandler: onError}))
-    .pipe(eslint())
+    .pipe(eslint({
+      "env": {
+        "browser": true,
+        "jquery": true
+      },
+      "globals": {},
+      "rules": {
+        "strict": [
+          2,
+          "safe"
+        ],
+        "curly": 2,
+        "no-undef": 2
+      }
+    }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
     .pipe(eslint.reporter('default'))
@@ -72,7 +84,6 @@ gulp.task('build-js', function() {
 
 // Sass
 gulp.task('build-sass', function() {
-  'use strict';
   return gulp.src(pkg.directories.theme + '/**/*.scss')
     .pipe(plumber({errorHandler: onError}))
     .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
@@ -91,7 +102,6 @@ gulp.task('build-sass', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-  'use strict';
   livereload.listen();
   gulp.watch(['gulpfile.js', 'package.json'], process.exit);
   gulp.watch(['*.js', pkg.directories.src+'/**/*.js', pkg.directories.test+'/**/*.js'], ['test']);

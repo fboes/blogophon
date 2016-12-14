@@ -1,5 +1,6 @@
+'use strict';
+
 exports.testBasicProperties = function(test) {
-  'use strict';
   test.expect(10);
 
   var config = require('../src/config');

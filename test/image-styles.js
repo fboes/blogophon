@@ -1,5 +1,6 @@
+'use strict';
+
 exports.testGeneralFunctionality = function testGeneralFunctionality(test) {
-  'use strict';
   test.expect(3);
 
   var config      = require('../src/config');

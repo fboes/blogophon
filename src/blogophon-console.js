@@ -1,3 +1,5 @@
+'use strict';
+
 var inquirer       = require('inquirer');
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
@@ -14,7 +16,6 @@ var Generator      = config.notInitialized ? {} : require('./generator');
  * @constructor
  */
 var BlogophonConsole = function() {
-  'use strict';
   var external     = {};
   var internal     = {};
   var files        = [];

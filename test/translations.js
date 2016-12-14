@@ -1,5 +1,6 @@
+'use strict';
+
 exports.testTranslations = function(test) {
-  'use strict';
   test.expect(3);
 
   var translations = require('../src/helpers/translations');

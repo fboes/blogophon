@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Convert HTML in even better HTML.
  * @param  {String}  string
@@ -6,7 +8,6 @@
  * @constructor
  */
 var markyMark = function markyMark (string, rules) {
-  'use strict';
   var internal = {};
   var external = {};
 

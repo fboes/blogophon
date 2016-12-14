@@ -1,3 +1,5 @@
+'use strict';
+
 var markdownConvert = require('marked');
 var crypto          = require('crypto');
 var SuperString     = require('../helpers/super-string');
@@ -15,7 +17,6 @@ var imageStyles     = require('../helpers/image-styles');
  * @constructor
  */
 var Post = function (filename, markdown, meta, config) {
-  'use strict';
   config = config || require('../config');
   var external = {};
   var internal = {};

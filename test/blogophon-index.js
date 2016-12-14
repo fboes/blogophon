@@ -1,5 +1,6 @@
+'use strict';
+
 exports.testGeneralFunctionality = function(test) {
-  'use strict';
   //test.expect(2);
 
   var index = require('../src/blogophon-index');

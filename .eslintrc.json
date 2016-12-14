@@ -7,7 +7,7 @@
     "curly": 2,
     "no-undef": 2,
     "no-unused-vars": 2,
-    "strict": [2,"function"],
+    "strict": [2,"safe"],
     "eqeqeq": 2,
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "brace-style": "error",

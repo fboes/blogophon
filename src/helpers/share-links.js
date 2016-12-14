@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Generate object of share links.
  * @param  {String} title       [description]
@@ -8,7 +10,6 @@
  * @return {Object} [description]
  */
 var shareLinks = function(title, link, description, siteName, image) {
-  'use strict';
   if (!link) {
     throw new Error('Missing required URL for share link');
   }

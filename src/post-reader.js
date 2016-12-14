@@ -1,3 +1,5 @@
+'use strict';
+
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs');
 var readline       = require('readline');
@@ -9,7 +11,6 @@ var post           = require('./models/post');
  * @constructor
  */
 var PostReader = function(file, config) {
-  'use strict';
   config = config || require('../config');
   if (!file) {
     throw new Error('File '+file+' is empty');

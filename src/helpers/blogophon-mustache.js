@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * This adds additonal functionality to Mustache.
  */
@@ -11,7 +13,6 @@ var path           = require('path');
  * @return {Mustache}    [description]
  */
 Mustache.getTemplates = function(themePath) {
-  'use strict';
   Mustache.themePath = themePath;
   Mustache.templates = {
     post:     fs.readFileSync(path.join(Mustache.themePath, '/post.html'), 'utf8'),
@@ -48,7 +49,6 @@ Mustache.getTemplates = function(themePath) {
  * @return {String}        [description]
  */
 Mustache.escape = function(string) {
-  'use strict';
   var entityMap = {
     '&': '&amp;',
     '<': '&lt;',

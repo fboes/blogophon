@@ -1,9 +1,10 @@
+'use strict';
+
 /**
  * Translate strings.
  * @constructor
  */
 var translations = function (language) {
-  'use strict';
   // TODO: Move languages to separate files
   var external = {};
   external.translations = {

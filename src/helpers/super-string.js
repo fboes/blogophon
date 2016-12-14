@@ -1,3 +1,4 @@
+'use strict';
 
 /**
  * [url description]
@@ -5,7 +6,6 @@
  * @return {url}    [description]
  */
 var SuperString = function (string) {
-  'use strict';
   var external = {};
   external.string = String(string);
 
