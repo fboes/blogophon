@@ -176,7 +176,7 @@ var Post = function (filename, markdown, meta, config) {
     ])).digest('hex');
 
     // Add extra stuff
-    if (config.specialFeatures.jsonrss || config.specialFeatures.atom || config.specialFeatures.rss) {
+    if (config.specialFeatures.jsonrss || config.specialFeatures.atom || config.specialFeatures.rss || config.specialFeatures.kml) {
       external.safeHtml       = internal.makeSafeHtml(external.html);
       external.safeHtmlTeaser = internal.makeSafeHtml(external.htmlTeaser);
     }
