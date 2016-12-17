@@ -10,9 +10,10 @@
 
 *.css text eol=lf merge=ours
 *.html text eol=lf
-*.ics text eol=lf
+*.ics text eol=crlf
 *.js text eol=lf
 *.json text eol=lf
+*.kml text eol=lf
 *.md text eol=lf
 *.php text eol=lf
 *.scss text eol=lf
