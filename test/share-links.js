@@ -23,7 +23,7 @@ exports.testBasicProperties = function(test) {
     title: 'Gollum',
     link: 'www.example.com',
     description: 'Mordor',
-    siteName: 'MiddleEarth',
+    siteName: 'MiddleEarth'
   };
   var share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
 
@@ -39,7 +39,7 @@ exports.testBasicProperties = function(test) {
     },
     siteName: function(str) {
       return str.match(new RegExp(testData.siteName));
-    },
+    }
   };
 
   test.ok(share.twitter);

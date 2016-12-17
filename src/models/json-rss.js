@@ -20,7 +20,7 @@ var jsonRss = function(index, pubDate, config, title) {
           contentEncoded: item.safeHtml || item.html,
           link: item.meta.AbsoluteUrl,
           pubDate: item.meta.Created.rfc,
-          guid: item.meta.Id || item.meta.AbsoluteUrl,
+          guid: item.meta.Id || item.meta.AbsoluteUrl
         };
 
         if (item.meta.Tags) {
