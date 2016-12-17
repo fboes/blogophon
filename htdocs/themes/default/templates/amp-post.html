@@ -44,7 +44,10 @@
               <span itemprop="name">{{meta.AuthorName}}</span>
             </address>
             {{/meta.AuthorName}}
-            <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><amp-img src="//cdn.3960.org/css/iphone.png" alt="" itemprop="logo" height="20" width="20"></amp-img> <span itemprop="name">{{config.name}}</span></address>
+            <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+              <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" /> 
+              <span itemprop="name">{{config.name}}</span>
+            </address>
             <span class="share">
               <amp-social-share type="twitter"></amp-social-share>
               <amp-social-share type="facebook"></amp-social-share>
