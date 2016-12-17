@@ -7,6 +7,7 @@ var path           = require('path');
 var SuperString    = require('./helpers/super-string');
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
+var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var PostReader     = require('./post-reader');
 var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
@@ -278,7 +279,8 @@ var Generator = function (config) {
             pubDate:     pubDate.ics,
             config:      config,
             absoluteUrl: urls.ics.absoluteUrl(),
-            title:       title
+            title:       title,
+            icsQuote:    MustacheQuoters.icsQuote
           })));
         }
         if (config.specialFeatures.jsonrss) {

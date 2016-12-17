@@ -1,7 +1,7 @@
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//3960.org//BLOGOPHON//DE
-X-WR-CALNAME;CHARSET=UTF-8:{{{config.name}}} | {{{title}}}
+X-WR-CALNAME;CHARSET=UTF-8:{{#icsQuote}}{{{config.name}}} | {{{title}}}{{/icsQuote}}
 X-WR-TIMEZONE;VALUE=TEXT:Europe/Berlin
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
@@ -10,8 +10,8 @@ BEGIN:VEVENT
 DTSTART;VALUE=DATE:{{{meta.Created.icsDay}}}
 DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
 URL:{{{meta.AbsoluteUrl}}}
-SUMMARY;CHARSET=UTF-8:{{{meta.Title}}}
-DESCRIPTION;CHARSET=UTF-8:{{{meta.Description}}}
+SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
+DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}
 DTSTAMP:{{{pubDate}}}
 UID:{{{meta.Id}}}
 END:VEVENT

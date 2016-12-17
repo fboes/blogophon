@@ -117,7 +117,7 @@ var Post = function (filename, markdown, meta, config) {
       meta.Description = meta.Description
         .replace(/>/g, ' ')
         .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
-        .replace(/\s\s+/g, ' ')
+        .replace(/[ ][ ]+/g, ' ')
         .replace(/http(s)?:\S+/g, '')
       ;
       meta.Description = SuperString(meta.Description).niceShorten(320);
