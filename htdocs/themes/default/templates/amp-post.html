@@ -4,15 +4,7 @@
   <meta charset="utf-8">
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
-  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-  <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
-  <script async src="https://cdn.ampproject.org/v0.js"></script>
-  <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-  <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
-  <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
-  <style amp-custom>{{ampCss}}</style>
-  <link rel="shortcut icon" type="image/x-icon" href="//cdn.3960.org/css/favicon.ico" />
-  <link rel="publisher" href="https://plus.google.com/111597900565235858304" />
+  {{>amp_meta}}
 </head>
 <body>
   <div id="container">
@@ -45,7 +37,7 @@
             </address>
             {{/meta.AuthorName}}
             <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-              <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" /> 
+              <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" />
               <span itemprop="name">{{config.name}}</span>
             </address>
             <span class="share">
@@ -67,6 +59,6 @@
     </main>
     {{>footer}}
   </div>
-  <amp-pixel src="//stats.3960.org/piwik.php?idsite=8&amp;rec=1&amp;action_name=TITLE&amp;urlref=DOCUMENT_REFERRER&amp;url=CANONICAL_URL%3Futm_medium%3Damp&amp;rand=RANDOM"></amp-pixel>
+  {{>amp_closure}}
 </body>
 </html>

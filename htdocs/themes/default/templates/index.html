@@ -26,6 +26,9 @@
   {{#config.specialFeatures.icscalendar}}
     <link rel="alternate" type="text/calendar" title="{{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
   {{/config.specialFeatures.icscalendar}}
+  {{#config.specialFeatures.acceleratedmobilepages}}
+    <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}">
+  {{/config.specialFeatures.acceleratedmobilepages}}
   {{>meta}}
 </head>
 <body class="index">
@@ -68,6 +71,10 @@
                         <span itemprop="name">{{meta.AuthorName}}</span>
                       </address>
                     {{/meta.AuthorName}}
+                    <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                      <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" />
+                      <span itemprop="name">{{config.name}}</span>
+                    </address>
                     {{#meta.Tags.length}}
                       <span class="tags">
                         Andere Artikel zum Thema

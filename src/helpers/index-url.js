@@ -17,7 +17,7 @@ var indexUrl = function (identifier) {
     } else {
       var u = external.identifier.trim().toLowerCase().replace(/\s/g, '');
       if (base !== 'index') {
-        u = u.replace(/\/index/, '/' + base);
+        u = u.replace(/(^|\/)index/, '$1' + base);
       }
       if (type !== 'html') {
         u = u.replace(/\.html$/, '.' + type);

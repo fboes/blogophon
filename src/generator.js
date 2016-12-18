@@ -254,7 +254,6 @@ var Generator = function (config) {
         var promises = [];
         var pubDate = blogophonDate(index.pubDate);
 
-
         if (config.specialFeatures.rss) {
           promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index:       index.getPosts(10),
@@ -308,6 +307,9 @@ var Generator = function (config) {
         if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( urls.ajax.filename(), JSON.stringify(index, undefined, 2)));
         }
+        if (config.specialFeatures.acceleratedmobilepages) {
+          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g, '');
+        }
 
         for (page = 0; page < pagedPosts.length; page ++) {
           var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
@@ -322,7 +324,19 @@ var Generator = function (config) {
           };
           curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
           curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();
+          if (config.specialFeatures.acceleratedmobilepages) {
+            curPageObj.meta.AbsoluteUrlAmp = curUrlObj.absoluteUrl('amp');
+          }
           promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+
+          if (config.specialFeatures.acceleratedmobilepages) {
+            curPageObj.ampCss = Mustache.ampCss;
+            curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl('amp');
+            curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl('amp');
+
+            promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename('amp'), Mustache.render(Mustache.templates.ampIndex, curPageObj, Mustache.partials)));
+          }
+
         }
         Promise
           .all(promises)

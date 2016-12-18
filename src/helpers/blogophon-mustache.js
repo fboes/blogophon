@@ -18,6 +18,7 @@ Mustache.getTemplates = function(themePath) {
     post:     fs.readFileSync(path.join(Mustache.themePath, '/post.html'), 'utf8'),
     amp:      fs.readFileSync(path.join(Mustache.themePath, '/amp-post.html'), 'utf8'),
     index:    fs.readFileSync(path.join(Mustache.themePath, '/index.html'), 'utf8'),
+    ampIndex: fs.readFileSync(path.join(Mustache.themePath, '/amp-index.html'), 'utf8'),
     tags:     fs.readFileSync(path.join(Mustache.themePath, '/tags.html'), 'utf8'),
     authors:  fs.readFileSync(path.join(Mustache.themePath, '/authors.html'), 'utf8'),
     four:     fs.readFileSync(path.join(Mustache.themePath, '/404.html'), 'utf8'),
@@ -36,7 +37,7 @@ Mustache.getTemplates = function(themePath) {
 
   Mustache.partials = {};
   fs.readdirSync(path.join(Mustache.themePath, '/partials')).forEach(function(file){
-    Mustache.partials[file.replace(/\.[a-z]+$/, '')] = fs.readFileSync(path.join(Mustache.themePath, '/partials/'+file), 'utf8');
+    Mustache.partials[file.replace(/\.[a-z]+$/, '').replace(/\-/g, '_')] = fs.readFileSync(path.join(Mustache.themePath, '/partials/'+file), 'utf8');
   });
 
   for (var t in Mustache.templates) {
