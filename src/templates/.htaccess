@@ -3,12 +3,17 @@
 
 AddType text/xml xml rss atom
 AddType text/plain .md
+AddType text/calendar .ics
 AddType application/json .json
 AddType application/vnd.google-earth.kml+xml .kml
-AddCharset utf-8 .html .css .js .rss .atom .xml .md .json .txt
+AddCharset utf-8 .html .css .js .rss .atom .xml .ics .md .json .txt
 ErrorDocument 404 /404.html
 ErrorDocument 410 /404.html
 DirectoryIndex index.html
+
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+</IfModule>
 
 # General Blogophon redirects
 RedirectMatch 301 ^/htdocs/(.*)$ /$1
