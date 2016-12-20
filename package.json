@@ -15,7 +15,7 @@
     "start": "node ./index.js",
     "generate": "node ./generate.js",
     "precommit": "npm test",
-    "test": "eslint src && eslint *.js && nodeunit test"
+    "test": "eslint src && eslint *.js && eslint test && nodeunit test"
   },
   "keywords": [
     "blog",
@@ -83,6 +83,7 @@
       "no-undef": 2,
       "no-unused-vars": 2,
       "semi": ["error", "always"],
+      "space-before-function-paren": ["error", "never"],
       "strict": [2,"safe"]
     },
     "extends": ["eslint:recommended"]

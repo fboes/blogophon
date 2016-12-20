@@ -1,6 +1,6 @@
 'use strict';
 
-var ampify = function () {
+var ampify = function() {
   var external = {};
 
   /**

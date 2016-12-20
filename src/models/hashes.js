@@ -51,7 +51,7 @@ var hashes = function(hashFilename) {
    * Get a list of all keys (with their hashes) which have been altered by calling `.update()`.
    * @return {Object} [description]
    */
-  external.getUpdatedHashes = function () {
+  external.getUpdatedHashes = function() {
     return updatedHashes;
   };
 

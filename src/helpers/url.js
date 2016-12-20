@@ -9,7 +9,7 @@ var config         = require('../config');
  * @param  {String} identifier [description]
  * @return {url}    [description]
  */
-var url = function (identifier) {
+var url = function(identifier) {
   var external = {};
 
   external.identifier = identifier ? identifier.replace(/^\/+/, '') : null;

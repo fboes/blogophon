@@ -94,7 +94,7 @@ var BlogophonConsole = function() {
    * Display the setup dialog.
    * @return {[type]} [description]
    */
-  external.setupDialog = function () {
+  external.setupDialog = function() {
     var themesAvailable= fs.readdirSync(config.directories.theme).filter(function(file) {
       return fs.statSync(path.join(config.directories.theme, file)).isDirectory();
     });
@@ -227,7 +227,7 @@ var BlogophonConsole = function() {
     ];
 
     inquirer.prompt(questions).then(
-      function (answers) {
+      function(answers) {
         answers.theme = config.theme ? config.theme : themesAvailable[0];
         var generator = new Generator(config);
         generator

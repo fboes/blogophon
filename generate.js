@@ -25,7 +25,7 @@ if (args.help) {
 var generator = Generator(config);
 generator
   .getArticles()
-  .then(function () {
+  .then(function() {
     generator
       .buildAll(args.force, args.noimages)
       .then(function() {

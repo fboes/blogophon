@@ -22,7 +22,7 @@ var imageStyles    = require('./helpers/image-styles');
  * Generator used for creating the blog.
  * @constructor
  */
-var Generator = function (config) {
+var Generator = function(config) {
   if (!config) {
     throw new Error('config is empty');
   }

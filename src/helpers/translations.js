@@ -4,7 +4,7 @@
  * Translate strings.
  * @constructor
  */
-var translations = function (language) {
+var translations = function(language) {
   // TODO: Move languages to separate files
   var external = {};
   external.translations = {

@@ -7,7 +7,7 @@
  * @return {String}
  * @constructor
  */
-var markyMark = function markyMark (string, rules) {
+var markyMark = function markyMark(string, rules) {
   var internal = {};
   var external = {};
 
@@ -56,7 +56,7 @@ var markyMark = function markyMark (string, rules) {
    * @param  {String} string
    * @return {String}
    */
-  external.convert = function convert (string) {
+  external.convert = function convert(string) {
     external.output       = '';
     internal.mode         = '';
     internal.currentChunk = '';
@@ -71,7 +71,7 @@ var markyMark = function markyMark (string, rules) {
    * @param  {String}  c [description]
    * @return {Boolean}   [description]
    */
-  external.pushCharacter = function pushCharacter (c) {
+  external.pushCharacter = function pushCharacter(c) {
     if (c === '<') {
       internal.pushChunk(internal.currentChunk, c);
       internal.currentChunk = '';
@@ -94,7 +94,7 @@ var markyMark = function markyMark (string, rules) {
    * @param  {String} newMode
    * @return {String}          Name of new mode
    */
-  internal.pushChunk = function pushChunk (chunk, newMode) {
+  internal.pushChunk = function pushChunk(chunk, newMode) {
     newMode = newMode || '';
     if (chunk) {
       switch (internal.mode) {
@@ -143,7 +143,7 @@ var markyMark = function markyMark (string, rules) {
    * Get current state of parsed characters by joining all chunks.
    * @return {String} [description]
    */
-  external.getResults = function getResults () {
+  external.getResults = function getResults() {
     internal.pushChunk(internal.currentChunk);
     return internal.convertResult(external.output);
   };
@@ -320,7 +320,7 @@ var markyMark = function markyMark (string, rules) {
    * @param  {String} html [description]
    * @return {String}      [description]
    */
-  internal.convertResult = function convertResult (html) {
+  internal.convertResult = function convertResult(html) {
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
       .replace(/(<\/?h)3/g, '$14')

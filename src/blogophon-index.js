@@ -169,7 +169,7 @@ var blogophonIndex = function() {
    * [getGeoArticles description]
    * @return {Array}      [description]
    */
-  external.getGeoArticles = function () {
+  external.getGeoArticles = function() {
     //return blogophonIndex().pushArray(
     return external.index.filter(function(post) {
       return (post.meta.Latitude || post.meta.Longitude);

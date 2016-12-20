@@ -6,10 +6,10 @@ var url       = require('../helpers/url');
  * [indexUrl description]
  * @param {[type]} identifier [description]
  */
-var indexUrl = function (identifier) {
+var indexUrl = function(identifier) {
   var external = url(identifier);
 
-  external.convert = function (base, type) {
+  external.convert = function(base, type) {
     base = base || 'index';
     type = type || 'html';
     if (!external.identifier) {

@@ -14,7 +14,7 @@ var application = function() {
    * Search upward until valid project is found, and cange into this directory.
    * @return {[type]} [description]
    */
-  external.changeDirectory = function () {
+  external.changeDirectory = function() {
     var foundDirectory = external.findDirectory();
     //console.log(foundDirectory);
     if (foundDirectory) {

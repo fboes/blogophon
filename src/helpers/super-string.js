@@ -5,7 +5,7 @@
  * @param  {String} identifier [description]
  * @return {url}    [description]
  */
-var SuperString = function (string) {
+var SuperString = function(string) {
   var external = {};
   external.string = String(string);
 

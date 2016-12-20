@@ -1,8 +1,8 @@
 'use strict';
 
 var blogophonMustacheQuoters = {
-  icsQuote: function () {
-    return function (text, render) {
+  icsQuote: function() {
+    return function(text, render) {
       return render(text)
         .replace(/(\n|\r|\r\n)/g, "\\n\r\n")
         .replace(/^([\s\S]{1,50}(?:\s))([\s\S]+)$/, function(all, first, last) {
@@ -12,18 +12,18 @@ var blogophonMustacheQuoters = {
       ;
     };
   },
-  noLineBreak: function () {
-    return function (text, render) {
+  noLineBreak: function() {
+    return function(text, render) {
       return render(text).replace(/\s*[\n|\r]+/g, ' ');
     };
   },
-  nl2br: function () {
-    return function (text, render) {
+  nl2br: function() {
+    return function(text, render) {
       return render(text).replace(/[\n|\r]+/g, '<br />$0');
     };
   },
-  encodeURIComponent: function () {
-    return function (text, render) {
+  encodeURIComponent: function() {
+    return function(text, render) {
       return encodeURIComponent(render(text));
     };
   }

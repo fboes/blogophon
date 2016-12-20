@@ -16,7 +16,7 @@ var imageStyles     = require('../helpers/image-styles');
  * This class holds Markdown and converts it into a proper post.
  * @constructor
  */
-var Post = function (filename, markdown, meta, config) {
+var Post = function(filename, markdown, meta, config) {
   config = config || require('../config');
   var external = {};
   var internal = {};
@@ -28,7 +28,7 @@ var Post = function (filename, markdown, meta, config) {
    * @param  {Object} meta     [description]
    * @return {Post}            [description]
    */
-  external.makeMeta = function (filename, markdown, meta) {
+  external.makeMeta = function(filename, markdown, meta) {
     if (!filename) {
       throw new Error('filename is empty');
     }
@@ -255,7 +255,7 @@ var Post = function (filename, markdown, meta, config) {
    * Get all images using image styles. This list may come in handy for the image resizer.
    * @return {Array} of {filename, style}
    */
-  external.getAllImagesWithStyle = function () {
+  external.getAllImagesWithStyle = function() {
     var singleImage;
     var allMarkdown = external.meta.MarkdownDescription + "\n" + markdown;
     var all = allMarkdown.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/g) || [];
@@ -268,7 +268,7 @@ var Post = function (filename, markdown, meta, config) {
     });
   };
 
-  external.getAllImagesWithStyleObject = function () {
+  external.getAllImagesWithStyleObject = function() {
     var styles = external.getAllImagesWithStyle();
     var returnObject = {};
     styles.forEach(function(s) {

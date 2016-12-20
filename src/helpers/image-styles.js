@@ -7,7 +7,7 @@ var Promise        = require('promise/lib/es6-extensions');
  * Converts images and replaces HTML for image integration.
  * @constructor
  */
-var imageStyles = function (config) {
+var imageStyles = function(config) {
   var external = {};
   var internal = {};
 
@@ -29,7 +29,7 @@ var imageStyles = function (config) {
           .noProfile()
           .interlace('Line')
           .quality(internal.jpgQuality)
-          .write(targetFilename, function (err) {
+          .write(targetFilename, function(err) {
             if (err) {
               reject(err);
             }
@@ -47,7 +47,7 @@ var imageStyles = function (config) {
    * @param  {String}  style          [description]
    * @return {Promise}                [description]
    */
-  external.generateImagesFromStyle = function (sourceFilename, targetFilename, style) {
+  external.generateImagesFromStyle = function(sourceFilename, targetFilename, style) {
     if (!targetFilename) {
       throw new Error('No target filename given for conversion');
     }
