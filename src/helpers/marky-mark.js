@@ -328,18 +328,22 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(<\/?h)1/g, '$12')
       .replace(/(<h2.+?<\/h2>)/, '') // Remove title, will be put into meta.Title
       .replace(/\/\/youtu\.be\/([a-zA-Z0-9\-_]+)/g, '//www.youtube.com/watch?v=$1')
-      .replace(
-        /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<div class="video-player youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"><a href="https://www.youtube.com/watch?v=$1"><img src="https://img.youtube.com/vi/$1/hqdefault.jpg" alt="$2" /></a></iframe></div>'
-      )
-      .replace(
-        /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<div class="video-player vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1"><a href="https://vimeo.com/$1">$2</a></iframe></div>'
-      )
-      .replace(
-        /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-        '<img src="https://i.giphy.com/$1.gif" alt="" />'
-      )
+      .replace(/(<p>)\s*(<a[^>]+?>[^<]+?<\/a>)\s*(<\/p>)/g, function(all) { //, before, inline, after
+        return all
+          .replace(
+            /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+            '<div class="video-player youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
+          )
+          .replace(
+            /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+            '<div class="video-player vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1"></iframe></div>'
+          )
+          .replace(
+            /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+            '<img src="https://i.giphy.com/$1.gif" alt="" />'
+          )
+        ;
+      })
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
       .replace(/(>)\[ \](\s)/g, '$1<span class="checkbox"></span>$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<span class="checkbox checkbox--checked"></span>$2')

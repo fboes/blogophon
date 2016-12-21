@@ -88,7 +88,7 @@ exports.testReplacingMarkdown = function(test) {
  * @param  {[type]} test [description]
  */
 exports.testImageParser = function(test) {
-  test.expect(12);
+  test.expect(13);
 
   var testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
     Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
@@ -110,9 +110,10 @@ exports.testImageParser = function(test) {
   test.equal(imageStyles[3].style,    null);
 
   imageStyles = testPost.getAllImagesWithStyleObject();
-  //console.log(imageStyles);
+  console.log(testPost.html);
   test.ok(imageStyles['description.jpg']);
   test.ok(imageStyles['markdown.jpg']);
+  test.ok(testPost.html.match(/src="http:\/\/www\.example\.com\/remote\.jpg"/));
 
   test.done();
 };

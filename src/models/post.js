@@ -133,7 +133,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     meta.authorUrlObj = authorUrl(meta.AuthorName, config.htdocs.author);
     if (!meta.Image) {
-      var match = external.html.match(/<img.+?src="(.+?)"/);
+      var match = external.html.match(/<(?:!\-\- )?img.+?src="(.+?)"/);
       if (match) {
         meta.Image = match[1];
       }
@@ -197,7 +197,7 @@ var Post = function(filename, markdown, meta, config) {
   internal.markyMark = function(markdown, relUrl) {
     var html = markyMark(markdownConvert(markdown), {language: config.language}).toString();
     if (relUrl) {
-      html = html.replace(/(<img[^>]+src=")/g, '$1'+relUrl);
+      html = html.replace(/(<img[^>]+src=")([^:"]+?")/g, '$1'+relUrl+'$2');
     }
     return imageStyles(config)
       .replaceImgHtml(html)
