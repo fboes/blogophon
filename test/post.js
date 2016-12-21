@@ -110,7 +110,7 @@ exports.testImageParser = function(test) {
   test.equal(imageStyles[3].style,    null);
 
   imageStyles = testPost.getAllImagesWithStyleObject();
-  console.log(testPost.html);
+  //console.log(imageStyles);
   test.ok(imageStyles['description.jpg']);
   test.ok(imageStyles['markdown.jpg']);
   test.ok(testPost.html.match(/src="http:\/\/www\.example\.com\/remote\.jpg"/));
