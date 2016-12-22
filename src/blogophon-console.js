@@ -272,10 +272,18 @@ var BlogophonConsole = function() {
         type: 'list',
         name: 'classes',
         message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote'],
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location'],
         default: 'Normal article',
         filter: function(v) {
           return (v === 'Normal article') ? null : v;
+        }
+      }, {
+        type: 'input',
+        name: 'location',
+        message: 'Place name or address',
+        default: '',
+        when: function(answers) {
+          return answers.classes === 'Location';
         }
       }, {
         type: 'confirm',
@@ -333,15 +341,10 @@ var BlogophonConsole = function() {
       function(answers) {
         var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
-        var templateData = {
-          title: answers.title,
-          keywords: answers.keywords,
-          classes: answers.classes,
-          author: answers.author,
-          lead: answers.lead || 'Lorem ipsum…',
-          mainText: answers.mainText || 'Lorem ipsum…',
-          date: new Date()
-        };
+
+        var templateData = answers;
+        templateData.date = new Date();
+
         switch (answers.classes) {
           case 'Images':
             templateData.lead = "![](image.jpg#default)\n\nLorem ipsum…";
@@ -354,6 +357,10 @@ var BlogophonConsole = function() {
             break;
           case 'Quote':
             templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";
+            break;
+          case 'Location':
+            templateData.latitude = 52.3702160;
+            templateData.longitude = 4.8951680;
             break;
         }
         fs.writeFile(markdownFilename, Mustache.render(template, templateData), function(err) {

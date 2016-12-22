@@ -19,6 +19,9 @@
     <meta name="geo.position.latitude" content="{{post.meta.Latitude}}" />
     <meta name="geo.position.longitude" content="{{post.meta.Longitude}}" />
   {{/post.meta.Latitude}}
+  {{#post.meta.Location}}
+    <meta name="geo.placename" content="{{post.meta.Location}}" />
+  {{/post.meta.Location}}
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
   {{#config.specialFeatures.rss}}
     <link rel="alternate" type="application/rss+xml" title="{{config.name}} RSS" href="{{config.absoluteBasePath}}posts.rss" />
@@ -62,6 +65,17 @@
                   <span itemprop="ratingValue">{{value}}</span>/<span itemprop="bestRating">{{best}}</span>
                 </p>
               {{/meta.RatingObj}}
+              {{#meta.Latitude}}
+                <div class="location" itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
+                  {{#meta.Location}}
+                    <span itemprop="name">{{meta.Location}}</span>
+                  {{/meta.Location}}
+                  <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                    <meta itemprop="latitude" content="{{meta.Latitude}}" />
+                    <meta itemprop="longitude" content="{{meta.Longitude}}" />
+                  </div>
+                </div>
+              {{/meta.Latitude}}
             </div>
             <footer class="meta">
               {{#meta.Modified.locale}}

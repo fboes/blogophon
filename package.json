@@ -37,7 +37,7 @@
     "gulp-sass": "^3.0.0",
     "gulp-shell": "^0.5.2",
     "gulp-uglify": "^2.0.0",
-    "husky": "^0.11.7",
+    "husky": "^0.11.9",
     "nodeunit": "^0.10.2"
   },
   "directories": {
@@ -71,22 +71,60 @@
     "globals": {},
     "rules": {
       "brace-style": "error",
-      "comma-dangle": ["error", "never"],
-      "comma-spacing": ["error", { "before": false, "after": true }],
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "comma-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true
+        }
+      ],
       "curly": 2,
       "eqeqeq": 2,
-      "func-call-spacing": ["error", "never"],
-      "indent": ["error", 2, { "SwitchCase": 1 }],
-      "key-spacing": ["error", { "beforeColon": false, "mode": "minimum" }],
-      "linebreak-style": ["error", "unix"],
+      "func-call-spacing": [
+        "error",
+        "never"
+      ],
+      "indent": [
+        "error",
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "key-spacing": [
+        "error",
+        {
+          "beforeColon": false,
+          "mode": "minimum"
+        }
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
       "no-console": 0,
       "no-undef": 2,
       "no-unused-vars": 2,
-      "semi": ["error", "always"],
-      "space-before-function-paren": ["error", "never"],
-      "strict": [2,"safe"]
+      "semi": [
+        "error",
+        "always"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ],
+      "strict": [
+        2,
+        "safe"
+      ]
     },
-    "extends": ["eslint:recommended"]
+    "extends": [
+      "eslint:recommended"
+    ]
   },
   "engine": "node >= 0.12.0"
 }

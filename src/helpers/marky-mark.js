@@ -323,6 +323,7 @@ var markyMark = function markyMark(string, rules) {
   internal.convertResult = function convertResult(html) {
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
+      .replace(/(id="[^"]+)(" id=")/g, '$1 ')
       .replace(/(<\/?h)3/g, '$14')
       .replace(/(<\/?h)2/g, '$13')
       .replace(/(<\/?h)1/g, '$12')

@@ -10,6 +10,13 @@ Classes:   {{{classes}}}
 Author:    {{{author}}}
 {{/author}}
 Twitter:   {{{title}}}
+{{#location}}
+Location:  {{{location}}}
+{{/location}}
+{{#latitude}}
+Latitude:  {{{latitude}}}
+Longitude: {{{longitude}}}
+{{/latitude}}
 ---
 
 {{{title}}}
