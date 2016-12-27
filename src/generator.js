@@ -31,6 +31,13 @@ var Generator = function(config) {
 
   Mustache = Mustache.getTemplates(path.join(config.directories.currentTheme, 'templates'));
 
+  if (config.specialFeatures.facebookinstantarticles) {
+    Mustache.facebookHtml = Mustache.facebookHtml || fs.readFileSync(path.join(__dirname, '/templates/facebook.html'), 'utf8');
+  }
+  if (config.specialFeatures.acceleratedmobilepages) {
+    Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g, '');
+  }
+
   internal.currentIndex = null;
   internal.translation  = translations(config.locale.language);
   internal.hashes       = hashes();
@@ -237,6 +244,7 @@ var Generator = function(config) {
 
     fs.ensureDirSync(config.directories.htdocs + path);
     fs.removeSync(config.directories.htdocs + path + 'index*');
+
     return new Promise(
       function(resolve, reject) {
         var page;
@@ -254,14 +262,14 @@ var Generator = function(config) {
         var promises = [];
         var pubDate = blogophonDate(index.pubDate);
 
-        if (config.specialFeatures.rss) {
+        if (config.specialFeatures.rss || config.specialFeatures.facebookinstantarticles) {
           promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
             index:       index.getPosts(10),
             pubDate:     pubDate.rfc,
             config:      config,
             absoluteUrl: urls.rss.absoluteUrl(),
             title:       title
-          })));
+          }, {contentHtml: Mustache.facebookHtml || '{{{safeHtml}}}'})));
         }
         if (config.specialFeatures.atom) {
           promises.push(fs.writeFileAsync( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
@@ -306,9 +314,6 @@ var Generator = function(config) {
         }
         if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( urls.ajax.filename(), JSON.stringify(index, undefined, 2)));
-        }
-        if (config.specialFeatures.acceleratedmobilepages) {
-          Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g, '');
         }
 
         for (page = 0; page < pagedPosts.length; page ++) {

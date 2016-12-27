@@ -13,7 +13,7 @@ For each article with an author different from the set default author, just [add
 RSS
 ----------------
 
-For every index page (start page, tag pages, author pages) there will be a corresponding RSS newsfeed. This is also a good start for [Facebook Instant Articles](https://developers.facebook.com/docs/instant-articles/publishing/setup-rss-feed).
+For every index page (start page, tag pages, author pages) there will be a corresponding RSS newsfeed.
 
 All required links will be added to your page.
 
@@ -31,7 +31,14 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 All required links will be added to your page.
 
-This is like a RSS newsfeed, but in JSON. This will help parsers to digest information from your page.
+This is like a RSS newsfeed, but in JSON. This will help parsers to digest information from your page. See [JSON-RSS](http://blog.3960.org/post/8478676503/rss-mit-json).
+
+Facebook Instant Articles
+-------------------------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding RSS newsfeed suitable for [Facebook Instant Articles](https://developers.facebook.com/docs/instant-articles/publishing/setup-rss-feed).
+
+To have all links for discoverability of the RSS newsfeed showing up on your page, you also have to activate "RSS".
 
 Apple News
 ----------------

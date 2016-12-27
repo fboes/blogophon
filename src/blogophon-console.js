@@ -216,6 +216,7 @@ var BlogophonConsole = function() {
           "ATOM",
           "JSON-RSS",
           "Apple News",
+          "Facebook Instant Articles",
           "Accelerated Mobile Pages",
           "Microsoft tiles",
           "ICS-Calendar",

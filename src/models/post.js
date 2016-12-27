@@ -234,7 +234,6 @@ var Post = function(filename, markdown, meta, config) {
    */
   internal.makeSafeHtml = function(html) {
     return html
-      .replace(/(<\/?)iframe[^>]*>/g, '')
       .replace(/((?:src|href)=")(\/)/g, '$1' + config.baseUrl +'$2')
     ;
   };
