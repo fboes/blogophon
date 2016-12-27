@@ -6,7 +6,7 @@
  */
 var manifest = function(config) {
   return {
-    lang: config.language,
+    lang: config.locale.language,
     name: config.name || '',
     description: config.description || '',
     short_name: config.name || '',

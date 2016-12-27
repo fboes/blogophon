@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{config.language}}" prefix="og: http://ogp.me/ns#">
+<html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
   <title>{{#meta.title}}{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}} | {{/meta.title}}{{config.name}}</title>
@@ -43,7 +43,7 @@
         {{#index.length}}
           <div class="teasers">
             {{#index}}
-              <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
+              <article class="{{meta.Classes}}"{{^meta.IsDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.IsDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
                 {{#meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
                 {{/meta.Image}}

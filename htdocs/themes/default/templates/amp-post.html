@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ⚡ lang="{{config.language}}">
+<html ⚡ lang="{{config.locale.language}}" dir="{{config.locale.direction}}">
 <head>
   <meta charset="utf-8">
   <title>{{post.meta.Title}} | {{config.name}}</title>
@@ -11,7 +11,7 @@
     {{>header}}
     <main>
       {{#post}}
-        <article class="{{meta.Classes}}" lang="{{meta.Language}}" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="{{meta.Classes}}"{{^meta.IsDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.IsDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
           <link itemprop="mainEntityOfPage" href="{{meta.AbsoluteUrl}}" />
           {{#meta.Image}}
             <link itemprop="image" href="{{meta.Image}}" />

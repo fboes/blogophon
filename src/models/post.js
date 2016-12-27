@@ -48,8 +48,19 @@ var Post = function(filename, markdown, meta, config) {
       meta.DateModified = meta.Date;
     }
     if (!meta.Language) {
-      meta.Language = config.language;
+      meta.Language = config.locale.language;
     }
+
+    if (!meta.Direction) {
+      if (meta.Language === config.locale.Language) {
+        meta.Direction = config.locale.direction;
+      } else {
+        meta.Direction = (meta.Language.match(/^(ar|zh|fa|he)/) ? 'rtl' : 'ltr');
+      }
+    }
+
+    meta.IsDefaultLanguage = (meta.Language === config.locale.language && meta.Direction === config.locale.direction);
+
     if (!meta.Id) {
       meta.Id = filename.replace(new RegExp('^' + process.cwd() + '/'), '');
     }
@@ -195,7 +206,7 @@ var Post = function(filename, markdown, meta, config) {
    * @return {String}          [description]
    */
   internal.markyMark = function(markdown, relUrl) {
-    var html = markyMark(markdownConvert(markdown), {language: config.language}).toString();
+    var html = markyMark(markdownConvert(markdown), {language: config.locale.language}).toString();
     if (relUrl) {
       html = html.replace(/(<img[^>]+src=")([^:"]+?")/g, '$1'+relUrl+'$2');
     }

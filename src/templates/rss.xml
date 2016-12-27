@@ -9,7 +9,7 @@
     <title>{{config.name}} | {{title}}</title>
     <link>{{config.absoluteBasePath}}</link>
     <description>{{config.description}}</description>
-    <language>{{config.language}}</language>
+    <language>{{config.locale.language}}</language>
     <lastBuildDate>{{pubDate}}</lastBuildDate>
     <atom:link href="{{absoluteUrl}}" rel="self" type="application/rss+xml" />
     {{#index}}

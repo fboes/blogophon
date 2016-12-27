@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xml:lang="{{config.language}}"
+<feed xml:lang="{{config.locale.language}}"
   xmlns="http://www.w3.org/2005/Atom"
   xmlns:georss="http://www.georss.org/georss"
   xmlns:gml="http://www.opengis.net/gml">

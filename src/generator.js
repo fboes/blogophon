@@ -32,7 +32,7 @@ var Generator = function(config) {
   Mustache = Mustache.getTemplates(path.join(config.directories.currentTheme, 'templates'));
 
   internal.currentIndex = null;
-  internal.translation  = translations(config.language);
+  internal.translation  = translations(config.locale.language);
   internal.hashes       = hashes();
   internal.imageStyles  = imageStyles(config);
 

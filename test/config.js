@@ -3,9 +3,11 @@
 var config = require('../src/config');
 
 exports.testConfigProperties = function testConfigProperties(test) {
-  test.expect(9);
+  test.expect(11);
 
-  test.ok(config.language,      'config.language is present');
+  test.ok(config.locale,      'config.locale is present');
+  test.ok(config.locale.language,   'config.locale.language is present');
+  test.ok(config.locale.direction,  'config.locale.direction is present');
   test.ok(config.baseUrl,       'config.baseUrl is present');
   test.ok(config.basePath,      'config.basePath is present');
   test.ok(config.themeConf,     'config.themeConf is present');

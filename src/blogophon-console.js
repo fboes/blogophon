@@ -145,14 +145,14 @@ var BlogophonConsole = function() {
         default: config.description
       }, {
         type: 'input',
-        name: 'language',
+        name: 'locale.language',
         message: 'Standard language of your blog, like `en` for English',
-        default: config.language,
+        default: config.locale.language || config.language,
         validate: function(v) {
-          return v.match(/^[a-zA-Z\-]+$/) ? true : 'Please supply a valid two-letter language code like `en`, `es`, `fr` or `de`.';
+          return v.match(/^[a-zA-Z]+([\-_][a-zA-Z]+)?$/) ? true : 'Please supply a valid language code like `en`, `es`, `fr`, `de` or `pt-br`.';
         },
         filter: function(v) {
-          return v.toLowerCase();
+          return v.toLowerCase().replace(/_/, '-');
         }
       }, {
         type: 'list',
@@ -229,6 +229,7 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         answers.theme = config.theme ? config.theme : themesAvailable[0];
+        answers.locale.direction = answers.locale.direction || config.locale.direction || (answers.language.match(/^(ar|zh|fa|he)/) ? 'rtl' : 'ltr');
         var generator = new Generator(config);
         generator
           .buildBasicFiles(answers)
