@@ -283,7 +283,7 @@ var Generator = function(config) {
           })));
         }
         if (config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate.rfc, config, title), undefined, 2)));
+          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title), undefined, 2)));
         }
         if (config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));

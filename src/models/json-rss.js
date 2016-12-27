@@ -12,7 +12,8 @@ var jsonRss = function(index, pubDate, config, title) {
       link: config.baseUrl + config.basePath,
       description: config.description || '',
       language: config.language,
-      lastBuildDate: pubDate,
+      lastBuildDate: pubDate.rfc,
+      lastBuildDateTs: pubDate.timestamp,
       items: index.map(function(item){
         var returnItem = {
           title: item.meta.Title,
@@ -20,6 +21,7 @@ var jsonRss = function(index, pubDate, config, title) {
           contentEncoded: item.safeHtml || item.html,
           link: item.meta.AbsoluteUrl,
           pubDate: item.meta.Created.rfc,
+          pubDateTs: item.meta.Created.timestamp,
           guid: item.meta.Id || item.meta.AbsoluteUrl
         };
 
