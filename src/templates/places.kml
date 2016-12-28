@@ -4,18 +4,28 @@
   <Folder>
     {{#index}}
       {{#meta.Latitude}}
-      <Placemark id="{{meta.Id}}">
-        <name>{{meta.Title}}</name>
-        <visibility>1</visibility>
-        <description><![CDATA[{{{safeHtmlTeaser}}}<a href="{{meta.AbsoluteUrl}}?utm_medium=kml">More...</a>]]></description>
-        <Point>
-          <coordinates>{{meta.Longitude}},{{meta.Latitude}}</coordinates>
-        </Point>
-        <TimeStamp>
-          <when>{{meta.Created.iso}}</when>
-        </TimeStamp>
-        <atom:link href="{{meta.AbsoluteUrl}}" />
-      </Placemark>
+        <Placemark id="{{meta.Id}}">
+          <name>{{meta.Title}}</name>
+          <visibility>1</visibility>
+          <description><![CDATA[{{{safeHtmlTeaser}}}<a href="{{meta.AbsoluteUrl}}?utm_medium=kml">More...</a>]]></description>
+          <Point>
+            <coordinates>{{meta.Longitude}},{{meta.Latitude}}</coordinates>
+          </Point>
+          {{#meta.Location}}
+            <address>{{meta.Location}}</address>
+          {{/meta.Location}}
+          <TimeStamp>
+            <when>{{meta.Created.iso}}</when>
+          </TimeStamp>
+          {{#meta.Keywords}}
+            <ExtendedData>
+              <Data name="Keywords">
+                <value>{{meta.Keywords}}</value>
+              </Data>
+            </ExtendedData>
+          {{/meta.Keywords}}
+          <atom:link href="{{meta.AbsoluteUrl}}" />
+        </Placemark>
       {{/meta.Latitude}}
     {{/index}}
   </Folder>
