@@ -13,3 +13,66 @@ exports.testGeneralFunctionality = function testGeneralFunctionality(test) {
   //console.log(imageStyles.replaceImgHtml('<img src="test.jpg#default" alt=""/>'));
   test.done();
 };
+
+exports.testHtmlConversion = function testHtmlConversion(test) {
+  test.expect(37);
+
+  var config      = require('../src/config');
+  var imageStyles = require('../src/helpers/image-styles')(config);
+  var html;
+
+  html = imageStyles.replaceImgHtml('<img src="test.jpg" alt="Example image"/>');
+  test.ok(html, 'replaceImgHtml is returning something');
+  test.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
+  test.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
+  test.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
+  test.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+
+  html = imageStyles.replaceImgHtml('<img src="http://www.example.com/test.jpg" alt="Example image"/>');
+  test.ok(html, 'replaceImgHtml is returning something');
+  test.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
+  test.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
+  test.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
+  test.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+
+  //console.log(html);
+
+  html = imageStyles.replaceImgHtml('<img src="test.jpg#default" alt="Example image"/>');
+  test.ok(html, 'replaceImgHtml is returning something');
+  test.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
+  test.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
+  test.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
+  test.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+  test.ok(html.match(/srcset="/),    'replaceImgHtml has attribute srcset');
+  test.ok(html.match(/sizes="/),     'replaceImgHtml has attribute sizes');
+  test.ok(html.match(/width="/),     'replaceImgHtml has attribute width');
+  test.ok(html.match(/height="/),    'replaceImgHtml has attribute height');
+  test.ok(html.match(/test-[^"]+.jpg"/), 'replaceImgHtml has extra image urls');
+
+  html = imageStyles.replaceImgHtml('<img src="test.png#default" alt="Example image"/>');
+  test.ok(html, 'replaceImgHtml is returning something');
+  test.ok(html.match(/test\.png"/),  'replaceImgHtml still contains image url');
+  test.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
+  test.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
+  test.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+  test.ok(html.match(/srcset="/),    'replaceImgHtml has attribute srcset');
+  test.ok(html.match(/sizes="/),     'replaceImgHtml has attribute sizes');
+  test.ok(html.match(/width="/),     'replaceImgHtml has attribute width');
+  test.ok(html.match(/height="/),    'replaceImgHtml has attribute height');
+  test.ok(html.match(/test-[^"]+.png"/), 'replaceImgHtml has extra image urls');
+
+  //console.log(html);
+
+  html = imageStyles.replaceImgHtml('<img src="test.jpg#320x240" alt="Example image"/>');
+  test.ok(html, 'replaceImgHtml is returning something');
+  test.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
+  test.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
+  test.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
+  test.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+  test.ok(html.match(/width="/),     'replaceImgHtml has attribute width');
+  test.ok(html.match(/height="/),    'replaceImgHtml has attribute height');
+
+  //console.log(html);
+
+  test.done();
+};

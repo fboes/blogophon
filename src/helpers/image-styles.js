@@ -131,7 +131,7 @@ var imageStyles = function(config) {
   };
 
   /**
-   * Returns HTML for a given filename and image style. Uses by `external.replaceImgHtml()`.
+   * Returns HTML for a given filename and image style. Used by `external.replaceImgHtml()`.
    * @param  {String} all      Will be ignored (as it comes from a `.replace` operation)
    * @param  {String} filename Filename of image
    * @param  {String} style    Style for image
@@ -139,21 +139,27 @@ var imageStyles = function(config) {
    */
   internal.parseImagesReplace = function(all, filename, style) {
     style = style || "default";
-    var currentStyle = internal.getStyle(style);
-    var dominantIndex = (currentStyle.srcset.length - 1);
-    var srcset = [];
-    var i;
+    var html;
 
-    var html = '<img data-src="'+filename+'" src="'+external.getFilenameSrcset(filename, currentStyle.srcset[dominantIndex])+'" class="'+style+'"';
-    // html += ' width="'+currentStyle.srcset[dominantIndex][0]+'" height="'+currentStyle.srcset[dominantIndex][1]+'"';
+    if (style.match(/^\d+x\d+$/)) {
+      html = '<img src="'+filename+'" ' + style.replace(/^(\d+)x(\d+)$/, 'width="$2" height="$3"');
+    } else {
+      var currentStyle = internal.getStyle(style);
+      var dominantIndex = (currentStyle.srcset.length - 1);
+      var srcset = [];
+      var i;
 
-    if (currentStyle.srcset.length > 1) {
-      for (i = 0; i < currentStyle.srcset.length; i++) {
-        srcset.push(external.getFilenameSrcset(filename, currentStyle.srcset[i]) + ' '+currentStyle.srcset[i][0]+'w');
-      }
-      html += ' srcset="'+srcset.join(', ')+'"';
-      if (currentStyle.sizes.length) {
-        html += ' sizes="'+currentStyle.sizes.join(', ')+'"';
+      html = '<img data-src="'+filename+'" src="'+external.getFilenameSrcset(filename, currentStyle.srcset[dominantIndex])+'" class="'+style+'"';
+      html += ' width="'+currentStyle.srcset[dominantIndex][0]+'" height="'+currentStyle.srcset[dominantIndex][1]+'"';
+
+      if (currentStyle.srcset.length > 1) {
+        for (i = 0; i < currentStyle.srcset.length; i++) {
+          srcset.push(external.getFilenameSrcset(filename, currentStyle.srcset[i]) + ' '+currentStyle.srcset[i][0]+'w');
+        }
+        html += ' srcset="'+srcset.join(', ')+'"';
+        if (currentStyle.sizes.length) {
+          html += ' sizes="'+currentStyle.sizes.join(', ')+'"';
+        }
       }
     }
 
