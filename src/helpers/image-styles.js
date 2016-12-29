@@ -142,7 +142,7 @@ var imageStyles = function(config) {
     var html;
 
     if (style.match(/^\d+x\d+$/)) {
-      html = '<img src="'+filename+'" ' + style.replace(/^(\d+)x(\d+)$/, 'width="$2" height="$3"');
+      html = '<img src="'+filename+'" ' + style.replace(/^(\d+)x(\d+)$/, 'width="$1" height="$2"');
     } else {
       var currentStyle = internal.getStyle(style);
       var dominantIndex = (currentStyle.srcset.length - 1);

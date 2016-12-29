@@ -69,8 +69,8 @@ exports.testHtmlConversion = function testHtmlConversion(test) {
   test.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
   test.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
   test.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
-  test.ok(html.match(/width="/),     'replaceImgHtml has attribute width');
-  test.ok(html.match(/height="/),    'replaceImgHtml has attribute height');
+  test.ok(html.match(/width="320/),    'replaceImgHtml has attribute width');
+  test.ok(html.match(/height="240/),   'replaceImgHtml has attribute height');
 
   //console.log(html);
 
