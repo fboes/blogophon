@@ -15,6 +15,10 @@ var imageStyles     = require('../helpers/image-styles');
 /**
  * This class holds Markdown and converts it into a proper post.
  * @constructor
+ * @param {String} filename [description]
+ * @param {String} markdown [description]
+ * @param {Object} meta     [description]
+ * @param {Object} config   [description]
  */
 var Post = function(filename, markdown, meta, config) {
   config = config || require('../config');

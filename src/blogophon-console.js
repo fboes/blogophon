@@ -250,6 +250,7 @@ var BlogophonConsole = function() {
 
   /**
    * This is the Inquirer dialog for creating a new articles. Will call external.init() on finish.
+   * @return {[type]} [description]
    */
   external.createArticleDialog = function() {
     var questions    = [

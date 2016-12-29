@@ -70,13 +70,13 @@
     },
     "globals": {},
     "rules": {
-      "brace-style": "error",
+      "brace-style": 2,
       "comma-dangle": [
-        "error",
+        2,
         "never"
       ],
       "comma-spacing": [
-        "error",
+        2,
         {
           "before": false,
           "after": true
@@ -85,42 +85,44 @@
       "curly": 2,
       "eqeqeq": 2,
       "func-call-spacing": [
-        "error",
+        2,
         "never"
       ],
       "indent": [
-        "error",
+        2,
         2,
         {
           "SwitchCase": 1
         }
       ],
       "key-spacing": [
-        "error",
+        2,
         {
           "beforeColon": false,
           "mode": "minimum"
         }
       ],
       "linebreak-style": [
-        "error",
+        2,
         "unix"
       ],
       "no-console": 0,
       "no-undef": 2,
       "no-unused-vars": 2,
       "semi": [
-        "error",
+        2,
         "always"
       ],
       "space-before-function-paren": [
-        "error",
+        2,
         "never"
       ],
       "strict": [
         2,
         "safe"
-      ]
+      ],
+      "no-loop-func": 2,
+      "no-multi-str": 2
     },
     "extends": [
       "eslint:recommended"

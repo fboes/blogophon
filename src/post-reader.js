@@ -9,6 +9,8 @@ var post           = require('./models/post');
 /**
  * This class reads Markdown files into an object.
  * @constructor
+ * @param {String} file   [description]
+ * @param {Object} config [description]
  */
 var PostReader = function(file, config) {
   config = config || require('../config');
