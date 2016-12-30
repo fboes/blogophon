@@ -85,7 +85,8 @@ exports.testReplacingMarkdown = function(test) {
 
 /**
  * Find all image references to local images in Markdown and return this with corresponding styles.
- * @param  {[type]} test [description]
+ * @param  {Test} test [description]
+ * @return {void}      [description]
  */
 exports.testImageParser = function(test) {
   test.expect(13);

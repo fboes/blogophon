@@ -21,6 +21,7 @@ var imageStyles    = require('./helpers/image-styles');
 /**
  * Generator used for creating the blog.
  * @constructor
+ * @param {Object} config [description]
  */
 var Generator = function(config) {
   if (!config) {
@@ -234,6 +235,9 @@ var Generator = function(config) {
 
   /**
    * [buildIndexFiles description]
+   * @param  {Array}   index [description]
+   * @param  {String}  path  [description]
+   * @param  {String}  title [description]
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildIndexFiles = function(index, path, title) {
@@ -532,6 +536,7 @@ var Generator = function(config) {
 
   /**
    * Writes static files which will only be needed anew when the blog gets a new URL
+   * @param  {Object}  answers [description]
    * @return {Promise} [description]
    */
   external.buildBasicFiles = function(answers) {

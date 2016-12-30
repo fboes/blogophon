@@ -3,6 +3,11 @@
 /**
  * Returns RSS as a javascript object.
  * @constructor
+ * @param  {Array}  index   [description]
+ * @param  {String} pubDate [description]
+ * @param  {Object} config  [description]
+ * @param  {String} title   [description]
+ * @return {Object}         [description]
  */
 var jsonRss = function(index, pubDate, config, title) {
   return {

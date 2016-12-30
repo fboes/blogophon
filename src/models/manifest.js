@@ -3,6 +3,8 @@
 /**
  * Represents all posts
  * @constructor
+ * @param  {Object} config [description]
+ * @return {Object}        [description]
  */
 var manifest = function(config) {
   return {

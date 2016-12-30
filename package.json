@@ -122,7 +122,8 @@
         "safe"
       ],
       "no-loop-func": 2,
-      "no-multi-str": 2
+      "no-multi-str": 2,
+      "valid-jsdoc": [1]
     },
     "extends": [
       "eslint:recommended"

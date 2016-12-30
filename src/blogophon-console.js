@@ -14,6 +14,7 @@ var Generator      = config.notInitialized ? {} : require('./generator');
 /**
  * Represents the Inquirer dialog with which to edit articles.
  * @constructor
+ * @return {Object} [description]
  */
 var BlogophonConsole = function() {
   var external     = {};
@@ -391,6 +392,7 @@ var BlogophonConsole = function() {
 
   /**
    * This is the Inquirer dialog for editing an existing article. Will call external.init() on finish.
+   * @return {void} [description]
    */
   external.editArticleDialog = function() {
     var questions = [
@@ -417,6 +419,7 @@ var BlogophonConsole = function() {
 
   /**
    * This is the Inquirer dialog for renaming an existing article. Will call external.init() on finish.
+   * @return {void} [description]
    */
   external.renameArticleDialog = function() {
     var questions = [
@@ -481,6 +484,7 @@ var BlogophonConsole = function() {
 
   /**
    * This is the Inquirer dialog for deleting an existing article. Will call external.init() on finish.
+   * @return {void} [description]
    */
   external.deleteArticleDialog = function() {
     var questions = [
@@ -525,6 +529,7 @@ var BlogophonConsole = function() {
 
   /**
    * This is the Inquirer dialog for generating all HTML files. Will call external.init() on finish.
+   * @return {void} [description]
    */
   external.generateDialog = function() {
     var questions = [
@@ -577,6 +582,7 @@ var BlogophonConsole = function() {
 
   /**
    * This is the Inquirer dialog for showing the main menu. This will be called in a loop until `Exit` is selected.
+   * @return {void} [description]
    */
   external.init = function() {
     if (config.notInitialized) {

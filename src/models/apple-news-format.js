@@ -3,7 +3,8 @@
 /**
  * Returns RSS as a javascript object.
  * @constructor
- * @return {Object}
+ * @param  {Object} post [description]
+ * @return {Object}      [description]
  */
 var appleNewsFormat = function(post) {
   return {

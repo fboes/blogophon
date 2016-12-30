@@ -2,10 +2,10 @@
 
 /**
  * Convert HTML in even better HTML.
- * @param  {String}  string
- * @param  {Object}  rules  Object with settings
- * @return {String}
  * @constructor
+ * @param  {String}  string Input HTML
+ * @param  {Object}  rules  Object with settings
+ * @return {String}  Converted HTML
  */
 var markyMark = function markyMark(string, rules) {
   var internal = {};
@@ -53,8 +53,8 @@ var markyMark = function markyMark(string, rules) {
 
   /**
    * Put a complete string through the parser and return the results.
-   * @param  {String} string
-   * @return {String}
+   * @param  {String} string [description]
+   * @return {String}        [description]
    */
   external.convert = function convert(string) {
     external.output       = '';
@@ -91,7 +91,7 @@ var markyMark = function markyMark(string, rules) {
   /**
    * Push a single chunk of characters into the chunk array, but convert chunks by looking at the current mode
    * @param  {String} chunk    List of characters
-   * @param  {String} newMode
+   * @param  {String} newMode  [description]
    * @return {String}          Name of new mode
    */
   internal.pushChunk = function pushChunk(chunk, newMode) {
@@ -151,8 +151,8 @@ var markyMark = function markyMark(string, rules) {
   /**
    * Convert text node. Will do some pretty clever UTF-8 emoji stunts as well.
    * @see    http://apps.timwhitlock.info/emoji/tables/unicode
-   * @param  {String} string
-   * @return {String}x
+   * @param  {String} string [description]
+   * @return {String}        [description]
    */
   internal.convertText = function convertText(string) {
     var entityMap = {
@@ -237,8 +237,8 @@ var markyMark = function markyMark(string, rules) {
 
   /**
    * Convert code text node
-   * @param {String} string
-   * @return {String}
+   * @param {String} string [description]
+   * @return {String}       [description]
    */
   internal.convertCode = function convertCode(string) {
     return string
@@ -260,8 +260,8 @@ var markyMark = function markyMark(string, rules) {
 
   /**
    * Convert code text node
-   * @param {String} string
-   * @return {String}
+   * @param  {String} string [description]
+   * @return {String}        [description]
    */
   internal.convertCss = function convertCss(string) {
     return string
@@ -281,8 +281,8 @@ var markyMark = function markyMark(string, rules) {
 
   /**
    * Convert code text node
-   * @param {String} string
-   * @return {String}
+   * @param  {String} string [description]
+   * @return {String}        [description]
    */
   internal.convertHtml = function convertHtml(string) {
     return string
@@ -295,8 +295,8 @@ var markyMark = function markyMark(string, rules) {
 
   /**
    * Convert Markdown code text node
-   * @param {String}
-   * @return {String}
+   * @param  {String} string [description]
+   * @return {String}        [description]
    */
   internal.convertMarkdown = function convertMarkdown(string) {
     return string
@@ -308,8 +308,8 @@ var markyMark = function markyMark(string, rules) {
 
   /**
    * Convert bash / shell text node
-   * @param {String} string
-   * @return {String}
+   * @param  {String} string [description]
+   * @return {String}        [description]
    */
   internal.convertShell = function convertShell(string) {
     return string

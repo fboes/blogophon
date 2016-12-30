@@ -5,7 +5,9 @@ var SuperString = require('../helpers/super-string');
 
 /**
  * [postUrl description]
- * @param {[type]} identifier [description]
+ * @param  {String} identifier [description]
+ * @param  {String} path       [description]
+ * @return {Object}            [description]
  */
 var postUrl = function(identifier, path) {
   var external = url(identifier);

@@ -6,6 +6,7 @@ var config         = require('../config');
 
 /**
  * [url description]
+ * @constructor
  * @param  {String} identifier [description]
  * @return {url}    [description]
  */
@@ -16,9 +17,9 @@ var url = function(identifier) {
 
   /**
    * [convert description]
-   * @params {String} base Filename of file
-   * @params {String} type File type
-   * @return {String} [description]
+   * @param  {String} base Filename of file
+   * @param  {String} type File type
+   * @return {String}      [description]
    */
   external.convert = function convert(base, type) {
     base = base || 'index';
@@ -28,8 +29,8 @@ var url = function(identifier) {
 
   /**
    * [relativeUrl description]
-   * @params {String} base Filename of file
-   * @params {String} type File type
+   * @param  {String} base Filename of file
+   * @param  {String} type File type
    * @return {String} [description]
    */
   external.relativeUrl = function relativeUrl(base, type) {
@@ -39,8 +40,8 @@ var url = function(identifier) {
 
   /**
    * [absoluteUrl description]
-   * @params {String} base Filename of file
-   * @params {String} type File type
+   * @param  {String} base Filename of file
+   * @param  {String} type File type
    * @return {String} [description]
    */
   external.absoluteUrl = function absoluteUrl(base, type) {
@@ -59,8 +60,8 @@ var url = function(identifier) {
 
   /**
    * [filename description]
-   * @params {String} base Filename of file
-   * @params {String} type File type
+   * @param  {String} base Filename of file
+   * @param  {String} type File type
    * @return {String} [description]
    */
   external.filename = function filename(base, type) {

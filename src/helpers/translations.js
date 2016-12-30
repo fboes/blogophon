@@ -3,6 +3,8 @@
 /**
  * Translate strings.
  * @constructor
+ * @param  {String} language [description]
+ * @return {Object}          [description]
  */
 var translations = function(language) {
   // TODO: Move languages to separate files

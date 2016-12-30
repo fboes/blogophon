@@ -3,7 +3,7 @@
 /**
  * Represents an index of all posts.
  * @constructor
- * @return {blogophonIndex}
+ * @return {blogophonIndex} [description]
  */
 var blogophonIndex = function() {
   var external = {};

@@ -2,8 +2,8 @@
 
 /**
  * [url description]
- * @param  {String} identifier [description]
- * @return {url}    [description]
+ * @param  {String} string [description]
+ * @return {url}           [description]
  */
 var SuperString = function(string) {
   var external = {};

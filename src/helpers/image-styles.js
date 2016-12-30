@@ -6,6 +6,8 @@ var Promise        = require('promise/lib/es6-extensions');
 /**
  * Converts images and replaces HTML for image integration.
  * @constructor
+ * @param  {Object} config [description]
+ * @return {Object}        [description]
  */
 var imageStyles = function(config) {
   var external = {};
@@ -83,7 +85,8 @@ var imageStyles = function(config) {
   };
 
   /**
-   * Cycle through all styles, generate all sizes for the given image, including a conversion of the original file to an optimized copy of itself.
+   * Cycle through all styles, generate all sizes for the given image, including
+   * a conversion of the original file to an optimized copy of itself.
    * @param  {String}  sourceFilename [description]
    * @param  {String}  targetFilename [description]
    * @param  {Array}   styles         Optional, defaults to all styles
@@ -131,7 +134,8 @@ var imageStyles = function(config) {
   };
 
   /**
-   * Returns HTML for a given filename and image style. Used by `external.replaceImgHtml()`.
+   * Returns HTML for a given filename and image style.
+   * Used by `external.replaceImgHtml()`.
    * @param  {String} all      Will be ignored (as it comes from a `.replace` operation)
    * @param  {String} filename Filename of image
    * @param  {String} style    Style for image
@@ -201,6 +205,8 @@ var imageStyles = function(config) {
     style = style || "default";
     if (config.themeConf && config.themeConf.imageStyles[style] !== undefined) {
       return config.themeConf.imageStyles[style];
+    } else if (style.match(/^\d+x\d+$/)) {
+      return {};
     } else {
       throw new Error("Wrong image style: "+style);
     }

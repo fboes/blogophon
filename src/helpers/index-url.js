@@ -4,7 +4,8 @@ var url       = require('../helpers/url');
 
 /**
  * [indexUrl description]
- * @param {[type]} identifier [description]
+ * @param  {String} identifier [description]
+ * @return {Object}            [description]
  */
 var indexUrl = function(identifier) {
   var external = url(identifier);

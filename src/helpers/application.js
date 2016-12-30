@@ -6,6 +6,7 @@ var path = require('path');
 /**
  * Basic apllication stuff
  * @constructor
+ * @return {Object} [description]
  */
 var application = function() {
   var external = {};
@@ -24,7 +25,8 @@ var application = function() {
 
   /**
    * Recursively find directory.
-   * @return {[type]} [description]
+   * @param  {String} dir [description]
+   * @return {String}     [description]
    */
   external.findDirectory = function( dir ) {
     dir = dir || process.cwd();

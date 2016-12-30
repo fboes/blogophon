@@ -6,6 +6,9 @@ var dateFormat      = require('dateformat');
  * Returns lots of date formats as a javascript object.
  * @see https://en.wikipedia.org/wiki/Date_format_by_country
  * @constructor
+ * @param  {String} date   [description]
+ * @param  {String} locale [description]
+ * @return {Object}        [description]
  */
 var blogophonDate = function(date, locale) {
   if (!locale) {
