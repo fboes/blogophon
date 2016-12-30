@@ -41,11 +41,11 @@ exports.testCodeHighlighting = function(test) {
 
   m = markyMark('<p id="more">Mein Anwendungsfall: Ich warte auf eine bestimmte Anzahl von Events, und löse mein eigenes Event aus, wenn alle meine Sub-Events erfolgreich abgeschlossen haben. Bisher sah das so aus (schon mit der Kraft von <a href="/posts/nodejs-pattern-array-foreach/"><code>Array.forEach</code></a>):</p>  <pre><code class="lang-javascript">  var files = [\'a.txt\',\'b.txt\',\'c.txt\'];  /*var processed = 0;*/  var checkProcessed  = function(err) {    if (err) {      console.log("Error!");    }    if (++processed === files.length) {      console.log("Done!");    }  };  files.forEach(function(file) {    fs.writeFile(file, "Test test test", checkProcessed);  }); // Comment  </code></pre>');
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<i class/));
+  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp|u)>/));
 
   m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<i class/));
+  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp|u)>/));
 
   m = markyMark('<pre><code class="lang-markdown">'+
      "H1\n=====\n\nH2\n-----\n\n[Links](#) with some *italic* and **bold** text.\n\n### Headline\n"+
@@ -53,7 +53,7 @@ exports.testCodeHighlighting = function(test) {
   );
   //console.log(m);
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<i class/));
+  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp|u)>/));
 
   test.done();
 };
@@ -103,8 +103,8 @@ exports.testShell = function(test) {
   );
   //console.log(m);
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<i class/));
-  test.ok(m.match(/comment/));
+  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp)>/));
+  test.ok(m.match(/<\/?(u)>/));
 
   test.done();
 };
@@ -166,10 +166,10 @@ exports.testPhp = function(test) {
   //console.log(m);
 
   test.ok(m);
-  test.ok(m.match(/<i class="comment">\/\//));
-  test.ok(m.match(/<i class="[^"]+">namespace<\/i>/));
-  test.ok(m.match(/<i class="[^"]+">\$classname<\/i>/));
-  test.ok(m.match(/<i class="[^"]+">\$foo<\/i>/));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\/\//));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>namespace<\/(b|i|var|tt|kbd|samp|u)>/));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$classname<\/(b|i|var|tt|kbd|samp|u)>/));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$foo<\/(b|i|var|tt|kbd|samp|u)>/));
 
   test.done();
 };
