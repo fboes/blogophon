@@ -276,6 +276,9 @@ var Post = function(filename, markdown, meta, config) {
     var all = allMarkdown.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/g) || [];
     return all.map(function(i) {
       singleImage = i.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/);
+      if (singleImage[2] && singleImage[2].match(/^\d+x\d+$/)) {
+        singleImage[2] = null;
+      }
       return {
         filename: singleImage[1] || null,
         style: singleImage[2] || null

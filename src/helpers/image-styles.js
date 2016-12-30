@@ -27,6 +27,7 @@ var imageStyles = function(config) {
     }
     return new Promise(
       function(resolve, reject) {
+        //console.log(sourceFilename);
         gm(sourceFilename)
           .noProfile()
           .interlace('Line')
@@ -69,6 +70,7 @@ var imageStyles = function(config) {
         };
 
         styleData.srcset.forEach(function(currentSrcSet) {
+          //console.log(sourceFilename);
           gm(sourceFilename)
             .noProfile()
             .geometry(currentSrcSet[0], currentSrcSet[1], "^")
