@@ -74,7 +74,7 @@ var BlogophonConsole = function() {
   internal.shortfilenameFromTitle = function(title) {
     return SuperString(title.trim().toLowerCase())
       .asciify()
-      .replace(/(^|\-)(de(r|n|m|s)|die(s|se|ser|ses|sen|sem)?|d(a|o|e)s|(m|s|d)ein(e|es|er|em|en)?|a|the|(e|a)l|l(a|o)s?|(i|o|a)(n|m))\-/g, '$1')
+      .replace(/(^|\-)(de(r|n|m|s)|die(s|se|ser|ses|sen|sem)?|d(a|o|e)s|(m|s|d)?ein(e|es|er|em|en)?|a|the|(e|a)l|l(a|o)s?|(i|o|a)(n|m))\-/g, '$1')
       .replace(/(^[\-]+|[\-]+$)/g, '')
       .replace(/([\-])[\-]+/g, '$1')
       .replace(/\-(md~?)$/, '.$1')
