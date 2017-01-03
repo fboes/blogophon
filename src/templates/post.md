@@ -17,6 +17,9 @@ Location:  {{{location}}}
 Latitude:  {{{latitude}}}
 Longitude: {{{longitude}}}
 {{/latitude}}
+{{#link}}
+Link:      {{{link}}}
+{{/link}}
 ---
 
 {{{title}}}

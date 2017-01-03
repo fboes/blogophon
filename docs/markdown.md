@@ -29,11 +29,13 @@ DateModified: Wed Aug 25 2016 19:18:32 GMT+0200 (CEST) # Last modified date. If 
 Keywords:  Tag, Tag                                 # Comma-separated list of keywords / tags.
 Twitter:   \#Hashtag and some text                  # This text will be used on Twitter. If not set will default to title of document.
 Classes:   Images                                   # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
+Location:  Lista Lighthouse, Norway                 # Plain address this post is supposed to be located at.
 Latitude:  58.109285                                # Geolocation decimal latitude in WGS84, ranging from -90 to 90.
 Longitude: 6.5664576                                # Geolocation decimal longitude in WGS84, ranging from -180 to 180.
 Language:  en                                       # Language of current article, given in ISO 639-1 or RFC1766. If not set will default to blog's language.
 Author:    Example <example@example.org>            # Author name and email.
 Image:     /post/image/image.png                    # Image URL used for sharing. It is best to make this URL absolute.
+Link:      http://www.example.com/                  # By clicking on links to this article redirect to this URL instead of the original post's link.
 Rating:    1/5                                      # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
 ```
 

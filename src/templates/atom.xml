@@ -16,7 +16,7 @@
       <title>{{meta.Title}}</title>
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
-      <link href="{{meta.AbsoluteUrl}}?utm_medium=newsfeed" />
+      <link href="{{meta.AbsoluteLink}}?utm_medium=newsfeed" />
       <published>{{meta.Created.iso}}</published>
       <updated>{{meta.Modified.iso}}</updated>
       <id>{{meta.Id}}</id>

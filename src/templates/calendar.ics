@@ -9,7 +9,7 @@ METHOD:PUBLISH
 BEGIN:VEVENT
 DTSTART;VALUE=DATE:{{{meta.Created.icsDay}}}
 DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
-URL:{{{meta.AbsoluteUrl}}}
+URL:{{{meta.AbsoluteLink}}}
 SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
 DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}
 DTSTAMP:{{{pubDate}}}

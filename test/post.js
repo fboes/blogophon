@@ -30,7 +30,7 @@ exports.testErrors = function(test) {
 };
 
 exports.testStructure = function(test) {
-  test.expect(17);
+  test.expect(21);
 
   var testPost = post('test.md', 'Test', {
     Description: 'Description',
@@ -47,6 +47,8 @@ exports.testStructure = function(test) {
   test.ok(testPost.meta.DateModified);
   test.ok(testPost.meta.Url);
   test.ok(testPost.meta.AbsoluteUrl);
+  test.ok(testPost.meta.Link);
+  test.ok(testPost.meta.AbsoluteLink);
   test.ok(testPost.hash);
   test.ok(testPost.hash.match(/^[a-z0-9]+$/));
   test.ok(testPost.html);
@@ -54,6 +56,8 @@ exports.testStructure = function(test) {
   test.ok(testPost.htmlTeaser);
   test.equal(testPost.htmlTeaser, '<p>Description</p>');
   test.equal(String(testPost), testPost.hash);
+  test.equal(testPost.meta.Url, testPost.meta.Link);
+  test.equal(testPost.meta.AbsoluteUrl, testPost.meta.AbsoluteLink);
   test.done();
 };
 

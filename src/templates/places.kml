@@ -7,7 +7,7 @@
         <Placemark id="{{meta.Id}}">
           <name>{{meta.Title}}</name>
           <visibility>1</visibility>
-          <description><![CDATA[{{{safeHtmlTeaser}}}<a href="{{meta.AbsoluteUrl}}?utm_medium=kml">More...</a>]]></description>
+          <description><![CDATA[{{{safeHtmlTeaser}}}<a href="{{meta.AbsoluteLink}}?utm_medium=kml">More...</a>]]></description>
           <Point>
             <coordinates>{{meta.Longitude}},{{meta.Latitude}}</coordinates>
           </Point>
@@ -24,7 +24,7 @@
               </Data>
             </ExtendedData>
           {{/meta.Keywords}}
-          <atom:link href="{{meta.AbsoluteUrl}}" />
+          <atom:link href="{{meta.AbsoluteLink}}" />
         </Placemark>
       {{/meta.Latitude}}
     {{/index}}

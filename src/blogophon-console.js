@@ -283,6 +283,17 @@ var BlogophonConsole = function() {
         }
       }, {
         type: 'input',
+        name: 'link',
+        message: 'URL of page you want to link to',
+        default: '',
+        when: function(answers) {
+          return answers.classes === 'Link';
+        },
+        validate: function(v) {
+          return v.match(/^http(s)?:\/\/\S+$/) ? true : 'Please supply a valid url, starting with `http://` or `https://`.';
+        }
+      }, {
+        type: 'input',
         name: 'location',
         message: 'Place name or address',
         default: '',
@@ -292,7 +303,7 @@ var BlogophonConsole = function() {
       }, {
         type: 'confirm',
         name: 'images',
-        message: 'But you do want to use images?',
+        message: 'Do you want to use images?',
         default: false,
         when: function(answers) {
           return answers.classes !== 'Images';
@@ -357,7 +368,7 @@ var BlogophonConsole = function() {
             templateData.lead = "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
             break;
           case 'Link':
-            templateData.mainText = "[Lorem ipsum…](http://www.example.com)";
+            templateData.mainText = "[Lorem ipsum…](" + answers.link + ")";
             break;
           case 'Quote':
             templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";

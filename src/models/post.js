@@ -99,6 +99,8 @@ var Post = function(filename, markdown, meta, config) {
         meta.AbsoluteUrlAmp = meta.urlObj.absoluteUrl('amp');
       }
     }
+    meta.AbsoluteLink = meta.Link || meta.AbsoluteUrl;
+    meta.Link = meta.Link || meta.Url;
 
     external.htmlTeaser   = internal.markyMark(meta.Description.trim(), meta.Url);
     external.html         = internal.markyMark(markdown, meta.Url);

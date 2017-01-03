@@ -24,7 +24,7 @@ var jsonRss = function(index, pubDate, config, title) {
           title: item.meta.Title,
           description: item.safeHtmlTeaser || item.htmlTeaser,
           contentEncoded: item.safeHtml || item.html,
-          link: item.meta.AbsoluteUrl,
+          link: item.meta.AbsoluteLink || item.meta.AbsoluteUrl,
           pubDate: item.meta.Created.rfc,
           pubDateTs: item.meta.Created.timestamp,
           guid: item.meta.Id || item.meta.AbsoluteUrl
