@@ -15,7 +15,7 @@
     "start": "node ./index.js",
     "generate": "node ./generate.js",
     "precommit": "npm test",
-    "test": "eslint src && eslint *.js && eslint test && nodeunit test"
+    "test": "eslint src && eslint *.js && eslint test && nodeunit test --reporter minimal"
   },
   "keywords": [
     "blog",
@@ -37,7 +37,7 @@
     "gulp-sass": "^3.0.0",
     "gulp-shell": "^0.5.2",
     "gulp-uglify": "^2.0.0",
-    "husky": "^0.11.9",
+    "husky": "^0.12.0",
     "nodeunit": "^0.10.2"
   },
   "directories": {
