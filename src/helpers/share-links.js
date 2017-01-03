@@ -35,7 +35,7 @@ var shareLinks = function(title, link, description, siteName, image) {
       text: description+' '+link,
       link: link
     }),
-    pinterest: (!image ? null : 'http://pinterest.com/pin/create/button/?'+urlParameter({
+    pinterest: (!image ? null : 'https://pinterest.com/pin/create/button/?'+urlParameter({
       url:   link,
       media: image,
       description: description

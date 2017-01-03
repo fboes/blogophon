@@ -124,8 +124,8 @@ Just enter ASCII smileys to produce Emojis:
 | B) | &#x1F60E; |
 | XP | &#x1F61D; |
 | 8o | &#x1F628; |
-| +1 | &#x1F44D; |
-| -1 | &#x1F44E; |
+| `:+1:` | &#x1F44D; |
+| `:-1:` | &#x1F44E; |
 | <3 | &#x1F495; |
 | </3 | &#x1F494; |
 | (!) | &#x26A0; |
