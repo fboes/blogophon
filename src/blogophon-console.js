@@ -256,6 +256,15 @@ var BlogophonConsole = function() {
   external.createArticleDialog = function() {
     var questions    = [
       {
+        type: 'list',
+        name: 'classes',
+        message: 'Type of article',
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location', 'Micro post'],
+        default: 'Normal article',
+        filter: function(v) {
+          return (v === 'Normal article') ? null : v;
+        }
+      }, {
         type: 'input',
         name: 'title',
         message: 'Title',
@@ -271,15 +280,6 @@ var BlogophonConsole = function() {
         },
         filter: function(v) {
           return v.trim();
-        }
-      }, {
-        type: 'list',
-        name: 'classes',
-        message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location'],
-        default: 'Normal article',
-        filter: function(v) {
-          return (v === 'Normal article') ? null : v;
         }
       }, {
         type: 'input',
@@ -306,13 +306,16 @@ var BlogophonConsole = function() {
         message: 'Do you want to use images?',
         default: false,
         when: function(answers) {
-          return answers.classes !== 'Images';
+          return (answers.classes !== 'Images' && answers.classes !== 'Micro post');
         }
       }, {
         type: 'input',
         name: 'keywords',
         message: 'Keywords, comma-separated',
         default: '',
+        when: function(answers) {
+          return answers.classes !== 'Micro post';
+        },
         filter: function(v) {
           return v.trim();
         }
@@ -328,19 +331,25 @@ var BlogophonConsole = function() {
         type: 'confirm',
         name: 'draft',
         message: 'Is this a draft?',
-        default: false
+        default: false,
+        when: function(answers) {
+          return answers.classes !== 'Micro post';
+        }
       }, {
         type: 'confirm',
         name: 'edit',
         message: 'Open this in editor right away?',
-        default: true
+        default: true,
+        when: function(answers) {
+          return answers.classes !== 'Micro post';
+        }
       }, {
         type: 'input',
         name: 'lead',
         message: 'Lead / teaser text',
         default: '',
         when: function(answers) {
-          return !answers.edit && answers.classes !== 'Link';
+          return !answers.edit && answers.classes !== 'Link' && answers.classes !== 'Micro post';
         }
       }, {
         type: 'input',
@@ -348,7 +357,7 @@ var BlogophonConsole = function() {
         message: 'Main text',
         default: 'Lorem ipsum…',
         when: function(answers) {
-          return !answers.edit;
+          return (!answers.edit && answers.classes !== 'Micro post');
         }
       }
     ];
@@ -376,6 +385,9 @@ var BlogophonConsole = function() {
           case 'Location':
             templateData.latitude = 52.3702160;
             templateData.longitude = 4.8951680;
+            break;
+          case 'Micro post':
+            answers.keywords = answers.classes;
             break;
         }
         fs.writeFile(markdownFilename, Mustache.render(template, templateData), function(err) {
