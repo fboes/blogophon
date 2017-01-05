@@ -43,7 +43,7 @@
         {{#index.length}}
           <div class="teasers">
             {{#index}}
-              <article class="{{meta.Classes}}"{{^meta.IsDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.IsDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
+              <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
                 {{#meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
                 {{/meta.Image}}
@@ -61,9 +61,14 @@
                 <div itemprop="description">
                   {{{htmlTeaser}}}
                 </div>
-                {{^meta.noLinkNeeded}}
-                  <p><a href="{{meta.Link}}" title="{{meta.Title}}">Weiter lesen…</a></p>
-                {{/meta.noLinkNeeded}}
+                {{#meta.hasNoExtraDescription}}
+                  {{#meta.hasExternalLink}}
+                    <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                  {{/meta.hasExternalLink}}
+                {{/meta.hasNoExtraDescription}}
+                {{^meta.hasNoExtraDescription}}
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Weiter lesen…</a></p>
+                {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
                     {{#meta.AuthorName}}

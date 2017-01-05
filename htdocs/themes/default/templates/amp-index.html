@@ -17,7 +17,7 @@
       {{#index.length}}
         <div class="teasers">
           {{#index}}
-            <article class="{{meta.Classes}}"{{^meta.IsDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.IsDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
+            <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
               <link itemprop="mainEntityOfPage" href="{{meta.AbsoluteUrl}}" />
               {{#meta.Image}}
                 <link itemprop="image" href="{{meta.Image}}" />
@@ -25,6 +25,7 @@
               {{^meta.Image}}
                 <link itemprop="image" href="{{config.ogImage}}" />
               {{/meta.Image}}
+              <link itemprop="url mainEntityOfPage" href="{{meta.Url}}" />
               <header>
                 <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
                 {{#meta.Modified.locale}}
@@ -35,9 +36,14 @@
               <div itemprop="description">
                 {{{ampHtmlTeaser}}}
               </div>
-              {{^meta.noLinkNeeded}}
-                <p><a href="{{meta.AbsoluteUrlAmp}}" itemprop="url mainEntityOfPage" title="{{meta.Title}}">Weiter lesen…</a></p>
-              {{/meta.noLinkNeeded}}
+              {{#meta.hasNoExtraDescription}}
+                {{#meta.hasExternalLink}}
+                  <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                {{/meta.hasExternalLink}}
+              {{/meta.hasNoExtraDescription}}
+              {{^meta.hasNoExtraDescription}}
+                <p><a href="{{meta.AbsoluteUrlAmp}}" title="{{meta.Title}}">Weiter lesen…</a></p>
+              {{/meta.hasNoExtraDescription}}
 
               <footer class="meta">
                 {{#meta.AuthorName}}

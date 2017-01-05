@@ -43,7 +43,7 @@
     <div id="main">
       <main id="content">
         {{#post}}
-          <article class="{{meta.Classes}}"{{^meta.IsDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.IsDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
+          <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
             <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
             {{#meta.Image}}
               <link itemprop="image" href="{{meta.Image}}" />
@@ -76,6 +76,9 @@
                   </div>
                 </div>
               {{/meta.Latitude}}
+              {{#meta.hasExternalLink}}
+                <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+              {{/meta.hasExternalLink}}
             </div>
             <footer class="meta">
               {{#meta.Modified.locale}}

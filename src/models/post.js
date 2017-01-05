@@ -63,7 +63,7 @@ var Post = function(filename, markdown, meta, config) {
       }
     }
 
-    meta.IsDefaultLanguage = (meta.Language === config.locale.language && meta.Direction === config.locale.direction);
+    meta.isDefaultLanguage = (meta.Language === config.locale.language && meta.Direction === config.locale.direction);
 
     if (!meta.Id) {
       meta.Id = filename.replace(new RegExp('^' + process.cwd() + '/'), '');
@@ -99,6 +99,7 @@ var Post = function(filename, markdown, meta, config) {
         meta.AbsoluteUrlAmp = meta.urlObj.absoluteUrl('amp');
       }
     }
+    meta.hasExternalLink = (meta.Link && meta.Link !== meta.Url);
     meta.AbsoluteLink = meta.Link || meta.AbsoluteUrl;
     meta.Link = meta.Link || meta.Url;
 

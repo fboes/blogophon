@@ -71,10 +71,10 @@ var PostReader = function(file, config) {
         if (!postData.meta || !postData.markdown) {
           reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
         }
-        postData.meta.noLinkNeeded = false;
+        postData.meta.hasNoExtraDescription = false;
         if (!postData.meta.Description) {
           postData.meta.Description = descriptionBuffer || postData.markdown;
-          postData.meta.noLinkNeeded = true;
+          postData.meta.hasNoExtraDescription = true;
         }
         if (fileStat.mtime) {
           postData.meta.DateModified = fileStat.mtime;
