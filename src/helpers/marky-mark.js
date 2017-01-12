@@ -117,12 +117,13 @@ var markyMark = function markyMark(string, rules) {
         case '<markdown>':
           chunk = internal.convertMarkdown(chunk);
           break;
+        case '<bash>':
         case '<shell>':
           chunk = internal.convertShell(chunk);
           break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|xml|markdown|shell)/);
+            var lang = chunk.match(/(css|html|xml|markdown|shell|bash)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -251,7 +252,8 @@ var markyMark = function markyMark(string, rules) {
       .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
       .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
       .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
-      .replace(/((?:\/\/|\s#).+?)(\n|$)/g, '<u>$1</u>$2')
+      .replace(/(\/\/.+?)(\n|$)/g, '<u>$1</u>$2')
+      .replace(/(^|\s)(#.+?)(\n|$)/g, '$1<u>$2</u>$3')
       .replace(/(\/\*[\s\S]+?\*\/)/g, '<u>$1</u>')
       .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
       .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
@@ -268,7 +270,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
       .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i>$2</i>$3')
       .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/(\b)((?:$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+      .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
       .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
       .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
       .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
@@ -313,7 +315,14 @@ var markyMark = function markyMark(string, rules) {
    */
   internal.convertShell = function convertShell(string) {
     return string
-      .replace(/(\$.+?)(\n|$)/g, '<tt>$1</tt>$2')
+      .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
+      .replace(/(^|\b)(if|fi|then|case|esac|function)(\b)/g, '$1<i>$2</i>$3')
+      .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/([^\\])(`)(.*?[^\\])(`)/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/(\n)(\$ .+?)(\n|$)/g, '$1<tt>$2</tt>$3')
       .replace(/(#.+?)(\n|$)/g, '<u>$1</u>$2')
     ;
   };
@@ -326,7 +335,7 @@ var markyMark = function markyMark(string, rules) {
   internal.convertResult = function convertResult(html) {
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
-      .replace(/(id="[^"]+)(" id=")/g, '$1 ')
+      .replace(/( id="[^"]+")( id=")/g, '$2')
       .replace(/(<\/?h)3/g, '$14')
       .replace(/(<\/?h)2/g, '$13')
       .replace(/(<\/?h)1/g, '$12')
@@ -351,6 +360,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
+      .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list-item"$2')
       .replace(/(<(?:img)[^>]*[^/])(>)/g, '$1 /$2')
       .replace(/(<(?:hr|br)[^/])(>)/g, '$1 /$2')
       .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
