@@ -3,13 +3,12 @@
 var blogophonMustacheQuoters = {
   icsQuote: function() {
     return function(text, render) {
-      return render(text)
-        .replace(/(\n|\r|\r\n)/g, "\\n\r\n")
-        .replace(/^([\s\S]{1,50}(?:\s))([\s\S]+)$/, function(all, first, last) {
-          return first + "\r\n" + last.match(/[\s\S]{1,72}(\s|$)/g).join("\r\n");
-        })
-        .replace(/(\r\n)/g, '$1 ')
-      ;
+      var newText = render(text).replace(/(\n|\r|\r\n)/g, "\\n");
+      if (newText.length > 30) {
+        newText = newText.match(/[\s\S]{1,72}/g).join("\r\n ");
+        newText = "\r\n "+newText;
+      }
+      return newText;
     };
   },
   noLineBreak: function() {
