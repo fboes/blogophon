@@ -5,6 +5,19 @@
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
   {{>amp_meta}}
+  <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+  {{#post.ampProperties.hasAudio}}
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
+  {{/post.ampProperties.hasAudio}}
+  {{#post.ampProperties.hasIframe}}
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  {{/post.ampProperties.hasIframe}}
+  {{#post.ampProperties.hasYoutube}}
+    <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+  {{/post.ampProperties.hasYoutube}}
+  {{#post.ampProperties.hasVimeo}}
+    <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
+  {{/post.ampProperties.hasVimeo}}
 </head>
 <body>
   <div id="container">

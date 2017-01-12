@@ -17,6 +17,7 @@ var blogophonIndex = require('./blogophon-index');
 var hashes         = require('./models/hashes');
 var appleNewsFormat = require('./models/apple-news-format');
 var imageStyles    = require('./helpers/image-styles');
+var ampify         = require('./helpers/ampify')();
 
 /**
  * Generator used for creating the blog.
@@ -341,8 +342,16 @@ var Generator = function(config) {
             curPageObj.ampCss = Mustache.ampCss;
             curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl('amp');
             curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl('amp');
+            curPageObj.consolidatedProperties = ampify.getConsolidatedProperties(curPageObj.index);
 
-            promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename('amp'), Mustache.render(Mustache.templates.ampIndex, curPageObj, Mustache.partials)));
+            promises.push(fs.writeFileAsync(
+              indexUrl(curPageObj.currentUrl).filename('amp'),
+              Mustache.render(
+                Mustache.templates.ampIndex,
+                curPageObj,
+                Mustache.partials
+              )
+            ));
           }
 
         }

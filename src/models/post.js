@@ -201,6 +201,8 @@ var Post = function(filename, markdown, meta, config) {
     if (config.specialFeatures.acceleratedmobilepages) {
       external.ampHtml        = ampify.ampifyHtml(external.html);
       external.ampHtmlTeaser  = ampify.ampifyHtml(external.htmlTeaser);
+      external.ampProperties       = ampify.ampifyProperties(external.ampHtml);
+      external.ampPropertiesTeaser = ampify.ampifyProperties(external.ampHtmlTeaser);
     }
 
     return external;
