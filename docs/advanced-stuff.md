@@ -8,11 +8,6 @@ Other means of editing articles
 
 If you do not want to use [`node index.js`](index.js), [read the manual operations instructions](manual.md).
 
-Gulp
------
-
-`gulp watch` will compile articles automatically as soon as you save an altered Markdown file. This may be useful if you like to keep checking how your editing turns out.
-
 Cronjob
 -------
 

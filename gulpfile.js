@@ -13,7 +13,6 @@ var eslint     = require('gulp-eslint');
 var nodeunit   = require('gulp-nodeunit');
 var livereload = require('gulp-livereload');
 var plumber    = require('gulp-plumber');
-var shell      = require('gulp-shell');
 var sass       = require('gulp-sass');
 var rename     = require("gulp-rename");
 var uglify     = require('gulp-uglify');
@@ -102,7 +101,6 @@ gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(['gulpfile.js', 'package.json'], process.exit);
   gulp.watch(['*.js', pkg.directories.src+'/**/*.js', pkg.directories.test+'/**/*.js'], ['test']);
-  gulp.watch([pkg.directories.data+'/**/*'],       ['generate']);
   gulp.watch(pkg.directories.theme + '/**/*.js',   ['build-js']);
   gulp.watch(pkg.directories.theme + '/**/*.scss', ['build-sass']);
 });
@@ -110,4 +108,3 @@ gulp.task('watch', function() {
 // Default Task
 gulp.task('default',     ['eslint', 'nodeunit', 'build-js', 'build-sass']);
 gulp.task('test',        ['eslint', 'nodeunit']);
-gulp.task('generate',    shell.task(['npm run generate']));

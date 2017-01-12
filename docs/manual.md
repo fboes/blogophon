@@ -13,10 +13,6 @@ You do not have to use `index.js` to generate your blog. All operations can be d
 1. Edit a file in `user/posts` using [Markdown](markdown.md) and save it.
 1. Generate HTML files either automatically or manually (see below).
 
-## Generate HTML files automatically
-
-1. Start Gulp watcher via `gulp watch`. Gulp will automatically create all HTML files via the Blogophon Generator whenever a Markdown file changes.
-
 ## Generate HTML files manually
 
 1. Run [`node ./generate.js`](generate.js) to make the Blogophon Generator generate all HTML files.
