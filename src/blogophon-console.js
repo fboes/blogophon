@@ -37,24 +37,51 @@ var BlogophonConsole = function() {
   var template     = fs.readFileSync(path.join(__dirname, 'templates/post.md'), 'utf8');
 
   /**
-   * Get all Markdown files as a simple array
+   * Get all Markdown files as a simple array.
+   * Array values can be simple strings, or objects containing
+   * a name (to display in list),
+   * a value (to save in the answers hash) and
+   * a short (to display after selection) properties.
+   * The choices array can also contain a Separator.
    * @return {Array} [description]
    */
   internal.makeChoices = function() {
-    files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
-      return v.replace(/^.+\/(.+?)$/, '$1');
-    });
-    files.push(new inquirer.Separator());
     var choices = [];
     if (!config.notInitialized) {
+      internal.makeFiles();
       choices.push(choicesStr[0]);
-      if (files.length > 1) {
+      if (files.length > 0) {
         choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
       }
       choices.push(new inquirer.Separator());
     }
     choices.push(choicesStr[5], new inquirer.Separator(), choicesStr[6]);
     return choices;
+  };
+
+/**
+ * Get listing of all Markdown files which may be edited
+ * @return {Array}   [description]
+ */
+  internal.makeFiles = function() {
+    if (config.notInitialized) {
+      files = [];
+    } else {
+      files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
+        var filename = v.replace(/^.+\/(.+?)$/, '$1');
+        var fileStat = fs.lstatSync(v);
+        return {
+          name: fileStat.mtime.toLocaleString(config.locale.language || 'en')
+            + "\t" + filename + "\t" +Math.ceil(fileStat.size/1000)+' kB',
+          value: filename,
+          short: filename
+        };
+      });
+      if (files.length) {
+        files.push(new inquirer.Separator());
+      }
+    }
+    return files;
   };
 
   /**
