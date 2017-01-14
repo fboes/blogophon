@@ -9,7 +9,8 @@ var shell          = require('shelljs');
 var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
-var Generator      = config.notInitialized ? {} : require('./generator');
+var setup          = require('./setup')();
+var Generator      = require('./generator');
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -30,11 +31,7 @@ var BlogophonConsole = function() {
     'Exit'
   ];
 
-  if (!config.notInitialized) {
-    Mustache.getTemplates(config.directories.currentTheme + '/templates');
-  }
-
-  var template     = fs.readFileSync(path.join(__dirname, 'templates/post.md'), 'utf8');
+  Mustache.getTemplates();
 
   /**
    * Get all Markdown files as a simple array.
@@ -77,7 +74,7 @@ var BlogophonConsole = function() {
           short: filename
         };
       });
-      if (files.length) {
+      if (files.length > 1) {
         files.push(new inquirer.Separator());
       }
     }
@@ -259,9 +256,8 @@ var BlogophonConsole = function() {
       function(answers) {
         answers.theme = config.theme ? config.theme : themesAvailable[0];
         answers.locale.direction = answers.locale.direction || config.locale.direction || (answers.language.match(/^(ar|zh|fa|he)/) ? 'rtl' : 'ltr');
-        var generator = new Generator(config);
-        generator
-          .buildBasicFiles(answers)
+        setup
+          .buildBasicFiles(config, answers)
           .then(function() {
             console.log("Settings changed, please restart the Blogophon.");
             // TODO: reload config and return to main menu
@@ -405,7 +401,7 @@ var BlogophonConsole = function() {
             templateData.longitude = 4.8951680;
             break;
         }
-        fs.writeFile(markdownFilename, Mustache.render(template, templateData), function(err) {
+        fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
           if (err) {
             console.error(chalk.red( markdownFilename + ' could not be written' ));
           } else {

@@ -1,7 +1,7 @@
 ![Blogophon -](blogophon.png) Manual operations
 =================
 
-You do not have to use `index.js` to generate your blog. All operations can be done by a bunch of other tools.
+You do not have to use `blogophon` to generate your blog. All operations can be done by a bunch of other tools.
 
 ## Create a new article
 
@@ -15,9 +15,9 @@ You do not have to use `index.js` to generate your blog. All operations can be d
 
 ## Generate HTML files manually
 
-1. Run [`node ./generate.js`](generate.js) to make the Blogophon Generator generate all HTML files.
+1. Run [`blogophon-generate`](generate.js) to make the Blogophon Generator generate all HTML files in the folder you are in.
 
-`generate.js` has some options:
+`blogophon-generate` has some options:
 
 * `--force`: Create _all_ articles anew, ignoring cached versions.
 * `--deploy`:  Execute `deployCmd` command found in `user/config.json`.

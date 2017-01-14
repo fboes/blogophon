@@ -6,20 +6,20 @@ In this document you will find some stuff for hardcore CLI wizards and server gu
 Other means of editing articles
 -------------------------------
 
-If you do not want to use [`node index.js`](index.js), [read the manual operations instructions](manual.md).
+If you do not want to use [`blogophon`](index.js), [read the manual operations instructions](manual.md).
 
 Cronjob
 -------
 
 As the Blogophon will ignore articles with a publishing date set into the future, you may want to build some mechanism for generating your unpublished pages automatically. Here is how:
 
-Get the path to your `generate.js` by typing `pwd`. Then edit your Crontab: `crontab -e`
+Get the path to your blog by typing `pwd`. Then edit your Crontab: `crontab -e`
 
 Add one of these lines:
 
 ```
-58 23 * * * cd PATH_TO_YOUR_BLOG && node ./generate.js >/dev/null 2>&1 # Midnight, daily without log
-58 23 * * * cd PATH_TO_YOUR_BLOG && node ./generate.js --log >> logs/generate.log 2>&1 # Midnight, daily with log
+58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate >/dev/null 2>&1 # Midnight, daily without log
+58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate --log >> logs/generate.log 2>&1 # Midnight, daily with log
 ```
 
 For more exotic execution times check http://crontab-generator.org/. And keep in mind to check the timezone your crontab will be executed in.
@@ -38,11 +38,6 @@ Editor
 ------
 
 If you use Sublime Text for editing your markdown files, consider installing `Markdown Extended`. It supports YAML frontmatter and code block syntax highlighting in Markdown files.
-
-Multiple blogs & global installation
-------------------------------------
-
-There are setup instructions on [hot to use Blogophon globally / for multiple blogs on one machine](global-installation.md).
 
 Server setup
 ------------
@@ -76,3 +71,13 @@ You may want to deactivate URL shortening in [IFTTT's settings](https://ifttt.co
 ### Slack
 
 Slack offers a plugin to import RSS feeds directly to a Slack channel. Just [follow the instructions on installing the RSS app into Slack](https://get.slack.help/hc/en-us/articles/218688467-Add-RSS-feeds-to-Slack).
+
+If you are not able to globally install the Blogophon
+-----------------------------------------------------
+
+In certain environments you may not be able to install the Blogophon globally. Thankfully there is a way to locally install the Blogophon.
+
+1. Run `npm install blogophon` in a folder you have access to.
+
+* All command relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
+* All command relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`

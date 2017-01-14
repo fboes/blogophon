@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>{{#meta.title}}{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}} | {{/meta.title}}{{config.name}}</title>
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
-  {{>amp_meta}}
+  {{>ampMetaHtml}}
   {{#consolidatedProperties.ampPropertiesTeaser.hasAudio}}
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
   {{/consolidatedProperties.ampPropertiesTeaser.hasAudio}}
@@ -20,7 +20,7 @@
 </head>
 <body>
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <main>
       {{#meta.title}}
         <h2>{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h2>
@@ -86,8 +86,8 @@
         {{/nextUrl}}
       </p>
     </main>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>amp_closure}}
+  {{>ampClosureHtml}}
 </body>
 </html>

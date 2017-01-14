@@ -36,7 +36,7 @@ var translations = function(language) {
     }
   };
 
-  if (!external.translations[language]) {
+  if (language !== 'en' && !external.translations[language]) {
     throw new Error("Missing locale "+language);
   }
 
@@ -66,7 +66,7 @@ var translations = function(language) {
    * @return {[type]}     [description]
    */
   external.getString = function(key) {
-    return (!external.currentLanguage[key]) ? key : external.currentLanguage[key];
+    return (!external.currentLanguage || !external.currentLanguage[key]) ? key : external.currentLanguage[key];
   };
 
   return external;

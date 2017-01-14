@@ -29,11 +29,11 @@
   {{#config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}">
   {{/config.specialFeatures.acceleratedmobilepages}}
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="index">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
         {{#meta.title}}
@@ -115,7 +115,7 @@
 
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
         <section>
           <h3>Abonnement</h3>
           <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
@@ -139,8 +139,8 @@
         </section>
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>

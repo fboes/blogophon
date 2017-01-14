@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <title>Unbekannt verzogen… | {{config.name}}</title>
   <meta name="robots" content="noindex, follow" />
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="four-oh-four">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
         <h2>Sorry, diese URL gibt es (nicht) mehr…</h2>
@@ -25,11 +25,11 @@
         <p>Ansonsten gibt es mehr Artikel auf der <a href="{{config.basePath}}">Startseite</a>.</p>
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>

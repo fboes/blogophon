@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
-  {{>amp_meta}}
+  {{>ampMetaHtml}}
   <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
   {{#post.ampProperties.hasAudio}}
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
@@ -21,7 +21,7 @@
 </head>
 <body>
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <main>
       {{#post}}
         <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
@@ -73,8 +73,8 @@
         </p>
       {{/post}}
     </main>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>amp_closure}}
+  {{>ampClosureHtml}}
 </body>
 </html>

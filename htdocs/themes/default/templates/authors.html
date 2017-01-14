@@ -8,11 +8,11 @@
   <meta property="og:title" name="title" content="Alle Autoren" />
   <meta property="og:description" name="description" content="Alle Autoren in dem Blog &quot;{{config.name}}&quot;" />
   <link rel="canonical" href="{{config.absoluteBasePath}}tagged/" />
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="authors">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
         <h2>Alle Autoren</h2>
@@ -29,11 +29,11 @@
 
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>
