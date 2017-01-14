@@ -36,14 +36,13 @@ The basic work-flow is this:
 
 If you are a CLI wizard, you may also want to take a look at [Blogophon's special CLI features](docs/advanced-stuff.md).
 
-Version
+Status
 -------
 
+[![npm version](https://badge.fury.io/js/blogophon.svg)](https://badge.fury.io/js/blogophon)
 [![Build Status](https://travis-ci.org/fboes/blogophon.svg?branch=master)](https://travis-ci.org/fboes/blogophon)
 [![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
 [![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
-
-Version: [0.7.1](https://github.com/fboes/blogophon/releases) (2016-11-30)
 
 Legal stuff
 -----------
