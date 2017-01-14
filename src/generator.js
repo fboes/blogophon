@@ -132,7 +132,7 @@ var Generator = function(config) {
           fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.themeTemplates.postHtml, {
             post: post,
             config: config
-          }, Mustache.partials))
+          }, Mustache.themePartials))
         ];
         if (config.specialFeatures.applenews) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article', 'json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
@@ -142,7 +142,7 @@ var Generator = function(config) {
             post: post,
             ampCss: Mustache.ampCss,
             config: config
-          }, Mustache.partials)));
+          }, Mustache.themePartials)));
         }
         if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index', 'json'), JSON.stringify(post, undefined, 2)));
@@ -333,7 +333,7 @@ var Generator = function(config) {
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.meta.AbsoluteUrlAmp = curUrlObj.absoluteUrl('amp');
           }
-          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.themeTemplates.indexHtml, curPageObj, Mustache.partials)));
+          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.themeTemplates.indexHtml, curPageObj, Mustache.themePartials)));
 
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.ampCss = Mustache.ampCss;
@@ -346,7 +346,7 @@ var Generator = function(config) {
               Mustache.render(
                 Mustache.themeTemplates.ampIndexHtml,
                 curPageObj,
-                Mustache.partials
+                Mustache.themePartials
               )
             ));
           }
@@ -393,7 +393,7 @@ var Generator = function(config) {
         promises.push(fs.writeFileAsync( indexUrl(config.htdocs.tag + '/index.html').filename(), Mustache.render(Mustache.themeTemplates.tagsHtml, {
           index: tagPages,
           config: config
-        }, Mustache.partials)));
+        }, Mustache.themePartials)));
 
         Promise
           .all(promises)
@@ -441,7 +441,7 @@ var Generator = function(config) {
               index: authorPages,
               config: config
             },
-            Mustache.partials)
+            Mustache.themePartials)
           ));
 
           Promise
@@ -479,7 +479,7 @@ var Generator = function(config) {
                 index: internal.currentIndex.getPosts(5),
                 config: config
               },
-              Mustache.partials
+              Mustache.themePartials
             )
           ),
 
