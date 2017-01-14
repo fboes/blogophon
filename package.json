@@ -1,6 +1,6 @@
 {
   "name": "blogophon",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "description": "A small and simple Static Site Generator for blogs.",
   "main": "./index.js",
   "repository": {
@@ -122,7 +122,9 @@
       ],
       "no-loop-func": 2,
       "no-multi-str": 2,
-      "valid-jsdoc": [1]
+      "valid-jsdoc": [
+        1
+      ]
     },
     "extends": [
       "eslint:recommended"
