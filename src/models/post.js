@@ -109,6 +109,8 @@ var Post = function(filename, markdown, meta, config) {
     if (!meta.Title) {
       meta.Title = markdown.split(/\n/)[0];
     }
+    meta.MarkdownTitle = meta.Title;
+    meta.Title = SuperString(internal.removeMarkdown(meta.Title)).niceShorten(320);
     if (meta.Keywords) {
       meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
         var tagUrlObj = tagUrl(tag, config.htdocs.tag);
@@ -132,13 +134,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     if (meta.Description) {
       meta.MarkdownDescription = meta.Description;
-      meta.Description = meta.Description
-        .replace(/>/g, ' ')
-        .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
-        .replace(/[ ][ ]+/g, ' ')
-        .replace(/http(s)?:\S+/g, '')
-      ;
-      meta.Description = SuperString(meta.Description).niceShorten(320);
+      meta.Description = SuperString(internal.removeMarkdown(meta.Description)).niceShorten(320);
     }
     if (!meta.Author) {
       meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
@@ -222,6 +218,21 @@ var Post = function(filename, markdown, meta, config) {
     return imageStyles(config)
       .replaceImgHtml(html)
       .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
+    ;
+  };
+
+  /**
+   * Remove Markdown from String
+   * @param  {String} markdown [description]
+   * @return {String}          [description]
+   */
+  internal.removeMarkdown = function(markdown) {
+    return markdown
+      .replace(/>/g, ' ')
+      .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
+      .replace(/[ ][ ]+/g, ' ')
+      .replace(/http(s)?:\S+/g, '')
+      .trim()
     ;
   };
 

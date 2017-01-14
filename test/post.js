@@ -62,7 +62,7 @@ exports.testStructure = function(test) {
 };
 
 exports.testReplacingMarkdown = function(test) {
-  test.expect(9);
+  test.expect(10);
 
   var testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
   var testMarkdownDescription = 'Description ![](some-image.jpg) and [some internal link](internal.md).';
@@ -83,6 +83,7 @@ exports.testReplacingMarkdown = function(test) {
   test.ok(testPost.htmlTeaser.match(/test\/some\-image.jpg/), 'Image has path added');
   test.ok(!testPost.html.match(/internal\.md/), 'Internal links are converted');
   test.ok(!testPost.htmlTeaser.match(/internal\.md/), 'Internal links are converted');
+  test.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');
 
   test.done();
 };
