@@ -24,6 +24,7 @@ var geoJson = function(index) {
           title: item.meta.Title,
           description: item.meta.Description,
           link: item.meta.AbsoluteUrl,
+          "marker-symbol": item.meta.Marker || "marker",
           pubDate: item.meta.Created.rfc,
           categories: tags
         },

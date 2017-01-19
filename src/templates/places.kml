@@ -17,13 +17,18 @@
           <TimeStamp>
             <when>{{meta.Created.iso}}</when>
           </TimeStamp>
-          {{#meta.Keywords}}
-            <ExtendedData>
+          <ExtendedData>
+            {{#meta.Keywords}}
               <Data name="Keywords">
                 <value>{{meta.Keywords}}</value>
               </Data>
-            </ExtendedData>
-          {{/meta.Keywords}}
+            {{/meta.Keywords}}
+            {{#meta.Marker}}
+              <Data name="Marker">
+                <value>{{meta.Marker}}</value>
+              </Data>
+            {{/meta.Marker}}
+          </ExtendedData>
           <atom:link href="{{meta.AbsoluteLink}}" />
         </Placemark>
       {{/meta.Latitude}}
