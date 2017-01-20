@@ -14,6 +14,7 @@ Twitter:   {{{title}}}
 Location:  {{{location}}}
 {{/location}}
 {{#latitude}}
+Marker:    marker
 Latitude:  {{{latitude}}}
 Longitude: {{{longitude}}}
 {{/latitude}}

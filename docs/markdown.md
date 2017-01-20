@@ -30,6 +30,7 @@ Keywords:  Tag, Tag                                 # Comma-separated list of ke
 Twitter:   \#Hashtag and some text                  # This text will be used on Twitter. If not set will default to title of document.
 Classes:   Images                                   # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
 Location:  Lista Lighthouse, Norway                 # Plain address this post is supposed to be located at.
+Marker:    marker                                   # See https://github.com/mapbox/simplestyle-spec/blob/master/1.1.0/README.md#3-client-behavior, definition for "marker-symbol"
 Latitude:  58.109285                                # Geolocation decimal latitude in WGS84, ranging from -90 to 90.
 Longitude: 6.5664576                                # Geolocation decimal longitude in WGS84, ranging from -180 to 180.
 Language:  en                                       # Language of current article, given in ISO 639-1 or RFC1766. If not set will default to blog's language.
