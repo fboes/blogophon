@@ -11,6 +11,7 @@ var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
 var setup          = require('./setup')();
 var Generator      = require('./generator');
+var https          = require('https');
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -114,6 +115,33 @@ var BlogophonConsole = function() {
   internal.dirnameFromFilename = function(filename) {
     return filename.replace(/\.md~?$/, '');
   };
+
+  /**
+   * Get coordinates for address
+   * @param  {String}   address  [description]
+   * @param  {String}   language [description]
+   * @param  {Function} callback [description]
+   * @return {Object}            with `latitude, longitude`
+   */
+  internal.convertAddress = function(address, language, callback) {
+    https.get({
+      host: 'nominatim.openstreetmap.org',
+      path: '/search?q='+encodeURIComponent(address)+'&format=json&accept-language='+encodeURIComponent(language || 'en')
+    }, function(response) {
+      var body = '';
+      response.on('data', function(d) {
+        body += d;
+      });
+      response.on('end', function() {
+        var parsed = JSON.parse(body);
+        callback(null, {
+          latitude:  parsed[0] ? parsed[0].lat : null,
+          longitude: parsed[0] ? parsed[0].lon : null
+        });
+      });
+    });
+  };
+
 
   /**
    * Display the setup dialog.
@@ -397,31 +425,45 @@ var BlogophonConsole = function() {
             templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";
             break;
           case 'Location':
-            templateData.latitude = 52.3702160;
-            templateData.longitude = 4.8951680;
+            templateData.latitude = 0.00001;
+            templateData.longitude = 0.00001;
             break;
         }
-        fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
-          if (err) {
-            console.error(chalk.red( markdownFilename + ' could not be written' ));
-          } else {
-            console.log( markdownFilename + ' created');
-            var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
-            console.log(chalk.grey(cmd));
-            if (answers.edit) {
-              shell.exec(cmd);
-            }
-            if (answers.classes === 'Images' || answers.images) {
-              shell.mkdir('-p', filename);
-            }
-            external.init();
-          }
-        });
+        if (templateData.location) {
+          console.log('Geocoding...');
+          internal.convertAddress(templateData.location, config.locale.language, function(err, geo) {
+            templateData.latitude = geo.latitude || templateData.latitude;
+            templateData.longitude = geo.longitude || templateData.longitude;
+            internal.makePost(markdownFilename, filename, templateData);
+          });
+        } else {
+          internal.makePost(markdownFilename, filename, templateData);
+        }
+
       },
       function(err) {
         console.error(err);
       }
     );
+  };
+
+  internal.makePost = function(markdownFilename, filename, templateData) {
+    fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
+      if (err) {
+        console.error(chalk.red( markdownFilename + ' could not be written' ));
+      } else {
+        console.log( markdownFilename + ' created');
+        var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
+        console.log(chalk.grey(cmd));
+        if (templateData.edit) {
+          shell.exec(cmd);
+        }
+        if (templateData.classes === 'Images' || templateData.images) {
+          shell.mkdir('-p', filename);
+        }
+        external.init();
+      }
+    });
   };
 
   /**
