@@ -25,17 +25,17 @@
   },
   "icons": [
     {
-      "src": "http://cdn.3960.org/favicon-96x96.png",
+      "src": "https://cdn.3960.org/favicon-96x96.png",
       "sizes": "96x96"
     },
     {
-      "src": "http://cdn.3960.org/favicon-144x144.png",
+      "src": "https://cdn.3960.org/favicon-144x144.png",
       "sizes": "144x144"
     },
     {
-      "src": "http://cdn.3960.org/favicon-196x196.png",
+      "src": "https://cdn.3960.org/favicon-196x196.png",
       "sizes": "196x196"
     }
   ],
-  "ogImage": "http://cdn.3960.org/favicon-196x196.png"
+  "ogImage": "https://cdn.3960.org/favicon-196x196.png"
 }
