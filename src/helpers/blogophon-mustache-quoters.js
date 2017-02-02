@@ -3,7 +3,9 @@
 var blogophonMustacheQuoters = {
   icsQuote: function() {
     return function(text, render) {
-      var newText = render(text).replace(/(\n|\r|\r\n)/g, "\\n");
+      var newText = render(text)
+        .replace(/(\n|\r|\r\n)/g, "\\n")
+        .replace(/(,|;)/g, '\\$1');
       if (newText.length > 30) {
         newText = newText.match(/[\s\S]{1,72}/g).join("\r\n ");
         newText = "\r\n "+newText;

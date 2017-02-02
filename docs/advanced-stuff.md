@@ -79,5 +79,5 @@ In certain environments you may not be able to install the Blogophon globally. T
 
 1. Run `npm install blogophon` in a folder you have access to.
 
-* All command relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
-* All command relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`
+* All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
+* All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`
