@@ -53,7 +53,7 @@ There is a [sample nginx configuration](nginx.conf) to use for your server.
 Automatically publish to external services
 ------------------------------------------
 
-The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter or Facebook.
+The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter or Facebook. This idea is called [POSSE](https://indieweb.org/POSSE) (Publish (on your) Own Site, Syndicate Elsewhere).
 
 ### IFTT
 

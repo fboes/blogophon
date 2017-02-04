@@ -9,13 +9,14 @@ A small and simple [Static Site Generator](https://davidwalsh.name/introduction-
 * It uses simple, fast and [hackable templating](docs/theming.md) via Mustache. It also supports multiple themes.
 * Generates a bunch of way to find your articles: Regular index pages, tag pages, author pages.
 * The Blogophon comes with a built-in image-scaler, which leads to responsive images.
-* The default them puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph).
+* The default theme puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph).
 * A ton of [special features](docs/special-features.md) like ATOM, RSS, AMP, etc.
 
 Installation
 ------------
 
 1. Make sure you have [Node.js](https://nodejs.org/) installed by calling `node -v`.
+1. Make sure you have [ImageMagick](http://www.imagemagick.org/) installed by calling `magick -help`. ImageMagick is needed for scaling images.
 1. Run `npm install -g blogophon` to install the Blogophon on your computer.
 1. Change to a folder you want to initialize the Blogophon in.
 1. Run `blogophon` to start the configuration dialog and enable [special features](docs/special-features.md).
