@@ -1,6 +1,8 @@
 Changelog
 =========
 
+For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
+
 1.0.3
 -----
 
@@ -16,4 +18,3 @@ Changelog
 -----
 
 * [x] Documentation improved
-
