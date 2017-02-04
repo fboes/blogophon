@@ -40,6 +40,21 @@ Link:      http://www.example.com/                  # By clicking on links to th
 Rating:    1/5                                      # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
 ```
 
+Basic Markdown example
+----------------------
+
+To get you started quickly, here is a small Markdown example. For more information check out the full [Markdown documentation](https://daringfireball.net/projects/markdown/syntax).
+
+```markdown
+Title of your document
+======================
+
+Some paragraph with **bold** text, linking to [an example](https://www.example.com/).
+
+Another paragraph with some _italic_ text.
+
+```
+
 Teaser text
 -----------
 
