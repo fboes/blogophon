@@ -12,6 +12,16 @@
         "240px"
       ]
     },
+    "portrait": {
+      "srcset": [
+        [480,640],
+        [240,320]
+      ],
+      "sizes": [
+        "(min-width: 580px) 32vw",
+        "240px"
+      ]
+    },
     "default": {
       "srcset": [
         [640,360],
