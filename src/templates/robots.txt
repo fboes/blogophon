@@ -5,4 +5,5 @@ User-agent: *
 Disallow: {{config.basePath}}google*.html
 Disallow: {{config.basePath}}yandex*.html
 
+Host: {{config.baseUrl}}
 Sitemap: {{config.absoluteBasePath}}sitemap.xml
