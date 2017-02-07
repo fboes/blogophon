@@ -1,7 +1,9 @@
 ![](docs/blogophon.png) Blogophon
 =========
 
-A small and simple [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) for blogs. A live example of this blog generator can be found at [3960! Journal](http://journal.3960.org).
+A [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) supporting [Markdown](docs/markdown.md), [responsive images](docs/markdown.md#images), [RSS and other RESTful files](docs/special-features.md). Built with Node.js and minimal dependencies.
+
+A live example of this blog generator can be found at [3960! Journal](http://journal.3960.org).
 
 **Features**
 
