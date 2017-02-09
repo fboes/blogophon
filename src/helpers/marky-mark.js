@@ -219,8 +219,8 @@ var markyMark = function markyMark(string, rules) {
    */
   internal.convertTextBlock = function convertTextBlock(string) {
     return string
-      .replace(/&quot;(.+?)&quot;/g, internal.rules.quotation.primary[0] + '$1' + internal.rules.quotation.primary[1])
-      .replace(/(?:'|&#39;)(.+?)(?:'|&#39;)/g, internal.rules.quotation.secondary[0] + '$1' + internal.rules.quotation.secondary[1])
+      .replace(/(&quot;)(.+?)\1/g, internal.rules.quotation.primary[0] + '$2' + internal.rules.quotation.primary[1])
+      .replace(/('|&#39;)(.+?)\1/g, internal.rules.quotation.secondary[0] + '$2' + internal.rules.quotation.secondary[1])
     ;
   };
 
@@ -247,9 +247,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
       .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
       .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<tt>$2</tt>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/([^\\])(&quot;|'|&#39;)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
       .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
       .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
       .replace(/(\/\/.+?)(\n|$)/g, '<u>$1</u>$2')
@@ -272,9 +270,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
       .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
       .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/([^\\])(&quot;|'|&#39;)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
       .replace(/([\d\.]+[a-z]+)/g, '$1<samp>$2</samp>$3')
       .replace(/(\/\/.+?(?:\n|$))/g, '<u>$1</u>')
       .replace(/(\/\*[\s\S]+?\*\/)/g, '<u>$1</u>')
@@ -318,10 +314,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
       .replace(/(^|\b)(if|fi|then|case|esac|function)(\b)/g, '$1<i>$2</i>$3')
       .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(`)(.*?[^\\])(`)/g, '$1<kbd>$2$3$4</kbd>')
+      .replace(/([^\\])(&quot;|'|&#39;|`)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
       .replace(/(\n)(\$ .+?)(\n|$)/g, '$1<tt>$2</tt>$3')
       .replace(/(#.+?)(\n|$)/g, '<u>$1</u>$2')
     ;
@@ -336,10 +329,11 @@ var markyMark = function markyMark(string, rules) {
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
       .replace(/( id="[^"]+")( id=")/g, '$2')
-      .replace(/(<\/?h)3/g, '$14')
-      .replace(/(<\/?h)2/g, '$13')
-      .replace(/(<\/?h)1/g, '$12')
-      .replace(/(<h2.+?<\/h2>)/, '') // Remove title, will be put into meta.Title
+      .replace(/(<h1.+?<\/h1>)/, '') // Remove title, will be put into meta.Title
+      .replace(/(<\/?h)(\d)/g, function(all, tag, number) {
+        // Decrement headlines, so h2, will be h3
+        return tag + (Number(number)+1);
+      })
       .replace(/\/\/youtu\.be\/([a-zA-Z0-9\-_]+)/g, '//www.youtube.com/watch?v=$1')
       .replace(/(<p>)\s*(<a[^>]+?>[^<]+?<\/a>)\s*(<\/p>)/g, function(all) { //, before, inline, after
         return all
@@ -366,7 +360,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
         return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row">$2</th>') + after;
       })
-      .replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g, function(all, before, inline, after) {
+      .replace(/(<(p|h\d|li)>)([\s\S]+?)(<\/\2>)/g, function(all, before, tag, inline, after) {
         return before + internal.convertTextBlock(inline) + after;
       })
       .trim()

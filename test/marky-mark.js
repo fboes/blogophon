@@ -116,9 +116,9 @@ exports.testShell = function(test) {
  */
 exports.testQuotation = function(test) {
 
-  test.expect(1);
+  test.expect(3);
 
-  var m, x = '<p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
+  var m, x = '<h1>Delete me</h1><h2>Downgrade me</h2><p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
 
   m = markyMark(x, {
     quotation: {
@@ -134,6 +134,8 @@ exports.testQuotation = function(test) {
       secondary: ['‚', '‘']
     }
   }), 'Quotation changed');
+  test.ok(!m.match(/<h2>/));
+  test.ok(m.match(/<h3>/));
 
   test.done();
 };
@@ -167,9 +169,9 @@ exports.testPhp = function(test) {
 
   test.ok(m);
   test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\/\//));
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>namespace<\/(b|i|var|tt|kbd|samp|u)>/));
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$classname<\/(b|i|var|tt|kbd|samp|u)>/));
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$foo<\/(b|i|var|tt|kbd|samp|u)>/));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>namespace<\/\1>/));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$classname<\/\1>/));
+  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$foo<\/\1>/));
 
   test.done();
 };
