@@ -81,6 +81,9 @@
               {{/meta.hasExternalLink}}
             </div>
             <footer class="meta">
+              {{#config.twitterAccount}}
+                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">Kommentieren &amp; diskutieren auf Twitter</a></p>
+              {{/config.twitterAccount}}
               {{#meta.Modified.locale}}
                 <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
               {{/meta.Modified.locale}}

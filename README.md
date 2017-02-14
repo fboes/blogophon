@@ -14,6 +14,13 @@ A live example of this blog generator can be found at [3960! Journal](http://jou
 * The default theme puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph).
 * A ton of [special features](docs/special-features.md) like ATOM, RSS, AMP, etc.
 
+Requirements
+------------
+
+Your _blog pages_ can be hosted on any web hosting service - it only consists of static files. You will need no PHP, MySQL or anything like that.
+
+The Blogophon _generator_ works on every platform with [NodeJs](https://nodejs.org/en/). This includes Windows, Mac OSX and Linux. The Blogophon can also be installed directly on your web host, as long as you have [NodeJs](https://nodejs.org/en/) installed on your web host and SSH access.
+
 Installation
 ------------
 
