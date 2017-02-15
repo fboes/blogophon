@@ -3,6 +3,13 @@ Changelog
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+1.0.4
+-----
+
+* [x] Fixed minor problem with paragraphs containing attributes not being found by marky-mark.js
+* [x] Making Yandex and Nginx happy
+* [x] New portrait image size
+
 1.0.3
 -----
 
