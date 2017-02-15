@@ -37,7 +37,7 @@
     "gulp-sass": "^3.0.0",
     "gulp-uglify": "^2.0.0",
     "husky": "^0.13.1",
-    "nodeunit": "^0.10.2"
+    "nodeunit": "^0.11.0"
   },
   "directories": {
     "doc": "docs",
