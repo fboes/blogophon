@@ -3,6 +3,8 @@ Changelog
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Image gallery added
+
 1.0.4
 -----
 

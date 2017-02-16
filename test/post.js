@@ -124,6 +124,47 @@ exports.testImageParser = function(test) {
   test.done();
 };
 
+exports.testGallery = function(test) {
+  test.expect(4);
+
+  var filename = 'test.md';
+  var markdown;
+  var testPost;
+
+  markdown = '![alt1](img1-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date(),
+    Classes: 'images'
+  });
+  test.ok(!testPost.html.match(/<div class="gallery/));
+
+  markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-64x48.jpg) ![alt3](img3-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date(),
+    Classes: 'images'
+  });
+  test.ok(testPost.html.match(/<div class="gallery/));
+
+  markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-32x24.jpg) ![alt3](img3-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date(),
+    Classes: 'images'
+  });
+  test.ok(testPost.html.match(/<div class="gallery/));
+
+  markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-32x24.jpg) ![alt3](img3-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date()
+  });
+  test.ok(!testPost.html.match(/<div class="gallery/));
+
+  test.done();
+};
+
 /*
 exports.testSpecialProperties = function(test) {
 

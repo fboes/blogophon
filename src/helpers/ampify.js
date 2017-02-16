@@ -20,6 +20,12 @@ var ampify = function() {
       .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
       .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^\.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)><\/amp-iframe>/g, '<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
       .replace(/<amp-iframe([^>]*) src="https:\/\/player\.vimeo\.com\/video\/(.+?)"([^>]*)>(.*?)<\/amp-iframe>/g, '<amp-vimeo$1 data-videoid="$2"$3></amp-vimeo>')
+      .replace(/<div class="gallery">([\s\S]+?)<\/div>/g, function(all, content) {
+        var width = html.match(/width="(\d+)"/) || ['', '640'];
+        var height = html.match(/height="(\d+)"/) || ['', '360'];
+        content = content.replace(/<\/?a(\s[^>]+)?>/g, '');
+        return '<amp-carousel width="'+width[1]+'" height="'+height[1]+'" layout="responsive" type="slides">'+content+'</amp-carousel>';
+      })
       .replace(/( style=".+?")/g, '')
     ;
   };
@@ -37,7 +43,8 @@ var ampify = function() {
       hasAudio: html.search(/<amp\-audio/) >= 0,
       hasIframe: html.search(/<amp\-iframe/) >= 0,
       hasYoutube: html.search(/<amp\-youtube/) >= 0,
-      hasVimeo: html.search(/<amp\-vimeo/) >= 0
+      hasVimeo: html.search(/<amp\-vimeo/) >= 0,
+      hasCarousel: html.search(/<amp\-carousel/) >= 0
     };
   };
 
