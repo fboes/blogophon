@@ -16,6 +16,10 @@ try {
   };
 }
 
+if (!config.language && process.env && process.env.LANG) {
+  config.language = process.env.LANG.replace(/^([a-zA-Z]+).*?$/, '$1');
+}
+
 config.theme              = config.theme         || 'default';
 config.htdocs             = config.htdocs        || {};
 config.directories        = pkg.directories;
@@ -31,7 +35,7 @@ config.basePath           = config.basePath      || '/';
 config.absoluteBasePath   = config.baseUrl + config.basePath;
 config.domain             = config.baseUrl.replace(/^[a-z]+:\/\//, '');
 config.locale             = config.locale || {};
-config.locale.language    = config.locale.language  || config.language || process.env.LANG.replace(/^([a-zA-Z]+).*?$/, '$1') || 'en';
+config.locale.language    = config.locale.language  || config.language || 'en';
 config.locale.direction   = config.locale.direction || (config.locale.language.match(/^(ar|zh|fa|he)/) ? 'rtl' : 'ltr');
 config.itemsPerPage       = Number(config.itemsPerPage) || 5;
 config.defaultAuthor      = config.defaultAuthor        || {};
