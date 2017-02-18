@@ -93,7 +93,7 @@
                   <span itemprop="name">{{meta.AuthorName}}</span>
                 </address>
               {{/meta.AuthorName}}
-              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="//cdn.3960.org/css/iphone.png" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
+              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="{{config.themeConf.ogImage}}" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
               {{#meta.Tags.length}}
                 <span class="tags">
                   Andere Artikel zum Thema
@@ -155,6 +155,6 @@
     {{>footerHtml}}
   </div>
   {{>closureHtml}}
-  <noscript><img src="//stats.3960.org/piwik.php?idsite=8&amp;rec=1" alt="" /></noscript>
+  <!--noscript><img src="http://www.example.com/piwik.php?idsite=8&amp;rec=1" alt="" /></noscript-->
 </body>
 </html>

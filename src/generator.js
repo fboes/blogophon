@@ -385,7 +385,7 @@ var Generator = function(config) {
         var promises = Object.keys(tags).map(function(key) {
           return external.buildIndexFiles(
             tags[key].index,
-            tags[key].urlObj.relativeUrl(),
+            '/'+tags[key].urlObj.relativeDirname(),
             SuperString(internal.translation.getString('Articles with tag "%s"')).sprintf(tags[key].title)
           );
         });
@@ -430,7 +430,7 @@ var Generator = function(config) {
           var promises = Object.keys(authors).map(function(name) {
             return external.buildIndexFiles(
               authors[name].index,
-              authors[name].urlObj.relativeUrl(),
+              '/'+authors[name].urlObj.relativeDirname(),
               SuperString(internal.translation.getString('Articles written by %s')).sprintf(name)
             );
           });

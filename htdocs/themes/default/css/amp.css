@@ -1,8 +1,8 @@
-body { font: 80% Tahoma, sans-serif; padding: 0; }
+body { font-family: Arial, sans-serif; line-height: 1.5; padding: 0; margin: 0; }
 
-a { color: maroon; border-radius: 0.5em; }
+a { color: #116bfc; }
 
-#header { font-size: 1em; padding: 1em; margin: 0; border-bottom: 1px solid #888; background: #74AEEE; text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.5); }
+#header { font-size: 1em; padding: 1em; margin: 0; border-bottom: 1px solid #888; background: #116bfc; text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.5); }
 
 #header a { display: block; color: white; text-align: right; font-family: Georgia, serif; height: 100%; }
 

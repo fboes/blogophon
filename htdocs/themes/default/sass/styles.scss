@@ -1,0 +1,31 @@
+@import "base";
+@import "screen";
+
+
+
+#container {
+  max-width: 50em;
+  margin:auto;
+}
+
+#prevnext {
+  text-align:center;
+  padding: 2em 0;
+  a {
+    display:inline-block;
+    padding:0 1em;
+  }
+}
+
+#sidebar {
+  border-top: 1px dashed $color-grey-dark;
+}
+
+#footer {
+  color: $color-grey-dark;
+  border-top: 1px dashed;
+  padding: 1em;
+  font-size: 0.8em;
+}
+
+@import "blogophon-styles";
