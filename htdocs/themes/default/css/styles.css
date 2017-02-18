@@ -3,7 +3,7 @@ body { font-family: Arial, sans-serif; line-height: 1.5; padding: 0; margin: 0; 
 
 a { color: #116bfc; }
 
-#container { max-width: 50em; margin: auto; }
+#container { max-width: 640px; margin: auto; }
 
 #prevnext { text-align: center; padding: 2em 0; }
 
@@ -23,7 +23,7 @@ article img { float: left; margin: 0 1em 1em 0; max-width: 100%; height: auto; }
 
 article img.default { width: 100%; margin: 0 0 1em; float: none; }
 
-article img[width="240"], article img.quad { max-width: 50%; }
+article img[width="240"], article img.quad { max-width: 37.5%; }
 
 article a.image { position: relative; cursor: zoom-in; }
 
