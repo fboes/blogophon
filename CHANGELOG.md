@@ -3,6 +3,11 @@ Changelog
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+rc 1.1.0
+--------
+
+* [x] New (and very basic) default theme
+* [x] Fixed major bug for installations in subfolders
 * [x] Image gallery added
 
 1.0.4
