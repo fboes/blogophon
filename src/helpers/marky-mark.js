@@ -177,32 +177,32 @@ var markyMark = function markyMark(string, rules) {
     });
 
     entityMap = {
-      ':)': '&#x1F60A;',
-      ':))': '&#x1F602;',
-      ':(': '&#x1F629;',
-      ':\'(': '&#x1F622;',
-      ':|': '&#x1F610;',
-      ':/': '&#x1F612;',
-      ':D': '&#x1F604;',
-      ':P': '&#x1F60B;',
-      ':p': '&#x1F60B;',
-      ':O': '&#x1F632;',
-      ':o': '&#x1F632;',
-      ':?': '&#x1F914;',
-      ':@': '&#x1F620;',
-      ':*': '&#x1F618;',
-      ';)': '&#x1F609;',
-      'B)': '&#x1F60E;',
-      'XP': '&#x1F61D;',
-      '8o': '&#x1F628;',
-      ':+1:': '&#x1F44D;',
-      ':-1:': '&#x1F44E;',
-      '&lt;3': '&#x1F495;',
-      '&lt;/3': '&#x1F494;',
-      '(!)': '&#x26A0;'
+      ':)': '1F60A',
+      ':))': '1F602',
+      ':(': '1F629',
+      ':\'(': '1F622',
+      ':|': '1F610',
+      ':/': '1F612',
+      ':D': '1F604',
+      ':P': '1F60B',
+      ':p': '1F60B',
+      ':O': '1F632',
+      ':o': '1F632',
+      ':?': '1F914',
+      ':@': '1F620',
+      ':*': '1F618',
+      ';)': '1F609',
+      'B)': '1F60E',
+      'XP': '1F61D',
+      '8o': '1F628',
+      ':+1:': '1F44D',
+      ':-1:': '1F44E',
+      '&lt;3': '1F495',
+      '&lt;/3': '1F494',
+      '(!)': '26A0'
     };
     string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|:(?:\+|\-)1:|&lt;\?3|\(!\))(\W|$)/g, function(all, before, s, after) {
-      return before + '<span class="emoji" title="'+s+'">' + entityMap[s] + '</span>' + after;
+      return before + '<span class="emoji emoji--' + entityMap[s] + '" title="'+s+'">&#x' + entityMap[s] + ';</span>' + after;
     });
 
     return string
@@ -339,11 +339,11 @@ var markyMark = function markyMark(string, rules) {
         return inline
           .replace(
             /(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
-            '<div class="video-player youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
+            '<div class="video-player video-player--youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
           )
           .replace(
             /(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)/g,
-            '<div class="video-player vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1"></iframe></div>'
+            '<div class="video-player video-player--vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1"></iframe></div>'
           )
           .replace(
             /(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)/g,
@@ -354,7 +354,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
-      .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list-item"$2')
+      .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list__item"$2')
       .replace(/(<(?:img)[^>]*[^/])(>)/g, '$1 /$2')
       .replace(/(<(?:hr|br)[^/])(>)/g, '$1 /$2')
       .replace(/(<table[^>]*>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
