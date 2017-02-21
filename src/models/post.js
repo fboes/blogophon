@@ -243,9 +243,13 @@ var Post = function(filename, markdown, meta, config) {
    */
   internal.galleryHtml = function(html) {
     return html
-      .replace(/<p>(\s*(?:<img[^>]+>\s*){2,})<\/p>/g, '<div class="gallery">$1</div>')
-      .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="image">$1</a>')
-      .replace(/(<a[^>]+)(><img[^>]+alt=")(.+?)(")/g, '$1 title="$3"$2$3$4')
+      .replace(/<p>(\s*(?:<img[^>]+>\s*){2,})<\/p>/g, function(all, content) {
+        var count = content.match(/<img/g).length;
+        content = content.replace(/(<img.+?>)/g, '  <div class="gallery__slide">$1</div>'+"\n");
+        return '<div class="gallery gallery--' + count + '" data-gallery-count="' + count + '">' + "\n" + content + '</div>';
+      })
+      .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="gallery__link">$1</a>')
+      .replace(/(<a[^>]+)(><img[^>]+alt=")(["]+?)(")/g, '$1 title="$3"$2$3$4')
     ;
   };
 
