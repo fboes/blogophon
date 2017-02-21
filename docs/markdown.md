@@ -107,6 +107,7 @@ An image gallery is built by supplying a paragraph consisting only of images:
 
 ```markdown
 ![Subline 1](img1.jpg#default) ![Subline 2](img2.jpg#default) ![Subline 3](img3.jpg#default)
+
 ```
 
 Youtube & Vimeo
@@ -119,44 +120,41 @@ Giphy
 
 For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
 
-Checkboxes
------------
+Special characters
+------------------
 
-```markdown
+There are some Markdown codes in the Blogophon to add special characters like Emojis to your HTML output:
 
-* [ ] _Produces an empty checkbox_
-* [X] _Produces a checked checkbox_
-
-```
-
-Emojis
-------
-
-Just enter ASCII smileys to produce Emojis:
-
-| ASCII | Result |
-|-------|--------|
-| :) | &#x1F60A; |
-| :)) | &#x1F602; |
-| :( | &#x1F629; |
-| :'( | &#x1F622; |
-| :\| | &#x1F610; |
-| :/ | &#x1F612; |
-| :D | &#x1F604; |
-| :P | &#x1F60B; |
-| :O | &#x1F632; |
-| :? | &#x1F914; |
-| :@ | &#x1F620; |
-| :* | &#x1F618; |
-| ;) | &#x1F609; |
-| B) | &#x1F60E; |
-| XP | &#x1F61D; |
-| 8o | &#x1F628; |
-| `:+1:` | &#x1F44D; |
-| `:-1:` | &#x1F44E; |
-| <3 | &#x1F495; |
-| </3 | &#x1F494; |
-| (!) | &#x26A0; |
+| Markdown | Result in… |
+|----------|------------|
+| `&shy;`  | Soft hyphen, to break words across lines by inserting visible hyphens. |
+| `&nbsp;` | Non-breaking space, prevents an automatic line break at its position.  |
+| `--`     | `—`, am em dash. |
+| `(C)`    | ©         |
+| `(R)`    | ®         |
+| `(TM)`   | ™         |
+| `(+-)`   | ±         |
+| `:)`     | &#x1F60A; |
+| `:))`    | &#x1F602; |
+| `:(`     | &#x1F629; |
+| `:'(`    | &#x1F622; |
+| `:\|`    | &#x1F610; |
+| `:/`     | &#x1F612; |
+| `:D`     | &#x1F604; |
+| `:P`     | &#x1F60B; |
+| `:O`     | &#x1F632; |
+| `:?`     | &#x1F914; |
+| `:@`     | &#x1F620; |
+| `:*`     | &#x1F618; |
+| `;)`     | &#x1F609; |
+| `B)`     | &#x1F60E; |
+| `XP`     | &#x1F61D; |
+| `8o`     | &#x1F628; |
+| `:+1:`   | &#x1F44D; |
+| `:-1:`   | &#x1F44E; |
+| `<3`     | &#x1F495; |
+| `</3`    | &#x1F494; |
+| `(!)`    | &#x26A0;  |
 
 
 Tables
@@ -198,3 +196,13 @@ The following identifiers are supported:
 * `shell` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
+
+Checkboxes
+-----------
+
+```markdown
+
+* [ ] _Produces an empty checkbox_
+* [X] _Produces a checked checkbox_
+
+```
