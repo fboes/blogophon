@@ -197,7 +197,7 @@ var markyMark = function markyMark(string, rules) {
       '8o': '1F628',
       ':+1:': '1F44D',
       ':-1:': '1F44E',
-      '&lt;3': '1F495',
+      '&lt;3': '2764',
       '&lt;/3': '1F494',
       '(!)': '26A0'
     };

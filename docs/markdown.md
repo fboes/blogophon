@@ -156,6 +156,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `</3`    | &#x1F494; |
 | `(!)`    | &#x26A0;  |
 
+For more Emojis and special characters refer to a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode), and convert a code like `U+1F680` into `&#x1F680;`.
 
 Tables
 ------
