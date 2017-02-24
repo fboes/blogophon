@@ -72,6 +72,7 @@ gulp.task('build-js', function() {
       max_line_len: 9000
     }}))
     .pipe(gulp.dest(pkg.directories.theme))
+    .pipe(livereload())
   ;
 });
 
@@ -89,6 +90,7 @@ gulp.task('build-sass', function() {
       path.dirname = path.dirname.replace(/sass/, 'css');
     }))
     .pipe(gulp.dest(pkg.directories.theme))
+    .pipe(livereload())
   ;
 });
 
