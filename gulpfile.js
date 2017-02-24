@@ -6,6 +6,7 @@ var pkg  = require('./package.json');
 var beep = require('beepbeep');
 var onError = function() {
   beep();
+  return true;
 };
 
 // Include Our Plugins
@@ -46,16 +47,10 @@ gulp.task('nodeunit', function() {
 
 // Lint Task
 gulp.task('build-js', function() {
-  return gulp.src(
-    [
-      pkg.directories.theme + '/**/js-src/*.js'
-    ])
+  return gulp.src(pkg.directories.theme + '/**/js-src/*.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint({
-      'env': [
-        'browser',
-        'jquery'
-      ],
+      'useEslintrc': false,
       'rules': {
         'strict': [
           2,
@@ -63,17 +58,19 @@ gulp.task('build-js', function() {
         ],
         'curly': 2,
         'no-undef': 2
-      }
+      },
+      'envs': [
+        'browser'
+      ]
     }))
     .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
+    //.pipe(eslint.failAfterError())
+    .pipe(rename(function(path){
+      path.dirname = path.dirname.replace(/js\-src/, 'js');
+    }))
     .pipe(uglify({output: {
       max_line_len: 9000
     }}))
-    .pipe(rename(function(path){
-      path.dirname = path.dirname.replace(/js\-src/, 'js');
-      return path;
-    }))
     .pipe(gulp.dest(pkg.directories.theme))
   ;
 });
@@ -90,7 +87,6 @@ gulp.task('build-sass', function() {
     ]))
     .pipe(rename(function(path){
       path.dirname = path.dirname.replace(/sass/, 'css');
-      return path;
     }))
     .pipe(gulp.dest(pkg.directories.theme))
   ;
