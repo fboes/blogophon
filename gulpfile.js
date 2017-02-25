@@ -61,6 +61,9 @@ gulp.task('build-js', function() {
       },
       'envs': [
         'browser'
+      ],
+      "extends": [
+        "eslint:recommended"
       ]
     }))
     .pipe(eslint.format())
