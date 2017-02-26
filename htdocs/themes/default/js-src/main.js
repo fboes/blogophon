@@ -40,17 +40,19 @@
           }
           imagePopup.setImage(event.state.image, true);
         } else if(imagePopup.el) {
-          imagePopup.remove(event);
+          imagePopup.remove(event, true);
         }
       };
     },
-    remove: function(event) {
+    remove: function(event, noPushState) {
       event.preventDefault();
       event.stopPropagation();
       document.body.removeEventListener('click', imagePopup.remove);
       document.body.removeChild(imagePopup.el);
       imagePopup.el = null;
-      history.pushState({}, '', window.location.pathname);
+      if (!noPushState) {
+        history.pushState({}, '', window.location.pathname);
+      }
     },
     setImage: function(href, noPushState) {
       this.el.getElementsByTagName('img')[0].setAttribute('src', href);
