@@ -35,10 +35,12 @@
       document.body.addEventListener('click', imagePopup.remove);
       window.onpopstate = function(event) {
         if (event.state && event.state.image) {
-          imagePopup.setImage(event.state.image);
-        } else {
+          if (!imagePopup.el) {
+            imagePopup.create();
+          }
+          imagePopup.setImage(event.state.image, true);
+        } else if(imagePopup.el) {
           imagePopup.remove(event);
-          delete window.onpopstate;
         }
       };
     },
@@ -50,9 +52,11 @@
       imagePopup.el = null;
       history.pushState({}, '', window.location.pathname);
     },
-    setImage: function(href) {
+    setImage: function(href, noPushState) {
       this.el.getElementsByTagName('img')[0].setAttribute('src', href);
-      history.pushState({image:href}, '', '#' + href);
+      if (!noPushState) {
+        history.pushState({image:href}, '', '#' + href);
+      }
     }
   };
 
