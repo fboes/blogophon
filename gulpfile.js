@@ -57,6 +57,10 @@ gulp.task('build-js', function() {
           'safe'
         ],
         'curly': 2,
+        "semi": [
+          2,
+          "always"
+        ],
         'no-undef': 2
       },
       'envs': [
