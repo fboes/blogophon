@@ -8,11 +8,14 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 ErrorDocument 410 /404.html
 
-AddType text/xml xml rss atom
-AddType text/plain .md
-AddType text/calendar .ics
 AddType application/json .json
 AddType application/vnd.google-earth.kml+xml .kml
+AddType text/calendar .ics
+AddType text/plain .md
+AddType text/xml xml rss atom
+AddType video/mp4 .mp4
+AddType video/ogg .ogv
+AddType video/webm .webm
 
 <IfModule mod_headers.c>
   Header set Access-Control-Allow-Origin "*"

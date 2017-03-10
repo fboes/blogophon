@@ -209,3 +209,28 @@ exports.testTable = function(test) {
 
   test.done();
 };
+
+exports.testMultimediaTags = function(test) {
+  test.expect(8);
+
+  var m;
+
+  m = markyMark('<img src="video.jpg" alt="Description" />');
+  test.ok(m.match(/<img/), 'Image tag still present');
+  test.ok(!m.match(/<(video|audio)/), 'No audio/video tag present');
+
+  m = markyMark('<img src="video.mp4" alt="Description" />');
+  test.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+  test.ok(m.match(/<video.+?>Description<\/video>/), 'Video tag with description is present');
+
+  m = markyMark('<img src="video.mp4#12x24" alt="" />');
+  test.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+  test.ok(m.match(/<video/), 'Video tag is present');
+
+  m = markyMark('<img src="video.mp3" alt="" />');
+  test.ok(!m.match(/<(img|video)/), 'Image tag is gone');
+  test.ok(m.match(/<audio/), 'Audio tag is present');
+  //console.log(m);
+
+  test.done();
+};

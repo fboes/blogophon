@@ -352,11 +352,15 @@ var markyMark = function markyMark(string, rules) {
         ;
       })
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
+      .replace(/(<)img([^>]src="[^"]+\.(mp[234g]|webm|og[gamv])(?:#[^"]*)?"+[^>]*?)\s*\/?>/, function(all, first, last, suffix) {
+        var tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
+        all = first + tag + last + ' controls="controls"></' + tag + '>';
+        return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
+      })
+      .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
       .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list__item"$2')
-      .replace(/(<(?:img)[^>]*[^/])(>)/g, '$1 /$2')
-      .replace(/(<(?:hr|br)[^/])(>)/g, '$1 /$2')
       .replace(/(<table[^>]*>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
         return before + content.replace(/(<tr[^>]*>[\s]*)<td([^>]*>)<strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row"$2$3</th>') + after;
       })

@@ -12,7 +12,7 @@ A live example of this blog generator can be found at [3960! Journal](http://jou
 * Generates a bunch of way to find your articles: Regular index pages, tag pages, author pages.
 * The Blogophon comes with a built-in image-scaler, which leads to responsive images.
 * The default theme puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph).
-* A ton of [special features](docs/special-features.md) like ATOM, RSS, AMP, etc.
+* A ton of [special features](docs/special-features.md) like RSS/ATOM newsfeeds, Accelerated Mobile Pages (AMP), Facebook Instant Articles, etc.
 
 Requirements
 ------------

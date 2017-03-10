@@ -72,7 +72,7 @@ And this part will only be shown on article pages.
 
 ```
 
-If you do not use both methods, the Blogophon will build a **teaser text from article text** by using the first 160 characters.
+If you do not use one of the methods mentioned above, the Blogophon will build a **teaser text from article text** by using the first 160 characters.
 
 Images
 ------
@@ -110,8 +110,21 @@ An image gallery is built by supplying a paragraph consisting only of images:
 
 ```
 
-Youtube & Vimeo
+Videos & Audios
 ---------------
+
+To show video and audio files you just have to use the regular Markdown used for images:
+
+```markdown
+![Audio description](/media/audio.mp3)    _produces an audio player_
+![Video description](/media/video.mp4)    _produces an video player_
+![Video description](/media/video.webm)   _produces an video player_
+
+```
+
+Remember to use valid URLs for your video / audio files. You may want to upload this kind of files directly to `htdocs/media`.
+
+### Youtube & Vimeo
 
 For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
 
