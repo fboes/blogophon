@@ -358,6 +358,7 @@ var markyMark = function markyMark(string, rules) {
         return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
       })
       .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')
+      .replace(/(<p[^>]*>)\s*(<video[^>]+>\s*<\/video>)\s*<\/p>/g, '<div class="video-player video-player--html5">$2</div>')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
       .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list__item"$2')

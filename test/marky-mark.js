@@ -211,7 +211,7 @@ exports.testTable = function(test) {
 };
 
 exports.testMultimediaTags = function(test) {
-  test.expect(8);
+  test.expect(16);
 
   var m;
 
@@ -230,6 +230,18 @@ exports.testMultimediaTags = function(test) {
   m = markyMark('<img src="video.mp3" alt="" />');
   test.ok(!m.match(/<(img|video)/), 'Image tag is gone');
   test.ok(m.match(/<audio/), 'Audio tag is present');
+
+  m = markyMark('<p><img src="video.mp4" alt="" /></p>');
+  test.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+  test.ok(m.match(/<video/), 'Video tag is present');
+  test.ok(m.match(/<div class="video/), 'Wrapper div tag is present');
+  test.ok(!m.match(/<p/), 'P tag is gone');
+
+  m = markyMark('<p>Inline video: <img src="video.mp4" alt="" /></p>');
+  test.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+  test.ok(m.match(/<video/), 'Video tag is present');
+  test.ok(!m.match(/<div class="video/), 'Wrapper div tag is not present');
+  test.ok(m.match(/<p/), 'P tag is still there');
   //console.log(m);
 
   test.done();
