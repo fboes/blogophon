@@ -43,7 +43,7 @@
         {{#index.length}}
           <div class="teasers">
             {{#index}}
-              <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
+              <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
                 {{#meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
                 {{/meta.Image}}
@@ -52,13 +52,13 @@
                 {{/meta.Image}}
                 <link itemprop="url mainEntityOfPage" href="{{meta.Url}}" />
                 <header>
-                  <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
+                  <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
-                    <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time>
+                    <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time>
                   {{/meta.Modified.locale}}
-                  <h4 itemprop="name headline"><a href="{{meta.Link}}">{{meta.Title}}</a></h4>
+                  <h4 itemprop="name headline" class="p-name"><a href="{{meta.Link}}">{{meta.Title}}</a></h4>
                 </header>
-                <div itemprop="description">
+                <div itemprop="description" class="p-summary">
                   {{{htmlTeaser}}}
                 </div>
                 {{#meta.hasNoExtraDescription}}
@@ -67,12 +67,12 @@
                   {{/meta.hasExternalLink}}
                 {{/meta.hasNoExtraDescription}}
                 {{^meta.hasNoExtraDescription}}
-                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Weiter lesen…</a></p>
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}" class="u-url">Weiter lesen…</a></p>
                 {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
                     {{#meta.AuthorName}}
-                      <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                      <address class="author p-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
                         <link itemprop="image" href="{{meta.AuthorImage}}" />
                         <span itemprop="name">{{meta.AuthorName}}</span>
                       </address>
@@ -85,7 +85,7 @@
                       <span class="tags">
                         Andere Artikel zum Thema
                         {{#meta.Tags}}
-                          · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords">{{title}}</span>”</a>
+                          · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                         {{/meta.Tags}}
                       </span>
                     {{/meta.Tags.length}}
