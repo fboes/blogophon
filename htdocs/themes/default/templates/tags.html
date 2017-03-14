@@ -2,11 +2,11 @@
 <html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
-  <title>Alle Tags | {{config.name}}</title>
+  <title>All tags | {{config.name}}</title>
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{config.absoluteBasePath}}tagged/" />
-  <meta property="og:title" name="title" content="Alle Tags" />
-  <meta property="og:description" name="description" content="Alle Tags in dem Blog &quot;{{config.name}}&quot;" />
+  <meta property="og:title" name="title" content="All tags" />
+  <meta property="og:description" name="description" content="All tags for &quot;{{config.name}}&quot;" />
   <link rel="canonical" href="{{config.absoluteBasePath}}tagged/" />
   {{>metaHtml}}
 </head>
@@ -15,13 +15,13 @@
     {{>headerHtml}}
     <div id="main">
       <main id="content">
-        <h2>Alle Tags</h2>
+        <h2>All tags</h2>
 
         {{#index.length}}
           <nav>
             <ul>
               {{#index}}
-                <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">{{title}}</a></li>
+                <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">{{title}}</a></li>
               {{/index}}
             </ul>
           </nav>

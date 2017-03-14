@@ -50,11 +50,11 @@
               </div>
               {{#meta.hasNoExtraDescription}}
                 {{#meta.hasExternalLink}}
-                  <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                  <p><a href="{{meta.Link}}">Go to website…</a></p>
                 {{/meta.hasExternalLink}}
               {{/meta.hasNoExtraDescription}}
               {{^meta.hasNoExtraDescription}}
-                <p><a href="{{meta.AbsoluteUrlAmp}}" title="{{meta.Title}}">Weiter lesen…</a></p>
+                <p><a href="{{meta.AbsoluteUrlAmp}}" title="{{meta.Title}}">Read on…</a></p>
               {{/meta.hasNoExtraDescription}}
 
               <footer class="meta">
@@ -76,13 +76,13 @@
 
       <p class="back">
         {{#prevUrl}}
-          <a href="{{prevUrl}}" rel="prev" class="prev">&laquo; <span>Vorherige Seite</span></a>
+          <a href="{{prevUrl}}" rel="prev" class="prev">&laquo; <span>Previous page</span></a>
         {{/prevUrl}}
         {{#title}}
-          <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
+          <a href="{{config.basePath}}" rel="contents" id="up">To article listing</a>
         {{/title}}
         {{#nextUrl}}
-          <a href="{{nextUrl}}" rel="next" class="next"><span>Nächste Seite</span> &raquo;</a>
+          <a href="{{nextUrl}}" rel="next" class="next"><span>Next page</span> &raquo;</a>
         {{/nextUrl}}
       </p>
     </main>

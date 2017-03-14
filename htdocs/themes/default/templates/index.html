@@ -63,11 +63,11 @@
                 </div>
                 {{#meta.hasNoExtraDescription}}
                   {{#meta.hasExternalLink}}
-                    <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                    <p><a href="{{meta.Link}}">Go to website…</a></p>
                   {{/meta.hasExternalLink}}
                 {{/meta.hasNoExtraDescription}}
                 {{^meta.hasNoExtraDescription}}
-                  <p><a href="{{meta.Url}}" title="{{meta.Title}}" class="u-url">Weiter lesen…</a></p>
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}" class="u-url">Read on…</a></p>
                 {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
@@ -83,9 +83,9 @@
                     </address>
                     {{#meta.Tags.length}}
                       <span class="tags">
-                        Andere Artikel zum Thema
+                        Tags:
                         {{#meta.Tags}}
-                          · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                          · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                         {{/meta.Tags}}
                       </span>
                     {{/meta.Tags.length}}
@@ -99,17 +99,17 @@
         <div id="prevnext">
           <span>
             {{#currentPage}}
-                <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+                <span>Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
             {{/currentPage}}
             {{#title}}
-              <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
+              <br /><a href="{{config.basePath}}" rel="home">Back to home page</a>
             {{/title}}
           </span>
           {{#prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="Previous page">&laquo;</a>
           {{/prevUrl}}
           {{#nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
+            <a href="{{nextUrl}}" rel="next" class="next" title="Next page">&raquo;</a>
           {{/nextUrl}}
         </div>
 
@@ -117,8 +117,8 @@
       <aside id="sidebar">
         {{>sidebarHtml}}
         <section>
-          <h3>Abonnement</h3>
-          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+          <h3>Subscription</h3>
+          <p>Stay up to date with our Newsfeeds:</p>
           <ul>
             {{#config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>

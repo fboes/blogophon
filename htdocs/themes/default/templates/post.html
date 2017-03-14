@@ -60,7 +60,7 @@
 
               {{#meta.RatingObj}}
                 <p itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
-                  <strong>Bewertung:</strong>
+                  <strong>Rating:</strong>
                   <meta itemprop="worstRating" content="{{worst}}">
                   <span itemprop="ratingValue">{{value}}</span>/<span itemprop="bestRating">{{best}}</span>
                 </p>
@@ -77,15 +77,15 @@
                 </div>
               {{/meta.Latitude}}
               {{#meta.hasExternalLink}}
-                <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                <p><a href="{{meta.Link}}">Go to website…</a></p>
               {{/meta.hasExternalLink}}
             </div>
             <footer class="meta">
               {{#config.twitterAccount}}
-                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">Kommentieren &amp; diskutieren auf Twitter</a></p>
+                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">Comment &amp; discuss on Twitter</a></p>
               {{/config.twitterAccount}}
               {{#meta.Modified.locale}}
-                <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
+                <p>Last modified <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
               {{/meta.Modified.locale}}
               {{#meta.AuthorName}}
                 <address class="author p-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -96,22 +96,22 @@
               <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="{{config.themeConf.ogImage}}" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
               {{#meta.Tags.length}}
                 <span class="tags">
-                  Andere Artikel zum Thema
+                  Tags:
                   {{#meta.Tags}}
-                    · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                    · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                   {{/meta.Tags}}
                 </span>
               {{/meta.Tags.length}}
               <span class="share">
-                <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="Teilen auf Twitter"><span>Teilen via Twitter</span></a>
-                <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="Teilen auf Facebook"><span>Teilen via Facebook</span></a>
-                <a href="{{share.whatsapp}}" target="social" class="whatsapp" rel="nofollow" aria-label="Teilen via Whatsapp"><span>Teilen via WhatsApp</span></a>
+                <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="Share via Twitter"><span>Share via Twitter</span></a>
+                <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="Share via Facebook"><span>Share via Facebook</span></a>
+                <a href="{{share.whatsapp}}" target="social" class="whatsapp" rel="nofollow" aria-label="Share via Whatsapp"><span>Share via WhatsApp</span></a>
               </span>
             </footer>
           </article>
           <div id="prevnext">
             <span style="display:inline-block;">
-              <a href="{{config.basePath}}" rel="contents" id="up">Zurück zur Übersichtsseite</a>
+              <a href="{{config.basePath}}" rel="contents" id="up">Back to article listing</a>
             </span>
             {{#prev.Url}}
               <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
@@ -126,18 +126,18 @@
         {{>sidebarHtml}}
         {{#post.meta.Tags.length}}
           <section>
-            <h3>Verwandte Artikel</h3>
+            <h3>Related articles</h3>
             <ul>
               {{#post.meta.Tags}}
-                <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">…zum Thema „{{title}}”</a></li>
+                <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">…for tag „{{title}}”</a></li>
               {{/post.meta.Tags}}
             </ul>
           </section>
         {{/post.meta.Tags.length}}
 
         <section>
-          <h3>Abonnement</h3>
-          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+          <h3>Subscription</h3>
+          <p>Stay up to date with our Newsfeeds:</p>
           <ul>
             {{#config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">RSS-Feed</a></li>

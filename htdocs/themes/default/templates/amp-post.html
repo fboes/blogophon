@@ -42,12 +42,12 @@
           <div itemprop="articleBody">
             {{{ampHtml}}}
               {{#meta.hasExternalLink}}
-                <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                <p><a href="{{meta.Link}}">Go to website…</a></p>
               {{/meta.hasExternalLink}}
           </div>
           <footer class="meta">
             {{#meta.Modified.locale}}
-             <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+             <p>Last modified <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
             {{/meta.Modified.locale}}
             {{#meta.AuthorName}}
             <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -69,7 +69,7 @@
           {{#prev.AbsoluteUrlAmp}}
             <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo; <span>Vorheriger Artikel</span></a>
           {{/prev.AbsoluteUrlAmp}}
-          <a href="{{config.basePath}}amp.html" rel="contents" id="up">Zur Übersichtsseite</a>
+          <a href="{{config.basePath}}amp.html" rel="contents" id="up">To article listing</a>
           {{#next.AbsoluteUrlAmp}}
             <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}"><span>Nächster Artikel</span> &raquo;</a>
           {{/next.AbsoluteUrlAmp}}
