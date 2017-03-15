@@ -165,6 +165,30 @@ exports.testGallery = function(test) {
   test.done();
 };
 
+exports.testLinks = function(test) {
+  test.expect(3);
+
+  var markdown = 'www.1test.com will not be found'
+    + 'But [this link](http://www.2test.com) will be found.'
+    + 'As will be [this link](https://www.3test.com).'
+    + 'An ![image](https://www.4test.com) should not be found.'
+    + 'As will be [this link](https://www.5test.com/some-compilcated-foo?a#b).'
+  ;
+  var testLinks = post('test.md', markdown, {
+    Description: 'None',
+    Date: new Date()
+  }).getAllExternalLinks();
+
+  //console.log(testLinks);
+
+  test.equal(testLinks[0],    'http://www.2test.com');
+  test.equal(testLinks[1],    'https://www.3test.com');
+  test.equal(testLinks[2],    'https://www.5test.com/some-compilcated-foo?a#b');
+
+  test.done();
+};
+
+
 /*
 exports.testSpecialProperties = function(test) {
 

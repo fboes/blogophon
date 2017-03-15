@@ -324,6 +324,20 @@ var Post = function(filename, markdown, meta, config) {
     return returnObject;
   };
 
+  /**
+   * Get all links to external ressources
+   * @return {Array} [description]
+   */
+  external.getAllExternalLinks = function() {
+    var search = /<a[^>]+href="(http[^"]+)"/g;
+    var matched;
+    var externalLinks = [];
+    while ((matched = search.exec(external.html)) !== null) {
+      externalLinks.push(matched[1]);
+    }
+    return externalLinks;
+  };
+
   return external.makeMeta(filename, markdown, meta);
 };
 
