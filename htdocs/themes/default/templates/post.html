@@ -44,13 +44,13 @@
       <main id="content">
         {{#post}}
           <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
-            <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
             {{#meta.Image}}
               <link itemprop="image" href="{{meta.Image}}" />
             {{/meta.Image}}
             {{^meta.Image}}
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
+            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished dt-published" class="date">{{meta.Created.locale}}</time>
               <h2 itemprop="name headline" class="p-name">{{meta.Title}}</h2>
@@ -88,7 +88,7 @@
                 <p>Last modified <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
               {{/meta.Modified.locale}}
               {{#meta.AuthorName}}
-                <address class="author p-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <link itemprop="image" href="{{meta.AuthorImage}}" />
                   <span itemprop="name">{{meta.AuthorName}}</span>
                 </address>

@@ -30,14 +30,13 @@
         <div class="teasers">
           {{#index}}
             <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
-              <link itemprop="mainEntityOfPage" href="{{meta.AbsoluteUrl}}" />
               {{#meta.Image}}
                 <link itemprop="image" href="{{meta.Image}}" />
               {{/meta.Image}}
               {{^meta.Image}}
                 <link itemprop="image" href="{{config.ogImage}}" />
               {{/meta.Image}}
-              <link itemprop="url mainEntityOfPage" href="{{meta.Url}}" />
+              <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
               <header>
                 <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
                 {{#meta.Modified.locale}}

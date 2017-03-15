@@ -43,7 +43,7 @@ article table td, article table th { padding: 0.1em 1em 0.1em 0; }
 
 article table td:last-child, article table th:last-child { padding-right: 0; }
 
-article .location { display: none; }
+article .location, article .permalink { display: none; }
 
 article input[type="checkbox"] { vertical-align: -0.15em; }
 

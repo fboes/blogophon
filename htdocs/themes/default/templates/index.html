@@ -50,7 +50,7 @@
                 {{^meta.Image}}
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
-                <link itemprop="url mainEntityOfPage" href="{{meta.Url}}" />
+                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
@@ -67,12 +67,12 @@
                   {{/meta.hasExternalLink}}
                 {{/meta.hasNoExtraDescription}}
                 {{^meta.hasNoExtraDescription}}
-                  <p><a href="{{meta.Url}}" title="{{meta.Title}}" class="u-url">Read on…</a></p>
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Read on…</a></p>
                 {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
                     {{#meta.AuthorName}}
-                      <address class="author p-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                      <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                         <link itemprop="image" href="{{meta.AuthorImage}}" />
                         <span itemprop="name">{{meta.AuthorName}}</span>
                       </address>
