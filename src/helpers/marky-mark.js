@@ -246,7 +246,7 @@ var markyMark = function markyMark(string, rules) {
       .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
       .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
       .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
-      .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<tt>$2</tt>$3')
+      .replace(/([\s|=|;])(\d[\d\.]*)([\s|=|;])/g, '$1<tt>$2</tt>$3')
       .replace(/([^\\])(&quot;|'|&#39;)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
       .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
       .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
