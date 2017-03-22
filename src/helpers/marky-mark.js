@@ -373,7 +373,7 @@ var markyMark = function markyMark(string, rules) {
         return tag + (Number(number)+1);
       })
       .replace(/\/\/youtu\.be\/([a-zA-Z0-9\-_]+)/g, '//www.youtube.com/watch?v=$1')
-      .replace(/(<p[^>]*>)\s*(<a[^>]+?>[^<]+?<\/a>)\s*(<\/p>)/g, function(all, before, inline) { // after
+      .replace(/(<p(?:\s[^>]+)?>)\s*(<a[^>]+?>[^<]+?<\/a>)\s*(<\/p>)/g, function(all, before, inline) { // after
         return inline
           .replace(
             /(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
@@ -396,14 +396,14 @@ var markyMark = function markyMark(string, rules) {
         return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
       })
       .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')
-      .replace(/(<p[^>]*>)\s*(<video[^>]+>\s*<\/video>)\s*<\/p>/g, '<div class="video-player video-player--html5">$2</div>')
+      .replace(/(<p(?:\s[^>]+)?>)\s*(<video[^>]+>\s*<\/video>)\s*<\/p>/g, '<div class="video-player video-player--html5">$2</div>')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
       .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list__item"$2')
       .replace(/(<table[^>]*>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
         return before + content.replace(/(<tr[^>]*>[\s]*)<td([^>]*>)<strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row"$2$3</th>') + after;
       })
-      .replace(/(<(p|h\d|li)[^>]*>)([\s\S]+?)(<\/\2>)/g, function(all, before, tag, inline, after) {
+      .replace(/(<(p|h\d|li)(?:\s[^>]+)?>)([\s\S]+?)(<\/\2>)/g, function(all, before, tag, inline, after) {
         return before + internal.convertTextBlock(inline) + after;
       })
       .trim()

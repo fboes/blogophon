@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * [x] Improving code highlighting by handling strings and comments separately from standard code
+* [x] Fixed broken matching for <p>-tags
 * [x] Adding `h-entry` microformats and English template language
 
 1.1.0
