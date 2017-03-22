@@ -166,17 +166,17 @@ p.meta, footer.meta {
   }
 }
 
-pre.code, // Tumblr
+pre.code,
 pre > code {
   font: 1em/1.3 $fontfamily-monospace;
-  color:white;
-  margin-bottom:1em;
-  padding:0.5em;
+  color: white;
+  margin-bottom: 1em;
+  padding: 0.5em;
   background: rgba(0,0,0,0.1);
-  display:block;
-  overflow:scroll;
+  display: block;
+  overflow: scroll;
   background:#272822;
-  b, i, var, tt, kbd, samp, u {
+  b, i, var, tt, em, kbd, samp, u {
     text-decoration: none;
     font-style: normal;
     font-family: inherit;
@@ -184,7 +184,7 @@ pre > code {
   .c1, b    { color: #66D9EF; } // blue
   .c2, i    { color: #F92672; } // red
   .c3, var  { color: #A6E22E; } // green
-  .c4, tt   { color: #FD971F; } // orange
+  .c4, tt, em { color: #FD971F; } // orange
   .c5, kbd  { color: #E6DB74; } // yellow
   .c6, samp { color: #AE81FF; } // purple
   .comment, u {

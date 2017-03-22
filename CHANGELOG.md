@@ -1,8 +1,9 @@
-Changelog
-=========
+Change log
+==========
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Improving code highlighting by handling strings and comments separately from standard code
 * [x] Adding `h-entry` microformats and English template language
 
 1.1.0
@@ -16,7 +17,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 1.0.4
 -----
 
-* [x] Fixed minor problem with paragraphs containing attributes not being found by marky-mark.js
+* [x] Fixed minor problem with paragraphs containing attributes not being found by `marky-mark.js`
 * [x] Making Yandex and Nginx happy
 * [x] New portrait image size
 

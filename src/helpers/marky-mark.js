@@ -237,25 +237,64 @@ var markyMark = function markyMark(string, rules) {
    */
 
   /**
+   * Find strings and comments in code and encapsulate them with HTML. For other code use `codeConverterFunction`.
+   * @param  {String}   code                  [description]
+   * @param  {Function} codeConverterFunction Convert code not being strings or comments
+   * @return {String}                         [description]
+   */
+  internal.convertGeneralCode = function(code, codeConverterFunction) {
+    codeConverterFunction = codeConverterFunction || function(codeRest) {
+      return codeRest;
+    };
+    var breaker = /(\/\*[\S\s]+?\*\/|(?:\/\/|\#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
+    var myArray;
+    var chunks = [];
+    var lastIndex = 0;
+
+    code = code.replace(/&#39\;/g, "'");
+    while ((myArray = breaker.exec(code)) !== null) {
+      if (lastIndex !== breaker.lastIndex - myArray[0].length) {
+        chunks.push(codeConverterFunction(code.substring(lastIndex, breaker.lastIndex - myArray[0].length)));
+      }
+      switch(myArray[0].charAt(0)) {
+        case '/':
+        case '#':
+          myArray[0] = ('<u>' + myArray[0] + '</u>').replace(/(\n)(<\/u>)$/, '$2$1');
+          break;
+        case "'":
+        case '"':
+        case '`':
+        case '&':
+          myArray[0] = '<kbd>' + myArray[0] + '</kbd>';
+          break;
+      }
+      lastIndex = breaker.lastIndex;
+      chunks.push(myArray[0]);
+    }
+    if (lastIndex !== code.length) {
+      chunks.push(codeConverterFunction(code.substring(lastIndex)));
+    }
+    return chunks.join('');
+  };
+
+  /**
    * Convert code text node
    * @param {String} string [description]
    * @return {String}       [description]
    */
-  internal.convertCode = function convertCode(string) {
-    return string
-      .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
-      .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
-      .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<tt>$2</tt>$3')
-      .replace(/([^\\])(&quot;|'|&#39;)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
-      .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
-      .replace(/(\/\/.+?)(\n|$)/g, '<u>$1</u>$2')
-      .replace(/(^|\s)(#.+?)(\n|$)/g, '$1<u>$2</u>$3')
-      .replace(/(\/\*[\s\S]+?\*\/)/g, '<u>$1</u>')
-      .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
-      .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
-    ;
+  internal.convertCode = function(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
+        .replace(/([^a-zA-Z$#\d])(\-?\d[\d\.]*)/g, '$1<em>$2</em>')
+        .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
+        .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
+        .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
+        .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
+      ;
+    });
   };
 
   /**
@@ -264,17 +303,32 @@ var markyMark = function markyMark(string, rules) {
    * @return {String}        [description]
    */
   internal.convertCss = function convertCss(string) {
-    return string
-      .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
-      .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
-      .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
-      .replace(/([^\\])(&quot;|'|&#39;)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([\d\.]+[a-z]+)/g, '$1<samp>$2</samp>$3')
-      .replace(/(\/\/.+?(?:\n|$))/g, '<u>$1</u>')
-      .replace(/(\/\*[\s\S]+?\*\/)/g, '<u>$1</u>')
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
+        .replace(/([\d\.]+[a-z]+)/g, '$1<samp>$2</samp>$3')
       ;
+    });
+  };
+
+  /**
+   * Convert bash / shell text node
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertShell = function convertShell(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(^|\b)(if|fi|then|case|esac|function)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/(\n)(\$ .+?)(\n|$)/g, '$1<em>$2</em>$3')
+      ;
+    });
   };
 
   /**
@@ -299,24 +353,8 @@ var markyMark = function markyMark(string, rules) {
   internal.convertMarkdown = function convertMarkdown(string) {
     return string
       .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<b>$2</b>$3<var>$4</var>$5')
-      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<tt>$2</tt>$3')
-      .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<tt>$2</tt>$3')
-    ;
-  };
-
-  /**
-   * Convert bash / shell text node
-   * @param  {String} string [description]
-   * @return {String}        [description]
-   */
-  internal.convertShell = function convertShell(string) {
-    return string
-      .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
-      .replace(/(^|\b)(if|fi|then|case|esac|function)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
-      .replace(/([^\\])(&quot;|'|&#39;|`)(.*?[^\\])(\2)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/(\n)(\$ .+?)(\n|$)/g, '$1<tt>$2</tt>$3')
-      .replace(/(#.+?)(\n|$)/g, '<u>$1</u>$2')
+      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<em>$2</em>$3')
+      .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<em>$2</em>$3')
     ;
   };
 

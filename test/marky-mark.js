@@ -41,11 +41,11 @@ exports.testCodeHighlighting = function(test) {
 
   m = markyMark('<p id="more">Mein Anwendungsfall: Ich warte auf eine bestimmte Anzahl von Events, und löse mein eigenes Event aus, wenn alle meine Sub-Events erfolgreich abgeschlossen haben. Bisher sah das so aus (schon mit der Kraft von <a href="/posts/nodejs-pattern-array-foreach/"><code>Array.forEach</code></a>):</p>  <pre><code class="lang-javascript">  var files = [\'a.txt\',\'b.txt\',\'c.txt\'];  /*var processed = 0;*/  var checkProcessed  = function(err) {    if (err) {      console.log("Error!");    }    if (++processed === files.length) {      console.log("Done!");    }  };  files.forEach(function(file) {    fs.writeFile(file, "Test test test", checkProcessed);  }); // Comment  </code></pre>');
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp|u)>/));
+  test.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
 
   m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp|u)>/));
+  test.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
 
   m = markyMark('<pre><code class="lang-markdown">'+
      "H1\n=====\n\nH2\n-----\n\n[Links](#) with some *italic* and **bold** text.\n\n### Headline\n"+
@@ -53,7 +53,7 @@ exports.testCodeHighlighting = function(test) {
   );
   //console.log(m);
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp|u)>/));
+  test.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
 
   test.done();
 };
@@ -103,7 +103,7 @@ exports.testShell = function(test) {
   );
   //console.log(m);
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<\/?(b|i|var|tt|kbd|samp)>/));
+  test.ok(m.match(/<\/?(b|i|var|em|kbd|samp)>/));
   test.ok(m.match(/<\/?(u)>/));
 
   test.done();
@@ -168,10 +168,10 @@ exports.testPhp = function(test) {
   //console.log(m);
 
   test.ok(m);
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\/\//));
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>namespace<\/\1>/));
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$classname<\/\1>/));
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>\$foo<\/\1>/));
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\/\//));
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>namespace<\/\1>/));
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$classname<\/\1>/));
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$foo<\/\1>/));
 
   test.done();
 };
@@ -183,7 +183,7 @@ exports.testBash = function(test) {
   m = markyMark(x);
   //console.log(m);
   test.ok(m, 'Got output');
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>/), 'Markup added');
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
   test.ok(m.match(/<u>#/), 'Comments found');
 
   x = '<pre><code class="lang-bash">#!/bin/bash\nset -e\ncd `dirname $0`/..\nif [ ! -e build/config.sh ]; then\n  cp build/_config.sh build/config.sh\nfi\nsource build/config.sh\n\nif [ &quot;$LOCAL_DB_HOST&quot; ]; then\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;CREATE DATABASE IF NOT EXISTS $LOCAL_DB_DB&quot;\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;GRANT ALL ON $LOCAL_DB_DB.* TO \'$LOCAL_DB_USR\'@\'localhost\' IDENTIFIED BY \'$LOCAL_DB_PWD\'&quot;\nfi\nif [ -f build/mysql/dbdump.sql ]; then\n  build/import-dbdump.sh\nfi\n\nif [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \x1B[32mDirectory access\x1B[m ===&quot;\n  echo &quot;&quot;\nfi\n\nfunction make_writable_directory {\n  mkdir -p $1 && chmod -R ugo+rwX $1\n  if [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n    echo &quot;semanage fcontext -a -t httpd_sys_rw_content_t \&quot;$LOCAL_DIRECTORY/$1(/.*)?\&quot;&quot;\n  fi\n}\n\n# mkdir -p tmp\n# make_writable_directory htdocs/files\n#[ -h TARGET ] || ln -s SOURCE TARGET\n#[ -f TARGET ] || cp SOURCE TARGET\n\nif [ ! -d /vagrant ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \x1B[32mApache2 vhost config\x1B[m ===&quot;\n  echo &quot;&quot;\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g&quot; build/apache/macro-broilerplate.conf\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g;s#localhost#$LOCAL_HOST#g&quot; build/apache/httpd-vhost.conf\n  echo &quot;&quot;\n  echo -e &quot;=== \x1B[32m/etc/hosts\x1B[m === &quot;\n  echo &quot;&quot;\n  echo &quot;127.0.0.1    $LOCAL_HOST&quot;\n  echo &quot;"\n  [ -d node_modules ] || npm install\nelse\n  [ -d node_modules ] || sudo npm install --no-bin-links\nfi</code></pre>';
@@ -191,7 +191,7 @@ exports.testBash = function(test) {
   m = markyMark(x);
   //console.log(m);
   test.ok(m, 'Got output');
-  test.ok(m.match(/<(b|i|var|tt|kbd|samp|u)>/), 'Markup added');
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
   test.ok(m.match(/<u>#/), 'Comments found');
 
   test.done();
