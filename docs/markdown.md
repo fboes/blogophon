@@ -138,11 +138,11 @@ Special characters
 
 There are some Markdown codes in the Blogophon to add special characters like Emojis to your HTML output:
 
-| Markdown | Result in… |
-|----------|------------|
+| Markdown | Results in… |
+|----------|-------------|
 | `&shy;`  | Soft hyphen, to break words across lines by inserting visible hyphens. |
 | `&nbsp;` | Non-breaking space, prevents an automatic line break at its position.  |
-| `--`     | `—`, am em dash. |
+| `--`     | `—`, an [em dash](http://www.thepunctuationguide.com/em-dash.html). |
 | `(C)`    | ©         |
 | `(R)`    | ®         |
 | `(TM)`   | ™         |
@@ -151,7 +151,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `:))`    | &#x1F602; |
 | `:(`     | &#x1F629; |
 | `:'(`    | &#x1F622; |
-| `:\|`    | &#x1F610; |
+| `:|`     | &#x1F610; |
 | `:/`     | &#x1F612; |
 | `:D`     | &#x1F604; |
 | `:P`     | &#x1F60B; |

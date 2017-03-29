@@ -6,7 +6,7 @@ In this document you will find some stuff for hardcore CLI wizards and server gu
 Other means of editing articles
 -------------------------------
 
-If you do not want to use [`blogophon`](index.js), [read the manual operations instructions](manual.md).
+If you do not want to use [`blogophon`](../index.js), [read the manual operations instructions](manual.md).
 
 Cronjob
 -------
