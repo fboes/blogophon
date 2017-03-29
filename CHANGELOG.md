@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * [x] Fixed broken matching for <p>-tags
 * [x] Adding `h-entry` microformats and English template language
 * [x] Added `8<` symbol (for snippets)
+* [X] Codepen.io integration
 
 1.1.0
 -----

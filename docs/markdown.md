@@ -128,10 +128,16 @@ Remember to use valid URLs for your video / audio files. You may want to upload 
 
 For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
 
-Giphy
------
+Embedding other services
+--------------
+
+### Giphy
 
 For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
+
+### Codepen
+
+For displaying a Codepen example, just put a link to the Codepen page into a single line. This will be converted to the corresponding example iFrame.
 
 Special characters
 ------------------
