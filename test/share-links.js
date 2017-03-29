@@ -17,7 +17,7 @@ exports.testBasicProperties = function(test) {
 };
 
 exports.testBasicProperties = function(test) {
-  test.expect(13);
+  test.expect(19);
 
   var testData = {
     title: 'Gollum',
@@ -59,6 +59,15 @@ exports.testBasicProperties = function(test) {
   test.ok(share.email);
   test.ok(testMatch.link(share.email));
   test.ok(testMatch.title(share.whatsapp));
+
+  test.ok(share.wordpress);
+  test.ok(testMatch.link(share.wordpress));
+
+  test.ok(share.tumblr);
+  test.ok(testMatch.link(share.tumblr));
+
+  test.ok(share.pocket);
+  test.ok(testMatch.link(share.pocket));
 
   test.done();
 };
