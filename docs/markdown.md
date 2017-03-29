@@ -169,6 +169,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `B)`     | &#x1F60E; |
 | `XP`     | &#x1F61D; |
 | `8o`     | &#x1F628; |
+| `8<`     | &#x2702;  |
 | `:+1:`   | &#x1F44D; |
 | `:-1:`   | &#x1F44E; |
 | `<3`     | &#x2764;  |
