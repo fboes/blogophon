@@ -7,7 +7,7 @@
  * @param  {Object}  rules  Object with settings
  * @return {String}  Converted HTML
  */
-var markyMark = function markyMark(string, rules) {
+var markyMark = function(string, rules) {
   var internal = {};
   var external = {};
 
@@ -56,7 +56,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  external.convert = function convert(string) {
+  external.convert = function(string) {
     external.output       = '';
     internal.mode         = '';
     internal.currentChunk = '';
@@ -71,7 +71,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String}  c [description]
    * @return {Boolean}   [description]
    */
-  external.pushCharacter = function pushCharacter(c) {
+  external.pushCharacter = function(c) {
     if (c === '<') {
       internal.pushChunk(internal.currentChunk, c);
       internal.currentChunk = '';
@@ -94,7 +94,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} newMode  [description]
    * @return {String}          Name of new mode
    */
-  internal.pushChunk = function pushChunk(chunk, newMode) {
+  internal.pushChunk = function(chunk, newMode) {
     newMode = newMode || '';
     if (chunk) {
       switch (internal.mode) {
@@ -144,7 +144,7 @@ var markyMark = function markyMark(string, rules) {
    * Get current state of parsed characters by joining all chunks.
    * @return {String} [description]
    */
-  external.getResults = function getResults() {
+  external.getResults = function() {
     internal.pushChunk(internal.currentChunk);
     return internal.convertResult(external.output);
   };
@@ -155,7 +155,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertText = function convertText(string) {
+  internal.convertText = function(string) {
     var entityMap = {
       '...': '…',
       '… …': '…',
@@ -180,7 +180,7 @@ var markyMark = function markyMark(string, rules) {
       ':)': '1F60A',
       ':))': '1F602',
       ':(': '1F629',
-      ':\'(': '1F622',
+      ":'(": '1F622',
       ':|': '1F610',
       ':/': '1F612',
       ':D': '1F604',
@@ -195,13 +195,14 @@ var markyMark = function markyMark(string, rules) {
       'B)': '1F60E',
       'XP': '1F61D',
       '8o': '1F628',
+      '8<': '2702',
       ':+1:': '1F44D',
       ':-1:': '1F44E',
       '&lt;3': '2764',
       '&lt;/3': '1F494',
       '(!)': '26A0'
     };
-    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|:(?:\+|\-)1:|&lt;\?3|\(!\))(\W|$)/g, function(all, before, s, after) {
+    string = string.replace(/(\W|^)(:(?:'?\(|\)\)|[\)\|\/DPpOo\*\?@])|[;B]\)|XP|8[o<]|:[\+\-]1:|&lt;\?3|\(!\))(\W|$)/g, function(all, before, s, after) {
       return before + '<span class="emoji emoji--' + entityMap[s] + '" title="'+s+'">&#x' + entityMap[s] + ';</span>' + after;
     });
 
@@ -217,7 +218,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertTextBlock = function convertTextBlock(string) {
+  internal.convertTextBlock = function(string) {
     return string
       .replace(/(&quot;)(.+?)\1/g, internal.rules.quotation.primary[0] + '$2' + internal.rules.quotation.primary[1])
       .replace(/('|&#39;)(.+?)\1/g, internal.rules.quotation.secondary[0] + '$2' + internal.rules.quotation.secondary[1])
@@ -302,7 +303,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertCss = function convertCss(string) {
+  internal.convertCss = function(string) {
     return internal.convertGeneralCode(string, function(codeRest) {
       return codeRest
         .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
@@ -320,7 +321,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertShell = function convertShell(string) {
+  internal.convertShell = function(string) {
     return internal.convertGeneralCode(string, function(codeRest) {
       return codeRest
         .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
@@ -336,7 +337,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertHtml = function convertHtml(string) {
+  internal.convertHtml = function(string) {
     return string
       .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i>$2</i>')
       .replace(/(&amp;(?:#x)?[a-zA-F0-9]+?;)/g, '<samp>$1</samp>')
@@ -350,7 +351,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertMarkdown = function convertMarkdown(string) {
+  internal.convertMarkdown = function(string) {
     return string
       .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<b>$2</b>$3<var>$4</var>$5')
       .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<em>$2</em>$3')
@@ -363,7 +364,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} html [description]
    * @return {String}      [description]
    */
-  internal.convertResult = function convertResult(html) {
+  internal.convertResult = function(html) {
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
       .replace(/( id="[^"]+")( id=")/g, '$2')
