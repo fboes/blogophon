@@ -18,6 +18,7 @@ var hashes         = require('./models/hashes');
 var appleNewsFormat = require('./models/apple-news-format');
 var imageStyles    = require('./helpers/image-styles');
 var ampify         = require('./helpers/ampify')();
+var slacked        = require('./models/slacked');
 
 /**
  * Generator used for creating the blog.
@@ -252,14 +253,15 @@ var Generator = function(config) {
         var page;
         var pagedPosts = index.getPagedPosts(config.itemsPerPage);
         var urls = {
-          rss:   indexUrl(path + 'posts.rss'),
-          rssjs: indexUrl(path + 'rss.json'),
-          geojs: indexUrl(path + 'geo.json'),
+          rss:        indexUrl(path + 'posts.rss'),
+          jsonrss:    indexUrl(path + 'rss.json'),
+          slackjson:  indexUrl(path + 'slack.json'),
+          geojs:      indexUrl(path + 'geo.json'),
           networkKml: indexUrl(path + 'network.kml'),
           placesKml:  indexUrl(path + 'places.kml'),
-          atom:  indexUrl(path + 'posts.atom'),
-          ics:   indexUrl(path + 'posts.ics'),
-          ajax:  indexUrl(path + 'index.json')
+          atom:       indexUrl(path + 'posts.atom'),
+          ics:        indexUrl(path + 'posts.ics'),
+          ajax:       indexUrl(path + 'index.json')
         };
         var promises = [];
         var pubDate = blogophonDate(index.pubDate);
@@ -292,7 +294,10 @@ var Generator = function(config) {
           })));
         }
         if (config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title), undefined, 2)));
+          promises.push(fs.writeFileAsync( urls.jsonrss.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title), undefined, 2)));
+        }
+        if (config.specialFeatures.jsonforslack) {
+          promises.push(fs.writeFileAsync( urls.slackjson.filename(), JSON.stringify(slacked(index.getPosts(3), pubDate, config, title), undefined, 2)));
         }
         if (config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));

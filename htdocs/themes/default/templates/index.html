@@ -17,6 +17,9 @@
   {{#config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
   {{/config.specialFeatures.jsonrss}}
+  {{#config.specialFeatures.jsonforslack}}
+    <link rel="alternate" type="application/json" title="{{meta.title}} Slack-JSON" href="{{meta.absoluteUrlDirname}}/slack.json" />
+  {{/config.specialFeatures.jsonforslack}}
   {{#config.specialFeatures.geojson}}
     <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{/config.specialFeatures.geojson}}
@@ -129,6 +132,9 @@
             {{#config.specialFeatures.jsonrss}}
               <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
             {{/config.specialFeatures.jsonrss}}
+            {{#config.specialFeatures.jsonforslack}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}slack.json">Slack-JSON: {{meta.title}}</a></li>
+            {{/config.specialFeatures.jsonforslack}}
             {{#config.specialFeatures.geojson}}
               <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
             {{/config.specialFeatures.geojson}}

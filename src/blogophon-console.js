@@ -267,6 +267,7 @@ var BlogophonConsole = function() {
           "Multiple authors",
           "RSS",
           "ATOM",
+          "JSON for Slack",
           "JSON-RSS",
           "Apple News",
           "Facebook Instant Articles",

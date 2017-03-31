@@ -33,6 +33,13 @@ All required links will be added to your page.
 
 This is like a RSS newsfeed, but in JSON. This will help parsers to digest information from your page. See [JSON-RSS](http://blog.3960.org/post/8478676503/rss-mit-json).
 
+JSON for Slack
+----------------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding `slack.json` newsfeed.
+
+This JSON is understood by [Slack's slash command](https://slack.com/apps/A0F82E8CA-slash-commands), so you can have a Slack bot telling you about current articles.
+
 Facebook Instant Articles
 -------------------------
 

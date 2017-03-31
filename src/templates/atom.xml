@@ -19,6 +19,10 @@
       <link href="{{meta.AbsoluteLink}}?utm_medium=newsfeed" />
       <published>{{meta.Created.iso}}</published>
       <updated>{{meta.Modified.iso}}</updated>
+      <author>
+        <name>{{meta.AuthorName}}</name>
+        <email>{{meta.AuthorEmail}}</email>
+      </author>
       <id>{{meta.Id}}</id>
       {{#meta.Tags}}
         <category term="{{title}}" />

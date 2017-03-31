@@ -27,7 +27,8 @@ var jsonRss = function(index, pubDate, config, title) {
           link: item.meta.AbsoluteLink || item.meta.AbsoluteUrl,
           pubDate: item.meta.Created.rfc,
           pubDateTs: item.meta.Created.timestamp,
-          guid: item.meta.Id || item.meta.AbsoluteUrl
+          guid: item.meta.Id || item.meta.AbsoluteUrl,
+          author: item.meta.AuthorEmail
         };
 
         if (item.meta.Tags) {
