@@ -84,10 +84,10 @@ gulp.task('build-js', function() {
 });
 
 // Sass
-gulp.task('build-sass', function() {
+gulp.task('build-css', function() {
   return gulp.src(pkg.directories.theme + '/**/*.scss')
     .pipe(plumber({errorHandler: onError}))
-    .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
         browsers: ['last 2 versions', '> 0.5%', 'ie 8-11']
@@ -107,9 +107,9 @@ gulp.task('watch', function() {
   gulp.watch(['gulpfile.js', 'package.json'], process.exit);
   gulp.watch(['*.js', pkg.directories.src+'/**/*.js', pkg.directories.test+'/**/*.js'], ['test']);
   gulp.watch(pkg.directories.theme + '/**/*.js',   ['build-js']);
-  gulp.watch(pkg.directories.theme + '/**/*.scss', ['build-sass']);
+  gulp.watch(pkg.directories.theme + '/**/*.scss', ['build-css']);
 });
 
 // Default Task
-gulp.task('default',     ['eslint', 'nodeunit', 'build-js', 'build-sass']);
+gulp.task('default',     ['eslint', 'nodeunit', 'build-js', 'build-css']);
 gulp.task('test',        ['eslint', 'nodeunit']);
