@@ -18,6 +18,7 @@ var sass       = require('gulp-sass');
 var rename     = require("gulp-rename");
 var uglify     = require('gulp-uglify');
 var postcss    = require('gulp-postcss');
+var replace    = require('gulp-replace');
 var autoprefixer = require('autoprefixer');
 
 // Lint Task
@@ -87,7 +88,7 @@ gulp.task('build-js', function() {
 gulp.task('build-css', function() {
   return gulp.src(pkg.directories.theme + '/**/*.scss')
     .pipe(plumber({errorHandler: onError}))
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
         browsers: ['last 2 versions', '> 0.5%', 'ie 8-11']
@@ -96,6 +97,7 @@ gulp.task('build-css', function() {
     .pipe(rename(function(path){
       path.dirname = path.dirname.replace(/sass/, 'css');
     }))
+    .pipe(replace(/(\n)\s*\n/g, '$1'))
     .pipe(gulp.dest(pkg.directories.theme))
     .pipe(livereload())
   ;
