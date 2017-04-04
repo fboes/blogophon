@@ -306,12 +306,12 @@ var markyMark = function(string, rules) {
   internal.convertCss = function(string) {
     return internal.convertGeneralCode(string, function(codeRest) {
       return codeRest
-        .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(\b)(margin|padding|color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
         .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/(\b)((?:\.|#)[a-zA-Z][a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
         .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
         .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
-        .replace(/([\d\.]+[a-z]+)/g, '$1<samp>$2</samp>$3')
+        .replace(/(\D)([\d\.]+[a-z]+)(\b)/g, '$1<samp>$2</samp>$3')
       ;
     });
   };
