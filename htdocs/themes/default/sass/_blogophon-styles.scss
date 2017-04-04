@@ -86,8 +86,10 @@ article {
       width: 2em;
     }
   }
-  p iframe {
+  iframe {
     width: 100%;
+    overflow: hidden;
+    border: none;
   }
 }
 

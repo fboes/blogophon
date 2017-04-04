@@ -17,7 +17,7 @@ var slacked = function(index, pubDate, config, title) {
     "attachments":  index.map(function(item){
       return {
         "author_name": item.meta.AuthorName,
-        "fallback": item.meta.Title,
+        "fallback": item.meta.Title + ' - ' + item.meta.AbsoluteUrl,
         "title": item.meta.Title,
         "title_link": item.meta.AbsoluteUrl,
         "text": item.meta.Description,

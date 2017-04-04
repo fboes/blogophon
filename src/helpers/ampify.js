@@ -15,11 +15,12 @@ var ampify = function() {
       .replace(/(<amp-img[^>]+?)\s?\/>/g, '$1></amp-img>')
       .replace(/(<amp-(?:video|iframe|audio|img).+?>).*(<\/amp-(?:video|iframe|audio|img))/g, '$1$2')
       .replace(/(<amp-(?:video|iframe|audio|img))/g, '$1 layout="responsive"')
-      .replace(/(<amp-(?:video|iframe|audio)[^>]+) allowfullscreen=".+?"/g, '$1')
+      .replace(/(<amp-(?:video|iframe|audio)[^>]+) (scrolling)=".+?"/g, '$1')
       .replace(/(<amp-(?:video|iframe))/g, '$1 width="640" height="360"')
       .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
       .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^\.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)><\/amp-iframe>/g, '<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
       .replace(/<amp-iframe([^>]*) src="https:\/\/player\.vimeo\.com\/video\/(.+?)"([^>]*)>(.*?)<\/amp-iframe>/g, '<amp-vimeo$1 data-videoid="$2"$3></amp-vimeo>')
+      .replace(/(<amp-(?:video|audio)[^>]+) allowfullscreen=".+?"/g, '$1')
       .replace(/<div class="gallery"[^>]*>([\s\S]+?)<\/div>/g, function(all, content) {
         var width = html.match(/width="(\d+)"/) || ['', '640'];
         var height = html.match(/height="(\d+)"/) || ['', '360'];

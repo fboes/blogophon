@@ -378,11 +378,11 @@ var markyMark = function(string, rules) {
         return inline
           .replace(
             /(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
-            '<div class="video-player video-player--youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
+            '<div class="video-player video-player--youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1" scrolling="no"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
           )
           .replace(
             /(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)/g,
-            '<div class="video-player video-player--vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1"></iframe></div>'
+            '<div class="video-player video-player--vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1" scrolling="no"></iframe></div>'
           )
           .replace(
             /(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)/g,
@@ -390,7 +390,7 @@ var markyMark = function(string, rules) {
           )
           .replace(
             /(?:<a)?[^>]*?codepen\.io\/([a-zA-Z0-9\-_]+)\/pen\/([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
-            '<div class="embed embed--codepen"><iframe allowfullscreen="true" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="256"></iframe></div>'
+            '<div class="embed embed--codepen"><iframe allowfullscreen="true" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe></div>'
           )
         ;
       })
