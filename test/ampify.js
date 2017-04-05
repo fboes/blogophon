@@ -18,10 +18,11 @@ exports.testAmpifyVideo = function testAmpifyBasic(test) {
   html += "\n";
   html += '<div class="video-player vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/108650530"></iframe></div>';
   html += "\n";
-  html += '<div><iframe src="http://www.example.com"></iframe></div>';
+  html += '<div>Before iFrame 1 <iframe src="http://www.example.com"></iframe> behin iFrame 1</div>';
+  html += '<div class="embed embed--codepen">Before iFrame 2 <iframe allowfullscreen="allowfullscreen" src="//codepen.io/fboes/embed/wJQpJQ/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe> behind iFrame 2</div>';
   var ampHtml = ampify.ampifyHtml(html);
 
-
+  console.log(ampHtml);
   test.ok(ampHtml.match(/<amp\-youtube/));
   test.ok(ampHtml.match(/<amp\-vimeo/));
   test.ok(ampHtml.match(/<amp\-iframe/));

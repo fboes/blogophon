@@ -241,6 +241,7 @@ var markyMark = function(string, rules) {
    * Find strings and comments in code and encapsulate them with HTML. For other code use `codeConverterFunction`.
    * @param  {String}   code                  [description]
    * @param  {Function} codeConverterFunction Convert code not being strings or comments
+   * @param  {RegExp}   breaker               [description]
    * @return {String}                         [description]
    */
   internal.convertGeneralCode = function(code, codeConverterFunction, breaker) {
