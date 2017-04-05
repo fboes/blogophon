@@ -250,3 +250,18 @@ exports.testMultimediaTags = function(test) {
 
   test.done();
 };
+
+exports.testCss = function(test) {
+  test.expect(2);
+  var m, x = '<pre><code class="lang-css">* { margin: 0; padding: 0; }'+"\n"
+  +'* + h1, * + h2, * + h3, * + h4 { margin-top: 1.2em; }'+"\n"
+  +'#identifier { margin-top: 0.5em; }'+"\n"
+  +'.class { margin-top: 0.2em; }</code></pre>';
+
+  m = markyMark(x);
+  //console.log(m);
+  test.ok(m, 'Got output');
+  test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
+
+  test.done();
+};

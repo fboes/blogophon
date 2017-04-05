@@ -243,11 +243,11 @@ var markyMark = function(string, rules) {
    * @param  {Function} codeConverterFunction Convert code not being strings or comments
    * @return {String}                         [description]
    */
-  internal.convertGeneralCode = function(code, codeConverterFunction) {
+  internal.convertGeneralCode = function(code, codeConverterFunction, breaker) {
     codeConverterFunction = codeConverterFunction || function(codeRest) {
       return codeRest;
     };
-    var breaker = /(\/\*[\S\s]+?\*\/|(?:\/\/|\#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
+    breaker = breaker || /(\/\*[\S\s]+?\*\/|(?:\/\/|\#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
     var myArray;
     var chunks = [];
     var lastIndex = 0;
@@ -306,14 +306,14 @@ var markyMark = function(string, rules) {
   internal.convertCss = function(string) {
     return internal.convertGeneralCode(string, function(codeRest) {
       return codeRest
-        .replace(/(\b)(margin|padding|color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
-        .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/(\b)((?:\.|#)[a-zA-Z][a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
-        .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
-        .replace(/(\D)([\d\.]+[a-z]+)(\b)/g, '$1<samp>$2</samp>$3')
+        .replace(/([\b\s])((?:margin|padding|border)(?:\-[a-z]+)?|(?:[a-z]+\-)?color|float|text-align|position|display|overflow)(\s*:)/g, '$1<b>$2</b>$3')
+        .replace(/(:\s)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none|hidden|static|absolute|relative)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([\b\s])([\.\#][a-zA-Z][a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([\b\s])(\$[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/([\b\s])(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(\D)(\d[\d\.]*[a-z]+)(\b)/g, '$1<samp>$2</samp>$3')
       ;
-    });
+    }, /(\/\*[\S\s]+?\*\/|(?:\/\/).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g);
   };
 
   /**
@@ -390,7 +390,7 @@ var markyMark = function(string, rules) {
           )
           .replace(
             /(?:<a)?[^>]*?codepen\.io\/([a-zA-Z0-9\-_]+)\/pen\/([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
-            '<div class="embed embed--codepen"><iframe allowfullscreen="true" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe></div>'
+            '<div class="embed embed--codepen"><iframe allowfullscreen="allowfullscreen" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe></div>'
           )
         ;
       })
