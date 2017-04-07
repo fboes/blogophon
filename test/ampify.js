@@ -22,7 +22,7 @@ exports.testAmpifyVideo = function testAmpifyBasic(test) {
   html += '<div class="embed embed--codepen">Before iFrame 2 <iframe allowfullscreen="allowfullscreen" src="//codepen.io/fboes/embed/wJQpJQ/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe> behind iFrame 2</div>';
   var ampHtml = ampify.ampifyHtml(html);
 
-  console.log(ampHtml);
+  //console.log(ampHtml);
   test.ok(ampHtml.match(/<amp\-youtube/));
   test.ok(ampHtml.match(/<amp\-vimeo/));
   test.ok(ampHtml.match(/<amp\-iframe/));
