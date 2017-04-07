@@ -12,7 +12,7 @@ var onError = function() {
 // Include Our Plugins
 var eslint     = require('gulp-eslint');
 var nodeunit   = require('gulp-nodeunit');
-var livereload = require('gulp-livereload');
+var gls        = require('gulp-live-server');
 var plumber    = require('gulp-plumber');
 var sass       = require('gulp-sass');
 var rename     = require("gulp-rename");
@@ -80,7 +80,6 @@ gulp.task('build-js', function() {
       max_line_len: 9000
     }}))
     .pipe(gulp.dest(pkg.directories.theme))
-    .pipe(livereload())
   ;
 });
 
@@ -99,13 +98,21 @@ gulp.task('build-css', function() {
     }))
     .pipe(replace(/(\n)\s*\n/g, '$1'))
     .pipe(gulp.dest(pkg.directories.theme))
-    .pipe(livereload())
   ;
+});
+
+gulp.task('serve', function() {
+  var server = gls.static(pkg.directories.htdocs);
+  server.start();
+  gulp.watch(pkg.directories.htdocs + '/**/*', function(file) {
+    /* eslint-disable */
+    server.notify.apply(server, [file]);
+    /* eslint-enable */
+  });
 });
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-  livereload.listen();
   gulp.watch(['gulpfile.js', 'package.json'], process.exit);
   gulp.watch(['*.js', pkg.directories.src+'/**/*.js', pkg.directories.test+'/**/*.js'], ['test']);
   gulp.watch(pkg.directories.theme + '/**/*.js',   ['build-js']);
@@ -113,5 +120,6 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default',     ['eslint', 'nodeunit', 'build-js', 'build-css']);
-gulp.task('test',        ['eslint', 'nodeunit']);
+gulp.task('test',    ['eslint', 'nodeunit']);
+gulp.task('build',   ['build-js', 'build-css']);
+gulp.task('default', ['serve', 'watch']);
