@@ -1,13 +1,41 @@
-body { font-family: Arial, sans-serif; line-height: 1.5; padding: 0; margin: 0; }
+* { margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; line-height: 1.5; }
+* + h2, * + h3, * + article, * + section { margin-top: 1em; }
+* + p, * + h4 { margin-top: 0.5em; }
+li { margin-left: 1.5em; }
 a { color: #116bfc; }
-#header { font-size: 1em; padding: 1em; margin: 0; border-bottom: 1px solid #888; background: #116bfc; text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.5); }
-#header a { display: block; color: white; text-align: right; font-family: Georgia, serif; height: 100%; }
-main { padding: 1em; }
-.date { float: right; color: gray; font-size: 0.6em; font-weight: normal; margin-left: 0.5em; }
-#footer { text-align: center; clear: both; border-top: 1px dotted #cccccc; font-size: 0.8em; color: gray; margin-top: 3em; }
-.back { text-align: center; margin-top: 1em; }
-.meta { font-size: 0.9em; color: gray; }
-.meta a { color: inherit; }
-.meta .author, .meta .publisher { display: none; }
+#container > * { padding-left: calc(50vw - 300px); padding-right: calc(50vw - 300px); }
+#container > header { background-color: #116bfc; }
+#container > header h1 { font-size: 1em; }
+#container > header a { color: white; text-decoration: none; }
+#container > aside { border-top: 1px dashed #666666; }
+#prevnext { text-align: center; padding: 2em 0; }
+#prevnext a { display: inline-block; padding: 0 1em; }
+#footer { color: #666666; border-top: 1px dashed; padding: 1em; font-size: 0.8em; margin-top: 1em; text-align: center; }
+article header .date { float: right; font-size: 0.8em; }
+article + article { margin-top: 2em; border-top: 1px solid #eee; }
+article blockquote p { white-space: pre-line; }
+article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }
+article table { margin-bottom: 1em; }
+article table tr, article table thead, article table tbody { border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+article table tr:last-child, article table thead:last-child, article table tbody:last-child { border: none; }
+article table td, article table th { padding: 0.1em 1em 0.1em 0; }
+article table td:last-child, article table th:last-child { padding-right: 0; }
+article .location, article .permalink { display: none; }
+article input[type="checkbox"] { vertical-align: -0.15em; }
+article footer { color: #666666; overflow: hidden; font-size: 0.8em; }
+article footer a { text-decoration: none; }
+article address img { width: 2em; }
+article iframe { width: 100%; overflow: hidden; border: none; }
+.teasers .modified { display: none; }
+pre.code, pre > code { font: 1em/1.3 "Courier New", monospace; color: white; margin-bottom: 1em; padding: 0.5em; background: rgba(0, 0, 0, 0.1); display: block; overflow: scroll; background: #272822; }
+pre.code b, pre.code i, pre.code var, pre.code tt, pre.code em, pre.code kbd, pre.code samp, pre.code u, pre > code b, pre > code i, pre > code var, pre > code tt, pre > code em, pre > code kbd, pre > code samp, pre > code u { text-decoration: none; font-style: normal; font-family: inherit; }
+pre.code .c1, pre.code b, pre > code .c1, pre > code b { color: #66D9EF; }
+pre.code .c2, pre.code i, pre > code .c2, pre > code i { color: #F92672; }
+pre.code .c3, pre.code var, pre > code .c3, pre > code var { color: #A6E22E; }
+pre.code .c4, pre.code tt, pre.code em, pre > code .c4, pre > code tt, pre > code em { color: #FD971F; }
+pre.code .c5, pre.code kbd, pre > code .c5, pre > code kbd { color: #E6DB74; }
+pre.code .c6, pre.code samp, pre > code .c6, pre > code samp { color: #AE81FF; }
+pre.code .comment, pre.code .comment *, pre.code u, pre.code u *, pre > code .comment, pre > code .comment *, pre > code u, pre > code u * { color: #75715E !important; }
 amp-img.quad { float: left; display: inline-block; margin: 0 1em 1em 0; }
 amp-img.default { width: 100%; clear: both; }

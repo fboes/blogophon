@@ -1,0 +1,7 @@
+@mixin amp () {
+  @if($amp) { @content; }
+}
+
+@mixin no-amp () {
+  @if(not($amp)) { @content; }
+}
