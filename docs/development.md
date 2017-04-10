@@ -1,10 +1,12 @@
 ![Blogophon -](blogophon.png) Development
 ===========
 
+The Blogophon supports the building of custom themes and frontend functionality. You ware free to change the styling of the pages build by the Blogophon.
+
 Gulp
 ----
 
-The Blogophon supports [Gulp](http://gulpjs.com/). This is recommended if you plan on building themes or new Javascript functionality.
+The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. If will check and compress your files while you are editing.
 
 | Command      | Description                                 |
 |--------------|---------------------------------------------|

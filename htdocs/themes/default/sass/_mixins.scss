@@ -1,7 +1,33 @@
-@mixin amp () {
-  @if($amp) { @content; }
+// Only output this block in AMP pages.
+@mixin amp() {
+  @if($amp) {
+    @content;
+  }
 }
 
-@mixin no-amp () {
-  @if(not($amp)) { @content; }
+// Only output this block in non-AMP pages.
+@mixin no-amp() {
+  @if(not($amp)) {
+    @content;
+  }
+}
+
+// Only output this block when viewport is wider than $width-container.
+// Optional: Supply $amp as first parameter to also make it disappear on AMP pages.
+@mixin bigger-as-container($hide: false) {
+  @if(not($hide)) {
+    @media screen and (min-width: #{$width-container}) {
+      @content;
+    }
+  }
+}
+
+// Only output this block when viewport is wider than $width-media-tablet.
+// Optional: Supply $amp as first parameter to also make it disappear on AMP pages.
+@mixin bigger-as-tablet($hide: false) {
+  @if(not($hide)) {
+    @media screen and (min-width: #{$width-media-tablet}) {
+      @content;
+    }
+  }
 }

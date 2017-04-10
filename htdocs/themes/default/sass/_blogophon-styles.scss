@@ -3,24 +3,30 @@ article {
     .date {
       float: right;
       font-size: 0.8em;
+      body[dir="rtl"] & {
+        float: left;
+      }
+    }
+  }
+  img, amp-img {
+    float:left;
+    body[dir="rtl"] & {
+      float:right;
+    }
+    margin:0 1em 1em 0;
+    max-width:100%;
+    height: auto;
+    &.default {
+      width: 100%;
+      margin: 0 0 1em;
+      float:none;
+    }
+    &[width="240"],
+    &.quad {
+      max-width:37.5%;
     }
   }
   @include no-amp {
-    img {
-      float:left;
-      margin:0 1em 1em 0;
-      max-width:100%;
-      height: auto;
-      &.default {
-        width: 100%;
-        margin: 0 0 1em;
-        float:none;
-      }
-      &[width="240"],
-      &.quad {
-        max-width:37.5%;
-      }
-    }
     a.gallery__link {
       position:relative;
       cursor:zoom-in;
@@ -211,19 +217,4 @@ pre > code {
     width: 1em;
     fill: currentColor;
   }
-}
-
-@include amp {
-  amp-img {
-    &.quad {
-      float:left;
-      display: inline-block;
-      margin: 0 1em 1em 0;
-    }
-    &.default {
-      width:100%;
-      clear:both;
-    }
-  }
-
 }

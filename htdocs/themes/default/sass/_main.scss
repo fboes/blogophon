@@ -4,7 +4,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: $fontfamily-default;
     line-height: 1.5;
 }
 * + h2, * + h3, * + article, * + section {
@@ -15,15 +15,44 @@ body {
 }
 li {
   margin-left: 1.5em;
+  body[dir="rtl"] & {
+    margin-right: 1.5em;
+    margin-left: 0;
+  }
 }
 a {
   color: $color-theme;
 }
 
+@include no-amp {
+  @media print {
+    @page {
+      margin: 0.5cm;
+    }
+    h1, h2, h3, h4 {
+      page-break-after: avoid;
+    }
+    h1, h2, h3, h4, p, li, tr, img {
+      page-break-inside: avoid;
+    }
+    thead {
+      display: table-header-group;
+    }
+    img {
+      max-width: 100% !important;
+    }
+  }
+}
+
 #container {
   > * {
-    padding-left: calc(50vw - 300px);
-    padding-right: calc(50vw - 300px);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    @include bigger-as-container {
+      padding-left: calc(50vw - (#{$width-container / 2}) + 0.5em);
+      padding-right: calc(50vw - (#{$width-container / 2}) + 0.5em);
+    }
   }
 
   > header {
