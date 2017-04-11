@@ -81,3 +81,7 @@ In certain environments you may not be able to install the Blogophon globally. T
 
 * All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
 * All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`
+
+---
+
+Return to [table of contents](README.md).

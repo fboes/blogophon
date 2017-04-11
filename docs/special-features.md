@@ -97,3 +97,7 @@ AJAX
 Exports all articles as `index.json`. These files may be used for AJAX loading of articles.
 
 Exports all indexes as `index.json`, containing references to the AJAX articles.
+
+---
+
+Return to [table of contents](README.md).

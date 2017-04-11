@@ -45,7 +45,10 @@ a {
 }
 
 #container {
-  > * {
+  > header,
+  > div > main,
+  > div > aside,
+  > footer {
     padding-left: 0.5em;
     padding-right: 0.5em;
 
@@ -80,11 +83,21 @@ a {
   }
 }
 
+#header,
+#sidebar,
 #footer {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+#sidebar {
+  background-color: $color-grey;
+  border-top:1px dashed $color-grey-dark;
+}
+
+#footer {
+  background-color: $color-grey;
   color: $color-grey-dark;
-  border-top: 1px dashed;
-  padding: 1em;
-  font-size: 0.8em;
-  margin-top: 1em;
+  font-size: 0.7em;
   text-align: center;
 }

@@ -3,12 +3,16 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+1.1.1
+-----
+
 * [x] Improving code highlighting by handling strings and comments separately from standard code
 * [x] Adding `h-entry` microformats and English template language
 * [x] Added `8<` symbol (for snippets)
 * [X] Codepen.io integration
 * [x] More sharing links (Pocket, Tumblr, Wordpress)
 * [x] JSON for Slack added
+* [x] Improved default theme
 
 1.1.0
 -----

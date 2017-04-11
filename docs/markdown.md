@@ -227,3 +227,7 @@ Checkboxes
 * [X] _Produces a checked checkbox_
 
 ```
+
+---
+
+Return to [table of contents](README.md).
