@@ -51,7 +51,7 @@ Title of your document
 
 Some paragraph with **bold** text, linking to [an example](https://www.example.com/).
 
-Another paragraph with some _italic_ text.
+Another paragraph with some _italic_ text. And there is also `typewriter-style code`.
 
 ```
 
