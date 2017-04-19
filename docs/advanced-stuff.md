@@ -86,7 +86,7 @@ Google Webmaster search console
 -------------------------------
 
 1. Register for Google Webmaster search console at https://www.google.com/webmasters/
-1. Put verification HTML page into your `/htdocs` fodler.
+1. Put verification HTML page into your `/htdocs` folder.
 1. Submit sitemap located at `/sitemap.xml`.
 1. Add URL parameter `utm_medium` and mark it as "does not alter site content".
 
