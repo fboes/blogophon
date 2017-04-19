@@ -19,6 +19,8 @@ var blogophonMustacheQuoters = {
       console.log(text);
       if (text.match(/:\s/)) {
         text = "'" + text.replace(/(')/g, '\\$1') + "'";
+      } else if (text.match(/#/)) {
+        text = text.replace(/(#)/g, '\\$1');
       }
       return text;
     };
