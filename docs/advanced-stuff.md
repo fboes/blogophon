@@ -82,6 +82,14 @@ In certain environments you may not be able to install the Blogophon globally. T
 * All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
 * All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`
 
+Google Webmaster search console
+-------------------------------
+
+1. Register for Google Webmaster search console at https://www.google.com/webmasters/
+1. Put verification HTML page into your `/htdocs` fodler.
+1. Submit sitemap located at `/sitemap.xml`.
+1. Add URL parameter `utm_medium` and mark it as "does not alter site content".
+
 ---
 
 Return to [table of contents](README.md).
