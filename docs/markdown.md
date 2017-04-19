@@ -61,7 +61,7 @@ Title of your document
 
 Some paragraph with **bold** text, linking to [an example](https://www.example.com/).
 
-Another paragraph with some _italic_ text.
+Another paragraph with some _italic_ text. And there is also `typewriter-style code`.
 
 ```
 
@@ -167,7 +167,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `:))`    | &#x1F602; |
 | `:(`     | &#x1F629; |
 | `:'(`    | &#x1F622; |
-| `:|`     | &#x1F610; |
+| `:\|`    | &#x1F610; |
 | `:/`     | &#x1F612; |
 | `:D`     | &#x1F604; |
 | `:P`     | &#x1F60B; |
