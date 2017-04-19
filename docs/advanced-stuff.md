@@ -37,7 +37,7 @@ echo \"Publishing...\" && rsync -az --delete user HOST:PATH_TO_YOUR_BLOG && echo
 Editor
 ------
 
-If you use Sublime Text for editing your markdown files, consider installing `Markdown Extended`. It supports YAML frontmatter and code block syntax highlighting in Markdown files.
+If you use [Sublime Text](https://www.sublimetext.com/) for editing your markdown files, consider installing [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended). It supports YAML frontmatter and code block syntax highlighting in Markdown files.
 
 Server setup
 ------------

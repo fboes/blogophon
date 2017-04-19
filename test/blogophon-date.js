@@ -63,3 +63,24 @@ exports.moreTests = function moreTests(test) {
 
   test.done();
 };
+
+exports.exocticTimestamps = function exocticTimestamps(test) {
+  test.expect(6);
+
+  var germanDate;
+  germanDate = blogophonDate('2016-08-25T19:13:12+02:00', 'de');
+
+  test.equals(germanDate.year, '2016');
+  test.equals(germanDate.month, '08');
+  test.equals(germanDate.day, '25');
+
+  germanDate = blogophonDate(new Date('2016-08-25T19:13:12+02:00'), 'de');
+
+  test.equals(germanDate.year, '2016');
+  test.equals(germanDate.month, '08');
+  test.equals(germanDate.day, '25');
+
+  //console.log(germanDate);
+
+  test.done();
+};

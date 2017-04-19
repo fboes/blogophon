@@ -3,7 +3,7 @@
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs');
 var readline       = require('readline');
-var yamljs         = require('yamljs');
+var yaml           = require('js-yaml');
 var post           = require('./models/post');
 
 /**
@@ -44,7 +44,8 @@ var PostReader = function(file, config) {
         } else {
           if (readYaml) {
             readYaml = false;
-            postData.meta = yamljs.parse(yamlBuffer);
+            console.log(file);
+            postData.meta = yaml.safeLoad(yamlBuffer);
             if (!postData.meta) {
               postData.meta = {};
             }

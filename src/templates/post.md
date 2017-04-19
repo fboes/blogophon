@@ -1,25 +1,25 @@
 ---
-Date:      {{{date}}}
+Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
 {{#keywords}}
-Keywords:  {{{keywords}}}
+Keywords:  {{#ymlQuote}}{{{keywords}}}{{/ymlQuote}}
 {{/keywords}}
 {{#classes}}
-Classes:   {{{classes}}}
+Classes:   {{#ymlQuote}}{{{classes}}}{{/ymlQuote}}
 {{/classes}}
 {{#author}}
-Author:    {{{author}}}
+Author:    {{#ymlQuote}}{{{author}}}{{/ymlQuote}}
 {{/author}}
-Twitter:   {{{title}}}
+Twitter:   {{#ymlQuote}}{{{title}}}{{/ymlQuote}}
 {{#location}}
-Location:  {{{location}}}
+Location:  {{#ymlQuote}}{{{location}}}{{/ymlQuote}}
 {{/location}}
 {{#latitude}}
 Marker:    marker
-Latitude:  {{{latitude}}}
-Longitude: {{{longitude}}}
+Latitude:  {{#ymlQuote}}{{{latitude}}}{{/ymlQuote}}
+Longitude: {{#ymlQuote}}{{{longitude}}}{{/ymlQuote}}
 {{/latitude}}
 {{#link}}
-Link:      {{{link}}}
+Link:      {{#ymlQuote}}{{{link}}}{{/ymlQuote}}
 {{/link}}
 ---
 

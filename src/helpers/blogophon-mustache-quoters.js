@@ -13,6 +13,16 @@ var blogophonMustacheQuoters = {
       return newText;
     };
   },
+  ymlQuote: function() {
+    return function(text, render) {
+      text = render(text);
+      console.log(text);
+      if (text.match(/:\s/)) {
+        text = "'" + text.replace(/(')/g, '\\$1') + "'";
+      }
+      return text;
+    };
+  },
   noLineBreak: function() {
     return function(text, render) {
       return render(text).replace(/\s*[\n|\r]+/g, ' ');

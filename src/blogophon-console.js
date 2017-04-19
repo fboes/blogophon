@@ -9,9 +9,11 @@ var shell          = require('shelljs');
 var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
+var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var setup          = require('./setup')();
 var Generator      = require('./generator');
 var https          = require('https');
+var blogophonDate  = require('./models/blogophon-date');
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -410,7 +412,7 @@ var BlogophonConsole = function() {
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
 
         var templateData = answers;
-        templateData.date = new Date();
+        templateData.date = blogophonDate(new Date()).iso;
 
         switch (answers.classes) {
           case 'Images':
@@ -449,6 +451,8 @@ var BlogophonConsole = function() {
   };
 
   internal.makePost = function(markdownFilename, filename, templateData) {
+    templateData.ymlQuote = MustacheQuoters.ymlQuote;
+    console.log(templateData);
     fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
       if (err) {
         console.error(chalk.red( markdownFilename + ' could not be written' ));
