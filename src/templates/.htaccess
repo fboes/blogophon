@@ -21,6 +21,19 @@ AddType video/webm .webm
   Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
+#<IfModule mod_expires.c>
+#  ExpiresActive on
+#  ExpiresDefault                          "access plus 1 hour"
+#  ExpiresByType image/vnd.microsoft.icon  "access plus 2 weeks"
+#  ExpiresByType image/png                 "access plus 2 weeks"
+#  ExpiresByType image/jpg                 "access plus 2 weeks"
+#  ExpiresByType image/jpeg                "access plus 2 weeks"
+#  ExpiresByType image/svg+xml             "access plus 2 weeks"
+#  ExpiresByType text/css                  "access plus 2 weeks"
+#  ExpiresByType application/javascript    "access plus 2 weeks"
+#  ExpiresByType text/javascript           "access plus 2 weeks"
+#</IfModule>
+
 # General Blogophon redirects
 RedirectMatch 301 ^/htdocs/(.*)$ /$1
 RedirectMatch 301 ^/(posts|\d+(/\d+(/\d+)?)?)/?$ /
