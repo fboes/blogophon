@@ -156,7 +156,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 
 | Markdown | Results in… |
 |----------|-------------|
-| `&shy;`  | Soft hyphen, to break words across lines by inserting visible hyphens. |
+| `&shy;`  | [Soft hyphen](https://en.wikipedia.org/wiki/Soft_hyphen), to break words across lines by inserting visible hyphens. |
 | `&nbsp;` | Non-breaking space, prevents an automatic line break at its position.  |
 | `--`     | `—`, an [em dash](http://www.thepunctuationguide.com/em-dash.html). |
 | `(C)`    | ©         |
@@ -167,6 +167,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `:))`    | &#x1F602; |
 | `:(`     | &#x1F629; |
 | `:'(`    | &#x1F622; |
+| `;(`     | &#x1F622; |
 | `:\|`    | &#x1F610; |
 | `:/`     | &#x1F612; |
 | `:D`     | &#x1F604; |
@@ -176,6 +177,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `:@`     | &#x1F620; |
 | `:*`     | &#x1F618; |
 | `;)`     | &#x1F609; |
+| `:$`     | &#x1F633; |
 | `B)`     | &#x1F60E; |
 | `XP`     | &#x1F61D; |
 | `8o`     | &#x1F628; |
