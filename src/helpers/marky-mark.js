@@ -179,24 +179,23 @@ var markyMark = function(string, rules) {
     entityMap = {
       ':)': '1F60A',
       ':))': '1F602',
+      ':D': '1F604',
+      ';)': '1F609',
+      'B)': '1F60E',
+      ':P': '1F60B',
+      'xP': '1F61D',
+      ':*': '1F618',
+      ':O': '1F632',
+      ':|': '1F610',
+      ':?': '1F914',
+      ':/': '1F612',
+      'xO': '1F635',
       ':(': '1F629',
       ":'(": '1F622',
       ";(": '1F622',
-      ':|': '1F610',
-      ':/': '1F612',
-      ':D': '1F604',
-      ':P': '1F60B',
-      ':p': '1F60B',
-      ':O': '1F632',
-      ':o': '1F632',
-      ':?': '1F914',
       ':@': '1F620',
-      ':*': '1F618',
       ':$': '1F633',
-      ';)': '1F609',
-      'B)': '1F60E',
-      'XP': '1F61D',
-      '8o': '1F628',
+      '8O': '1F628',
       '8<': '2702',
       ':+1:': '1F44D',
       ':-1:': '1F44E',
@@ -204,9 +203,12 @@ var markyMark = function(string, rules) {
       '&lt;/3': '1F494',
       '(!)': '26A0'
     };
-    string = string.replace(/(\W|^)(:(?:'?\(|\)\)|[\)\|\/DPpOo\*\?@\$])|[;B]\)|;\(|XP|8[o<]|:[\+\-]1:|&lt;\?3|\(!\))(\W|$)/g, function(all, before, s, after) {
-      return before + '<span class="emoji emoji--' + entityMap[s] + '" title="'+s+'">&#x' + entityMap[s] + ';</span>' + after;
-    });
+    string = string.replace(
+      /(\W|^)(:(?:'?\(|\)\)|[\)\|\/DPO\*\?@\$])|[;B]\)|;\(|x[PO]|8[o<]|:[\+\-]1:|&lt;\?3|\(!\))(\W|$)/g,
+      function(all, before, s, after) {
+        return before + '<span class="emoji emoji--' + entityMap[s] + '" title="' + s + '">&#x' + entityMap[s] + ';</span>' + after;
+      }
+    );
 
     return string
       .replace(/(\d)\s*-\s*(\d)/g, '$1–$2')
