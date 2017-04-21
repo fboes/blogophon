@@ -19,6 +19,7 @@ var PostReader = function(file, config) {
   }
 
   var readYaml = true;
+  var lineNumber = 0;
   var yamlBuffer = '';
   var descriptionBuffer = '';
   var startDescriptionBuffer = false;
@@ -37,35 +38,37 @@ var PostReader = function(file, config) {
       readline.createInterface({
         input: require('fs').createReadStream( file )
       }).on('line', function(line) {
-        if (readYaml && line.match(/\S+:[\s\S]/)) {
-          yamlBuffer += line + "\n";
+        lineNumber ++;
+        if (lineNumber === 1 && line.match(/^---$/)) {
+          // Start YAML parser
+          readYaml = true;
         } else if(readYaml && line.match(/^---$/)) {
-          // do nothing
-        } else {
-          if (readYaml) {
-            readYaml = false;
-            console.log(file);
-            postData.meta = yaml.safeLoad(yamlBuffer);
-            if (!postData.meta) {
-              postData.meta = {};
-            }
-          } else {
-            if (!postData.meta.Title && line !== '') {
-              postData.meta.Title = line;
-            }
-            if (!postData.meta.Description) {
-              if (line.match(/^(={3,})$/) && !startDescriptionBuffer) {
-                startDescriptionBuffer = true;
-              } else if (line.match(/^(={3}|\*{3})$/) && startDescriptionBuffer) {
-                startDescriptionBuffer = false;
-                line = '===';
-                postData.meta.Description = descriptionBuffer;
-              } else if (startDescriptionBuffer) {
-                descriptionBuffer += line+"\n";
-              }
-            }
-            postData.markdown += line + "\n";
+          // Finish YAML parser
+          readYaml = false;
+          postData.meta = yaml.safeLoad(yamlBuffer);
+          if (!postData.meta) {
+            postData.meta = {};
           }
+        } else if (readYaml) {
+          // Add to YAML buffer
+          yamlBuffer += line + "\n";
+        } else {
+          // Add to Markdown buffer
+          if (!postData.meta.Title && line !== '') {
+            postData.meta.Title = line;
+          }
+          if (!postData.meta.Description) {
+            if (line.match(/^(={3,})$/) && !startDescriptionBuffer) {
+              startDescriptionBuffer = true;
+            } else if (line.match(/^(={3}|\*{3})$/) && startDescriptionBuffer) {
+              startDescriptionBuffer = false;
+              line = '===';
+              postData.meta.Description = descriptionBuffer;
+            } else if (startDescriptionBuffer) {
+              descriptionBuffer += line+"\n";
+            }
+          }
+          postData.markdown += line + "\n";
         }
       })
       .once('close', function() {

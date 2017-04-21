@@ -112,7 +112,8 @@ var Post = function(filename, markdown, meta, config) {
     meta.MarkdownTitle = meta.Title;
     meta.Title = SuperString(internal.removeMarkdown(meta.Title)).niceShorten(320);
     if (meta.Keywords) {
-      meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
+      meta.Keywords = internal.listToArray(meta.Keywords);
+      meta.Tags = meta.Keywords.map(function(tag){
         var tagUrlObj = tagUrl(tag, config.htdocs.tag);
         return {
           title: tag,
@@ -123,9 +124,10 @@ var Post = function(filename, markdown, meta, config) {
       });
     }
     if (!meta.Classes) {
-      meta.Classes = 'Normal article';
+      meta.Classes = ['Normal article'];
     }
-    meta.Classes = meta.Classes.trim().split(/,\s*/).map(function(c) {
+    meta.Classes = internal.listToArray(meta.Classes);
+    meta.Classes = meta.Classes.map(function(c) {
       return SuperString(c).asciify();
     });
     if (meta.Classes.indexOf('images') >= 0) {
@@ -336,6 +338,16 @@ var Post = function(filename, markdown, meta, config) {
       externalLinks.push(matched[1]);
     }
     return externalLinks;
+  };
+
+  /**
+   * Converts a comma-separated string into an array.
+   * If the first argument is an array, this array will be returned unaltered.
+   * @param  {String|Array} input [description]
+   * @return {Array}              [description]
+   */
+  internal.listToArray = function(input) {
+    return Array.isArray(input) ? input : input.trim().split(/,\s*/);
   };
 
   return external.makeMeta(filename, markdown, meta);
