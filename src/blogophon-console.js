@@ -85,6 +85,22 @@ var BlogophonConsole = function() {
   };
 
   /**
+   * Returns the title to be used for generating a filename.
+   * @param  {String} title  [description]
+   * @param  {Object} config [description]
+   * @return {String}        [description]
+   */
+  internal.titleForFilename = function(title, config) {
+    if (config.postFileMode) {
+      return config.postFileMode
+        .replace(/Title/, title)
+        .replace(/Date/, blogophonDate(new Date()).format('yyyy-mm-dd'))
+      ;
+    }
+    return title;
+  };
+
+  /**
    * Convert title to Markdown filename
    * @param  {String} title [description]
    * @return {String}       [description]
@@ -177,7 +193,7 @@ var BlogophonConsole = function() {
         message: 'Domain of your site, starting with `http`',
         default: config.baseUrl,
         validate: function(v) {
-          return v.match(/^http(s)?:\/\/\S+[a-z]$/) ? true : 'Please supply a valid url, starting with `http://`, but without trailing `/`.';
+          return v.match(/^http(s)?:\/\/\S+[^/]$/) ? true : 'Please supply a valid url, starting with `http://`, but without trailing `/`.';
         },
         filter: function(v) {
           return v.replace(/\/$/, '');
@@ -219,6 +235,17 @@ var BlogophonConsole = function() {
           'Year',
           'Year/Month',
           'Year/Month/Day'
+        ]
+      }, {
+        type: 'list',
+        name: 'postFileMode',
+        message: 'Choose URL file pattern for your posts:',
+        default: config.postFileMode || 'Title',
+        choices: [
+          'Title',
+          'Title-Date',
+          'Date-Title',
+          'Date'
         ]
       }, {
         type: 'input',
@@ -408,7 +435,10 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
-        var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
+        var markdownFilename =
+          internal.filenameFromTitle(internal.titleForFilename(answers.title, config))
+          + (answers.draft ? '.md~' : '.md')
+        ;
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
 
         var templateData = answers;
