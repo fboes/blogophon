@@ -7,7 +7,6 @@ var path           = require('path');
 var SuperString    = require('./helpers/super-string');
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
-var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var PostReader     = require('./post-reader');
 var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
@@ -130,7 +129,7 @@ var Generator = function(config) {
       function(resolve, reject) {
         fs.ensureDirSync(post.meta.urlObj.dirname());
         var promises = [
-          fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.themeTemplates.postHtml, {
+          fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.renderExtra(Mustache.themeTemplates.postHtml, {
             post: post,
             config: config
           }, Mustache.themePartials))
@@ -139,7 +138,7 @@ var Generator = function(config) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article', 'json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
         if (config.specialFeatures.acceleratedmobilepages) {
-          promises.push(fs.writeFileAsync(post.meta.urlObj.filename('amp'), Mustache.render(Mustache.themeTemplates.ampPostHtml, {
+          promises.push(fs.writeFileAsync(post.meta.urlObj.filename('amp'), Mustache.renderExtra(Mustache.themeTemplates.ampPostHtml, {
             post: post,
             ampCss: Mustache.ampCss,
             config: config
@@ -284,13 +283,12 @@ var Generator = function(config) {
           })));
         }
         if (config.specialFeatures.icscalendar) {
-          promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.render(Mustache.templates.calendarIcs, {
+          promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.renderExtra(Mustache.templates.calendarIcs, {
             index: index.getPosts(),
             pubDate:     pubDate.ics,
             config:      config,
             absoluteUrl: urls.ics.absoluteUrl(),
-            title:       title,
-            icsQuote:    MustacheQuoters.icsQuote
+            title:       title
           })));
         }
         if (config.specialFeatures.jsonrss) {
@@ -303,14 +301,14 @@ var Generator = function(config) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
         }
         if (config.specialFeatures.kml) {
-          promises.push(fs.writeFileAsync( urls.networkKml.filename(), Mustache.render(Mustache.templates.networkKml, {
+          promises.push(fs.writeFileAsync( urls.networkKml.filename(), Mustache.renderExtra(Mustache.templates.networkKml, {
             pubDate:     pubDate.iso,
             config:      config,
             absoluteUrl: urls.networkKml.absoluteUrl(),
             title:       title,
             link:        urls.placesKml.absoluteUrl()
           })));
-          promises.push(fs.writeFileAsync( urls.placesKml.filename(), Mustache.render(Mustache.templates.placesKml, {
+          promises.push(fs.writeFileAsync( urls.placesKml.filename(), Mustache.renderExtra(Mustache.templates.placesKml, {
             index:       index.getPosts(),
             pubDate:     pubDate.iso,
             config:      config,
@@ -338,7 +336,7 @@ var Generator = function(config) {
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.meta.AbsoluteUrlAmp = curUrlObj.absoluteUrl('amp');
           }
-          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.themeTemplates.indexHtml, curPageObj, Mustache.themePartials)));
+          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.renderExtra(Mustache.themeTemplates.indexHtml, curPageObj, Mustache.themePartials)));
 
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.ampCss = Mustache.ampCss;
@@ -348,7 +346,7 @@ var Generator = function(config) {
 
             promises.push(fs.writeFileAsync(
               indexUrl(curPageObj.currentUrl).filename('amp'),
-              Mustache.render(
+              Mustache.renderExtra(
                 Mustache.themeTemplates.ampIndexHtml,
                 curPageObj,
                 Mustache.themePartials
@@ -395,7 +393,7 @@ var Generator = function(config) {
           );
         });
 
-        promises.push(fs.writeFileAsync( indexUrl(config.htdocs.tag + '/index.html').filename(), Mustache.render(Mustache.themeTemplates.tagsHtml, {
+        promises.push(fs.writeFileAsync( indexUrl(config.htdocs.tag + '/index.html').filename(), Mustache.renderExtra(Mustache.themeTemplates.tagsHtml, {
           index: tagPages,
           config: config
         }, Mustache.themePartials)));
@@ -442,7 +440,7 @@ var Generator = function(config) {
 
           promises.push(fs.writeFileAsync(
             indexUrl(config.htdocs.author+'/index.html').filename(),
-            Mustache.render(Mustache.themeTemplates.authorsHtml, {
+            Mustache.renderExtra(Mustache.themeTemplates.authorsHtml, {
               index: authorPages,
               config: config
             },
@@ -479,7 +477,7 @@ var Generator = function(config) {
         var promises = [
           fs.writeFileAsync(
             indexUrl('404.html').filename(),
-            Mustache.render(
+            Mustache.renderExtra(
               Mustache.themeTemplates.notFoundHtml, {
                 index: internal.currentIndex.getPosts(5),
                 config: config
@@ -490,7 +488,7 @@ var Generator = function(config) {
 
           fs.writeFileAsync(
             indexUrl('sitemap.xml').filename(),
-            Mustache.render(
+            Mustache.renderExtra(
               Mustache.templates.sitemapXml, {
                 index: internal.currentIndex.getPosts(),
                 tagPages: tagPages,
@@ -507,7 +505,7 @@ var Generator = function(config) {
             promises.push(
               fs.writeFileAsync(
                 indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(),
-                Mustache.render(
+                Mustache.renderExtra(
                   Mustache.templates.livetileXml, {
                     post: post
                   }

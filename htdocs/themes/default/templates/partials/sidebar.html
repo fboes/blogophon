@@ -1,17 +1,17 @@
 <section>
-  <h3>Links</h3>
+  <h3>{{#i18n}}Links{{/i18n}}</h3>
   <ul>
-    <li><a href="{{config.basePath}}tagged/">All tags</a></li>
+    <li><a href="{{config.basePath}}tagged/">{{#i18n}}All tags{{/i18n}}</a></li>
     {{#config.twitterAccount}}
-      <li><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">Twitter feed</a></li>
+      <li><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">{{#i18n}}Twitter feed{{/i18n}}</a></li>
     {{/config.twitterAccount}}
   </ul>
 </section>
 
 <section>
-  <h3>Search</h3>
+  <h3>{{#i18n}}Search{{/i18n}}</h3>
   <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.domain}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
-    <input type="search" name="q" title="Enter search query" placeholder="Search term…">
-    <input type="submit" value="Search">
+    <input type="search" name="q" title="{{#i18n}}Enter search query{{/i18n}}" placeholder="{{#i18n}}Search term…{{/i18n}}">
+    <input type="submit" value="{{#i18n}}Search{{/i18n}}">
   </form>
 </section>

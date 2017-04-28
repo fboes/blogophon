@@ -9,7 +9,6 @@ var shell          = require('shelljs');
 var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
-var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var setup          = require('./setup')();
 var Generator      = require('./generator');
 var https          = require('https');
@@ -481,9 +480,7 @@ var BlogophonConsole = function() {
   };
 
   internal.makePost = function(markdownFilename, filename, templateData) {
-    templateData.ymlQuote = MustacheQuoters.ymlQuote;
-    console.log(templateData);
-    fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
+    fs.writeFile(markdownFilename, Mustache.renderExtra(Mustache.templates.postMd, templateData), function(err) {
       if (err) {
         console.error(chalk.red( markdownFilename + ' could not be written' ));
       } else {

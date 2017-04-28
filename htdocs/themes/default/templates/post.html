@@ -33,7 +33,7 @@
     <link rel="alternate" type="application/json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
   {{/config.specialFeatures.jsonrss}}
   {{#config.specialFeatures.jsonforslack}}
-    <link rel="alternate" type="application/json" title="{{config.name}} Slack-JSON" href="{{config.absoluteBasePath}}slack.json" />
+    <link rel="alternate" type="application/json" title="{{config.name}} {{#i18n}}Slack-JSON{{/i18n}}" href="{{config.absoluteBasePath}}slack.json" />
   {{/config.specialFeatures.jsonforslack}}
   {{#config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{post.meta.AbsoluteUrlAmp}}" />
@@ -53,7 +53,7 @@
             {{^meta.Image}}
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
-            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
+            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished dt-published" class="date">{{meta.Created.locale}}</time>
               <h2 itemprop="name headline" class="p-name">{{meta.Title}}</h2>
@@ -80,15 +80,15 @@
                 </div>
               {{/meta.Latitude}}
               {{#meta.hasExternalLink}}
-                <p><a href="{{meta.Link}}">Go to website…</a></p>
+                <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
               {{/meta.hasExternalLink}}
             </div>
             <footer class="meta">
               {{#config.twitterAccount}}
-                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">Comment &amp; discuss on Twitter</a></p>
+                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">{{#i18n}}Comment &amp; discuss on Twitter{{/i18n}}</a></p>
               {{/config.twitterAccount}}
               {{#meta.Modified.locale}}
-                <p>Last modified <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
+                <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
               {{/meta.Modified.locale}}
               {{#meta.AuthorName}}
                 <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -99,22 +99,22 @@
               <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="{{config.themeConf.ogImage}}" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
               {{#meta.Tags.length}}
                 <span class="tags">
-                  Tags:
+                  {{#i18n}}Tags:{{/i18n}}
                   {{#meta.Tags}}
-                    · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                    · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &bdquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                   {{/meta.Tags}}
                 </span>
               {{/meta.Tags.length}}
               <span class="share">
-                <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="Share via Twitter"><span>Share via Twitter</span></a>
-                <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="Share via Facebook"><span>Share via Facebook</span></a>
-                <a href="{{share.whatsapp}}" target="social" class="whatsapp" rel="nofollow" aria-label="Share via Whatsapp"><span>Share via WhatsApp</span></a>
+                <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="{{#i18n}}Share via Twitter{{/i18n}}"><span>{{#i18n}}Share via Twitter{{/i18n}}</span></a>
+                <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="{{#i18n}}Share via Facebook{{/i18n}}"><span>{{#i18n}}Share via Facebook{{/i18n}}</span></a>
+                <a href="{{share.whatsapp}}" target="social" class="whatsapp" rel="nofollow" aria-label="{{#i18n}}Share via Whatsapp{{/i18n}}"><span>{{#i18n}}Share via WhatsApp{{/i18n}}</span></a>
               </span>
             </footer>
           </article>
           <div id="prevnext">
             <span style="display:inline-block;">
-              <a href="{{config.basePath}}" rel="contents" id="up">Back to article listing</a>
+              <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
             </span>
             {{#prev.Url}}
               <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
@@ -129,30 +129,30 @@
         {{>sidebarHtml}}
         {{#post.meta.Tags.length}}
           <section>
-            <h3>Related articles</h3>
+            <h3>{{#i18n}}Related articles{{/i18n}}</h3>
             <ul>
               {{#post.meta.Tags}}
-                <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">…for tag „{{title}}”</a></li>
+                <li><a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &bdquo;{{title}}&rdquo;{{/i18n}}">{{#i18n}}…for tag „{{title}}”{{/i18n}}</a></li>
               {{/post.meta.Tags}}
             </ul>
           </section>
         {{/post.meta.Tags.length}}
 
         <section>
-          <h3>Subscription</h3>
-          <p>Stay up to date with our Newsfeeds:</p>
+          <h3>{{#i18n}}Subscription{{/i18n}}</h3>
+          <p>{{#i18n}}Stay up to date with our Newsfeeds:{{/i18n}}</p>
           <ul>
             {{#config.specialFeatures.rss}}
-              <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">RSS-Feed</a></li>
+              <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">{{#i18n}}RSS-Feed{{/i18n}}</a></li>
             {{/config.specialFeatures.rss}}
             {{#config.specialFeatures.atom}}
-              <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
+              <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">{{#i18n}}ATOM-Feed{{/i18n}}</a></li>
             {{/config.specialFeatures.atom}}
             {{#config.specialFeatures.jsonrss}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">{{#i18n}}RSS-JS / JSON{{/i18n}}</a></li>
             {{/config.specialFeatures.jsonrss}}
             {{#config.specialFeatures.jsonforslack}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}slack.json">Slack-JSON</a></li>
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}slack.json">{{#i18n}}Slack-JSON{{/i18n}}</a></li>
             {{/config.specialFeatures.jsonforslack}}
           </ul>
         </section>

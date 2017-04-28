@@ -15,13 +15,13 @@
     <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
   {{/config.specialFeatures.atom}}
   {{#config.specialFeatures.jsonrss}}
-    <link rel="alternate" type="application/json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
+    <link rel="alternate" type="application/json" title="{{meta.title}} {{#i18n}}JSON-RSS{{/i18n}}" href="{{meta.absoluteUrlDirname}}/rss.json" />
   {{/config.specialFeatures.jsonrss}}
   {{#config.specialFeatures.jsonforslack}}
-    <link rel="alternate" type="application/json" title="{{meta.title}} Slack-JSON" href="{{meta.absoluteUrlDirname}}/slack.json" />
+    <link rel="alternate" type="application/json" title="{{meta.title}} {{#i18n}}Slack-JSON{{/i18n}}" href="{{meta.absoluteUrlDirname}}/slack.json" />
   {{/config.specialFeatures.jsonforslack}}
   {{#config.specialFeatures.geojson}}
-    <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
+    <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} {{#i18n}}GeoJSON{{/i18n}}" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{/config.specialFeatures.geojson}}
   {{#config.specialFeatures.kml}}
     <link rel="alternate" type="application/vnd.google-earth.kml+xml" title="{{meta.title}} KML" href="{{meta.absoluteUrlDirname}}/network.kml" />
@@ -53,7 +53,7 @@
                 {{^meta.Image}}
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
-                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
+                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
@@ -66,11 +66,11 @@
                 </div>
                 {{#meta.hasNoExtraDescription}}
                   {{#meta.hasExternalLink}}
-                    <p><a href="{{meta.Link}}">Go to website…</a></p>
+                    <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
                   {{/meta.hasExternalLink}}
                 {{/meta.hasNoExtraDescription}}
                 {{^meta.hasNoExtraDescription}}
-                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Read on…</a></p>
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">{{#i18n}}Read on…{{/i18n}}</a></p>
                 {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
@@ -86,9 +86,9 @@
                     </address>
                     {{#meta.Tags.length}}
                       <span class="tags">
-                        Tags:
+                        {{#i18n}}Tags:{{/i18n}}
                         {{#meta.Tags}}
-                          · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                          · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &bdquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                         {{/meta.Tags}}
                       </span>
                     {{/meta.Tags.length}}
@@ -102,17 +102,17 @@
         <div id="prevnext">
           <span>
             {{#currentPage}}
-                <span>Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+                <span>{{#i18n}}Page{{/i18n}} {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
             {{/currentPage}}
             {{#title}}
-              <br /><a href="{{config.basePath}}" rel="home">Back to home page</a>
+              <br /><a href="{{config.basePath}}" rel="home">{{#i18n}}Back to home page{{/i18n}}</a>
             {{/title}}
           </span>
           {{#prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="Previous page">&laquo;</a>
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}">&laquo;</a>
           {{/prevUrl}}
           {{#nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="Next page">&raquo;</a>
+            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}">&raquo;</a>
           {{/nextUrl}}
         </div>
 
@@ -120,23 +120,23 @@
       <aside id="sidebar">
         {{>sidebarHtml}}
         <section>
-          <h3>Subscription</h3>
-          <p>Stay up to date with our Newsfeeds:</p>
+          <h3>{{#i18n}}Subscription{{/i18n}}</h3>
+          <p>{{#i18n}}Stay up to date with our Newsfeeds:{{/i18n}}</p>
           <ul>
             {{#config.specialFeatures.rss}}
-              <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
+              <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">{{#i18n}}RSS-Feed{{/i18n}}: {{meta.title}}</a></li>
             {{/config.specialFeatures.rss}}
             {{#config.specialFeatures.atom}}
-              <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
+              <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">{{#i18n}}ATOM-Feed{{/i18n}}: {{meta.title}}</a></li>
             {{/config.specialFeatures.atom}}
             {{#config.specialFeatures.jsonrss}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">{{#i18n}}JSON-RSS{{/i18n}}: {{meta.title}}</a></li>
             {{/config.specialFeatures.jsonrss}}
             {{#config.specialFeatures.jsonforslack}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}slack.json">Slack-JSON: {{meta.title}}</a></li>
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}slack.json">{{#i18n}}Slack-JSON{{/i18n}}: {{meta.title}}</a></li>
             {{/config.specialFeatures.jsonforslack}}
             {{#config.specialFeatures.geojson}}
-              <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
+              <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">{{#i18n}}GeoJSON{{/i18n}}: {{meta.title}}</a></li>
             {{/config.specialFeatures.geojson}}
             {{#config.specialFeatures.kml}}
               <li><a type="application/vnd.google-earth.kml+xml" rel="alternate" href="{{config.absoluteUrlDirname}}network.kml">Google Earth KML: {{meta.title}}</a></li>
