@@ -13,7 +13,7 @@ var post           = require('./models/post');
  * @param {Object} config [description]
  */
 var PostReader = function(file, config) {
-  config = config || require('../config');
+  config = config || require('./config');
   if (!file) {
     throw new Error('File '+file+' is empty');
   }
