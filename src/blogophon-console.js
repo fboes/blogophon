@@ -88,13 +88,15 @@ var BlogophonConsole = function() {
    * Returns the title to be used for generating a filename.
    * @param  {String} title  [description]
    * @param  {Object} config [description]
+   * @param  {String} date   [description]
    * @return {String}        [description]
    */
-  internal.titleForFilename = function(title, config) {
+  internal.titleForFilename = function(title, config, date) {
+    date = date || new Date();
     if (config.postFileMode) {
       return config.postFileMode
         .replace(/Title/, title)
-        .replace(/Date/, blogophonDate(new Date()).format('yyyy-mm-dd'))
+        .replace(/Date/, blogophonDate(date).format('yyyy-mm-dd'))
       ;
     }
     return title;
@@ -335,6 +337,20 @@ var BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.createArticleDialog = function() {
+    var defaults = {
+      classes: 'Normal article',
+      link: '',
+      location: '',
+      images: false,
+      keywords: '',
+      date: blogophonDate(new Date()).iso,
+      author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+      draft: false,
+      edit: true,
+      lead: '',
+      mainText: 'Lorem ipsum…'
+    };
+
     var questions    = [
       {
         type: 'input',
@@ -358,7 +374,7 @@ var BlogophonConsole = function() {
         name: 'classes',
         message: 'Type of article',
         choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location'],
-        default: 'Normal article',
+        default: defaults.classes,
         filter: function(v) {
           return (v === 'Normal article') ? null : v;
         }
@@ -366,7 +382,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'link',
         message: 'URL of page you want to link to',
-        default: '',
+        default: defaults.link,
         when: function(answers) {
           return answers.classes === 'Link';
         },
@@ -377,7 +393,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'location',
         message: 'Place name or address',
-        default: '',
+        default: defaults.location,
         when: function(answers) {
           return answers.classes === 'Location';
         }
@@ -385,7 +401,7 @@ var BlogophonConsole = function() {
         type: 'confirm',
         name: 'images',
         message: 'Do you want to use images?',
-        default: false,
+        default: defaults.images,
         when: function(answers) {
           return answers.classes !== 'Images';
         }
@@ -393,7 +409,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'keywords',
         message: 'Keywords, comma-separated',
-        default: '',
+        default: defaults.keywords,
         filter: function(v) {
           return v.trim();
         }
@@ -401,25 +417,39 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'author',
         message: 'Author <E-Mail-Address>',
-        default: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+        default: defaults.author,
         when: function() {
           return config.specialFeatures.multipleauthors;
+        }
+      }, {
+        type: 'input',
+        name: 'date',
+        message: 'Publishing date',
+        default: defaults.date,
+        filter: function(v) {
+          return blogophonDate(v).iso;
+        },
+        validate: function(v) {
+          return v.match(/^\d[\d:\-\+T]+\d$/) ? true : 'Please supply a valid date like ' + defaults.date + '.';
         }
       }, {
         type: 'confirm',
         name: 'draft',
         message: 'Is this a draft?',
-        default: false
+        default: defaults.draft,
+        when: function(answers) {
+          return answers.date !== defaults.date;
+        }
       }, {
         type: 'confirm',
         name: 'edit',
         message: 'Open this in editor right away?',
-        default: true
+        default: defaults.edit
       }, {
         type: 'input',
         name: 'lead',
         message: 'Lead / teaser text',
-        default: '',
+        default: defaults.lead,
         when: function(answers) {
           return !answers.edit && answers.classes !== 'Link';
         }
@@ -427,7 +457,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'mainText',
         message: 'Main text',
-        default: 'Lorem ipsum…',
+        default: defaults.mainText,
         when: function(answers) {
           return !answers.edit;
         }
@@ -436,7 +466,7 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         var markdownFilename =
-          internal.filenameFromTitle(internal.titleForFilename(answers.title, config))
+          internal.filenameFromTitle(internal.titleForFilename(answers.title, config, answers.date))
           + (answers.draft ? '.md~' : '.md')
         ;
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
