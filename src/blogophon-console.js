@@ -510,7 +510,6 @@ var BlogophonConsole = function() {
 
   internal.makePost = function(markdownFilename, filename, templateData) {
     templateData.ymlQuote = MustacheQuoters.ymlQuote;
-    console.log(templateData);
     fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
       if (err) {
         console.error(chalk.red( markdownFilename + ' could not be written' ));
