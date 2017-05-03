@@ -470,22 +470,20 @@ var BlogophonConsole = function() {
           + (answers.draft ? '.md~' : '.md')
         ;
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
-
         var templateData = answers;
-        templateData.date = blogophonDate(new Date()).iso;
 
-        switch (answers.classes) {
+        switch (templateData.classes) {
           case 'Images':
-            templateData.lead = "![](image.jpg#default)\n\nLorem ipsum…";
+            templateData.lead = templateData.lead || "![](image.jpg#default)\n\nLorem ipsum…";
             break;
           case 'Video':
-            templateData.lead = "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+            templateData.lead = templateData.lead || "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
             break;
           case 'Link':
-            templateData.mainText = "[Lorem ipsum…](" + answers.link + ")";
+            templateData.mainText = templateData.mainText || "[Lorem ipsum…](" + answers.link + ")";
             break;
           case 'Quote':
-            templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";
+            templateData.mainText = templateData.mainText || "> Lorem ipsum…\n> <cite>Cicero</cite>";
             break;
           case 'Location':
             templateData.latitude = 0.00001;
