@@ -285,7 +285,6 @@ var Generator = function(config) {
           })));
         }
         if (config.specialFeatures.teasersnippets) {
-          console.log(Mustache.themeTemplates.snippetHtml);
           promises.push(fs.writeFileAsync( urls.snippetHtml.filename(), Mustache.render(Mustache.themeTemplates.snippetHtml, {
             index:       index.getPosts(3),
             title:       title
