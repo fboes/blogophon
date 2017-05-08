@@ -67,7 +67,6 @@
     document.querySelectorAll('[data-ajax-url]'),
     function(el, i){
       (function(el) {
-        console.log(el.getAttribute('data-ajax-url'));
         if (el.getAttribute('data-ajax-url')) {
           var request = new XMLHttpRequest();
           request.open('GET', el.getAttribute('data-ajax-url'), true);
