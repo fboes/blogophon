@@ -255,6 +255,7 @@ var Generator = function(config) {
         var urls = {
           rss:        indexUrl(path + 'posts.rss'),
           jsonrss:    indexUrl(path + 'rss.json'),
+          snippetHtml: indexUrl(path + 'snippet._html'),
           slackjson:  indexUrl(path + 'slack.json'),
           geojs:      indexUrl(path + 'geo.json'),
           networkKml: indexUrl(path + 'network.kml'),
@@ -280,6 +281,13 @@ var Generator = function(config) {
             pubDate:     pubDate.iso,
             config:      config,
             absoluteUrl: urls.atom.absoluteUrl(),
+            title:       title
+          })));
+        }
+        if (config.specialFeatures.teasersnippets) {
+          console.log(Mustache.themeTemplates.snippetHtml);
+          promises.push(fs.writeFileAsync( urls.snippetHtml.filename(), Mustache.render(Mustache.themeTemplates.snippetHtml, {
+            index:       index.getPosts(3),
             title:       title
           })));
         }

@@ -24,6 +24,12 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 All required links will be added to your page.
 
+Teaser snippets
+---------------
+
+This will generate small teaser snippets for your articles, linking to other articles.
+
+
 JSON-RSS
 ----------------
 

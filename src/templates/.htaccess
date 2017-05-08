@@ -21,6 +21,13 @@ AddType video/webm .webm
   Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
+{{#config.specialFeatures.teasersnippets}}
+  <IfModule mime_module>
+    Options +Includes
+    AddOutputFilter INCLUDES .html
+  </IfModule>
+{{/config.specialFeatures.teasersnippets}}
+
 #<IfModule mod_expires.c>
 #  ExpiresActive on
 #  ExpiresDefault                          "access plus 1 hour"

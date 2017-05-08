@@ -138,6 +138,12 @@
           </section>
         {{/post.meta.Tags.length}}
 
+        {{#config.specialFeatures.teasersnippets}}
+          <section data-ajax-url="{{config.basePath}}snippet._html">
+            <!--#include virtual="{{config.basePath}}snippet._html" -->
+          </section>
+        {{/config.specialFeatures.teasersnippets}}
+
         <section>
           <h3>Subscription</h3>
           <p>Stay up to date with our Newsfeeds:</p>

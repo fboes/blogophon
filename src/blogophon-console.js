@@ -296,6 +296,7 @@ var BlogophonConsole = function() {
         default: config.useSpecialFeature,
         choices: [
           "Multiple authors",
+          'Teaser snippets',
           "RSS",
           "ATOM",
           "JSON for Slack",
