@@ -1,19 +1,16 @@
 'use strict';
 
 var inquirer       = require('inquirer');
-var glob           = require('glob');
 var fs             = require('fs-extra-promise');
 var path           = require('path');
 var chalk          = require('chalk');
 var shell          = require('shelljs');
-var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
-var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var setup          = require('./setup')();
 var Generator      = require('./generator');
-var https          = require('https');
 var blogophonDate  = require('./models/blogophon-date');
+var blogophonEditor = require('./editor')(config);
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -48,7 +45,7 @@ var BlogophonConsole = function() {
   internal.makeChoices = function() {
     var choices = [];
     if (!config.notInitialized) {
-      internal.makeFiles();
+      files = blogophonEditor.makeFiles(new inquirer.Separator());
       choices.push(choicesStr[0]);
       if (files.length > 0) {
         choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
@@ -58,110 +55,6 @@ var BlogophonConsole = function() {
     choices.push(choicesStr[5], new inquirer.Separator(), choicesStr[6]);
     return choices;
   };
-
-/**
- * Get listing of all Markdown files which may be edited
- * @return {Array}   [description]
- */
-  internal.makeFiles = function() {
-    if (config.notInitialized) {
-      files = [];
-    } else {
-      files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
-        var filename = v.replace(/^.+\/(.+?)$/, '$1');
-        var fileStat = fs.lstatSync(v);
-        return {
-          name: fileStat.mtime.toLocaleString(config.locale.language || 'en')
-            + "\t" + filename + "\t" +Math.ceil(fileStat.size/1000)+' kB',
-          value: filename,
-          short: filename
-        };
-      });
-      if (files.length > 1) {
-        files.push(new inquirer.Separator());
-      }
-    }
-    return files;
-  };
-
-  /**
-   * Returns the title to be used for generating a filename.
-   * @param  {String} title  [description]
-   * @param  {Object} config [description]
-   * @param  {String} date   [description]
-   * @return {String}        [description]
-   */
-  internal.titleForFilename = function(title, config, date) {
-    date = date || new Date();
-    if (config.postFileMode) {
-      return config.postFileMode
-        .replace(/Title/, title)
-        .replace(/Date/, blogophonDate(date).format('yyyy-mm-dd'))
-      ;
-    }
-    return title;
-  };
-
-  /**
-   * Convert title to Markdown filename
-   * @param  {String} title [description]
-   * @return {String}       [description]
-   */
-  internal.filenameFromTitle = function(title) {
-    return path.join(config.directories.data, internal.shortfilenameFromTitle(title));
-  };
-
-  /**
-   * Remove stop words from filename and limit it to a sane length.
-   * @param  {String} title [description]
-   * @return {String}       [description]
-   */
-  internal.shortfilenameFromTitle = function(title) {
-    return SuperString(title.trim().toLowerCase())
-      .asciify()
-      .replace(/(^|\-)([a-z]|de[rnms]|die(s|se|ser|ses|sen|sem)?|d[aoe]s|[msd]?ein(e|es|er|em|en)?|th(e|is|at|ese|ose)|my|[ea]l|l[ao]s?|[ia][nm]|o[nf]|ist?|[ua]nd)\-/g, '$1')
-      .replace(/(^[\-]+|[\-]+$)/g, '')
-      .replace(/([\-])[\-]+/g, '$1')
-      .replace(/\-(md~?)$/, '.$1')
-      .replace(/^(.{64}[^-]*).*?(\.md~?)?$/, '$1$2')
-    ;
-  };
-
-  /**
-   * Convert Markdown filename into corresponding directory name (e.g. for images)
-   * @param  {String} filename [description]
-   * @return {String}          [description]
-   */
-  internal.dirnameFromFilename = function(filename) {
-    return filename.replace(/\.md~?$/, '');
-  };
-
-  /**
-   * Get coordinates for address
-   * @param  {String}   address  [description]
-   * @param  {String}   language [description]
-   * @param  {Function} callback [description]
-   * @return {Object}            with `latitude, longitude`
-   */
-  internal.convertAddress = function(address, language, callback) {
-    https.get({
-      host: 'nominatim.openstreetmap.org',
-      path: '/search?q='+encodeURIComponent(address)+'&format=json&accept-language='+encodeURIComponent(language || 'en')
-    }, function(response) {
-      var body = '';
-      response.on('data', function(d) {
-        body += d;
-      });
-      response.on('end', function() {
-        var parsed = JSON.parse(body);
-        callback(null, {
-          latitude:  parsed[0] ? parsed[0].lat : null,
-          longitude: parsed[0] ? parsed[0].lon : null
-        });
-      });
-    });
-  };
-
 
   /**
    * Display the setup dialog.
@@ -379,7 +272,7 @@ var BlogophonConsole = function() {
           if (v.trim().length <= 2) {
             return 'This title is way too short.';
           }
-          var filename = internal.filenameFromTitle(v);
+          var filename = blogophonEditor.filenameFromTitle(v);
           if (fs.existsSync(filename)) {
             return ("File " + filename + ' already exists');
           }
@@ -485,10 +378,10 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         var markdownFilename =
-          internal.filenameFromTitle(internal.titleForFilename(answers.title, config, answers.date))
+          blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date))
           + (answers.draft ? '.md~' : '.md')
         ;
-        var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
+        var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         var templateData = answers;
         templateData.lead     = templateData.lead     || defaults.lead(answers);
         templateData.mainText = templateData.mainText || defaults.mainText(answers);
@@ -498,13 +391,13 @@ var BlogophonConsole = function() {
         }
         if (templateData.location) {
           console.log('Geocoding...');
-          internal.convertAddress(templateData.location, config.locale.language, function(err, geo) {
+          blogophonEditor.convertAddress(templateData.location, config.locale.language, function(err, geo) {
             templateData.latitude = geo.latitude || templateData.latitude;
             templateData.longitude = geo.longitude || templateData.longitude;
-            internal.makePost(markdownFilename, filename, templateData);
+            blogophonEditor.makePost(markdownFilename, filename, templateData);
           });
         } else {
-          internal.makePost(markdownFilename, filename, templateData);
+          blogophonEditor.makePost(markdownFilename, filename, templateData);
         }
 
       },
@@ -512,26 +405,6 @@ var BlogophonConsole = function() {
         console.error(err);
       }
     );
-  };
-
-  internal.makePost = function(markdownFilename, filename, templateData) {
-    templateData.ymlQuote = MustacheQuoters.ymlQuote;
-    fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
-      if (err) {
-        console.error(chalk.red( markdownFilename + ' could not be written' ));
-      } else {
-        console.log( markdownFilename + ' created');
-        var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
-        console.log(chalk.grey(cmd));
-        if (templateData.edit) {
-          shell.exec(cmd);
-        }
-        if (templateData.classes === 'Images' || templateData.images) {
-          shell.mkdir('-p', filename);
-        }
-        external.init();
-      }
-    });
   };
 
   /**
@@ -577,7 +450,7 @@ var BlogophonConsole = function() {
         name: 'fileNew',
         message: 'Please enter a new filename or leave empty to cancel',
         filter: function(v) {
-          return internal.shortfilenameFromTitle(v);
+          return blogophonEditor.shortfilenameFromTitle(v);
         },
         validate: function(v) {
           return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
@@ -604,15 +477,15 @@ var BlogophonConsole = function() {
             checkProcessed
           );
           fs.move(
-            config.directories.data + '/' + internal.dirnameFromFilename(answers.file),
-            config.directories.data + '/' + internal.dirnameFromFilename(answers.fileNew),
+            config.directories.data + '/' + blogophonEditor.dirnameFromFilename(answers.file),
+            config.directories.data + '/' + blogophonEditor.dirnameFromFilename(answers.fileNew),
             checkProcessed
           );
           if (! answers.file.match(/~$/)) {
             maxProcessed ++;
             fs.move(
-              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file),
-              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.fileNew),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + blogophonEditor.dirnameFromFilename(answers.file),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + blogophonEditor.dirnameFromFilename(answers.fileNew),
               checkProcessed
             );
           }
@@ -659,8 +532,8 @@ var BlogophonConsole = function() {
           };
 
           fs.remove(path.join(config.directories.data, answers.file), checkProcessed);
-          fs.remove(path.join(config.directories.data, internal.dirnameFromFilename(answers.file)), checkProcessed);
-          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), internal.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data, blogophonEditor.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), blogophonEditor.dirnameFromFilename(answers.file)), checkProcessed);
         } else {
           external.init();
         }
