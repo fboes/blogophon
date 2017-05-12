@@ -113,12 +113,12 @@
             </footer>
           </article>
           <div id="prevnext">
-            <span style="display:inline-block;">
-              <a href="{{config.basePath}}" rel="contents" id="up">Back to article listing</a>
-            </span>
             {{#prev.Url}}
               <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
             {{/prev.Url}}
+            <span style="display:inline-block;">
+              <a href="{{config.basePath}}" rel="contents" id="up">Back to article listing</a>
+            </span>
             {{#next.Url}}
               <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}">&raquo;</a>
             {{/next.Url}}
