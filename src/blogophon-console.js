@@ -348,8 +348,26 @@ var BlogophonConsole = function() {
       author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
       draft: false,
       edit: true,
-      lead: '',
-      mainText: 'Lorem ipsum…'
+      lead: function(answers) {
+        switch (answers.classes) {
+          case 'Images':
+            return "![](image.jpg#default)\n\nLorem ipsum…";
+          case 'Video':
+            return "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+          default:
+            return '';
+        }
+      },
+      mainText: function(answers) {
+        switch (answers.classes) {
+          case 'Link':
+            return "[Lorem ipsum…](" + answers.link + ")";
+          case 'Quote':
+            return "> Lorem ipsum…\n> <cite>Cicero</cite>";
+          default:
+            return 'Lorem ipsum…';
+        }
+      }
     };
 
     var questions    = [
@@ -472,24 +490,11 @@ var BlogophonConsole = function() {
         ;
         var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         var templateData = answers;
-
-        switch (templateData.classes) {
-          case 'Images':
-            templateData.lead = templateData.lead || "![](image.jpg#default)\n\nLorem ipsum…";
-            break;
-          case 'Video':
-            templateData.lead = templateData.lead || "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
-            break;
-          case 'Link':
-            templateData.mainText = templateData.mainText || "[Lorem ipsum…](" + answers.link + ")";
-            break;
-          case 'Quote':
-            templateData.mainText = templateData.mainText || "> Lorem ipsum…\n> <cite>Cicero</cite>";
-            break;
-          case 'Location':
-            templateData.latitude = 0.00001;
-            templateData.longitude = 0.00001;
-            break;
+        templateData.lead     = templateData.lead     || defaults.lead(answers);
+        templateData.mainText = templateData.mainText || defaults.mainText(answers);
+        if (templateData.classes === 'Location') {
+          templateData.latitude = 0.00001;
+          templateData.longitude = 0.00001;
         }
         if (templateData.location) {
           console.log('Geocoding...');
