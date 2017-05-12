@@ -181,6 +181,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `:@`     | &#x1F620; | Angry face       |
 | `:$`     | &#x1F633; | Flushed face     |
 | `8O`     | &#x1F628; | Fearful face     |
+| `\o/`    | &#x1F64C; | Person raising both hands in celebration |
 | `8<`     | &#x2702;  | Scissors         |
 | `:+1:`   | &#x1F44D; | Thumbs up sign   |
 | `:-1:`   | &#x1F44E; | Thumbs down sign |

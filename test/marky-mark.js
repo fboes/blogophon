@@ -265,3 +265,15 @@ exports.testCss = function(test) {
 
   test.done();
 };
+
+exports.testEmoji = function(test) {
+  test.expect(2);
+
+  var m, x = ':) and ;) and \\o/ ';
+  m = markyMark(x);
+
+  test.ok(m, 'Got output');
+  test.equal(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
+
+  test.done();
+};
