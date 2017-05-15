@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * [x] Teaser snippets
 * [x] New option to automatically add the current date to generated filenames
 * [x] Multiline YAML parser added, fixed broken YAML generation
+* [x] Embedding of Github Gist added
 
 1.1.1
 -----

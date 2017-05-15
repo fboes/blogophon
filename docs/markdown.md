@@ -149,6 +149,10 @@ For displaying a Giphy image, just put a link to the Giphy page into a single li
 
 For displaying a Codepen example, just put a link to the Codepen page into a single line. This will be converted to the corresponding example iFrame.
 
+### Github Gist
+
+For displaying a Github Gist, just put a link to the Gist page into a single line. This will be converted to the corresponding example script.
+
 Special characters
 ------------------
 

@@ -398,6 +398,10 @@ var markyMark = function(string, rules) {
             /(?:<a)?[^>]*?codepen\.io\/([a-zA-Z0-9\-_]+)\/pen\/([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
             '<div class="embed embed--codepen"><iframe allowfullscreen="allowfullscreen" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe></div>'
           )
+          .replace(
+            /<a[^>]+href="([^"]+gist.github.com[^"]+)".+?<\/a>/g,
+            '<div class="embed embed--github"><script src="$1.js"></script></div>'
+          )
         ;
       })
       .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
