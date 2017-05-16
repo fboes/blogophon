@@ -1,18 +1,16 @@
 'use strict';
 
 var inquirer       = require('inquirer');
-var glob           = require('glob');
 var fs             = require('fs-extra-promise');
 var path           = require('path');
 var chalk          = require('chalk');
 var shell          = require('shelljs');
-var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
 var setup          = require('./setup')();
 var Generator      = require('./generator');
-var https          = require('https');
 var blogophonDate  = require('./models/blogophon-date');
+var blogophonEditor = require('./editor')(config);
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -47,7 +45,7 @@ var BlogophonConsole = function() {
   internal.makeChoices = function() {
     var choices = [];
     if (!config.notInitialized) {
-      internal.makeFiles();
+      files = blogophonEditor.makeFiles(new inquirer.Separator());
       choices.push(choicesStr[0]);
       if (files.length > 0) {
         choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
@@ -57,108 +55,6 @@ var BlogophonConsole = function() {
     choices.push(choicesStr[5], new inquirer.Separator(), choicesStr[6]);
     return choices;
   };
-
-/**
- * Get listing of all Markdown files which may be edited
- * @return {Array}   [description]
- */
-  internal.makeFiles = function() {
-    if (config.notInitialized) {
-      files = [];
-    } else {
-      files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
-        var filename = v.replace(/^.+\/(.+?)$/, '$1');
-        var fileStat = fs.lstatSync(v);
-        return {
-          name: fileStat.mtime.toLocaleString(config.locale.language || 'en')
-            + "\t" + filename + "\t" +Math.ceil(fileStat.size/1000)+' kB',
-          value: filename,
-          short: filename
-        };
-      });
-      if (files.length > 1) {
-        files.push(new inquirer.Separator());
-      }
-    }
-    return files;
-  };
-
-  /**
-   * Returns the title to be used for generating a filename.
-   * @param  {String} title  [description]
-   * @param  {Object} config [description]
-   * @return {String}        [description]
-   */
-  internal.titleForFilename = function(title, config) {
-    if (config.postFileMode) {
-      return config.postFileMode
-        .replace(/Title/, title)
-        .replace(/Date/, blogophonDate(new Date()).format('yyyy-mm-dd'))
-      ;
-    }
-    return title;
-  };
-
-  /**
-   * Convert title to Markdown filename
-   * @param  {String} title [description]
-   * @return {String}       [description]
-   */
-  internal.filenameFromTitle = function(title) {
-    return path.join(config.directories.data, internal.shortfilenameFromTitle(title));
-  };
-
-  /**
-   * Remove stop words from filename and limit it to a sane length.
-   * @param  {String} title [description]
-   * @return {String}       [description]
-   */
-  internal.shortfilenameFromTitle = function(title) {
-    return SuperString(title.trim().toLowerCase())
-      .asciify()
-      .replace(/(^|\-)([a-z]|de[rnms]|die(s|se|ser|ses|sen|sem)?|d[aoe]s|[msd]?ein(e|es|er|em|en)?|th(e|is|at|ese|ose)|my|[ea]l|l[ao]s?|[ia][nm]|o[nf]|ist?|[ua]nd)\-/g, '$1')
-      .replace(/(^[\-]+|[\-]+$)/g, '')
-      .replace(/([\-])[\-]+/g, '$1')
-      .replace(/\-(md~?)$/, '.$1')
-      .replace(/^(.{64}[^-]*).*?(\.md~?)?$/, '$1$2')
-    ;
-  };
-
-  /**
-   * Convert Markdown filename into corresponding directory name (e.g. for images)
-   * @param  {String} filename [description]
-   * @return {String}          [description]
-   */
-  internal.dirnameFromFilename = function(filename) {
-    return filename.replace(/\.md~?$/, '');
-  };
-
-  /**
-   * Get coordinates for address
-   * @param  {String}   address  [description]
-   * @param  {String}   language [description]
-   * @param  {Function} callback [description]
-   * @return {Object}            with `latitude, longitude`
-   */
-  internal.convertAddress = function(address, language, callback) {
-    https.get({
-      host: 'nominatim.openstreetmap.org',
-      path: '/search?q='+encodeURIComponent(address)+'&format=json&accept-language='+encodeURIComponent(language || 'en')
-    }, function(response) {
-      var body = '';
-      response.on('data', function(d) {
-        body += d;
-      });
-      response.on('end', function() {
-        var parsed = JSON.parse(body);
-        callback(null, {
-          latitude:  parsed[0] ? parsed[0].lat : null,
-          longitude: parsed[0] ? parsed[0].lon : null
-        });
-      });
-    });
-  };
-
 
   /**
    * Display the setup dialog.
@@ -293,6 +189,7 @@ var BlogophonConsole = function() {
         default: config.useSpecialFeature,
         choices: [
           "Multiple authors",
+          'Teaser snippets',
           "RSS",
           "ATOM",
           "JSON for Slack",
@@ -334,6 +231,38 @@ var BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.createArticleDialog = function() {
+    var defaults = {
+      classes: 'Normal article',
+      link: '',
+      location: '',
+      images: false,
+      keywords: '',
+      date: blogophonDate(new Date()).iso,
+      author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+      draft: false,
+      edit: true,
+      lead: function(answers) {
+        switch (answers.classes) {
+          case 'Images':
+            return "![](image.jpg#default)\n\nLorem ipsum…";
+          case 'Video':
+            return "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+          default:
+            return '';
+        }
+      },
+      mainText: function(answers) {
+        switch (answers.classes) {
+          case 'Link':
+            return "[Lorem ipsum…](" + answers.link + ")";
+          case 'Quote':
+            return "> Lorem ipsum…\n> <cite>Cicero</cite>";
+          default:
+            return 'Lorem ipsum…';
+        }
+      }
+    };
+
     var questions    = [
       {
         type: 'input',
@@ -343,7 +272,7 @@ var BlogophonConsole = function() {
           if (v.trim().length <= 2) {
             return 'This title is way too short.';
           }
-          var filename = internal.filenameFromTitle(v);
+          var filename = blogophonEditor.filenameFromTitle(v);
           if (fs.existsSync(filename)) {
             return ("File " + filename + ' already exists');
           }
@@ -357,7 +286,7 @@ var BlogophonConsole = function() {
         name: 'classes',
         message: 'Type of article',
         choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location'],
-        default: 'Normal article',
+        default: defaults.classes,
         filter: function(v) {
           return (v === 'Normal article') ? null : v;
         }
@@ -365,7 +294,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'link',
         message: 'URL of page you want to link to',
-        default: '',
+        default: defaults.link,
         when: function(answers) {
           return answers.classes === 'Link';
         },
@@ -376,7 +305,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'location',
         message: 'Place name or address',
-        default: '',
+        default: defaults.location,
         when: function(answers) {
           return answers.classes === 'Location';
         }
@@ -384,7 +313,7 @@ var BlogophonConsole = function() {
         type: 'confirm',
         name: 'images',
         message: 'Do you want to use images?',
-        default: false,
+        default: defaults.images,
         when: function(answers) {
           return answers.classes !== 'Images';
         }
@@ -392,7 +321,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'keywords',
         message: 'Keywords, comma-separated',
-        default: '',
+        default: defaults.keywords,
         filter: function(v) {
           return v.trim();
         }
@@ -400,25 +329,39 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'author',
         message: 'Author <E-Mail-Address>',
-        default: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+        default: defaults.author,
         when: function() {
           return config.specialFeatures.multipleauthors;
+        }
+      }, {
+        type: 'input',
+        name: 'date',
+        message: 'Publishing date',
+        default: defaults.date,
+        filter: function(v) {
+          return blogophonDate(v).iso;
+        },
+        validate: function(v) {
+          return v.match(/^\d[\d:\-\+T]+\d$/) ? true : 'Please supply a valid date like ' + defaults.date + '.';
         }
       }, {
         type: 'confirm',
         name: 'draft',
         message: 'Is this a draft?',
-        default: false
+        default: defaults.draft,
+        when: function(answers) {
+          return answers.date !== defaults.date;
+        }
       }, {
         type: 'confirm',
         name: 'edit',
         message: 'Open this in editor right away?',
-        default: true
+        default: defaults.edit
       }, {
         type: 'input',
         name: 'lead',
         message: 'Lead / teaser text',
-        default: '',
+        default: defaults.lead,
         when: function(answers) {
           return !answers.edit && answers.classes !== 'Link';
         }
@@ -426,7 +369,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'mainText',
         message: 'Main text',
-        default: 'Lorem ipsum…',
+        default: defaults.mainText,
         when: function(answers) {
           return !answers.edit;
         }
@@ -435,41 +378,26 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         var markdownFilename =
-          internal.filenameFromTitle(internal.titleForFilename(answers.title, config))
+          blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date))
           + (answers.draft ? '.md~' : '.md')
         ;
-        var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
-
+        var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         var templateData = answers;
-        templateData.date = blogophonDate(new Date()).iso;
-
-        switch (answers.classes) {
-          case 'Images':
-            templateData.lead = "![](image.jpg#default)\n\nLorem ipsum…";
-            break;
-          case 'Video':
-            templateData.lead = "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
-            break;
-          case 'Link':
-            templateData.mainText = "[Lorem ipsum…](" + answers.link + ")";
-            break;
-          case 'Quote':
-            templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";
-            break;
-          case 'Location':
-            templateData.latitude = 0.00001;
-            templateData.longitude = 0.00001;
-            break;
+        templateData.lead     = templateData.lead     || defaults.lead(answers);
+        templateData.mainText = templateData.mainText || defaults.mainText(answers);
+        if (templateData.classes === 'Location') {
+          templateData.latitude = 0.00001;
+          templateData.longitude = 0.00001;
         }
         if (templateData.location) {
           console.log('Geocoding...');
-          internal.convertAddress(templateData.location, config.locale.language, function(err, geo) {
+          blogophonEditor.convertAddress(templateData.location, config.locale.language, function(err, geo) {
             templateData.latitude = geo.latitude || templateData.latitude;
             templateData.longitude = geo.longitude || templateData.longitude;
-            internal.makePost(markdownFilename, filename, templateData);
+            blogophonEditor.makePost(markdownFilename, filename, templateData);
           });
         } else {
-          internal.makePost(markdownFilename, filename, templateData);
+          blogophonEditor.makePost(markdownFilename, filename, templateData);
         }
 
       },
@@ -477,25 +405,6 @@ var BlogophonConsole = function() {
         console.error(err);
       }
     );
-  };
-
-  internal.makePost = function(markdownFilename, filename, templateData) {
-    fs.writeFile(markdownFilename, Mustache.renderExtra(Mustache.templates.postMd, templateData), function(err) {
-      if (err) {
-        console.error(chalk.red( markdownFilename + ' could not be written' ));
-      } else {
-        console.log( markdownFilename + ' created');
-        var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
-        console.log(chalk.grey(cmd));
-        if (templateData.edit) {
-          shell.exec(cmd);
-        }
-        if (templateData.classes === 'Images' || templateData.images) {
-          shell.mkdir('-p', filename);
-        }
-        external.init();
-      }
-    });
   };
 
   /**
@@ -541,7 +450,7 @@ var BlogophonConsole = function() {
         name: 'fileNew',
         message: 'Please enter a new filename or leave empty to cancel',
         filter: function(v) {
-          return internal.shortfilenameFromTitle(v);
+          return blogophonEditor.shortfilenameFromTitle(v);
         },
         validate: function(v) {
           return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
@@ -568,15 +477,15 @@ var BlogophonConsole = function() {
             checkProcessed
           );
           fs.move(
-            config.directories.data + '/' + internal.dirnameFromFilename(answers.file),
-            config.directories.data + '/' + internal.dirnameFromFilename(answers.fileNew),
+            config.directories.data + '/' + blogophonEditor.dirnameFromFilename(answers.file),
+            config.directories.data + '/' + blogophonEditor.dirnameFromFilename(answers.fileNew),
             checkProcessed
           );
           if (! answers.file.match(/~$/)) {
             maxProcessed ++;
             fs.move(
-              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file),
-              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.fileNew),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + blogophonEditor.dirnameFromFilename(answers.file),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + blogophonEditor.dirnameFromFilename(answers.fileNew),
               checkProcessed
             );
           }
@@ -623,8 +532,8 @@ var BlogophonConsole = function() {
           };
 
           fs.remove(path.join(config.directories.data, answers.file), checkProcessed);
-          fs.remove(path.join(config.directories.data, internal.dirnameFromFilename(answers.file)), checkProcessed);
-          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), internal.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data, blogophonEditor.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), blogophonEditor.dirnameFromFilename(answers.file)), checkProcessed);
         } else {
           external.init();
         }

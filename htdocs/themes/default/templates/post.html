@@ -113,12 +113,12 @@
             </footer>
           </article>
           <div id="prevnext">
-            <span style="display:inline-block;">
-              <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
-            </span>
             {{#prev.Url}}
               <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
             {{/prev.Url}}
+            <span style="display:inline-block;">
+              <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
+            </span>
             {{#next.Url}}
               <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}">&raquo;</a>
             {{/next.Url}}
@@ -137,6 +137,12 @@
             </ul>
           </section>
         {{/post.meta.Tags.length}}
+
+        {{#config.specialFeatures.teasersnippets}}
+          <section data-ajax-url="{{config.basePath}}snippet._html">
+            <!--#include virtual="{{config.basePath}}snippet._html" -->
+          </section>
+        {{/config.specialFeatures.teasersnippets}}
 
         <section>
           <h3>{{#i18n}}Subscription{{/i18n}}</h3>

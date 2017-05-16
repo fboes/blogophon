@@ -149,6 +149,10 @@ For displaying a Giphy image, just put a link to the Giphy page into a single li
 
 For displaying a Codepen example, just put a link to the Codepen page into a single line. This will be converted to the corresponding example iFrame.
 
+### Github Gist
+
+For displaying a Github Gist, just put a link to the Gist page into a single line. This will be converted to the corresponding example script.
+
 Special characters
 ------------------
 
@@ -181,6 +185,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `:@`     | &#x1F620; | Angry face       |
 | `:$`     | &#x1F633; | Flushed face     |
 | `8O`     | &#x1F628; | Fearful face     |
+| `\o/`    | &#x1F64C; | Person raising both hands in celebration |
 | `8<`     | &#x2702;  | Scissors         |
 | `:+1:`   | &#x1F44D; | Thumbs up sign   |
 | `:-1:`   | &#x1F44E; | Thumbs down sign |

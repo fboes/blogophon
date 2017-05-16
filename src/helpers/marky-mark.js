@@ -196,6 +196,7 @@ var markyMark = function(string, rules) {
       ':@': '1F620',
       ':$': '1F633',
       '8O': '1F628',
+      '\\o/': '1F64C',
       '8<': '2702',
       ':+1:': '1F44D',
       ':-1:': '1F44E',
@@ -204,7 +205,7 @@ var markyMark = function(string, rules) {
       '(!)': '26A0'
     };
     string = string.replace(
-      /(\W|^)(:(?:'?\(|\)\)|[\)\|\/DPO\*\?@\$])|[;B]\)|;\(|x[PO]|8[o<]|:[\+\-]1:|&lt;\?3|\(!\))(\W|$)/g,
+      /(\W|^)(:(?:'?\(|\)\)|[\)\|\/DPO\*\?@\$])|[;B]\)|;\(|x[PO]|\\o\/|8[o<]|:[\+\-]1:|&lt;\?3|\(!\))(\W|$)/g,
       function(all, before, s, after) {
         return before + '<span class="emoji emoji--' + entityMap[s] + '" title="' + s + '">&#x' + entityMap[s] + ';</span>' + after;
       }
@@ -396,6 +397,10 @@ var markyMark = function(string, rules) {
           .replace(
             /(?:<a)?[^>]*?codepen\.io\/([a-zA-Z0-9\-_]+)\/pen\/([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
             '<div class="embed embed--codepen"><iframe allowfullscreen="allowfullscreen" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe></div>'
+          )
+          .replace(
+            /<a[^>]+href="([^"]+gist.github.com[^"]+)".+?<\/a>/g,
+            '<div class="embed embed--github"><script src="$1.js"></script></div>'
           )
         ;
       })

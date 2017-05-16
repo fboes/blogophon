@@ -100,6 +100,9 @@
         {{/index.length}}
 
         <div id="prevnext">
+          {{#prevUrl}}
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}">&laquo;</a>
+          {{/prevUrl}}
           <span>
             {{#currentPage}}
                 <span>{{#i18n}}Page{{/i18n}} {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
@@ -108,9 +111,6 @@
               <br /><a href="{{config.basePath}}" rel="home">{{#i18n}}Back to home page{{/i18n}}</a>
             {{/title}}
           </span>
-          {{#prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}">&laquo;</a>
-          {{/prevUrl}}
           {{#nextUrl}}
             <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}">&raquo;</a>
           {{/nextUrl}}

@@ -3,7 +3,7 @@
 var markyMark = require('../src/helpers/marky-mark');
 
 exports.testSimpleString = function(test) {
-  test.expect(12);
+  test.expect(13);
 
   var m;
 
@@ -31,6 +31,10 @@ exports.testSimpleString = function(test) {
   m = markyMark('<p><a href="http://codepen.io/larsenwork/pen/MpjXrb">Codepen</a></p>');
   test.ok(m.match(/codepen\.io\/larsenwork\/embed\/MpjXrb\//));
   test.ok(m.match(/<iframe/));
+
+  m = markyMark('<p><a href="https://gist.github.com/defunkt/2059">Github Gist</a></p>');
+  //console.log(m);
+  test.ok(m.match(/<script src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
 
   m = markyMark('<p><img src="http://www.example.com" alt="" /></p>');
   test.ok(m.match(/src="http:\/\/www\.example\.com/));
@@ -262,6 +266,18 @@ exports.testCss = function(test) {
   //console.log(m);
   test.ok(m, 'Got output');
   test.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
+
+  test.done();
+};
+
+exports.testEmoji = function(test) {
+  test.expect(2);
+
+  var m, x = ':) and ;) and \\o/ ';
+  m = markyMark(x);
+
+  test.ok(m, 'Got output');
+  test.equal(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
 
   test.done();
 };

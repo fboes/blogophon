@@ -63,6 +63,25 @@
   };
 
   // ---------------------------------------------------------------------------
+  Array.prototype.forEach.call(
+    document.querySelectorAll('[data-ajax-url]'),
+    function(el, i){
+      (function(el) {
+        if (el.getAttribute('data-ajax-url')) {
+          var request = new XMLHttpRequest();
+          request.open('GET', el.getAttribute('data-ajax-url'), true);
+          request.onload = function() {
+            if (this.status >= 200 && this.status < 400) {
+              el.innerHTML = this.response;
+            }
+          };
+          request.send();
+        }
+      })(el);
+    }
+  );
+
+  // ---------------------------------------------------------------------------
   document.body.addEventListener('click', function(event) {
     var el = event.target.closest('a.gallery__link');
     if (el && el.getAttribute('href')) {
