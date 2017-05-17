@@ -6,7 +6,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="{{post.meta.AbsoluteUrl}}" />
   <meta property="og:title" name="title" content="{{post.meta.Title}}" />
-  <meta property="og:description" name="description" content="{{post.meta.Description}}" />
+  <meta property="og:description" name="description" content="{{#noNewline}}{{post.meta.Description}}{{/noNewline}}" />
   {{#post.meta.Image}}
     <meta property="og:image" content="{{post.meta.Image}}" />
   {{/post.meta.Image}}

@@ -32,6 +32,11 @@ var blogophonMustacheQuoters = {
       return render(text).replace(/[\n|\r]+/g, '<br />$0');
     };
   },
+  noNewline: function() {
+    return function(text, render) {
+      return render(text).replace(/[\n|\r]+/g, ' ');
+    };
+  },
   i18n: function() {
     return function(text, render) {
       // change text
