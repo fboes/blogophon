@@ -34,7 +34,7 @@
           {{^meta.Image}}
             <link itemprop="image" href="{{config.ogImage}}" />
           {{/meta.Image}}
-          <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
+          <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
           <header>
             <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
             <h2 itemprop="name headline">{{meta.Title}}</h2>
@@ -42,12 +42,12 @@
           <div itemprop="articleBody">
             {{{ampHtml}}}
               {{#meta.hasExternalLink}}
-                <p><a href="{{meta.Link}}">Go to website…</a></p>
+                <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
               {{/meta.hasExternalLink}}
           </div>
           <footer class="meta">
             {{#meta.Modified.locale}}
-             <p>Last modified <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+             <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
             {{/meta.Modified.locale}}
             {{#meta.AuthorName}}
             <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -67,11 +67,11 @@
         </article>
         <p class="back">
           {{#prev.AbsoluteUrlAmp}}
-            <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo; <span>Vorheriger Artikel</span></a>
+            <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
           {{/prev.AbsoluteUrlAmp}}
-          <a href="{{config.basePath}}amp.html" rel="contents" id="up">To article listing</a>
+          <a href="{{config.basePath}}amp.html" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
           {{#next.AbsoluteUrlAmp}}
-            <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}"><span>Nächster Artikel</span> &raquo;</a>
+            <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
           {{/next.AbsoluteUrlAmp}}
         </p>
       {{/post}}

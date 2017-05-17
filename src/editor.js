@@ -8,7 +8,6 @@ var shell          = require('shelljs');
 var https          = require('https');
 var blogophonDate  = require('./models/blogophon-date');
 var SuperString    = require('./helpers/super-string');
-var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var Mustache       = require('./helpers/blogophon-mustache');
 
 var editor = function(config) {
@@ -119,8 +118,7 @@ var editor = function(config) {
   };
 
   external.makePost = function(markdownFilename, filename, templateData) {
-    templateData.ymlQuote = MustacheQuoters.ymlQuote;
-    fs.writeFile(markdownFilename, Mustache.render(Mustache.templates.postMd, templateData), function(err) {
+    fs.writeFile(markdownFilename, Mustache.renderExtra(Mustache.templates.postMd, templateData), function(err) {
       if (err) {
         console.error(chalk.red( markdownFilename + ' could not be written' ));
       } else {

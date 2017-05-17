@@ -6,6 +6,7 @@
 var Mustache       = require('mustache');
 var fs             = require('fs');
 var path           = require('path');
+var MustacheQuoters= require('./blogophon-mustache-quoters');
 
 /**
  * Get theme templates and load them into Mustache.themeTemplates
@@ -70,6 +71,22 @@ Mustache.escape = function(string) {
   return String(string).replace(/[&<>"']/g, function(s) {
     return entityMap[s];
   });
+};
+
+/**
+ * Add standard quoters to Mustache.render
+ * @param  {String} template [description]
+ * @param  {Object} view     [description]
+ * @param  {Object} partials [description]
+ * @return {String}          [description]
+ */
+Mustache.renderExtra = function(template, view, partials) {
+  for (var key in MustacheQuoters) {
+    if (!view[key]) {
+      view[key] = MustacheQuoters[key];
+    }
+  }
+  return Mustache.render(template, view, partials);
 };
 
 module.exports = Mustache;
