@@ -10,9 +10,9 @@
   {{#post.meta.Image}}
     <meta property="og:image" content="{{post.meta.Image}}" />
   {{/post.meta.Image}}
-  {{#post.meta.Keywords}}
+  {{#post.meta.Keywords.length}}
     <meta name="keywords" content="{{post.meta.Keywords}}" />
-  {{/post.meta.Keywords}}
+  {{/post.meta.Keywords.length}}
   {{#post.meta.Latitude}}
     <meta name="ICBM" content="{{post.meta.Latitude}}, {{post.meta.Longitude}}" />
     <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude}}" />
@@ -30,7 +30,7 @@
     <link rel="alternate" type="application/atom+xml" title="{{config.name}} ATOM" href="{{config.absoluteBasePath}}posts.atom" />
   {{/config.specialFeatures.atom}}
   {{#config.specialFeatures.jsonrss}}
-    <link rel="alternate" type="application/json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
+    <link rel="alternate" type="application/rss+json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
   {{/config.specialFeatures.jsonrss}}
   {{#config.specialFeatures.jsonforslack}}
     <link rel="alternate" type="application/json" title="{{config.name}} Slack-JSON" href="{{config.absoluteBasePath}}slack.json" />
@@ -155,7 +155,7 @@
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
             {{/config.specialFeatures.atom}}
             {{#config.specialFeatures.jsonrss}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
+              <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
             {{/config.specialFeatures.jsonrss}}
             {{#config.specialFeatures.jsonforslack}}
               <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}slack.json">Slack-JSON</a></li>
