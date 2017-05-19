@@ -56,6 +56,31 @@ var BlogophonConsole = function() {
     return choices;
   };
 
+  internal.makePost = function(markdownFilename, filename, templateData) {
+    blogophonEditor.makePost(
+      markdownFilename,
+      filename,
+      templateData,
+      function(err) {
+        if (err) {
+          console.error(chalk.red(markdownFilename + ' could not be written'));
+        } else {
+          console.log(markdownFilename + ' created');
+          if (templateData.edit) {
+            var cmd = config.isWin 
+              ? 'START ' + markdownFilename 
+              : 'open ' + markdownFilename + ' || vi '+ markdownFilename
+            ;
+            shell.exec(cmd);
+            console.log(chalk.grey(cmd));
+          }
+          external.init();
+        }
+      }
+    );
+  };
+
+
   /**
    * Display the setup dialog.
    * @return {[type]} [description]
@@ -394,10 +419,10 @@ var BlogophonConsole = function() {
           blogophonEditor.convertAddress(templateData.location, config.locale.language, function(err, geo) {
             templateData.latitude = geo.latitude || templateData.latitude;
             templateData.longitude = geo.longitude || templateData.longitude;
-            blogophonEditor.makePost(markdownFilename, filename, templateData);
+            internal.makePost(markdownFilename, filename, templateData);
           });
         } else {
-          blogophonEditor.makePost(markdownFilename, filename, templateData);
+          internal.makePost(markdownFilename, filename, templateData);
         }
 
       },
@@ -605,7 +630,6 @@ var BlogophonConsole = function() {
     if (config.notInitialized) {
       fs.ensureDirSync(config.directories.data);
       fs.ensureDirSync(config.directories.htdocs);
-      fs.copySync(path.join(__dirname, '..', 'htdocs', 'themes'), config.directories.theme);
       external.setupDialog();
     } else {
       var questions = [

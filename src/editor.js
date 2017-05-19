@@ -3,7 +3,6 @@
 var glob           = require('glob');
 var fs             = require('fs-extra-promise');
 var path           = require('path');
-var chalk          = require('chalk');
 var shell          = require('shelljs');
 var https          = require('https');
 var blogophonDate  = require('./models/blogophon-date');
@@ -21,7 +20,6 @@ var editor = function(config) {
   external.makeFiles = function(separator) {
     var files = [];
     if (!config.notInitialized) {
-      console.log(config.directories.data + "/**/*.{md,md~}");
       files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
         var filename = v.replace(/^.+\/(.+?)$/, '$1');
         var fileStat = fs.lstatSync(v);
@@ -117,23 +115,19 @@ var editor = function(config) {
     });
   };
 
-  external.makePost = function(markdownFilename, filename, templateData) {
-    fs.writeFile(markdownFilename, Mustache.renderExtra(Mustache.templates.postMd, templateData), function(err) {
-      if (err) {
-        console.error(chalk.red( markdownFilename + ' could not be written' ));
-      } else {
-        console.log( markdownFilename + ' created');
-        var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
-        console.log(chalk.grey(cmd));
-        if (templateData.edit) {
-          shell.exec(cmd);
+  external.makePost = function(markdownFilename, filename, templateData, callback) {
+    fs.writeFile(
+      markdownFilename,
+      Mustache.renderExtra(Mustache.templates.postMd, templateData),
+      function(err) {
+        if (!err) {
+          if (templateData.classes === 'Images' || templateData.images) {
+            shell.mkdir('-p', filename);
+          }
         }
-        if (templateData.classes === 'Images' || templateData.images) {
-          shell.mkdir('-p', filename);
-        }
-        external.init();
+        callback(err);
       }
-    });
+    );
   };
 
   //external.createFile = function(answers) {};

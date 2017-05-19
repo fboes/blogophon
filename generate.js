@@ -17,6 +17,7 @@ if (args.help) {
   console.log('  --deploy        Execute shell command `deployCmd` from file `user/config.json`');
   console.log('  --publish       Same as `--deploy`');
   console.log('  --help          Display this help and exit');
+  console.log('  --log           Add header to output usable for logging');
   process.exit(0);
 } else if (args.log) {
   console.log('---- ' + new Date() + ' -----');

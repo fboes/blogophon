@@ -18,6 +18,7 @@ var appleNewsFormat = require('./models/apple-news-format');
 var imageStyles    = require('./helpers/image-styles');
 var ampify         = require('./helpers/ampify')();
 var slacked        = require('./models/slacked');
+var jsonFeed       = require('./models/json-feed');
 
 /**
  * Generator used for creating the blog.
@@ -255,6 +256,7 @@ var Generator = function(config) {
           rss:        indexUrl(path + 'posts.rss'),
           jsonrss:    indexUrl(path + 'rss.json'),
           snippetHtml: indexUrl(path + 'snippet._html'),
+          jsonfeed:   indexUrl(path + 'feed.json'),
           slackjson:  indexUrl(path + 'slack.json'),
           geojs:      indexUrl(path + 'geo.json'),
           networkKml: indexUrl(path + 'network.kml'),
@@ -297,6 +299,16 @@ var Generator = function(config) {
             absoluteUrl: urls.ics.absoluteUrl(),
             title:       title
           })));
+        }
+        if (config.specialFeatures.jsonfeed) {
+          promises.push(fs.writeFileAsync( 
+            urls.jsonfeed.filename(), 
+            JSON.stringify(
+              jsonFeed(index.getPosts(20), pubDate, config, title, urls.jsonfeed.filename()),
+              undefined,
+              2
+            )
+          ));
         }
         if (config.specialFeatures.jsonrss) {
           promises.push(fs.writeFileAsync( urls.jsonrss.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title), undefined, 2)));
