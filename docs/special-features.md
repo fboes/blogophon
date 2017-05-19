@@ -29,6 +29,12 @@ Teaser snippets
 
 This will generate small teaser snippets for your articles, linking to other articles.
 
+JSON Feed
+----------------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding [JSON Feed](https://jsonfeed.org/).
+
+All required links will be added to your page.
 
 JSON-RSS
 ----------------

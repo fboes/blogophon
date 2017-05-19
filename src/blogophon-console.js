@@ -217,6 +217,7 @@ var BlogophonConsole = function() {
           'Teaser snippets',
           "RSS",
           "ATOM",
+          'JSON Feed',
           "JSON for Slack",
           "JSON-RSS",
           "Apple News",

@@ -14,6 +14,9 @@
   {{#config.specialFeatures.atom}}
     <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
   {{/config.specialFeatures.atom}}
+  {{#config.specialFeatures.jsonfeed}}
+    <link rel="alternate" type="application/json" title="{{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
+  {{/config.specialFeatures.jsonfeed}}
   {{#config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/rss+json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
   {{/config.specialFeatures.jsonrss}}
@@ -129,6 +132,9 @@
             {{#config.specialFeatures.atom}}
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
             {{/config.specialFeatures.atom}}
+            {{#config.specialFeatures.jsonfeed}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}feed.json">JSON Feed: {{meta.title}}</a></li>
+            {{/config.specialFeatures.jsonfeed}}
             {{#config.specialFeatures.jsonrss}}
               <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
             {{/config.specialFeatures.jsonrss}}
