@@ -3,6 +3,9 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+1.2.0
+-----
+
 * [x] Support for [JSON Feed](https://jsonfeed.org/)
 * [x] i18n
 * [x] Teaser snippets
