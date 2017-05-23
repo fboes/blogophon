@@ -16,7 +16,7 @@ var jsonRss = function(index, pubDate, config, title) {
       title: (config.name || '') + (title ? ' | ' + title : ''),
       link: config.baseUrl + config.basePath,
       description: config.description || '',
-      language: config.language,
+      language: config.locale.language,
       lastBuildDate: pubDate.rfc,
       lastBuildDateTs: pubDate.timestamp,
       items: index.map(function(item){

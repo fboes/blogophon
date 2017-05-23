@@ -3,7 +3,7 @@
 var blogophonDate = require('../src/models/blogophon-date');
 
 exports.testBasicProperties = function(test) {
-  test.expect(13);
+  test.expect(14);
 
   var config = require('../src/config');
   var pubDate = blogophonDate('2016-12-31', 'en');
@@ -27,6 +27,7 @@ exports.testBasicProperties = function(test) {
   test.ok(jsonRss.channel.title !== undefined);
   test.ok(jsonRss.channel.link !== undefined);
   test.ok(jsonRss.channel.description !== undefined);
+  test.ok(jsonRss.channel.language !== undefined);
   test.equals(jsonRss.channel.lastBuildDateTs, 1483142400);
   test.ok(jsonRss.channel.items[0] !== undefined);
   test.ok(jsonRss.channel.items[0].title !== undefined);

@@ -22,6 +22,7 @@ var jsonFeed = function(index, pubDate, config, title, feedUrl) {
       name: config.defaultAuthor.name,
       url: 'mailto:' + config.defaultAuthor.email
     },
+    _language: config.locale.language,
     items: index.map(function(post){
       var returnPost = {
         id: post.meta.Id || post.meta.AbsoluteUrl,
@@ -36,7 +37,8 @@ var jsonFeed = function(index, pubDate, config, title, feedUrl) {
           url: 'mailto:' + post.meta.AuthorEmail,
           avatar: post.meta.AuthorImage
         },
-        banner_image: post.meta.Image
+        banner_image: post.meta.Image,
+        _language: post.meta.Language || config.locale.language
       };
 
       if (post.meta.Image) {

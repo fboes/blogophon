@@ -17,7 +17,8 @@ exports.testBasicProperties = function(test) {
       Created: blogophonDate('2017-05-18'),
       Modified: blogophonDate('2016-05-19'),
       tags: [6, 7],
-      Description: 8
+      Description: 8,
+      Language: 'en'
     }
   };
   var jsonFeed = require('../src/models/json-feed')([item], pubDate, config, 'title', 'url');
