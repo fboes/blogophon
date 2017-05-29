@@ -8,7 +8,7 @@ article {
       }
     }
   }
-  img, amp-img {
+  img, amp-img, .figure {
     float:left;
     body[dir="rtl"] & {
       float:right;
@@ -21,9 +21,23 @@ article {
       margin: 0 0 1em;
       float:none;
     }
-    &[width="240"],
     &.quad {
       max-width:37.5%;
+    }
+  }
+  .figure {
+    display: inline-block;
+    font-size: 0.8em;
+   img {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+    .figcaption {
+      display: block;
+      padding: 0.5em 0;
+      border-bottom: 1px solid;
+      color: $color-grey-dark;
     }
   }
   @include no-amp {
@@ -91,6 +105,8 @@ article {
     display:none;
   }
 }
+
+
 
 @include no-amp {
   .video-player {

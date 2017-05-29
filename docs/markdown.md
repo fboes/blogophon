@@ -102,7 +102,7 @@ Link these images into your Markdown file like this:
 ![Image description](image.jpg#default) _produces an image, which will be scaled to match the `default` style_
 ![Image description](image.jpg#quad)    _produces an image, which will be scaled to match the `quad` style_
 ![Image description](image.jpg#320x240) _mark up this image as being 320 wide and 240 high_
-
+![> Image description](image.jpg)       _produces an unscaled image with visible image description_
 ```
 
 It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.

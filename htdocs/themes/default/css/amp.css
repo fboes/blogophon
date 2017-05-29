@@ -18,10 +18,13 @@ a { color: #116bfc; }
 #footer { background-color: #dddddd; color: #666666; font-size: 0.7em; text-align: center; }
 article header .date { float: right; font-size: 0.8em; }
 body[dir="rtl"] article header .date { float: left; }
-article img, article amp-img { float: left; margin: 0 1em 1em 0; max-width: 100%; height: auto; }
-body[dir="rtl"] article img, body[dir="rtl"] article amp-img { float: right; }
-article img.default, article amp-img.default { width: 100%; margin: 0 0 1em; float: none; }
-article img[width="240"], article img.quad, article amp-img[width="240"], article amp-img.quad { max-width: 37.5%; }
+article img, article amp-img, article .figure { float: left; margin: 0 1em 1em 0; max-width: 100%; height: auto; }
+body[dir="rtl"] article img, body[dir="rtl"] article amp-img, body[dir="rtl"] article .figure { float: right; }
+article img.default, article amp-img.default, article .figure.default { width: 100%; margin: 0 0 1em; float: none; }
+article img.quad, article amp-img.quad, article .figure.quad { max-width: 37.5%; }
+article .figure { display: inline-block; font-size: 0.8em; }
+article .figure img { margin: 0; width: 100%; max-width: 100%; }
+article .figure .figcaption { display: block; padding: 0.5em 0; border-bottom: 1px solid; color: #666666; }
 article + article { margin-top: 2em; border-top: 1px solid #eee; }
 article blockquote p { white-space: pre-line; }
 article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }

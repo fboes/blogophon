@@ -410,6 +410,10 @@ var markyMark = function(string, rules) {
         all = first + tag + last + ' controls="controls"></' + tag + '>';
         return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
       })
+      .replace(/(<img[^>]+alt=")(?:&gt;\s?)([^"]+)("[^>]*>)/g, function(all, first, alt, last) {
+        var img = '<span class="figure">' + first + alt + last + '<span class="figcaption">' + alt + '</span></span>';
+        return img.replace(/(class="figure)(".+<img[^>]+src="[^"]+#)([^"]+)(")/, '$1 $3$2$3$4');
+      })
       .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')
       .replace(/(<p(?:\s[^>]+)?>)\s*(<video[^>]+>\s*<\/video>)\s*<\/p>/g, '<div class="video-player video-player--html5">$2</div>')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')

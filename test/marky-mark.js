@@ -219,7 +219,7 @@ exports.testTable = function(test) {
 };
 
 exports.testMultimediaTags = function(test) {
-  test.expect(16);
+  test.expect(22);
 
   var m;
 
@@ -250,6 +250,16 @@ exports.testMultimediaTags = function(test) {
   test.ok(m.match(/<video/), 'Video tag is present');
   test.ok(!m.match(/<div class="video/), 'Wrapper div tag is not present');
   test.ok(m.match(/<p/), 'P tag is still there');
+
+  m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
+  test.ok(m.match(/<(img|video)/), 'Image tag is present');
+  test.ok(m.match(/figure/), 'figure is present');
+  test.ok(m.match(/figcaption/), 'figcaption is present');
+
+  m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
+  test.ok(m.match(/<(img|video)/), 'Image tag is present');
+  test.ok(m.match(/figure/), 'figure is present');
+  test.ok(m.match(/"figure default"/), 'new class is present');
   //console.log(m);
 
   test.done();
