@@ -231,7 +231,8 @@ var Post = function(filename, markdown, meta, config) {
   internal.removeMarkdown = function(markdown) {
     return markdown
       .replace(/>/g, ' ')
-      .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
+      .replace(/!\[([^\]]*)\]\(.+?\)/g, '')
+      .replace(/\[([^\]]*)\]\(.+?\)/g, '$1')
       .replace(/[ ][ ]+/g, ' ')
       .replace(/http(s)?:\S+/g, '')
       .trim()
