@@ -27,19 +27,14 @@ var generator = Generator(config);
 generator
   .getArticles()
   .then(function() {
-    generator
-      .buildAll(args.force, args.noimages)
-      .then(function() {
-        if(args.deploy || args.publish) {
-          generator.deploy();
-        } else {
-          console.log('Done');
-        }
-      })
-      .catch(function(err) {
-        console.error(err); process.exit(1);
-      })
-    ;
+    return generator.buildAll(args.force, args.noimages);
+  })
+  .then(function() {
+    if(args.deploy || args.publish) {
+      generator.deploy();
+    } else {
+      console.log('Done');
+    }
   })
   .catch(function(err) {
     console.error(err); process.exit(1);

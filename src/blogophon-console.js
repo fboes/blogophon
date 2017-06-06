@@ -67,8 +67,8 @@ var BlogophonConsole = function() {
         } else {
           console.log(markdownFilename + ' created');
           if (templateData.edit) {
-            var cmd = config.isWin 
-              ? 'START ' + markdownFilename 
+            var cmd = config.isWin
+              ? 'START ' + markdownFilename
               : 'open ' + markdownFilename + ' || vi '+ markdownFilename
             ;
             shell.exec(cmd);
@@ -592,34 +592,25 @@ var BlogophonConsole = function() {
       }
     ];
     var generator = Generator(config);
+    var answers;
     inquirer
       .prompt(questions)
-      .then(
-        function(answers) {
-          generator
-            .getArticles()
-            .then(function() {
-              generator
-                .buildAll(!answers.noforce)
-                .then(function() {
-                  if(answers.deploy) {
-                    generator.deploy();
-                  }
-                  external.init();
-                })
-                .catch( function(err) {
-                  console.error(err);
-                } )
-              ;
-            })
-            .catch( function(err) {
-              console.error(err);
-            } )
-          ;
-        })
-      .catch( function(err) {
+      .then(function(inquirerAnswers) {
+        answers = inquirerAnswers;
+        return generator.getArticles();
+      })
+      .then(function() {
+        return generator.buildAll(!answers.noforce);
+      })
+      .then(function() {
+        if(answers.deploy) {
+          generator.deploy();
+        }
+        external.init();
+      })
+      .catch(function(err) {
         console.error(err);
-      } )
+      })
     ;
   };
 

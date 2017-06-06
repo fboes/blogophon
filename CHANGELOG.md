@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Improved Promises in Generator
 * [x] Image sublines for images
 
 1.2.0
