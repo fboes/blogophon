@@ -301,17 +301,17 @@ var Generator = function(config) {
           })));
         }
         if (config.specialFeatures.jsonfeed) {
-          promises.push(fs.writeFileAsync( 
-            urls.jsonfeed.filename(), 
+          promises.push(fs.writeFileAsync(
+            urls.jsonfeed.filename(),
             JSON.stringify(
-              jsonFeed(index.getPosts(20), pubDate, config, title, urls.jsonfeed.filename()),
+              jsonFeed(index.getPosts(20), pubDate, config, title, urls.jsonfeed.absoluteUrl()),
               undefined,
               2
             )
           ));
         }
         if (config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFileAsync( urls.jsonrss.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title), undefined, 2)));
+          promises.push(fs.writeFileAsync( urls.jsonrss.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title, urls.jsonrss.absoluteUrl()), undefined, 2)));
         }
         if (config.specialFeatures.jsonforslack) {
           promises.push(fs.writeFileAsync( urls.slackjson.filename(), JSON.stringify(slacked(index.getPosts(3), pubDate, config, title), undefined, 2)));

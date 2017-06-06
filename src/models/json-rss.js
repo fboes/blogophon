@@ -7,9 +7,10 @@
  * @param  {String} pubDate [description]
  * @param  {Object} config  [description]
  * @param  {String} title   [description]
+ * @param  {String} feedUrl [description]
  * @return {Object}         [description]
  */
-var jsonRss = function(index, pubDate, config, title) {
+var jsonRss = function(index, pubDate, config, title, feedUrl) {
   return {
     version: "2.0",
     channel: {
@@ -17,6 +18,11 @@ var jsonRss = function(index, pubDate, config, title) {
       link: config.baseUrl + config.basePath,
       description: config.description || '',
       language: config.locale.language,
+      atomLink: {
+        href: feedUrl,
+        rel: 'self',
+        type: 'application/rss+json'
+      },
       lastBuildDate: pubDate.rfc,
       lastBuildDateTs: pubDate.timestamp,
       items: index.map(function(item){
