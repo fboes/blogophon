@@ -66,6 +66,7 @@ var Generator = function(config) {
             .then(function(posts) {
               internal.currentIndex.pushArray(posts);
               console.log('Removed ' + internal.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
+              console.log('Removed ' + internal.currentIndex.removeDrafts() + ' draft(s) from index');
               internal.currentIndex.makeNextPrev();
               resolve( files.length );
             })

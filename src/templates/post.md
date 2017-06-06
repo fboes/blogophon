@@ -1,4 +1,7 @@
 ---
+{{#draft}}
+Draft:     yes # Remove this line to undraft this article
+{{/draft}}
 Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
 {{#keywords}}
 Keywords:  {{#ymlQuote}}{{{keywords}}}{{/ymlQuote}}

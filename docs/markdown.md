@@ -38,6 +38,7 @@ Author:       Example <example@example.org> # Author name and email. If not set 
 Image:        /post/image/image.png         # Image URL used for sharing. It is best to make this URL absolute. If not set the first image found in the article text will be used.
 Link:         http://www.example.com/       # If given clicking on links to this article redirects to this URL instead of the original post's link.
 Rating:       1/5                           # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
+Draft:        yes                           # If set to `yes` this will prevent the article from being published. Use this for drafts.
 ```
 
 Because the teaser text uses Markdown (see below), you may also use multiline description field for YAML frontmatter like this:

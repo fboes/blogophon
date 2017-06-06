@@ -87,6 +87,19 @@ var blogophonIndex = function() {
   };
 
   /**
+   * Remove all items marked as draft
+   * @return {[type]} [description]
+   */
+  external.removeDrafts = function() {
+    var newIndex = external.index.filter(function(value) {
+      return !value.meta.Draft;
+    });
+    var count = external.index.length - newIndex.length;
+    external.index = newIndex;
+    return count;
+  };
+
+  /**
    * [makeNextPrev description]
    * @return {blogophonIndex} [description]
    */

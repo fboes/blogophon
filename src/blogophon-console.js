@@ -376,7 +376,7 @@ var BlogophonConsole = function() {
         message: 'Is this a draft?',
         default: defaults.draft,
         when: function(answers) {
-          return answers.date !== defaults.date;
+          return answers.date === defaults.date;
         }
       }, {
         type: 'confirm',
@@ -403,10 +403,7 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
-        var markdownFilename =
-          blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date))
-          + (answers.draft ? '.md~' : '.md')
-        ;
+        var markdownFilename = blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date)) + '.md';
         var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         var templateData = answers;
         templateData.lead     = templateData.lead     || defaults.lead(answers);
