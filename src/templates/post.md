@@ -21,6 +21,9 @@ Marker:    marker
 Latitude:  {{#ymlQuote}}{{{latitude}}}{{/ymlQuote}}
 Longitude: {{#ymlQuote}}{{{longitude}}}{{/ymlQuote}}
 {{/latitude}}
+{{#rating}}
+Rating:    {{#ymlQuote}}{{rating}}/5{{/ymlQuote}}
+{{/rating}}
 {{#link}}
 Link:      {{#ymlQuote}}{{{link}}}{{/ymlQuote}}
 {{/link}}

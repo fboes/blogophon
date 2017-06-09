@@ -265,6 +265,7 @@ var BlogophonConsole = function() {
       keywords: '',
       date: blogophonDate(new Date()).iso,
       author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+      rating: "5",
       draft: false,
       edit: true,
       lead: function(answers) {
@@ -311,7 +312,7 @@ var BlogophonConsole = function() {
         type: 'list',
         name: 'classes',
         message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location'],
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Review', 'Location'],
         default: defaults.classes,
         filter: function(v) {
           return (v === 'Normal article') ? null : v;
@@ -334,6 +335,21 @@ var BlogophonConsole = function() {
         default: defaults.location,
         when: function(answers) {
           return answers.classes === 'Location';
+        }
+      }, {
+        type: 'list',
+        name: 'rating',
+        message: 'Rating',
+        choices: ["1", "2", "3", "4", "5"],
+        default: defaults.rating,
+        when: function(answers) {
+          return answers.classes === 'Review';
+        },
+        validate: function(v) {
+          return (Number(v) >= 1 && Number(v)) <= 5 ? true : 'Please supply a number between 1 - 5.';
+        },
+        filter: function(v) {
+          return Number(v);
         }
       }, {
         type: 'confirm',
