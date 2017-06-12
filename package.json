@@ -17,6 +17,18 @@
     "precommit": "npm test",
     "test": "eslint src && eslint *.js && eslint test && nodeunit test --reporter minimal"
   },
+  "homepage": "https://github.com/fboes/blogophon",
+  "bugs": {
+    "url" : "https://github.com/fboes/blogophon/issues",
+    "email" : "info@3960.org"
+  },
+  "author": {
+    "name": "Frank Boës",
+    "email": "info@3960.org",
+    "url": "https://3960.org/"
+  },
+  "man": "./README.md",
+  "preferGlobal": true,
   "keywords": [
     "blog",
     "markdown",
