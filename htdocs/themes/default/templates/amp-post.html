@@ -49,6 +49,14 @@
             {{#meta.Modified.locale}}
              <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
             {{/meta.Modified.locale}}
+            {{#meta.Tags.length}}
+              <span class="tags">
+                Tags:
+                {{#meta.Tags}}
+                  · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                {{/meta.Tags}}
+              </span>
+            {{/meta.Tags.length}}
             {{#meta.AuthorName}}
             <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
               <link itemprop="image" href="{{meta.AuthorImage}}" />
