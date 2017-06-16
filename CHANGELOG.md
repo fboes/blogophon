@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * [x] Adding article type "Review"
 * [x] Improved drafting of articles
 * [x] Image sublines for images
+* [x] Minor styling update to default theme
 
 1.2.0
 -----

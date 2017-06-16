@@ -51,8 +51,12 @@ article {
     margin-top:2em;
     border-top: 1px solid #eee;
   }
-  blockquote p {
-    white-space: pre-line;
+  blockquote {
+    color: $color-grey-dark;
+    margin-left: 1em;
+    p {
+      white-space: pre-line;
+    }
   }
   code {
     font-family: $fontfamily-monospace;
@@ -172,6 +176,7 @@ article {
 
 
   p.meta, footer.meta {
+    margin-top: 1em;
     .share {
       a {
         &:before {
