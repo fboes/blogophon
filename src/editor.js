@@ -55,7 +55,7 @@ var editor = function(config) {
     return title;
   };
 
-    /**
+  /**
    * Convert title to Markdown filename
    * @param  {String} title [description]
    * @return {String}       [description]
@@ -72,10 +72,10 @@ var editor = function(config) {
   external.shortfilenameFromTitle = function(title) {
     return SuperString(title.trim().toLowerCase())
       .asciify()
-      .replace(/(^|\-)([a-z]|de[rnms]|die(s|se|ser|ses|sen|sem)?|d[aoe]s|[msd]?ein(e|es|er|em|en)?|th(e|is|at|ese|ose)|my|[ea]l|l[ao]s?|[ia][nm]|o[nf]|ist?|[ua]nd)\-/g, '$1')
-      .replace(/(^[\-]+|[\-]+$)/g, '')
-      .replace(/([\-])[\-]+/g, '$1')
-      .replace(/\-(md~?)$/, '.$1')
+      .replace(/(^|-)([a-z]|de[rnms]|die(s|se|ser|ses|sen|sem)?|d[aoe]s|[msd]?ein(e|es|er|em|en)?|th(e|is|at|ese|ose)|my|[ea]l|l[ao]s?|[ia][nm]|o[nf]|ist?|[ua]nd)-/g, '$1')
+      .replace(/(^[-]+|[-]+$)/g, '')
+      .replace(/([-])[-]+/g, '$1')
+      .replace(/-(md~?)$/, '.$1')
       .replace(/^(.{64}[^-]*).*?(\.md~?)?$/, '$1$2')
     ;
   };

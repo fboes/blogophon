@@ -23,9 +23,9 @@ exports.testAmpifyVideo = function testAmpifyBasic(test) {
   var ampHtml = ampify.ampifyHtml(html);
 
   //console.log(ampHtml);
-  test.ok(ampHtml.match(/<amp\-youtube/));
-  test.ok(ampHtml.match(/<amp\-vimeo/));
-  test.ok(ampHtml.match(/<amp\-iframe/));
+  test.ok(ampHtml.match(/<amp-youtube/));
+  test.ok(ampHtml.match(/<amp-vimeo/));
+  test.ok(ampHtml.match(/<amp-iframe/));
 
   var ampProperties = ampify.ampifyProperties(ampHtml);
   //console.log(ampProperties);

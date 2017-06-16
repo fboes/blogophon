@@ -77,10 +77,10 @@ exports.testReplacingMarkdown = function(test) {
   test.equal(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
   test.equal(testPost.meta.Description, 'Description and some internal link.', 'Description has no markdown');
   test.equal(testPost.meta.MarkdownDescription, testMarkdownDescription, '...but there is a description with markdown');
-  test.ok(testPost.meta.Image.match(/some\-image.jpg/));
-  test.ok(testPost.meta.ProperImage.match(/some\-image.jpg/));
-  test.ok(testPost.html.match(/test\/some\-image.jpg/), 'Image has path added');
-  test.ok(testPost.htmlTeaser.match(/test\/some\-image.jpg/), 'Image has path added');
+  test.ok(testPost.meta.Image.match(/some-image.jpg/));
+  test.ok(testPost.meta.ProperImage.match(/some-image.jpg/));
+  test.ok(testPost.html.match(/test\/some-image.jpg/), 'Image has path added');
+  test.ok(testPost.htmlTeaser.match(/test\/some-image.jpg/), 'Image has path added');
   test.ok(!testPost.html.match(/internal\.md/), 'Internal links are converted');
   test.ok(!testPost.htmlTeaser.match(/internal\.md/), 'Internal links are converted');
   test.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');

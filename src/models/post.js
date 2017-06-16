@@ -149,7 +149,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     meta.authorUrlObj = authorUrl(meta.AuthorName, config.htdocs.author);
     if (!meta.Image) {
-      var match = external.html.match(/<(?:!\-\- )?img.+?src="(.+?)"/);
+      var match = external.html.match(/<(?:!-- )?img.+?src="(.+?)"/);
       if (match) {
         meta.Image = match[1];
       }
@@ -219,7 +219,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     return imageStyles(config)
       .replaceImgHtml(html)
-      .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
+      .replace(/(href=")([a-zA-Z0-9-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
     ;
   };
 
@@ -251,7 +251,7 @@ var Post = function(filename, markdown, meta, config) {
         content = content.replace(/(<img.+?>)/g, '  <div class="gallery__slide">$1</div>'+"\n");
         return '<div class="gallery gallery--' + count + '" data-gallery-count="' + count + '">' + "\n" + content + '</div>';
       })
-      .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="gallery__link">$1</a>')
+      .replace(/(<img[^>]+src="([^"]+)(?:-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="gallery__link">$1</a>')
       .replace(/(<a[^>]+)(><img[^>]+alt=")(["]+?)(")/g, '$1 title="$3"$2$3$4')
     ;
   };
@@ -298,9 +298,9 @@ var Post = function(filename, markdown, meta, config) {
   external.getAllImagesWithStyle = function() {
     var singleImage;
     var allMarkdown = external.meta.MarkdownDescription + "\n" + markdown;
-    var all = allMarkdown.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/g) || [];
+    var all = allMarkdown.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/g) || [];
     return all.map(function(i) {
-      singleImage = i.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/);
+      singleImage = i.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/);
       if (singleImage[2] && singleImage[2].match(/^\d+x\d+$/)) {
         singleImage[2] = null;
       }

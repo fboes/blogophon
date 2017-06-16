@@ -172,7 +172,7 @@ var markyMark = function(string, rules) {
       '&lt;=': '⇐',
       '--': '—'
     };
-    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|\-\-)/g, function(s) {
+    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|--)/g, function(s) {
       return entityMap[s];
     });
 
@@ -205,7 +205,7 @@ var markyMark = function(string, rules) {
       '(!)': '26A0'
     };
     string = string.replace(
-      /(\W|^)(:(?:'?\(|\)\)|[\)\|\/DPO\*\?@\$])|[;B]\)|;\(|x[PO]|\\o\/|8[o<]|:[\+\-]1:|&lt;\?3|\(!\))(\W|$)/g,
+      /(\W|^)(:(?:'?\(|\)\)|[)|/DPO*?@$])|[;B]\)|;\(|x[PO]|\\o\/|8[o<]|:[+-]1:|&lt;\?3|\(!\))(\W|$)/g,
       function(all, before, s, after) {
         return before + '<span class="emoji emoji--' + entityMap[s] + '" title="' + s + '">&#x' + entityMap[s] + ';</span>' + after;
       }
@@ -253,12 +253,12 @@ var markyMark = function(string, rules) {
     codeConverterFunction = codeConverterFunction || function(codeRest) {
       return codeRest;
     };
-    breaker = breaker || /(\/\*[\S\s]+?\*\/|(?:\/\/|\#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
+    breaker = breaker || /(\/\*[\S\s]+?\*\/|(?:\/\/|#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
     var myArray;
     var chunks = [];
     var lastIndex = 0;
 
-    code = code.replace(/&#39\;/g, "'");
+    code = code.replace(/&#39;/g, "'");
     while ((myArray = breaker.exec(code)) !== null) {
       if (lastIndex !== breaker.lastIndex - myArray[0].length) {
         chunks.push(codeConverterFunction(code.substring(lastIndex, breaker.lastIndex - myArray[0].length)));
@@ -294,12 +294,12 @@ var markyMark = function(string, rules) {
       return codeRest
         .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
         .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
-        .replace(/([^a-zA-Z$#\d])(\-?\d[\d\.]*)/g, '$1<em>$2</em>')
+        .replace(/([$@%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
+        .replace(/([^a-zA-Z$#\d])(-?\d[\d.]*)/g, '$1<em>$2</em>')
         .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
-        .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
-        .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
-        .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
+        .replace(/((?:\\)(?:&.+?;|[^&]))/g, '<samp>$1</samp>')
+        .replace(/(\n)([+] .+?)(\n)/g, '$1<ins>$2</ins>$3')
+        .replace(/(\n)([-] .+?)(\n)/g, '$1<del>$2</del>$3')
       ;
     });
   };
@@ -312,12 +312,12 @@ var markyMark = function(string, rules) {
   internal.convertCss = function(string) {
     return internal.convertGeneralCode(string, function(codeRest) {
       return codeRest
-        .replace(/([\b\s])((?:margin|padding|border)(?:\-[a-z]+)?|(?:[a-z]+\-)?color|float|text-align|position|display|overflow)(\s*:)/g, '$1<b>$2</b>$3')
+        .replace(/([\b\s])((?:margin|padding|border)(?:-[a-z]+)?|(?:[a-z]+-)?color|float|text-align|position|display|overflow)(\s*:)/g, '$1<b>$2</b>$3')
         .replace(/(:\s)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none|hidden|static|absolute|relative)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/([\b\s])([\.\#][a-zA-Z][a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/([\b\s])(\$[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/([\b\s])([.#][a-zA-Z][a-zA-Z0-9_-]+)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([\b\s])(\$[a-zA-Z0-9_-]+)(\b)/g, '$1<var>$2</var>$3')
         .replace(/([\b\s])(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
-        .replace(/(\D)(\d[\d\.]*[a-z]+)(\b)/g, '$1<samp>$2</samp>$3')
+        .replace(/(\D)(\d[\d.]*[a-z]+)(\b)/g, '$1<samp>$2</samp>$3')
       ;
     }, /(\/\*[\S\s]+?\*\/|(?:\/\/).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g);
   };
@@ -332,7 +332,7 @@ var markyMark = function(string, rules) {
       return codeRest
         .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
         .replace(/(^|\b)(if|fi|then|case|esac|function)(\b)/g, '$1<i>$2</i>$3')
-        .replace(/(\b)((?:\$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/(\b)((?:\$)[a-zA-Z0-9_-]+)(\b)/g, '$1<var>$2</var>$3')
         .replace(/(\n)(\$ .+?)(\n|$)/g, '$1<em>$2</em>$3')
       ;
     });
@@ -347,7 +347,7 @@ var markyMark = function(string, rules) {
     return string
       .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i>$2</i>')
       .replace(/(&amp;(?:#x)?[a-zA-F0-9]+?;)/g, '<samp>$1</samp>')
-      .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?[^\\])(&quot;)/g, '$1<var>$2</var>$3<kbd>$4</kbd>$5')
+      .replace(/(\s)([a-zA-Z0-9_-]+?)(=&quot;)(.+?[^\\])(&quot;)/g, '$1<var>$2</var>$3<kbd>$4</kbd>$5')
       .replace(/(&lt;--.+?--&gt;)/g, '<u>$1</u>')
     ;
   };
@@ -360,7 +360,7 @@ var markyMark = function(string, rules) {
   internal.convertMarkdown = function(string) {
     return string
       .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<b>$2</b>$3<var>$4</var>$5')
-      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<em>$2</em>$3')
+      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=-]{3,})(\n|\r|$)/g, '$1<em>$2</em>$3')
       .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<em>$2</em>$3')
     ;
   };
@@ -391,7 +391,7 @@ var markyMark = function(string, rules) {
             '<div class="video-player video-player--vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1" scrolling="no"></iframe></div>'
           )
           .replace(
-            /(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)/g,
+            /(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)/g,
             '<img src="https://i.giphy.com/$1.gif" alt="" />'
           )
           .replace(
@@ -404,7 +404,7 @@ var markyMark = function(string, rules) {
           )
         ;
       })
-      .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
+      .replace(/(<img[^>]+src="[^"]+-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
       .replace(/(<)img([^>]src="[^"]+\.(mp[234g]|webm|og[gamv])(?:#[^"]*)?"+[^>]*?)\s*\/?>/, function(all, first, last, suffix) {
         var tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
         all = first + tag + last + ' controls="controls"></' + tag + '>';

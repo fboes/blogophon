@@ -18,9 +18,9 @@ exports.testExtender = function(test) {
   test.ok(url.dirname());
 
   test.ok(url.relativeUrl().match(/\/$/), 'No index.html at the end');
-  test.ok(url.filename().match(/[\/|\\]index\.html$/));
-  test.ok(!url.dirname().match(/[\/|\\]index\.html$/), 'No index.html at the end');
-  test.ok(!url.dirname().match(/[\/|\\]$/), 'No trailing slash');
+  test.ok(url.filename().match(/[/\\]index\.html$/));
+  test.ok(!url.dirname().match(/[/\\]index\.html$/), 'No index.html at the end');
+  test.ok(!url.dirname().match(/[/\\]$/), 'No trailing slash');
 
   /*console.log([
     url.relativeUrl(),
@@ -52,9 +52,9 @@ exports.testBasicTransformation = function(test) {
   test.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)tag(\/|\\)index\.html$/));
 
   url = AuthorUrl('Paul Wischwedel');
-  test.ok(url.relativeUrl().match(/^\S*\/authored\-by\/paul\-wischwedel\/$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/authored\-by\/paul\-wischwedel\/$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)authored\-by(\/|\\)paul\-wischwedel(\/|\\)index\.html$/));
+  test.ok(url.relativeUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));
+  test.ok(url.absoluteUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)authored-by(\/|\\)paul-wischwedel(\/|\\)index\.html$/));
 
   test.done();
 };

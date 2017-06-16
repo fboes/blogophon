@@ -124,10 +124,10 @@ var BlogophonConsole = function() {
         message: 'Base URL path, usually just `/`',
         default: config.basePath,
         validate: function(v) {
-          return v.match(/^[a-zA-Z0-9\.\/_-]*\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
+          return v.match(/^[a-zA-Z0-9./_-]*\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
         },
         filter: function(v) {
-          return v.replace(/^([^\/])/, '/$1').replace(/([^\/])$/, '$1/');
+          return v.replace(/^([^/])/, '/$1').replace(/([^/])$/, '$1/');
         }
       }, {
         type: 'input',
@@ -140,7 +140,7 @@ var BlogophonConsole = function() {
         message: 'Standard language of your blog, like `en` for English',
         default: config.locale.language || config.language,
         validate: function(v) {
-          return v.match(/^[a-zA-Z]+([\-_][a-zA-Z]+)?$/) ? true : 'Please supply a valid language code like `en`, `es`, `fr`, `de` or `pt-br`.';
+          return v.match(/^[a-zA-Z]+([-_][a-zA-Z]+)?$/) ? true : 'Please supply a valid language code like `en`, `es`, `fr`, `de` or `pt-br`.';
         },
         filter: function(v) {
           return v.toLowerCase().replace(/_/, '-');
@@ -384,7 +384,7 @@ var BlogophonConsole = function() {
           return blogophonDate(v).iso;
         },
         validate: function(v) {
-          return v.match(/^\d[\d:\-\+T]+\d$/) ? true : 'Please supply a valid date like ' + defaults.date + '.';
+          return v.match(/^\d[\d:+T-]+\d$/) ? true : 'Please supply a valid date like ' + defaults.date + '.';
         }
       }, {
         type: 'confirm',
@@ -492,7 +492,7 @@ var BlogophonConsole = function() {
           return blogophonEditor.shortfilenameFromTitle(v);
         },
         validate: function(v) {
-          return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
+          return v.match(/\.md~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
         }
       }
     ];

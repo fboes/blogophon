@@ -74,7 +74,7 @@ gulp.task('build-js', function() {
     .pipe(eslint.format())
     //.pipe(eslint.failAfterError())
     .pipe(rename(function(path){
-      path.dirname = path.dirname.replace(/js\-src/, 'js');
+      path.dirname = path.dirname.replace(/js-src/, 'js');
     }))
     .pipe(uglify({output: {
       max_line_len: 9000

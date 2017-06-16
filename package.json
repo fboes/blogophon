@@ -40,7 +40,7 @@
     "autoprefixer": "^7.0.1",
     "beepbeep": "^1.2.0",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
+    "gulp-eslint": "^4.0.0",
     "gulp-live-server": "0.0.30",
     "gulp-nodeunit": "0.1.0",
     "gulp-plumber": "^1.1.0",

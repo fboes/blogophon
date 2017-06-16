@@ -62,7 +62,7 @@ var SuperString = function(string) {
         .replace(/[ñ]/, 'n')
         .replace(/[ß]/, 'ss')
       ;
-    }).replace(/[^a-z0-9\-]/g, '-');
+    }).replace(/[^a-z0-9-]/g, '-');
   };
 
   /**

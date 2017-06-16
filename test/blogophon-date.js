@@ -33,9 +33,9 @@ exports.basicTest = function basicTest(test) {
 
   test.ok(englishDate.locale !== germanDate.locale);
   test.equals(germanDate.iso, englishDate.iso);
-  test.ok(germanDate.iso.match(/[\+\-]\d+:\d+$/), 'Proper timezone at the end of string');
+  test.ok(germanDate.iso.match(/[+-]\d+:\d+$/), 'Proper timezone at the end of string');
   test.equals(germanDate.rfc, englishDate.rfc);
-  test.ok(germanDate.rfc.match(/[\+\-]\d+$/), 'Proper timezone at the end of string');
+  test.ok(germanDate.rfc.match(/[+-]\d+$/), 'Proper timezone at the end of string');
   test.equals(germanDate.ics, englishDate.ics);
   test.ok(germanDate.ics.match(/^\d+T\d+.$/), 'String like 20060910T220000Z');
   test.ok(germanDate.icsDay.match(/^\d+$/), 'String like 20060910');

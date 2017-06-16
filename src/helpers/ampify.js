@@ -18,7 +18,7 @@ var ampify = function() {
       .replace(/(<amp-(?:video|iframe|audio)[^>]+) (scrolling)=".+?"/g, '$1')
       .replace(/(<amp-(?:video|iframe))/g, '$1 width="640" height="360"')
       .replace(/(<amp-(?:audio))/g, '$1 width="640" height="60"')
-      .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^\.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)><\/amp-iframe>/g, '<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
+      .replace(/<amp-iframe([^>]*) src="https:\/\/www.youtube[^.]*.com\/embed\/(.+?)\?enablejsapi=1"([^>]*)><\/amp-iframe>/g, '<amp-youtube$1 data-videoid="$2"$3></amp-youtube>')
       .replace(/<amp-iframe([^>]*) src="https:\/\/player\.vimeo\.com\/video\/(.+?)"([^>]*)>(.*?)<\/amp-iframe>/g, '<amp-vimeo$1 data-videoid="$2"$3></amp-vimeo>')
       .replace(/( (height)="[^"]*")([^>]* \2="[^"]*")/g, '$3')
       .replace(/( (width)="[^"]*")([^>]* \2="[^"]*")/g, '$3')
@@ -41,13 +41,13 @@ var ampify = function() {
    */
   external.ampifyProperties = function(html) {
     return {
-      hasImg: html.search(/<amp\-img/) >= 0,
-      hasVideo: html.search(/<amp\-video/) >= 0,
-      hasAudio: html.search(/<amp\-audio/) >= 0,
-      hasIframe: html.search(/<amp\-iframe/) >= 0,
-      hasYoutube: html.search(/<amp\-youtube/) >= 0,
-      hasVimeo: html.search(/<amp\-vimeo/) >= 0,
-      hasCarousel: html.search(/<amp\-carousel/) >= 0
+      hasImg: html.search(/<amp-img/) >= 0,
+      hasVideo: html.search(/<amp-video/) >= 0,
+      hasAudio: html.search(/<amp-audio/) >= 0,
+      hasIframe: html.search(/<amp-iframe/) >= 0,
+      hasYoutube: html.search(/<amp-youtube/) >= 0,
+      hasVimeo: html.search(/<amp-vimeo/) >= 0,
+      hasCarousel: html.search(/<amp-carousel/) >= 0
     };
   };
 

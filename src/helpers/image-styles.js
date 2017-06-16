@@ -197,7 +197,7 @@ var imageStyles = function(config) {
    * @return {String}          Converted filename for given style.
    */
   external.getFilenameSrcset = function(filename, srcset) {
-    return filename.replace(/^(.+)(\.[^\.]+)$/, '$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
+    return filename.replace(/^(.+)(\.[^.]+)$/, '$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
   };
 
   /**
