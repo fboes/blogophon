@@ -16,7 +16,7 @@ var blogophonMustacheQuoters = {
   ymlQuote: function() {
     return function(text, render) {
       text = render(text);
-      if (text.match(/[':#{}\[\]]/) && !text.match(/^\d[\d:\-+T]+\d$/)) {
+      if (text.match(/[':#{}[\]]/) && !text.match(/^\d[\d:\-+T]+\d$/)) {
         text = "'" + text.replace(/(')/g, '$1$1') + "'";
       }
       return text;
