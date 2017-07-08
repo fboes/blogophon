@@ -29,8 +29,9 @@ var imageStyles = function(config) {
       function(resolve, reject) {
         //console.log(sourceFilename);
         gm(sourceFilename)
-          .noProfile()
-          .interlace('Line')
+          .strip() //noProfile()
+          .interlace('Plane')
+          .colorspace('sRGB')
           .quality(internal.jpgQuality)
           .write(targetFilename, function(err) {
             if (err) {
@@ -72,12 +73,13 @@ var imageStyles = function(config) {
         styleData.srcset.forEach(function(currentSrcSet) {
           //console.log(sourceFilename);
           gm(sourceFilename)
-            .noProfile()
+            .strip() //noProfile()
+            .colorspace('sRGB')
             .geometry(currentSrcSet[0], currentSrcSet[1], "^")
             .gravity('Center')
             .crop(currentSrcSet[0], currentSrcSet[1])
             .unsharp(2, 0.5, 0.5, 0)
-            .interlace('Line')
+            .interlace('Plane')
             .quality(internal.jpgQuality)
             .write(external.getFilenameSrcset(targetFilename, currentSrcSet), checkProcessed)
           ;
@@ -195,7 +197,7 @@ var imageStyles = function(config) {
    * @return {String}          Converted filename for given style.
    */
   external.getFilenameSrcset = function(filename, srcset) {
-    return filename.replace(/^(.+)(\.[^\.]+)$/, '$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
+    return filename.replace(/^(.+)(\.[^.]+)$/, '$1-'+Number(srcset[0])+'x'+Number(srcset[1])+'$2');
   };
 
   /**

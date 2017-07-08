@@ -109,8 +109,11 @@ var Post = function(filename, markdown, meta, config) {
     if (!meta.Title) {
       meta.Title = markdown.split(/\n/)[0];
     }
+    meta.MarkdownTitle = meta.Title;
+    meta.Title = SuperString(internal.removeMarkdown(meta.Title)).niceShorten(320);
     if (meta.Keywords) {
-      meta.Tags = meta.Keywords.trim().split(/,\s*/).map(function(tag){
+      meta.Keywords = internal.listToArray(meta.Keywords);
+      meta.Tags = meta.Keywords.map(function(tag){
         var tagUrlObj = tagUrl(tag, config.htdocs.tag);
         return {
           title: tag,
@@ -121,9 +124,10 @@ var Post = function(filename, markdown, meta, config) {
       });
     }
     if (!meta.Classes) {
-      meta.Classes = 'Normal article';
+      meta.Classes = ['Normal article'];
     }
-    meta.Classes = meta.Classes.trim().split(/,\s*/).map(function(c) {
+    meta.Classes = internal.listToArray(meta.Classes);
+    meta.Classes = meta.Classes.map(function(c) {
       return SuperString(c).asciify();
     });
     if (meta.Classes.indexOf('images') >= 0) {
@@ -132,13 +136,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     if (meta.Description) {
       meta.MarkdownDescription = meta.Description;
-      meta.Description = meta.Description
-        .replace(/>/g, ' ')
-        .replace(/!?\[([^\]]*)\]\(.+?\)/g, '$1')
-        .replace(/[ ][ ]+/g, ' ')
-        .replace(/http(s)?:\S+/g, '')
-      ;
-      meta.Description = SuperString(meta.Description).niceShorten(320);
+      meta.Description = SuperString(internal.removeMarkdown(meta.Description)).niceShorten(320);
     }
     if (!meta.Author) {
       meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
@@ -151,7 +149,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     meta.authorUrlObj = authorUrl(meta.AuthorName, config.htdocs.author);
     if (!meta.Image) {
-      var match = external.html.match(/<(?:!\-\- )?img.+?src="(.+?)"/);
+      var match = external.html.match(/<(?:!-- )?img.+?src="(.+?)"/);
       if (match) {
         meta.Image = match[1];
       }
@@ -201,6 +199,8 @@ var Post = function(filename, markdown, meta, config) {
     if (config.specialFeatures.acceleratedmobilepages) {
       external.ampHtml        = ampify.ampifyHtml(external.html);
       external.ampHtmlTeaser  = ampify.ampifyHtml(external.htmlTeaser);
+      external.ampProperties       = ampify.ampifyProperties(external.ampHtml);
+      external.ampPropertiesTeaser = ampify.ampifyProperties(external.ampHtmlTeaser);
     }
 
     return external;
@@ -219,7 +219,23 @@ var Post = function(filename, markdown, meta, config) {
     }
     return imageStyles(config)
       .replaceImgHtml(html)
-      .replace(/(href=")([a-zA-Z0-9\-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
+      .replace(/(href=")([a-zA-Z0-9-]+)\.md(")/g, '$1' + config.basePath + config.htdocs.posts + '/$2/$3')
+    ;
+  };
+
+  /**
+   * Remove Markdown from String
+   * @param  {String} markdown [description]
+   * @return {String}          [description]
+   */
+  internal.removeMarkdown = function(markdown) {
+    return markdown
+      .replace(/>/g, ' ')
+      .replace(/!\[([^\]]*)\]\(.+?\)/g, '')
+      .replace(/\[([^\]]*)\]\(.+?\)/g, '$1')
+      .replace(/[ ][ ]+/g, ' ')
+      .replace(/http(s)?:\S+/g, '')
+      .trim()
     ;
   };
 
@@ -230,7 +246,13 @@ var Post = function(filename, markdown, meta, config) {
    */
   internal.galleryHtml = function(html) {
     return html
-      .replace(/(<img[^>]+src="([^"]+)(?:\-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="image">$1</a>')
+      .replace(/<p>(\s*(?:<img[^>]+>\s*){2,})<\/p>/g, function(all, content) {
+        var count = content.match(/<img/g).length;
+        content = content.replace(/(<img.+?>)/g, '  <div class="gallery__slide">$1</div>'+"\n");
+        return '<div class="gallery gallery--' + count + '" data-gallery-count="' + count + '">' + "\n" + content + '</div>';
+      })
+      .replace(/(<img[^>]+src="([^"]+)(?:-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="gallery__link">$1</a>')
+      .replace(/(<a[^>]+)(><img[^>]+alt=")(["]+?)(")/g, '$1 title="$3"$2$3$4')
     ;
   };
 
@@ -276,9 +298,9 @@ var Post = function(filename, markdown, meta, config) {
   external.getAllImagesWithStyle = function() {
     var singleImage;
     var allMarkdown = external.meta.MarkdownDescription + "\n" + markdown;
-    var all = allMarkdown.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/g) || [];
+    var all = allMarkdown.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/g) || [];
     return all.map(function(i) {
-      singleImage = i.match(/!\[.*?\]\(([^\s\/]+?)(?:#(\S+))?\)/);
+      singleImage = i.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/);
       if (singleImage[2] && singleImage[2].match(/^\d+x\d+$/)) {
         singleImage[2] = null;
       }
@@ -303,6 +325,30 @@ var Post = function(filename, markdown, meta, config) {
       }
     });
     return returnObject;
+  };
+
+  /**
+   * Get all links to external ressources
+   * @return {Array} [description]
+   */
+  external.getAllExternalLinks = function() {
+    var search = /<a[^>]+href="(http[^"]+)"/g;
+    var matched;
+    var externalLinks = [];
+    while ((matched = search.exec(external.html)) !== null) {
+      externalLinks.push(matched[1]);
+    }
+    return externalLinks;
+  };
+
+  /**
+   * Converts a comma-separated string into an array.
+   * If the first argument is an array, this array will be returned unaltered.
+   * @param  {String|Array} input [description]
+   * @return {Array}              [description]
+   */
+  internal.listToArray = function(input) {
+    return Array.isArray(input) ? input : input.trim().split(/,\s*/);
   };
 
   return external.makeMeta(filename, markdown, meta);

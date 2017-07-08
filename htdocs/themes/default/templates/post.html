@@ -6,13 +6,13 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="{{post.meta.AbsoluteUrl}}" />
   <meta property="og:title" name="title" content="{{post.meta.Title}}" />
-  <meta property="og:description" name="description" content="{{post.meta.Description}}" />
+  <meta property="og:description" name="description" content="{{#noNewline}}{{post.meta.Description}}{{/noNewline}}" />
   {{#post.meta.Image}}
     <meta property="og:image" content="{{post.meta.Image}}" />
   {{/post.meta.Image}}
-  {{#post.meta.Keywords}}
+  {{#post.meta.Keywords.length}}
     <meta name="keywords" content="{{post.meta.Keywords}}" />
-  {{/post.meta.Keywords}}
+  {{/post.meta.Keywords.length}}
   {{#post.meta.Latitude}}
     <meta name="ICBM" content="{{post.meta.Latitude}}, {{post.meta.Longitude}}" />
     <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude}}" />
@@ -29,46 +29,52 @@
   {{#config.specialFeatures.atom}}
     <link rel="alternate" type="application/atom+xml" title="{{config.name}} ATOM" href="{{config.absoluteBasePath}}posts.atom" />
   {{/config.specialFeatures.atom}}
-  {{#config.specialFeatures.rssjs}}
-    <link rel="alternate" type="application/json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
-  {{/config.specialFeatures.rssjs}}
+  {{#config.specialFeatures.jsonfeed}}
+    <link rel="alternate" type="application/json" title="{{config.name}} JSON Feed" href="{{config.absoluteBasePath}}feed.json" />
+  {{/config.specialFeatures.jsonfeed}}
+  {{#config.specialFeatures.jsonrss}}
+    <link rel="alternate" type="application/rss+json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
+  {{/config.specialFeatures.jsonrss}}
+  {{#config.specialFeatures.jsonforslack}}
+    <link rel="alternate" type="application/json" title="{{config.name}} Slack-JSON" href="{{config.absoluteBasePath}}slack.json" />
+  {{/config.specialFeatures.jsonforslack}}
   {{#config.specialFeatures.acceleratedmobilepages}}
-    <link rel="amphtml" href="{{post.meta.AbsoluteUrlAmp}}">
+    <link rel="amphtml" href="{{post.meta.AbsoluteUrlAmp}}" />
   {{/config.specialFeatures.acceleratedmobilepages}}
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="post">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
         {{#post}}
-          <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
-            <link itemprop="mainEntityOfPage" href="{{post.meta.AbsoluteUrl}}" />
+          <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
             {{#meta.Image}}
               <link itemprop="image" href="{{meta.Image}}" />
             {{/meta.Image}}
             {{^meta.Image}}
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
+            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
             <header>
-              <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
-              <h2 itemprop="name headline">{{meta.Title}}</h2>
+              <time datetime="{{meta.Created.iso}}" itemprop="datePublished dt-published" class="date">{{meta.Created.locale}}</time>
+              <h2 itemprop="name headline" class="p-name">{{meta.Title}}</h2>
             </header>
-            <div itemprop="articleBody">
+            <div itemprop="articleBody" class="e-content">
               {{{html}}}
 
               {{#meta.RatingObj}}
                 <p itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
-                  <strong>Bewertung:</strong>
-                  <meta itemprop="worstRating" content="{{worst}}">
+                  <strong>Rating:</strong>
+                  <meta itemprop="worstRating" content="{{worst}}" />
                   <span itemprop="ratingValue">{{value}}</span>/<span itemprop="bestRating">{{best}}</span>
                 </p>
               {{/meta.RatingObj}}
               {{#meta.Latitude}}
                 <div class="location" itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
                   {{#meta.Location}}
-                    <span itemprop="name">{{meta.Location}}</span>
+                    <span itemprop="name" class="p-location">{{meta.Location}}</span>
                   {{/meta.Location}}
                   <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
                     <meta itemprop="latitude" content="{{meta.Latitude}}" />
@@ -77,42 +83,45 @@
                 </div>
               {{/meta.Latitude}}
               {{#meta.hasExternalLink}}
-                <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                <p><a href="{{meta.Link}}">Go to website…</a></p>
               {{/meta.hasExternalLink}}
             </div>
             <footer class="meta">
+              {{#config.twitterAccount}}
+                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">Comment &amp; discuss on Twitter</a></p>
+              {{/config.twitterAccount}}
               {{#meta.Modified.locale}}
-                <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+                <p>Last modified <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
               {{/meta.Modified.locale}}
               {{#meta.AuthorName}}
-                <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <link itemprop="image" href="{{meta.AuthorImage}}" />
                   <span itemprop="name">{{meta.AuthorName}}</span>
                 </address>
               {{/meta.AuthorName}}
-              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="//cdn.3960.org/css/iphone.png" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
+              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="{{config.themeConf.ogImage}}" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
               {{#meta.Tags.length}}
                 <span class="tags">
-                  Andere Artikel zum Thema
+                  Tags:
                   {{#meta.Tags}}
-                    · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords">{{title}}</span>”</a>
+                    · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                   {{/meta.Tags}}
                 </span>
               {{/meta.Tags.length}}
               <span class="share">
-                <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="Teilen auf Twitter"><span>Teilen via Twitter</span></a>
-                <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="Teilen auf Facebook"><span>Teilen via Facebook</span></a>
-                <a href="{{share.whatsapp}}" target="social" class="whatsapp" rel="nofollow" aria-label="Teilen via Whatsapp"><span>Teilen via WhatsApp</span></a>
+                <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="Share via Twitter"><span>Share via Twitter</span></a>
+                <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="Share via Facebook"><span>Share via Facebook</span></a>
+                <a href="{{share.whatsapp}}" target="social" class="whatsapp" rel="nofollow" aria-label="Share via Whatsapp"><span>Share via WhatsApp</span></a>
               </span>
             </footer>
           </article>
           <div id="prevnext">
-            <span style="display:inline-block;">
-              <a href="{{config.basePath}}amp.html" rel="contents" id="up">Zurück zur Übersichtsseite</a>
-            </span>
             {{#prev.Url}}
               <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
             {{/prev.Url}}
+            <span style="display:inline-block;">
+              <a href="{{config.basePath}}" rel="contents" id="up">Back to article listing</a>
+            </span>
             {{#next.Url}}
               <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}">&raquo;</a>
             {{/next.Url}}
@@ -120,21 +129,27 @@
         {{/post}}
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
         {{#post.meta.Tags.length}}
           <section>
-            <h3>Verwandte Artikel</h3>
+            <h3>Related articles</h3>
             <ul>
               {{#post.meta.Tags}}
-                <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">…zum Thema „{{title}}”</a></li>
+                <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">…for tag „{{title}}”</a></li>
               {{/post.meta.Tags}}
             </ul>
           </section>
         {{/post.meta.Tags.length}}
 
+        {{#config.specialFeatures.teasersnippets}}
+          <section data-ajax-url="{{config.basePath}}snippet._html">
+            <!--#include virtual="{{config.basePath}}snippet._html" -->
+          </section>
+        {{/config.specialFeatures.teasersnippets}}
+
         <section>
-          <h3>Abonnement</h3>
-          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+          <h3>Subscription</h3>
+          <p>Stay up to date with our Newsfeeds:</p>
           <ul>
             {{#config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">RSS-Feed</a></li>
@@ -142,16 +157,22 @@
             {{#config.specialFeatures.atom}}
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
             {{/config.specialFeatures.atom}}
+            {{#config.specialFeatures.jsonfeed}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}feed.json">JSON Feed</a></li>
+            {{/config.specialFeatures.jsonfeed}}
             {{#config.specialFeatures.jsonrss}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
+              <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
             {{/config.specialFeatures.jsonrss}}
+            {{#config.specialFeatures.jsonforslack}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}slack.json">Slack-JSON</a></li>
+            {{/config.specialFeatures.jsonforslack}}
           </ul>
         </section>
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
-  <noscript><img src="//stats.3960.org/piwik.php?idsite=8&amp;rec=1" alt="" /></noscript>
+  {{>closureHtml}}
+  <!--noscript><img src="http://www.example.com/piwik.php?idsite=8&amp;rec=1" alt="" /></noscript-->
 </body>
 </html>

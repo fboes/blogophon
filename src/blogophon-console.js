@@ -1,15 +1,16 @@
 'use strict';
 
 var inquirer       = require('inquirer');
-var glob           = require('glob');
 var fs             = require('fs-extra-promise');
 var path           = require('path');
 var chalk          = require('chalk');
 var shell          = require('shelljs');
-var SuperString    = require('./helpers/super-string');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
-var Generator      = config.notInitialized ? {} : require('./generator');
+var setup          = require('./setup')();
+var Generator      = require('./generator');
+var blogophonDate  = require('./models/blogophon-date');
+var blogophonEditor = require('./editor')(config);
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
@@ -30,25 +31,23 @@ var BlogophonConsole = function() {
     'Exit'
   ];
 
-  if (!config.notInitialized) {
-    Mustache.getTemplates(config.directories.currentTheme + '/templates');
-  }
-
-  var template     = fs.readFileSync(path.join(__dirname, 'templates/post.md'), 'utf8');
+  Mustache.getTemplates();
 
   /**
-   * Get all Markdown files as a simple array
+   * Get all Markdown files as a simple array.
+   * Array values can be simple strings, or objects containing
+   * a name (to display in list),
+   * a value (to save in the answers hash) and
+   * a short (to display after selection) properties.
+   * The choices array can also contain a Separator.
    * @return {Array} [description]
    */
   internal.makeChoices = function() {
-    files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
-      return v.replace(/^.+\/(.+?)$/, '$1');
-    });
-    files.push(new inquirer.Separator());
     var choices = [];
     if (!config.notInitialized) {
+      files = blogophonEditor.makeFiles(new inquirer.Separator());
       choices.push(choicesStr[0]);
-      if (files.length > 1) {
+      if (files.length > 0) {
         choices.push(choicesStr[1], choicesStr[2], choicesStr[3], choicesStr[4]);
       }
       choices.push(new inquirer.Separator());
@@ -57,39 +56,30 @@ var BlogophonConsole = function() {
     return choices;
   };
 
-  /**
-   * Convert title to Markdown filename
-   * @param  {String} title [description]
-   * @return {String}       [description]
-   */
-  internal.filenameFromTitle = function(title) {
-    return path.join(config.directories.data, internal.shortfilenameFromTitle(title));
+  internal.makePost = function(markdownFilename, filename, templateData) {
+    blogophonEditor.makePost(
+      markdownFilename,
+      filename,
+      templateData,
+      function(err) {
+        if (err) {
+          console.error(chalk.red(markdownFilename + ' could not be written'));
+        } else {
+          console.log(markdownFilename + ' created');
+          if (templateData.edit) {
+            var cmd = config.isWin
+              ? 'START ' + markdownFilename
+              : 'open ' + markdownFilename + ' || vi '+ markdownFilename
+            ;
+            shell.exec(cmd);
+            console.log(chalk.grey(cmd));
+          }
+          external.init();
+        }
+      }
+    );
   };
 
-  /**
-   * Remove stop words from filename and limit it to a sane length.
-   * @param  {String} title [description]
-   * @return {String}       [description]
-   */
-  internal.shortfilenameFromTitle = function(title) {
-    return SuperString(title.trim().toLowerCase())
-      .asciify()
-      .replace(/(^|\-)(de(r|n|m|s)|die(s|se|ser|ses|sen|sem)?|d(a|o|e)s|(m|s|d)?ein(e|es|er|em|en)?|a|the|(e|a)l|l(a|o)s?|(i|o|a)(n|m))\-/g, '$1')
-      .replace(/(^[\-]+|[\-]+$)/g, '')
-      .replace(/([\-])[\-]+/g, '$1')
-      .replace(/\-(md~?)$/, '.$1')
-      .replace(/^(.{64}[^-]*).*?(\.md~?)?$/, '$1$2')
-    ;
-  };
-
-  /**
-   * Convert Markdown filename into corresponding directory name (e.g. for images)
-   * @param  {String} filename [description]
-   * @return {String}          [description]
-   */
-  internal.dirnameFromFilename = function(filename) {
-    return filename.replace(/\.md~?$/, '');
-  };
 
   /**
    * Display the setup dialog.
@@ -123,7 +113,7 @@ var BlogophonConsole = function() {
         message: 'Domain of your site, starting with `http`',
         default: config.baseUrl,
         validate: function(v) {
-          return v.match(/^http(s)?:\/\/\S+[a-z]$/) ? true : 'Please supply a valid url, starting with `http://`, but without trailing `/`.';
+          return v.match(/^http(s)?:\/\/\S+[^/]$/) ? true : 'Please supply a valid url, starting with `http://`, but without trailing `/`.';
         },
         filter: function(v) {
           return v.replace(/\/$/, '');
@@ -134,10 +124,10 @@ var BlogophonConsole = function() {
         message: 'Base URL path, usually just `/`',
         default: config.basePath,
         validate: function(v) {
-          return v.match(/^[a-zA-Z0-9\.\/_-]*\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
+          return v.match(/^[a-zA-Z0-9./_-]*\/$/) ? true : 'Please supply a valid path with a trailing `/`.';
         },
         filter: function(v) {
-          return v.replace(/^([^\/])/, '/$1').replace(/([^\/])$/, '$1/');
+          return v.replace(/^([^/])/, '/$1').replace(/([^/])$/, '$1/');
         }
       }, {
         type: 'input',
@@ -150,7 +140,7 @@ var BlogophonConsole = function() {
         message: 'Standard language of your blog, like `en` for English',
         default: config.locale.language || config.language,
         validate: function(v) {
-          return v.match(/^[a-zA-Z]+([\-_][a-zA-Z]+)?$/) ? true : 'Please supply a valid language code like `en`, `es`, `fr`, `de` or `pt-br`.';
+          return v.match(/^[a-zA-Z]+([-_][a-zA-Z]+)?$/) ? true : 'Please supply a valid language code like `en`, `es`, `fr`, `de` or `pt-br`.';
         },
         filter: function(v) {
           return v.toLowerCase().replace(/_/, '-');
@@ -165,6 +155,17 @@ var BlogophonConsole = function() {
           'Year',
           'Year/Month',
           'Year/Month/Day'
+        ]
+      }, {
+        type: 'list',
+        name: 'postFileMode',
+        message: 'Choose URL file pattern for your posts:',
+        default: config.postFileMode || 'Title',
+        choices: [
+          'Title',
+          'Title-Date',
+          'Date-Title',
+          'Date'
         ]
       }, {
         type: 'input',
@@ -213,8 +214,11 @@ var BlogophonConsole = function() {
         default: config.useSpecialFeature,
         choices: [
           "Multiple authors",
+          'Teaser snippets',
           "RSS",
           "ATOM",
+          'JSON Feed',
+          "JSON for Slack",
           "JSON-RSS",
           "Apple News",
           "Facebook Instant Articles",
@@ -232,9 +236,8 @@ var BlogophonConsole = function() {
       function(answers) {
         answers.theme = config.theme ? config.theme : themesAvailable[0];
         answers.locale.direction = answers.locale.direction || config.locale.direction || (answers.language.match(/^(ar|zh|fa|he)/) ? 'rtl' : 'ltr');
-        var generator = new Generator(config);
-        generator
-          .buildBasicFiles(answers)
+        setup
+          .buildBasicFiles(config, answers)
           .then(function() {
             console.log("Settings changed, please restart the Blogophon.");
             // TODO: reload config and return to main menu
@@ -254,17 +257,41 @@ var BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.createArticleDialog = function() {
+    var defaults = {
+      classes: 'Normal article',
+      link: '',
+      location: '',
+      images: false,
+      keywords: '',
+      date: blogophonDate(new Date()).iso,
+      author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+      rating: "5",
+      draft: false,
+      edit: true,
+      lead: function(answers) {
+        switch (answers.classes) {
+          case 'Images':
+            return "![](image.jpg#default)\n\nLorem ipsum…";
+          case 'Video':
+            return "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+          default:
+            return '';
+        }
+      },
+      mainText: function(answers) {
+        switch (answers.classes) {
+          case 'Link':
+            return "[Lorem ipsum…](" + answers.link + ")";
+          case 'Quote':
+            return "> Lorem ipsum…\n> <cite>Cicero</cite>";
+          default:
+            return 'Lorem ipsum…';
+        }
+      }
+    };
+
     var questions    = [
       {
-        type: 'list',
-        name: 'classes',
-        message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Location', 'Micro post'],
-        default: 'Normal article',
-        filter: function(v) {
-          return (v === 'Normal article') ? null : v;
-        }
-      }, {
         type: 'input',
         name: 'title',
         message: 'Title',
@@ -272,7 +299,7 @@ var BlogophonConsole = function() {
           if (v.trim().length <= 2) {
             return 'This title is way too short.';
           }
-          var filename = internal.filenameFromTitle(v);
+          var filename = blogophonEditor.filenameFromTitle(v);
           if (fs.existsSync(filename)) {
             return ("File " + filename + ' already exists');
           }
@@ -282,10 +309,19 @@ var BlogophonConsole = function() {
           return v.trim();
         }
       }, {
+        type: 'list',
+        name: 'classes',
+        message: 'Type of article',
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Review', 'Location'],
+        default: defaults.classes,
+        filter: function(v) {
+          return (v === 'Normal article') ? null : v;
+        }
+      }, {
         type: 'input',
         name: 'link',
         message: 'URL of page you want to link to',
-        default: '',
+        default: defaults.link,
         when: function(answers) {
           return answers.classes === 'Link';
         },
@@ -296,15 +332,30 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'location',
         message: 'Place name or address',
-        default: '',
+        default: defaults.location,
         when: function(answers) {
           return answers.classes === 'Location';
+        }
+      }, {
+        type: 'list',
+        name: 'rating',
+        message: 'Rating',
+        choices: ["1", "2", "3", "4", "5"],
+        default: defaults.rating,
+        when: function(answers) {
+          return answers.classes === 'Review';
+        },
+        validate: function(v) {
+          return (Number(v) >= 1 && Number(v)) <= 5 ? true : 'Please supply a number between 1 - 5.';
+        },
+        filter: function(v) {
+          return Number(v);
         }
       }, {
         type: 'confirm',
         name: 'images',
         message: 'Do you want to use images?',
-        default: false,
+        default: defaults.images,
         when: function(answers) {
           return (answers.classes !== 'Images' && answers.classes !== 'Micro post');
         }
@@ -312,10 +363,10 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'keywords',
         message: 'Keywords, comma-separated',
-        default: '',
         when: function(answers) {
           return answers.classes !== 'Micro post';
         },
+        default: defaults.keywords,
         filter: function(v) {
           return v.trim();
         }
@@ -323,31 +374,39 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'author',
         message: 'Author <E-Mail-Address>',
-        default: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
+        default: defaults.author,
         when: function() {
           return config.specialFeatures.multipleauthors;
+        }
+      }, {
+        type: 'input',
+        name: 'date',
+        message: 'Publishing date',
+        default: defaults.date,
+        filter: function(v) {
+          return blogophonDate(v).iso;
+        },
+        validate: function(v) {
+          return v.match(/^\d[\d:+T-]+\d$/) ? true : 'Please supply a valid date like ' + defaults.date + '.';
         }
       }, {
         type: 'confirm',
         name: 'draft',
         message: 'Is this a draft?',
-        default: false,
+        default: defaults.draft,
         when: function(answers) {
-          return answers.classes !== 'Micro post';
+          return answers.date === defaults.date;
         }
       }, {
         type: 'confirm',
         name: 'edit',
         message: 'Open this in editor right away?',
-        default: true,
-        when: function(answers) {
-          return answers.classes !== 'Micro post';
-        }
+        default: defaults.edit
       }, {
         type: 'input',
         name: 'lead',
         message: 'Lead / teaser text',
-        default: '',
+        default: defaults.lead,
         when: function(answers) {
           return !answers.edit && answers.classes !== 'Link' && answers.classes !== 'Micro post';
         }
@@ -355,7 +414,7 @@ var BlogophonConsole = function() {
         type: 'input',
         name: 'mainText',
         message: 'Main text',
-        default: 'Lorem ipsum…',
+        default: defaults.mainText,
         when: function(answers) {
           return (!answers.edit && answers.classes !== 'Micro post');
         }
@@ -363,49 +422,26 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
-        var markdownFilename = internal.filenameFromTitle(answers.title) + (answers.draft ? '.md~' : '.md');
-        var filename = internal.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
-
+        var markdownFilename = blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date)) + '.md';
+        var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         var templateData = answers;
-        templateData.date = new Date();
-
-        switch (answers.classes) {
-          case 'Images':
-            templateData.lead = "![](image.jpg#default)\n\nLorem ipsum…";
-            break;
-          case 'Video':
-            templateData.lead = "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
-            break;
-          case 'Link':
-            templateData.mainText = "[Lorem ipsum…](" + answers.link + ")";
-            break;
-          case 'Quote':
-            templateData.mainText = "> Lorem ipsum…\n> <cite>Cicero</cite>";
-            break;
-          case 'Location':
-            templateData.latitude = 52.3702160;
-            templateData.longitude = 4.8951680;
-            break;
-          case 'Micro post':
-            answers.keywords = answers.classes;
-            break;
+        templateData.lead     = templateData.lead     || defaults.lead(answers);
+        templateData.mainText = templateData.mainText || defaults.mainText(answers);
+        if (templateData.classes === 'Location') {
+          templateData.latitude = 0.00001;
+          templateData.longitude = 0.00001;
         }
-        fs.writeFile(markdownFilename, Mustache.render(template, templateData), function(err) {
-          if (err) {
-            console.error(chalk.red( markdownFilename + ' could not be written' ));
-          } else {
-            console.log( markdownFilename + ' created');
-            var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
-            console.log(chalk.grey(cmd));
-            if (answers.edit) {
-              shell.exec(cmd);
-            }
-            if (answers.classes === 'Images' || answers.images) {
-              shell.mkdir('-p', filename);
-            }
-            external.init();
-          }
-        });
+        if (templateData.location) {
+          console.log('Geocoding...');
+          blogophonEditor.convertAddress(templateData.location, config.locale.language, function(err, geo) {
+            templateData.latitude = geo.latitude || templateData.latitude;
+            templateData.longitude = geo.longitude || templateData.longitude;
+            internal.makePost(markdownFilename, filename, templateData);
+          });
+        } else {
+          internal.makePost(markdownFilename, filename, templateData);
+        }
+
       },
       function(err) {
         console.error(err);
@@ -456,10 +492,10 @@ var BlogophonConsole = function() {
         name: 'fileNew',
         message: 'Please enter a new filename or leave empty to cancel',
         filter: function(v) {
-          return internal.shortfilenameFromTitle(v);
+          return blogophonEditor.shortfilenameFromTitle(v);
         },
         validate: function(v) {
-          return v.match(/\.md\~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
+          return v.match(/\.md~?$/) ? true : 'Please supply a file ending like `.md` or `.md~`.';
         }
       }
     ];
@@ -483,15 +519,15 @@ var BlogophonConsole = function() {
             checkProcessed
           );
           fs.move(
-            config.directories.data + '/' + internal.dirnameFromFilename(answers.file),
-            config.directories.data + '/' + internal.dirnameFromFilename(answers.fileNew),
+            config.directories.data + '/' + blogophonEditor.dirnameFromFilename(answers.file),
+            config.directories.data + '/' + blogophonEditor.dirnameFromFilename(answers.fileNew),
             checkProcessed
           );
           if (! answers.file.match(/~$/)) {
             maxProcessed ++;
             fs.move(
-              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.file),
-              config.directories.data.replace(/^user/, 'htdocs') + '/' + internal.dirnameFromFilename(answers.fileNew),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + blogophonEditor.dirnameFromFilename(answers.file),
+              config.directories.data.replace(/^user/, 'htdocs') + '/' + blogophonEditor.dirnameFromFilename(answers.fileNew),
               checkProcessed
             );
           }
@@ -538,8 +574,8 @@ var BlogophonConsole = function() {
           };
 
           fs.remove(path.join(config.directories.data, answers.file), checkProcessed);
-          fs.remove(path.join(config.directories.data, internal.dirnameFromFilename(answers.file)), checkProcessed);
-          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), internal.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data, blogophonEditor.dirnameFromFilename(answers.file)), checkProcessed);
+          fs.remove(path.join(config.directories.data.replace(/^user/, 'htdocs'), blogophonEditor.dirnameFromFilename(answers.file)), checkProcessed);
         } else {
           external.init();
         }
@@ -572,34 +608,25 @@ var BlogophonConsole = function() {
       }
     ];
     var generator = Generator(config);
+    var answers;
     inquirer
       .prompt(questions)
-      .then(
-        function(answers) {
-          generator
-            .getArticles()
-            .then(function() {
-              generator
-                .buildAll(!answers.noforce)
-                .then(function() {
-                  if(answers.deploy) {
-                    generator.deploy();
-                  }
-                  external.init();
-                })
-                .catch( function(err) {
-                  console.error(err);
-                } )
-              ;
-            })
-            .catch( function(err) {
-              console.error(err);
-            } )
-          ;
-        })
-      .catch( function(err) {
+      .then(function(inquirerAnswers) {
+        answers = inquirerAnswers;
+        return generator.getArticles();
+      })
+      .then(function() {
+        return generator.buildAll(!answers.noforce);
+      })
+      .then(function() {
+        if(answers.deploy) {
+          generator.deploy();
+        }
+        external.init();
+      })
+      .catch(function(err) {
         console.error(err);
-      } )
+      })
     ;
   };
 
@@ -611,7 +638,6 @@ var BlogophonConsole = function() {
     if (config.notInitialized) {
       fs.ensureDirSync(config.directories.data);
       fs.ensureDirSync(config.directories.htdocs);
-      fs.copySync(path.join(__dirname, '..', 'htdocs', 'themes'), config.directories.theme);
       external.setupDialog();
     } else {
       var questions = [

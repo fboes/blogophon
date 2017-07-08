@@ -26,7 +26,7 @@ var shareLinks = function(title, link, description, siteName, image) {
   };
 
   return {
-    facebook: 'http://www.facebook.com/sharer.php?u='+encodeURIComponent(link),
+    facebook: 'https://www.facebook.com/sharer.php?u='+encodeURIComponent(link),
     gplus:    'https://plus.google.com/share?link='+encodeURIComponent(link),
     xing:     'https://www.xing.com/spi/shares/new?url='+encodeURIComponent(link),
     twitter:  'https://twitter.com/intent/tweet?' + urlParameter({
@@ -45,6 +45,21 @@ var shareLinks = function(title, link, description, siteName, image) {
       url:     link,
       title:   title,
       summary: description
+    }),
+    pocket: 'https://getpocket.com/save?'+urlParameter({
+      url:     link,
+      title:   title
+    }),
+    tumblr: 'https://www.tumblr.com/share/link?'+urlParameter({
+      url:     link,
+      name:    title,
+      description: description
+    }),
+    wordpress: 'https://wordpress.com/press-this.php?'+urlParameter({
+      u:       link,
+      t:       title,
+      s:       description,
+      i:       image
     }),
     whatsapp: 'whatsapp://send?text=' +encodeURIComponent(title + ' [' + link + ']'),
     email:    'mailto:?'+urlParameter({

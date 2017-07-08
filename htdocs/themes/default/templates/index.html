@@ -14,9 +14,15 @@
   {{#config.specialFeatures.atom}}
     <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
   {{/config.specialFeatures.atom}}
+  {{#config.specialFeatures.jsonfeed}}
+    <link rel="alternate" type="application/json" title="{{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
+  {{/config.specialFeatures.jsonfeed}}
   {{#config.specialFeatures.jsonrss}}
-    <link rel="alternate" type="application/json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
+    <link rel="alternate" type="application/rss+json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
   {{/config.specialFeatures.jsonrss}}
+  {{#config.specialFeatures.jsonforslack}}
+    <link rel="alternate" type="application/json" title="{{meta.title}} Slack-JSON" href="{{meta.absoluteUrlDirname}}/slack.json" />
+  {{/config.specialFeatures.jsonforslack}}
   {{#config.specialFeatures.geojson}}
     <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{/config.specialFeatures.geojson}}
@@ -27,13 +33,13 @@
     <link rel="alternate" type="text/calendar" title="{{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
   {{/config.specialFeatures.icscalendar}}
   {{#config.specialFeatures.acceleratedmobilepages}}
-    <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}">
+    <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}" />
   {{/config.specialFeatures.acceleratedmobilepages}}
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="index">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
         {{#meta.title}}
@@ -43,49 +49,49 @@
         {{#index.length}}
           <div class="teasers">
             {{#index}}
-              <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
+              <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
                 {{#meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
                 {{/meta.Image}}
                 {{^meta.Image}}
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
-                <link itemprop="url mainEntityOfPage" href="{{meta.Url}}" />
+                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
                 <header>
-                  <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
+                  <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
-                    <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time>
+                    <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time>
                   {{/meta.Modified.locale}}
-                  <h4 itemprop="name headline"><a href="{{meta.Link}}">{{meta.Title}}</a></h4>
+                  <h4 itemprop="name headline" class="p-name"><a href="{{meta.Link}}">{{meta.Title}}</a></h4>
                 </header>
-                <div itemprop="description">
+                <div itemprop="description" class="p-summary">
                   {{{htmlTeaser}}}
                 </div>
                 {{#meta.hasNoExtraDescription}}
                   {{#meta.hasExternalLink}}
-                    <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                    <p><a href="{{meta.Link}}">Go to website…</a></p>
                   {{/meta.hasExternalLink}}
                 {{/meta.hasNoExtraDescription}}
                 {{^meta.hasNoExtraDescription}}
-                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Weiter lesen…</a></p>
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Read on…</a></p>
                 {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
                     {{#meta.AuthorName}}
-                      <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                      <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                         <link itemprop="image" href="{{meta.AuthorImage}}" />
                         <span itemprop="name">{{meta.AuthorName}}</span>
                       </address>
                     {{/meta.AuthorName}}
                     <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                      <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" />
+                      <link href="{{config.themeConf.ogImage}}" itemprop="logo" />
                       <span itemprop="name">{{config.name}}</span>
                     </address>
                     {{#meta.Tags.length}}
                       <span class="tags">
-                        Andere Artikel zum Thema
+                        Tags:
                         {{#meta.Tags}}
-                          · <a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">„<span itemprop="keywords">{{title}}</span>”</a>
+                          · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                         {{/meta.Tags}}
                       </span>
                     {{/meta.Tags.length}}
@@ -97,28 +103,28 @@
         {{/index.length}}
 
         <div id="prevnext">
+          {{#prevUrl}}
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="Previous page">&laquo;</a>
+          {{/prevUrl}}
           <span>
             {{#currentPage}}
-                <span>Seite {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+                <span>Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
             {{/currentPage}}
             {{#title}}
-              <br /><a href="{{config.basePath}}" rel="home">Zurück zur Startseite</a>
+              <br /><a href="{{config.basePath}}" rel="home">Back to home page</a>
             {{/title}}
           </span>
-          {{#prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="Vorherige Seite">&laquo;</a>
-          {{/prevUrl}}
           {{#nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="Nächste Seite">&raquo;</a>
+            <a href="{{nextUrl}}" rel="next" class="next" title="Next page">&raquo;</a>
           {{/nextUrl}}
         </div>
 
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
         <section>
-          <h3>Abonnement</h3>
-          <p>Neuerungen auf dieser Seite kann man auch mit einem Newsreader abonnieren:</p>
+          <h3>Subscription</h3>
+          <p>Stay up to date with our Newsfeeds:</p>
           <ul>
             {{#config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
@@ -126,9 +132,15 @@
             {{#config.specialFeatures.atom}}
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
             {{/config.specialFeatures.atom}}
+            {{#config.specialFeatures.jsonfeed}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}feed.json">JSON Feed: {{meta.title}}</a></li>
+            {{/config.specialFeatures.jsonfeed}}
             {{#config.specialFeatures.jsonrss}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
+              <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
             {{/config.specialFeatures.jsonrss}}
+            {{#config.specialFeatures.jsonforslack}}
+              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}slack.json">Slack-JSON: {{meta.title}}</a></li>
+            {{/config.specialFeatures.jsonforslack}}
             {{#config.specialFeatures.geojson}}
               <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
             {{/config.specialFeatures.geojson}}
@@ -139,8 +151,8 @@
         </section>
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>

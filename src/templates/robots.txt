@@ -1,6 +1,9 @@
 # http://www.robotstxt.org/
+# This file's content must be reachable via {{config.baseUrl}}/robots.txt
 
 User-agent: *
-Disallow: /google*.html
+Disallow: {{config.basePath}}google*.html
+Disallow: {{config.basePath}}yandex*.html
 
+Host: {{config.baseUrl}}
 Sitemap: {{config.absoluteBasePath}}sitemap.xml

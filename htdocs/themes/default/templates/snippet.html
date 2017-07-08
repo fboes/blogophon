@@ -1,0 +1,10 @@
+{{#title}}
+  <h3>{{title}}{{#subtitle}}, {{subtitle}}{{/subtitle}}</h3>
+{{/title}}
+{{#index.length}}
+  <ul class="teasers">
+    {{#index}}
+      <li><a href="{{meta.Url}}">{{meta.Title}}</a></li>
+    {{/index}}
+  </ul>
+{{/index.length}}

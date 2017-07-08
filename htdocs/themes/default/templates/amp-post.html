@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html ⚡ lang="{{config.locale.language}}" dir="{{config.locale.direction}}">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
-  {{>amp_meta}}
+  {{>ampMetaHtml}}
+  <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+  {{#post.ampProperties.hasAudio}}
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
+  {{/post.ampProperties.hasAudio}}
+  {{#post.ampProperties.hasIframe}}
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  {{/post.ampProperties.hasIframe}}
+  {{#post.ampProperties.hasYoutube}}
+    <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+  {{/post.ampProperties.hasYoutube}}
+  {{#post.ampProperties.hasVimeo}}
+    <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
+  {{/post.ampProperties.hasVimeo}}
+  {{#post.ampProperties.hasCarousel}}
+    <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
+  {{/post.ampProperties.hasCarousel}}
 </head>
 <body>
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <main>
       {{#post}}
         <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
-          <link itemprop="mainEntityOfPage" href="{{meta.AbsoluteUrl}}" />
           {{#meta.Image}}
             <link itemprop="image" href="{{meta.Image}}" />
           {{/meta.Image}}
           {{^meta.Image}}
             <link itemprop="image" href="{{config.ogImage}}" />
           {{/meta.Image}}
+          <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
           <header>
             <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
             <h2 itemprop="name headline">{{meta.Title}}</h2>
@@ -26,13 +42,21 @@
           <div itemprop="articleBody">
             {{{ampHtml}}}
               {{#meta.hasExternalLink}}
-                <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
               {{/meta.hasExternalLink}}
           </div>
           <footer class="meta">
             {{#meta.Modified.locale}}
-             <p>Zuletzt geändert am <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+             <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
             {{/meta.Modified.locale}}
+            {{#meta.Tags.length}}
+              <span class="tags">
+                Tags:
+                {{#meta.Tags}}
+                  · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                {{/meta.Tags}}
+              </span>
+            {{/meta.Tags.length}}
             {{#meta.AuthorName}}
             <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
               <link itemprop="image" href="{{meta.AuthorImage}}" />
@@ -40,7 +64,7 @@
             </address>
             {{/meta.AuthorName}}
             <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-              <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" />
+              <link href="{{config.themeConf.ogImage}}" itemprop="logo" />
               <span itemprop="name">{{config.name}}</span>
             </address>
             <span class="share">
@@ -51,17 +75,17 @@
         </article>
         <p class="back">
           {{#prev.AbsoluteUrlAmp}}
-            <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo; <span>Vorheriger Artikel</span></a>
+            <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
           {{/prev.AbsoluteUrlAmp}}
-          <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
+          <a href="{{config.basePath}}amp.html" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
           {{#next.AbsoluteUrlAmp}}
-            <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}"><span>Nächster Artikel</span> &raquo;</a>
+            <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
           {{/next.AbsoluteUrlAmp}}
         </p>
       {{/post}}
     </main>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>amp_closure}}
+  {{>ampClosureHtml}}
 </body>
 </html>

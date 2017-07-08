@@ -6,25 +6,20 @@ In this document you will find some stuff for hardcore CLI wizards and server gu
 Other means of editing articles
 -------------------------------
 
-If you do not want to use [`node index.js`](index.js), [read the manual operations instructions](manual.md).
-
-Gulp
------
-
-`gulp watch` will compile articles automatically as soon as you save an altered Markdown file. This may be useful if you like to keep checking how your editing turns out.
+If you do not want to use [`blogophon`](../index.js), [read the manual operations instructions](manual.md).
 
 Cronjob
 -------
 
 As the Blogophon will ignore articles with a publishing date set into the future, you may want to build some mechanism for generating your unpublished pages automatically. Here is how:
 
-Get the path to your `generate.js` by typing `pwd`. Then edit your Crontab: `crontab -e`
+Get the path to your blog by typing `pwd`. Then edit your Crontab: `crontab -e`
 
 Add one of these lines:
 
 ```
-58 23 * * * cd PATH_TO_YOUR_BLOG && node ./generate.js >/dev/null 2>&1 # Midnight, daily without log
-58 23 * * * cd PATH_TO_YOUR_BLOG && node ./generate.js --log >> logs/generate.log 2>&1 # Midnight, daily with log
+58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate >/dev/null 2>&1 # Midnight, daily without log
+58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate --log >> logs/generate.log 2>&1 # Midnight, daily with log
 ```
 
 For more exotic execution times check http://crontab-generator.org/. And keep in mind to check the timezone your crontab will be executed in.
@@ -42,12 +37,7 @@ echo \"Publishing...\" && rsync -az --delete user HOST:PATH_TO_YOUR_BLOG && echo
 Editor
 ------
 
-If you use Sublime Text for editing your markdown files, consider installing `Markdown Extended`. It supports YAML frontmatter and code block syntax highlighting in Markdown files.
-
-Multiple blogs & global installation
-------------------------------------
-
-There are setup instructions on [hot to use Blogophon globally / for multiple blogs on one machine](global-installation.md).
+If you use [Sublime Text](https://www.sublimetext.com/) for editing your markdown files, consider installing [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended). It supports YAML frontmatter and code block syntax highlighting in Markdown files.
 
 Server setup
 ------------
@@ -63,7 +53,7 @@ There is a [sample nginx configuration](nginx.conf) to use for your server.
 Automatically publish to external services
 ------------------------------------------
 
-The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter or Facebook.
+The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter or Facebook. This idea is called [POSSE](https://indieweb.org/POSSE) (Publish (on your) Own Site, Syndicate Elsewhere).
 
 ### IFTT
 
@@ -81,3 +71,25 @@ You may want to deactivate URL shortening in [IFTTT's settings](https://ifttt.co
 ### Slack
 
 Slack offers a plugin to import RSS feeds directly to a Slack channel. Just [follow the instructions on installing the RSS app into Slack](https://get.slack.help/hc/en-us/articles/218688467-Add-RSS-feeds-to-Slack).
+
+If you are not able to globally install the Blogophon
+-----------------------------------------------------
+
+In certain environments you may not be able to install the Blogophon globally. Thankfully there is a way to locally install the Blogophon.
+
+1. Run `npm install blogophon` in a folder you have access to.
+
+* All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
+* All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`
+
+Google Webmaster search console
+-------------------------------
+
+1. Register for Google Webmaster search console at https://www.google.com/webmasters/
+1. Put verification HTML page into your `/htdocs` folder.
+1. Submit sitemap located at `/sitemap.xml`.
+1. Add URL parameter `utm_medium` and mark it as "does not alter site content".
+
+---
+
+Return to [table of contents](README.md).

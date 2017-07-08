@@ -7,7 +7,6 @@ var path           = require('path');
 var SuperString    = require('./helpers/super-string');
 var blogophonDate  = require('./models/blogophon-date');
 var Mustache       = require('./helpers/blogophon-mustache');
-var MustacheQuoters= require('./helpers/blogophon-mustache-quoters');
 var PostReader     = require('./post-reader');
 var jsonRss        = require('./models/json-rss');
 var geoJson        = require('./models/geo-json');
@@ -17,6 +16,9 @@ var blogophonIndex = require('./blogophon-index');
 var hashes         = require('./models/hashes');
 var appleNewsFormat = require('./models/apple-news-format');
 var imageStyles    = require('./helpers/image-styles');
+var ampify         = require('./helpers/ampify')();
+var slacked        = require('./models/slacked');
+var jsonFeed       = require('./models/json-feed');
 
 /**
  * Generator used for creating the blog.
@@ -30,11 +32,9 @@ var Generator = function(config) {
   var external = {};
   var internal = {};
 
-  Mustache = Mustache.getTemplates(path.join(config.directories.currentTheme, 'templates'));
+  Mustache.getTemplates();
+  Mustache.getThemeTemplates(path.join(config.directories.currentTheme, 'templates'));
 
-  if (config.specialFeatures.facebookinstantarticles) {
-    Mustache.facebookHtml = Mustache.facebookHtml || fs.readFileSync(path.join(__dirname, '/templates/facebook.html'), 'utf8');
-  }
   if (config.specialFeatures.acceleratedmobilepages) {
     Mustache.ampCss = Mustache.ampCss || fs.readFileSync(path.join(Mustache.themePath, '../css/amp.css'), 'utf8').replace(/\s*[\n\r]+\s*/g, '');
   }
@@ -66,6 +66,7 @@ var Generator = function(config) {
             .then(function(posts) {
               internal.currentIndex.pushArray(posts);
               console.log('Removed ' + internal.currentIndex.removeFutureItems() + ' item(s) with future timestamp from index');
+              console.log('Removed ' + internal.currentIndex.removeDrafts() + ' draft(s) from index');
               internal.currentIndex.makeNextPrev();
               resolve( files.length );
             })
@@ -130,20 +131,20 @@ var Generator = function(config) {
       function(resolve, reject) {
         fs.ensureDirSync(post.meta.urlObj.dirname());
         var promises = [
-          fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.render(Mustache.templates.post, {
+          fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.renderExtra(Mustache.themeTemplates.postHtml, {
             post: post,
             config: config
-          }, Mustache.partials))
+          }, Mustache.themePartials))
         ];
         if (config.specialFeatures.applenews) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('article', 'json'), JSON.stringify(appleNewsFormat(post), undefined, 2)));
         }
         if (config.specialFeatures.acceleratedmobilepages) {
-          promises.push(fs.writeFileAsync(post.meta.urlObj.filename('amp'), Mustache.render(Mustache.templates.amp, {
+          promises.push(fs.writeFileAsync(post.meta.urlObj.filename('amp'), Mustache.renderExtra(Mustache.themeTemplates.ampPostHtml, {
             post: post,
             ampCss: Mustache.ampCss,
             config: config
-          }, Mustache.partials)));
+          }, Mustache.themePartials)));
         }
         if (config.specialFeatures.ajax) {
           promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index', 'json'), JSON.stringify(post, undefined, 2)));
@@ -253,29 +254,31 @@ var Generator = function(config) {
         var page;
         var pagedPosts = index.getPagedPosts(config.itemsPerPage);
         var urls = {
-          rss:   indexUrl(path + 'posts.rss'),
-          rssjs: indexUrl(path + 'rss.json'),
-          geojs: indexUrl(path + 'geo.json'),
+          rss:        indexUrl(path + 'posts.rss'),
+          jsonrss:    indexUrl(path + 'rss.json'),
+          snippetHtml: indexUrl(path + 'snippet._html'),
+          jsonfeed:   indexUrl(path + 'feed.json'),
+          slackjson:  indexUrl(path + 'slack.json'),
+          geojs:      indexUrl(path + 'geo.json'),
           networkKml: indexUrl(path + 'network.kml'),
           placesKml:  indexUrl(path + 'places.kml'),
-          atom:  indexUrl(path + 'posts.atom'),
-          ics:   indexUrl(path + 'posts.ics'),
-          ajax:  indexUrl(path + 'index.json')
+          atom:       indexUrl(path + 'posts.atom'),
+          ics:        indexUrl(path + 'posts.ics'),
+          ajax:       indexUrl(path + 'index.json')
         };
         var promises = [];
         var pubDate = blogophonDate(index.pubDate);
-
         if (config.specialFeatures.rss || config.specialFeatures.facebookinstantarticles) {
-          promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rss, {
+          promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rssXml, {
             index:       index.getPosts(10),
             pubDate:     pubDate.rfc,
             config:      config,
             absoluteUrl: urls.rss.absoluteUrl(),
             title:       title
-          }, {contentHtml: Mustache.facebookHtml || '{{{safeHtml}}}'})));
+          }, {contentHtml: config.specialFeatures.facebookinstantarticles ? Mustache.templates.facebookHtml : '{{{safeHtml}}}'})));
         }
         if (config.specialFeatures.atom) {
-          promises.push(fs.writeFileAsync( urls.atom.filename(), Mustache.render(Mustache.templates.atom, {
+          promises.push(fs.writeFileAsync( urls.atom.filename(), Mustache.render(Mustache.templates.atomXml, {
             index: index.getPosts(10),
             pubDate:     pubDate.iso,
             config:      config,
@@ -283,31 +286,49 @@ var Generator = function(config) {
             title:       title
           })));
         }
+        if (config.specialFeatures.teasersnippets) {
+          promises.push(fs.writeFileAsync( urls.snippetHtml.filename(), Mustache.render(Mustache.themeTemplates.snippetHtml, {
+            index:       index.getPosts(3),
+            title:       title
+          })));
+        }
         if (config.specialFeatures.icscalendar) {
-          promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.render(Mustache.templates.calendar, {
+          promises.push(fs.writeFileAsync( urls.ics.filename(), Mustache.renderExtra(Mustache.templates.calendarIcs, {
             index: index.getPosts(),
             pubDate:     pubDate.ics,
             config:      config,
             absoluteUrl: urls.ics.absoluteUrl(),
-            title:       title,
-            icsQuote:    MustacheQuoters.icsQuote
+            title:       title
           })));
         }
+        if (config.specialFeatures.jsonfeed) {
+          promises.push(fs.writeFileAsync(
+            urls.jsonfeed.filename(),
+            JSON.stringify(
+              jsonFeed(index.getPosts(20), pubDate, config, title, urls.jsonfeed.absoluteUrl()),
+              undefined,
+              2
+            )
+          ));
+        }
         if (config.specialFeatures.jsonrss) {
-          promises.push(fs.writeFileAsync( urls.rssjs.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title), undefined, 2)));
+          promises.push(fs.writeFileAsync( urls.jsonrss.filename(), JSON.stringify(jsonRss(index.getPosts(20), pubDate, config, title, urls.jsonrss.absoluteUrl()), undefined, 2)));
+        }
+        if (config.specialFeatures.jsonforslack) {
+          promises.push(fs.writeFileAsync( urls.slackjson.filename(), JSON.stringify(slacked(index.getPosts(3), pubDate, config, title), undefined, 2)));
         }
         if (config.specialFeatures.geojson) {
           promises.push(fs.writeFileAsync( urls.geojs.filename(), JSON.stringify(geoJson(index.getGeoArticles()), undefined, 2)));
         }
         if (config.specialFeatures.kml) {
-          promises.push(fs.writeFileAsync( urls.networkKml.filename(), Mustache.render(Mustache.templates.networkKml, {
+          promises.push(fs.writeFileAsync( urls.networkKml.filename(), Mustache.renderExtra(Mustache.templates.networkKml, {
             pubDate:     pubDate.iso,
             config:      config,
             absoluteUrl: urls.networkKml.absoluteUrl(),
             title:       title,
             link:        urls.placesKml.absoluteUrl()
           })));
-          promises.push(fs.writeFileAsync( urls.placesKml.filename(), Mustache.render(Mustache.templates.placesKml, {
+          promises.push(fs.writeFileAsync( urls.placesKml.filename(), Mustache.renderExtra(Mustache.templates.placesKml, {
             index:       index.getPosts(),
             pubDate:     pubDate.iso,
             config:      config,
@@ -335,14 +356,22 @@ var Generator = function(config) {
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.meta.AbsoluteUrlAmp = curUrlObj.absoluteUrl('amp');
           }
-          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.render(Mustache.templates.index, curPageObj, Mustache.partials)));
+          promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename(), Mustache.renderExtra(Mustache.themeTemplates.indexHtml, curPageObj, Mustache.themePartials)));
 
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.ampCss = Mustache.ampCss;
             curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl('amp');
             curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl('amp');
+            curPageObj.consolidatedProperties = ampify.getConsolidatedProperties(curPageObj.index);
 
-            promises.push(fs.writeFileAsync(indexUrl(curPageObj.currentUrl).filename('amp'), Mustache.render(Mustache.templates.ampIndex, curPageObj, Mustache.partials)));
+            promises.push(fs.writeFileAsync(
+              indexUrl(curPageObj.currentUrl).filename('amp'),
+              Mustache.renderExtra(
+                Mustache.themeTemplates.ampIndexHtml,
+                curPageObj,
+                Mustache.themePartials
+              )
+            ));
           }
 
         }
@@ -379,15 +408,15 @@ var Generator = function(config) {
         var promises = Object.keys(tags).map(function(key) {
           return external.buildIndexFiles(
             tags[key].index,
-            tags[key].urlObj.relativeUrl(),
+            '/'+tags[key].urlObj.relativeDirname()+'/',
             SuperString(internal.translation.getString('Articles with tag "%s"')).sprintf(tags[key].title)
           );
         });
 
-        promises.push(fs.writeFileAsync( indexUrl(config.htdocs.tag + '/index.html').filename(), Mustache.render(Mustache.templates.tags, {
+        promises.push(fs.writeFileAsync( indexUrl(config.htdocs.tag + '/index.html').filename(), Mustache.renderExtra(Mustache.themeTemplates.tagsHtml, {
           index: tagPages,
           config: config
-        }, Mustache.partials)));
+        }, Mustache.themePartials)));
 
         Promise
           .all(promises)
@@ -424,15 +453,19 @@ var Generator = function(config) {
           var promises = Object.keys(authors).map(function(name) {
             return external.buildIndexFiles(
               authors[name].index,
-              authors[name].urlObj.relativeUrl(),
+              '/'+authors[name].urlObj.relativeDirname()+'/',
               SuperString(internal.translation.getString('Articles written by %s')).sprintf(name)
             );
           });
 
-          promises.push(fs.writeFileAsync( indexUrl(config.htdocs.author+'/index.html').filename(), Mustache.render(Mustache.templates.authors, {
-            index: authorPages,
-            config: config
-          }, Mustache.partials)));
+          promises.push(fs.writeFileAsync(
+            indexUrl(config.htdocs.author+'/index.html').filename(),
+            Mustache.renderExtra(Mustache.themeTemplates.authorsHtml, {
+              index: authorPages,
+              config: config
+            },
+            Mustache.themePartials)
+          ));
 
           Promise
             .all(promises)
@@ -462,26 +495,42 @@ var Generator = function(config) {
         });
 
         var promises = [
-          fs.writeFileAsync( indexUrl('404.html').filename(), Mustache.render(Mustache.templates.four, {
-            index: internal.currentIndex.getPosts(5),
-            config: config
-          }, Mustache.partials)),
+          fs.writeFileAsync(
+            indexUrl('404.html').filename(),
+            Mustache.renderExtra(
+              Mustache.themeTemplates.notFoundHtml, {
+                index: internal.currentIndex.getPosts(5),
+                config: config
+              },
+              Mustache.themePartials
+            )
+          ),
 
-          fs.writeFileAsync( indexUrl('sitemap.xml').filename(), Mustache.render(Mustache.templates.sitemap, {
-            index: internal.currentIndex.getPosts(),
-            tagPages: tagPages,
-            pubDate: blogophonDate(internal.currentIndex.pubDate).iso,
-            config: config
-          }))
+          fs.writeFileAsync(
+            indexUrl('sitemap.xml').filename(),
+            Mustache.renderExtra(
+              Mustache.templates.sitemapXml, {
+                index: internal.currentIndex.getPosts(),
+                tagPages: tagPages,
+                pubDate: blogophonDate(internal.currentIndex.pubDate).iso,
+                config: config
+              }
+            )
+          )
         ];
 
         if (config.specialFeatures.microsofttiles) {
           fs.ensureDirSync(config.directories.htdocs + '/notifications');
           internal.currentIndex.getPosts(5).forEach(function(post, index) {
             promises.push(
-              fs.writeFileAsync( indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(), Mustache.render(Mustache.templates.livetile, {
-                post: post
-              }))
+              fs.writeFileAsync(
+                indexUrl('notifications/livetile-'+(index+1)+'.xml').filename(),
+                Mustache.renderExtra(
+                  Mustache.templates.livetileXml, {
+                    post: post
+                  }
+                )
+              )
             );
           });
         }
@@ -534,43 +583,6 @@ var Generator = function(config) {
     return true;
   };
 
-  /**
-   * Writes static files which will only be needed anew when the blog gets a new URL
-   * @param  {Object}  answers [description]
-   * @return {Promise} [description]
-   */
-  external.buildBasicFiles = function(answers) {
-    var manifest = require('./models/manifest');
-
-    fs.ensureDirSync(config.directories.data);
-    fs.ensureDirSync(config.directories.htdocs);
-
-    var promises = [
-      fs.writeFileAsync(path.join(config.directories.user,   'config.json'), JSON.stringify(answers, undefined, 2)),
-      fs.writeFileAsync(path.join(config.directories.htdocs, '.htaccess'), Mustache.render(Mustache.templates.htaccess, {
-        config: config
-      })),
-      fs.writeFileAsync(path.join(config.directories.htdocs, 'robots.txt'), Mustache.render(Mustache.templates.robots, {
-        config: config
-      })),
-      fs.writeFileAsync(path.join(config.directories.htdocs, 'opensearch.xml'), Mustache.render( Mustache.templates.opensearch, {
-        config: config
-      })),
-      fs.writeFileAsync(path.join(config.directories.htdocs, 'browserconfig.xml'), Mustache.render( Mustache.templates.browserconfig, {
-        config: config
-      })),
-      fs.writeFileAsync(path.join(config.directories.htdocs, 'manifest.json'), JSON.stringify(manifest(config), undefined, 2))
-    ];
-    return Promise
-      .all(promises)
-      .then(function() {
-        console.log("Wrote " + promises.length + " basic files");
-      })
-      .catch(function(err) {
-        console.error(err);
-      })
-    ;
-  };
   return external;
 };
 

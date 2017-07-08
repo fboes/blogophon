@@ -6,24 +6,23 @@
 {{/post.meta.Image}}
 {{#config.twitterAccount}}
   {{#post.meta.ProperImage}}
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary_large_image" />
   {{/post.meta.ProperImage}}
   {{^post.meta.ProperImage}}
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary" />
   {{/post.meta.ProperImage}}
   <meta name="twitter:site" content="@{{config.twitterAccount}}" />
   <meta name="twitter:creator" content="@{{config.twitterAccount}}" />
 {{/config.twitterAccount}}
 {{#config.themeConf.themeColor}}
-  <meta name="theme-color" content="{{config.themeConf.themeColor}}">
+  <meta name="theme-color" content="{{config.themeConf.themeColor}}" />
 {{/config.themeConf.themeColor}}
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="msapplication-config" content="{{config.absoluteBasePath}}browserconfig.xml" />
-<link rel="stylesheet" href="//cdn.3960.org/css/styles.css" />
+<link rel="stylesheet" href="{{config.absoluteBasePath}}{{config.htdocs.theme}}/css/styles.css" />
 {{#config.themeConf.icons}}
 <link rel="icon" href="{{src}}" sizes="{{sizes}}" />
 {{/config.themeConf.icons}}
-<link rel="apple-touch-icon" href="//cdn.3960.org/css/iphone.png" />
-<link rel="shortcut icon" type="image/x-icon" href="//cdn.3960.org/css/favicon.ico" />
+<link rel="apple-touch-icon" href="{{config.themeConf.ogImage}}" />
 <link rel="manifest" href="{{config.absoluteBasePath}}manifest.json" />
 <link rel="search" href="{{config.absoluteBasePath}}opensearch.xml" type="application/opensearchdescription+xml" title="{{config.name}}" />

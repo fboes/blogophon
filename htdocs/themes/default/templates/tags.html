@@ -2,26 +2,26 @@
 <html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
-  <title>Alle Tags | {{config.name}}</title>
+  <title>{{#i18n}}All tags{{/i18n}} | {{config.name}}</title>
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{config.absoluteBasePath}}tagged/" />
-  <meta property="og:title" name="title" content="Alle Tags" />
-  <meta property="og:description" name="description" content="Alle Tags in dem Blog &quot;{{config.name}}&quot;" />
+  <meta property="og:title" name="title" content="{{#i18n}}All tags{{/i18n}}" />
+  <meta property="og:description" name="description" content="{{#i18n}}All tags for &quot;{{config.name}}&quot;{{/i18n}}" />
   <link rel="canonical" href="{{config.absoluteBasePath}}tagged/" />
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="tags">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
-        <h2>Alle Tags</h2>
+        <h2>{{#i18n}}All tags{{/i18n}}</h2>
 
         {{#index.length}}
           <nav>
             <ul>
               {{#index}}
-                <li><a rel="tag" href="{{url}}" title="Weitere Artikel mit dem Tag &bdquo;{{title}}&rdquo;">{{title}}</a></li>
+                <li><a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &bdquo;{{title}}&rdquo;{{/i18n}}">{{title}}</a></li>
               {{/index}}
             </ul>
           </nav>
@@ -29,11 +29,11 @@
 
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>

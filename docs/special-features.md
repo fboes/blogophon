@@ -1,7 +1,7 @@
 ![Blogophon -](blogophon.png) Special features
 =================
 
-All features listed here can be activated during installation. Later on you can add features by calling `setup.js` again, or edit your `user/config.json`.
+All features listed here can be activated during installation. Later on you can add features by calling `blogophon` again, or edit your `user/config.json`.
 
 Multiple authors
 ----------------
@@ -24,6 +24,18 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 All required links will be added to your page.
 
+Teaser snippets
+---------------
+
+This will generate small teaser snippets for your articles, linking to other articles.
+
+JSON Feed
+----------------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding [JSON Feed](https://jsonfeed.org/).
+
+All required links will be added to your page.
+
 JSON-RSS
 ----------------
 
@@ -32,6 +44,13 @@ For every index page (start page, tag pages, author pages) there will be a corre
 All required links will be added to your page.
 
 This is like a RSS newsfeed, but in JSON. This will help parsers to digest information from your page. See [JSON-RSS](http://blog.3960.org/post/8478676503/rss-mit-json).
+
+JSON for Slack
+----------------
+
+For every index page (start page, tag pages, author pages) there will be a corresponding `slack.json` newsfeed.
+
+This JSON is understood by [Slack's slash command](https://slack.com/apps/A0F82E8CA-slash-commands), so you can have a Slack bot telling you about current articles.
 
 Facebook Instant Articles
 -------------------------
@@ -90,3 +109,7 @@ AJAX
 Exports all articles as `index.json`. These files may be used for AJAX loading of articles.
 
 Exports all indexes as `index.json`, containing references to the AJAX articles.
+
+---
+
+Return to [table of contents](README.md).

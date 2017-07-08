@@ -62,7 +62,7 @@ exports.testStructure = function(test) {
 };
 
 exports.testReplacingMarkdown = function(test) {
-  test.expect(9);
+  test.expect(10);
 
   var testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
   var testMarkdownDescription = 'Description ![](some-image.jpg) and [some internal link](internal.md).';
@@ -77,12 +77,13 @@ exports.testReplacingMarkdown = function(test) {
   test.equal(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
   test.equal(testPost.meta.Description, 'Description and some internal link.', 'Description has no markdown');
   test.equal(testPost.meta.MarkdownDescription, testMarkdownDescription, '...but there is a description with markdown');
-  test.ok(testPost.meta.Image.match(/some\-image.jpg/));
-  test.ok(testPost.meta.ProperImage.match(/some\-image.jpg/));
-  test.ok(testPost.html.match(/test\/some\-image.jpg/), 'Image has path added');
-  test.ok(testPost.htmlTeaser.match(/test\/some\-image.jpg/), 'Image has path added');
+  test.ok(testPost.meta.Image.match(/some-image.jpg/));
+  test.ok(testPost.meta.ProperImage.match(/some-image.jpg/));
+  test.ok(testPost.html.match(/test\/some-image.jpg/), 'Image has path added');
+  test.ok(testPost.htmlTeaser.match(/test\/some-image.jpg/), 'Image has path added');
   test.ok(!testPost.html.match(/internal\.md/), 'Internal links are converted');
   test.ok(!testPost.htmlTeaser.match(/internal\.md/), 'Internal links are converted');
+  test.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');
 
   test.done();
 };
@@ -122,6 +123,71 @@ exports.testImageParser = function(test) {
 
   test.done();
 };
+
+exports.testGallery = function(test) {
+  test.expect(4);
+
+  var filename = 'test.md';
+  var markdown;
+  var testPost;
+
+  markdown = '![alt1](img1-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date(),
+    Classes: 'images'
+  });
+  test.ok(!testPost.html.match(/<div class="gallery/));
+
+  markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-64x48.jpg) ![alt3](img3-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date(),
+    Classes: 'images'
+  });
+  test.ok(testPost.html.match(/<div class="gallery/));
+
+  markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-32x24.jpg) ![alt3](img3-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date(),
+    Classes: 'images'
+  });
+  test.ok(testPost.html.match(/<div class="gallery/));
+
+  markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-32x24.jpg) ![alt3](img3-64x48.jpg)';
+  testPost = post(filename, markdown, {
+    Description: 'None',
+    Date: new Date()
+  });
+  test.ok(!testPost.html.match(/<div class="gallery/));
+
+  test.done();
+};
+
+exports.testLinks = function(test) {
+  test.expect(3);
+
+  var markdown = 'www.1test.com will not be found'
+    + 'But [this link](http://www.2test.com) will be found.'
+    + 'As will be [this link](https://www.3test.com).'
+    + 'An ![image](https://www.4test.com) should not be found.'
+    + 'As will be [this link](https://www.5test.com/some-compilcated-foo?a#b).'
+  ;
+  var testLinks = post('test.md', markdown, {
+    Description: 'None',
+    Date: new Date()
+  }).getAllExternalLinks();
+
+  //console.log(testLinks);
+
+  test.equal(testLinks[0],    'http://www.2test.com');
+  test.equal(testLinks[1],    'https://www.3test.com');
+  test.equal(testLinks[2],    'https://www.5test.com/some-compilcated-foo?a#b');
+
+  test.done();
+};
+
 
 /*
 exports.testSpecialProperties = function(test) {

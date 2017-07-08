@@ -15,28 +15,55 @@ All Blogophon articles are written in [Markdown](https://daringfireball.net/proj
 Metadata via YAML front matter
 -----------------------------
 
-At the beginning of each post there is a YAML block for metadata. This block will not be shown in your article, but will contain extra data for your article.
+At the beginning of each post there is a [YAML](http://symfony.com/doc/current/components/yaml/yaml_format.html) block for metadata. This block will not be shown in your article, but will contain extra data for your article.
 
-Each YAML declaration starts with the declaration **key**, followed by `:`, and a declaration **value**. Please note the uppercased first letter in each declaration key.
+Each YAML declaration starts with the declaration **key**, followed by `:`, a whitespace, and a declaration **value**. Please note the uppercased first letter in each declaration key.
 
 All of these declarations are optional.
 
 ```yaml
-Title:     Title                                    # Title of document. If not set the first line of your Markdown will be used as title.
-Description: Some nice text                         # Teaser text. If not set will be generated from article text. For details see below.
-Date:      Wed Aug 25 2016 19:13:32 GMT+0200 (CEST) # Publishing date. If not set this will be taken from the file date. If this date set into the future, the article will not be published until the date is reached.
-DateModified: Wed Aug 25 2016 19:18:32 GMT+0200 (CEST) # Last modified date. If not set this will be taken from the file date publishing date.
-Keywords:  Tag, Tag                                 # Comma-separated list of keywords / tags.
-Twitter:   \#Hashtag and some text                  # This text will be used on Twitter. If not set will default to title of document.
-Classes:   Images                                   # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
-Location:  Lista Lighthouse, Norway                 # Plain address this post is supposed to be located at.
-Latitude:  58.109285                                # Geolocation decimal latitude in WGS84, ranging from -90 to 90.
-Longitude: 6.5664576                                # Geolocation decimal longitude in WGS84, ranging from -180 to 180.
-Language:  en                                       # Language of current article, given in ISO 639-1 or RFC1766. If not set will default to blog's language.
-Author:    Example <example@example.org>            # Author name and email.
-Image:     /post/image/image.png                    # Image URL used for sharing. It is best to make this URL absolute.
-Link:      http://www.example.com/                  # By clicking on links to this article redirect to this URL instead of the original post's link.
-Rating:    1/5                                      # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
+Title:        'Title'                       # Title of document. If not set the first line of your Markdown will be used as title.
+Description:  'Some nice text'              # Teaser text. If not set will be generated from article text. For details see below.
+Date:         2016-08-25T19:13:12+02:00     # Publishing date in ISO-8601. If not set this will be taken from the file date. If this date set into the future, the article will not be published until the date is reached.
+DateModified: 2016-08-26                    # Last modified date in ISO-8601. If not set this will be taken from the file date publishing date.
+Keywords:     Tag, Tag                      # Comma-separated list of keywords / tags.
+Twitter:      '#Hashtag and some text'      # This text will be used on Twitter. If not set will default to title of document.
+Classes:      Images                        # Sets the article type. E.g. `Images`, `Link`. This will be used as `class` attribute on the article, allowing for special CSS.
+Location:     Lista Lighthouse, Norway      # Plain address this post is supposed to be located at.
+Marker:       marker                        # See https://github.com/mapbox/simplestyle-spec/blob/master/1.1.0/README.md#3-client-behavior, definition for "marker-symbol"
+Latitude:     58.109285                     # Geolocation decimal latitude in WGS84, ranging from -90 to 90. If not given will be inferred from `Location` if given.
+Longitude:    6.5664576                     # Geolocation decimal longitude in WGS84, ranging from -180 to 180. If not given will be inferred from `Location` if given.
+Language:     en                            # Language of current article, given in ISO 639-1 or RFC1766. If not set will default to blog's language.
+Author:       Example <example@example.org> # Author name and email. If not set will default to blog's main author.
+Image:        /post/image/image.png         # Image URL used for sharing. It is best to make this URL absolute. If not set the first image found in the article text will be used.
+Link:         http://www.example.com/       # If given clicking on links to this article redirects to this URL instead of the original post's link.
+Rating:       1/5                           # Rating given in a review, with `x` out of `y`, `1` being the lowest possible rating.
+Draft:        yes                           # If set to `yes` this will prevent the article from being published. Use this for drafts.
+```
+
+Because the teaser text uses Markdown (see below), you may also use multiline description field for YAML frontmatter like this:
+
+```yaml
+Description: |
+  This multiline teaser text may contain [Markdown](https://www.example.com/). It is most important that the first line is a pipe symbol, `|`.
+
+  All your line breaks are belong to us.
+
+```
+
+Basic Markdown example
+----------------------
+
+To get you started quickly, here is a small Markdown example. For more information check out the full [Markdown documentation](https://daringfireball.net/projects/markdown/syntax).
+
+```markdown
+Title of your document
+======================
+
+Some paragraph with **bold** text, linking to [an example](https://www.example.com/).
+
+Another paragraph with some _italic_ text. And there is also `typewriter-style code`.
+
 ```
 
 Teaser text
@@ -56,7 +83,7 @@ And this part will only be shown on article pages.
 
 ```
 
-If you do not use both methods, the Blogophon will build a **teaser text from article text** by using the first 160 characters.
+If you do not use one of the methods mentioned above, the Blogophon will build a **teaser text from article text** by using the first 160 characters.
 
 Images
 ------
@@ -76,62 +103,100 @@ Link these images into your Markdown file like this:
 ![Image description](image.jpg#default) _produces an image, which will be scaled to match the `default` style_
 ![Image description](image.jpg#quad)    _produces an image, which will be scaled to match the `quad` style_
 ![Image description](image.jpg#320x240) _mark up this image as being 320 wide and 240 high_
-
+![> Image description](image.jpg)       _produces an unscaled image with visible image description_
 ```
 
 It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.
 
 If you do not use image styles, consider to at least state the size of the image. This will speed up the rendering of the whole page while the image has not yet loaded.
 
-Youtube & Vimeo
----------------
+### Image gallery
 
-For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
+For having an image gallery you have to use `Classes: images` in YAML front matter.
 
-Giphy
------
-
-For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
-
-Checkboxes
------------
+An image gallery is built by supplying a paragraph consisting only of images:
 
 ```markdown
-
-* [ ] _Produces an empty checkbox_
-* [X] _Produces a checked checkbox_
+![Subline 1](img1.jpg#default) ![Subline 2](img2.jpg#default) ![Subline 3](img3.jpg#default)
 
 ```
 
-Emojis
-------
+Videos & Audios
+---------------
 
-Just enter ASCII smileys to produce Emojis:
+To show video and audio files you just have to use the regular Markdown used for images:
 
-| ASCII | Result |
-|-------|--------|
-| :) | &#x1F60A; |
-| :)) | &#x1F602; |
-| :( | &#x1F629; |
-| :'( | &#x1F622; |
-| :\| | &#x1F610; |
-| :/ | &#x1F612; |
-| :D | &#x1F604; |
-| :P | &#x1F60B; |
-| :O | &#x1F632; |
-| :? | &#x1F914; |
-| :@ | &#x1F620; |
-| :* | &#x1F618; |
-| ;) | &#x1F609; |
-| B) | &#x1F60E; |
-| XP | &#x1F61D; |
-| 8o | &#x1F628; |
-| `:+1:` | &#x1F44D; |
-| `:-1:` | &#x1F44E; |
-| <3 | &#x1F495; |
-| </3 | &#x1F494; |
-| (!) | &#x26A0; |
+```markdown
+![Audio description](/media/audio.mp3)    _produces an audio player_
+![Video description](/media/video.mp4)    _produces an video player_
+![Video description](/media/video.webm)   _produces an video player_
 
+```
+
+Remember to use valid URLs for your video / audio files. You may want to upload this kind of files directly to `htdocs/media`.
+
+### Youtube & Vimeo
+
+For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
+
+Embedding other services
+--------------
+
+### Giphy
+
+For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
+
+### Codepen
+
+For displaying a Codepen example, just put a link to the Codepen page into a single line. This will be converted to the corresponding example iFrame.
+
+### Github Gist
+
+For displaying a Github Gist, just put a link to the Gist page into a single line. This will be converted to the corresponding example script.
+
+Special characters
+------------------
+
+There are some Markdown codes in the Blogophon to add special characters like Emojis to your HTML output:
+
+| Markdown | Results in… | Description    |
+|----------|-------------|----------------|
+| `&shy;`  |           | [Soft hyphen](https://en.wikipedia.org/wiki/Soft_hyphen), to break words across lines by inserting visible hyphens |
+| `&nbsp;` |           | Non-breaking space, prevents an automatic line break at its position |
+| `--`     | —         | [Em dash](http://www.thepunctuationguide.com/em-dash.html) |
+| `(C)`    | ©         | Copyright sign   |
+| `(R)`    | ®         | Registered sign  |
+| `(TM)`   | ™         | Trade mark sign  |
+| `(+-)`   | ±         | Plus-minus sign  |
+| `:)`     | &#x1F60A; | Smiling face with smiling eyes |
+| `:))`    | &#x1F602; | Face with tears of joy |
+| `:D`     | &#x1F604; | Smiling face with open mouth and smiling eyes |
+| `;)`     | &#x1F609; | Winking face     |
+| `B)`     | &#x1F60E; | Smiling face with sunglasses |
+| `:P`     | &#x1F60B; | Face with stuck-out tongue |
+| `xP`     | &#x1F61D; | Face with stuck-out tongue and tightly-closed eyes |
+| `:*`     | &#x1F618; | Face throwing a kiss |
+| `:O`     | &#x1F632; | Astonished face  |
+| `:\|`    | &#x1F610; | Neutral face     |
+| `:?`     | &#x1F914; | Thinking face    |
+| `:/`     | &#x1F612; | Unamused face    |
+| `xO`     | &#x1F635; | Dizzy face       |
+| `:(`     | &#x1F629; | Weary face       |
+| `:'(` / `;(` | &#x1F622; | Crying face  |
+| `:@`     | &#x1F620; | Angry face       |
+| `:$`     | &#x1F633; | Flushed face     |
+| `8O`     | &#x1F628; | Fearful face     |
+| `\o/`    | &#x1F64C; | Person raising both hands in celebration |
+| `8<`     | &#x2702;  | Scissors         |
+| `:+1:`   | &#x1F44D; | Thumbs up sign   |
+| `:-1:`   | &#x1F44E; | Thumbs down sign |
+| `<3`     | &#x2764;  | Heart            |
+| `</3`    | &#x1F494; | Broken heart     |
+| `(!)`    | &#x26A0;  | Warning sign     |
+
+Please use the proper upper-/lowercasing, as some characters are intentionally lowercased to avoid replacing acronyms by mistake.
+
+For more Emojis and special characters refer to a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode), and convert a code like `U+1F680` into `&#x1F680;`.
 
 Tables
 ------
@@ -172,3 +237,17 @@ The following identifiers are supported:
 * `shell` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
+
+Checkboxes
+-----------
+
+```markdown
+
+* [ ] _Produces an empty checkbox_
+* [X] _Produces a checked checkbox_
+
+```
+
+---
+
+Return to [table of contents](README.md).

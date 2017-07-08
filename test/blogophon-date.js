@@ -33,9 +33,9 @@ exports.basicTest = function basicTest(test) {
 
   test.ok(englishDate.locale !== germanDate.locale);
   test.equals(germanDate.iso, englishDate.iso);
-  test.ok(germanDate.iso.match(/[\+\-]\d+:\d+$/), 'Proper timezone at the end of string');
+  test.ok(germanDate.iso.match(/[+-]\d+:\d+$/), 'Proper timezone at the end of string');
   test.equals(germanDate.rfc, englishDate.rfc);
-  test.ok(germanDate.rfc.match(/[\+\-]\d+$/), 'Proper timezone at the end of string');
+  test.ok(germanDate.rfc.match(/[+-]\d+$/), 'Proper timezone at the end of string');
   test.equals(germanDate.ics, englishDate.ics);
   test.ok(germanDate.ics.match(/^\d+T\d+.$/), 'String like 20060910T220000Z');
   test.ok(germanDate.icsDay.match(/^\d+$/), 'String like 20060910');
@@ -58,6 +58,27 @@ exports.moreTests = function moreTests(test) {
   test.equals(germanDate.year, '2016');
   test.equals(germanDate.month, '01');
   test.equals(germanDate.day, '01');
+
+  //console.log(germanDate);
+
+  test.done();
+};
+
+exports.exocticTimestamps = function exocticTimestamps(test) {
+  test.expect(6);
+
+  var germanDate;
+  germanDate = blogophonDate('2016-08-25T19:13:12+02:00', 'de');
+
+  test.equals(germanDate.year, '2016');
+  test.equals(germanDate.month, '08');
+  test.equals(germanDate.day, '25');
+
+  germanDate = blogophonDate(new Date('2016-08-25T19:13:12+02:00'), 'de');
+
+  test.equals(germanDate.year, '2016');
+  test.equals(germanDate.month, '08');
+  test.equals(germanDate.day, '25');
 
   //console.log(germanDate);
 

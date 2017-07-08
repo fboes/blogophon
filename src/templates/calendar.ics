@@ -9,7 +9,7 @@ METHOD:PUBLISH
 BEGIN:VEVENT
 DTSTART;VALUE=DATE:{{{meta.Created.icsDay}}}
 DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
-URL:{{{meta.AbsoluteLink}}}
+URL:{{#icsQuote}}{{{meta.AbsoluteLink}}}{{/icsQuote}}
 SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
 DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}
 DTSTAMP:{{{pubDate}}}
@@ -22,7 +22,7 @@ GEO:{{meta.Latitude}};{{meta.Longitude}}
 {{#meta.Keywords}}
 CATEGORIES;CHARSET=UTF-8:{{#icsQuote}}{{meta.Keywords}}{{/icsQuote}}
 {{/meta.Keywords}}
-UID:{{{meta.Id}}}
+UID:{{#icsQuote}}{{{meta.Id}}}{{/icsQuote}}
 END:VEVENT
 {{/index}}
 END:VCALENDAR

@@ -2,26 +2,26 @@
 <html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
-  <title>Alle Autoren | {{config.name}}</title>
+  <title>{{#i18n}}All authors{{/i18n}} | {{config.name}}</title>
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{config.absoluteBasePath}}authored-by/" />
-  <meta property="og:title" name="title" content="Alle Autoren" />
-  <meta property="og:description" name="description" content="Alle Autoren in dem Blog &quot;{{config.name}}&quot;" />
+  <meta property="og:title" name="title" content="{{#i18n}}All authors{{/i18n}}" />
+  <meta property="og:description" name="description" content="{{#i18n}}All authors of &quot;{{config.name}}&quot;{{/i18n}}" />
   <link rel="canonical" href="{{config.absoluteBasePath}}tagged/" />
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="authors">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
-        <h2>Alle Autoren</h2>
+        <h2>{{#i18n}}All authors{{/i18n}}</h2>
 
         {{#index.length}}
           <nav>
             <ul>
               {{#index}}
-                <li><a href="{{url}}" title="Weitere Artikel vom Author {{title}}">{{title}}</a></li>
+                <li><a href="{{url}}" title="{{#i18n}}More articles by {{title}}{{/i18n}}">{{title}}</a></li>
               {{/index}}
             </ul>
           </nav>
@@ -29,11 +29,11 @@
 
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>

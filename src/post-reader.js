@@ -3,7 +3,7 @@
 var Promise        = require('promise/lib/es6-extensions');
 var fs             = require('fs');
 var readline       = require('readline');
-var yamljs         = require('yamljs');
+var yaml           = require('js-yaml');
 var post           = require('./models/post');
 
 /**
@@ -13,12 +13,13 @@ var post           = require('./models/post');
  * @param {Object} config [description]
  */
 var PostReader = function(file, config) {
-  config = config || require('../config');
+  config = config || require('./config');
   if (!file) {
     throw new Error('File '+file+' is empty');
   }
 
   var readYaml = true;
+  var lineNumber = 0;
   var yamlBuffer = '';
   var descriptionBuffer = '';
   var startDescriptionBuffer = false;
@@ -36,19 +37,24 @@ var PostReader = function(file, config) {
 
       readline.createInterface({
         input: require('fs').createReadStream( file )
-      }).on('line', function(line) {
-        if (readYaml && line.match(/\S+:[\s\S]/)) {
-          yamlBuffer += line + "\n";
-        } else if(readYaml && line.match(/^---$/)) {
-          // do nothing
-        } else {
-          if (readYaml) {
+      })
+        .on('line', function(line) {
+          lineNumber ++;
+          if (lineNumber === 1 && line.match(/^---$/)) {
+            // Start YAML parser
+            readYaml = true;
+          } else if(readYaml && line.match(/^---$/)) {
+            // Finish YAML parser
             readYaml = false;
-            postData.meta = yamljs.parse(yamlBuffer);
+            postData.meta = yaml.safeLoad(yamlBuffer);
             if (!postData.meta) {
               postData.meta = {};
             }
+          } else if (readYaml) {
+            // Add to YAML buffer
+            yamlBuffer += line + "\n";
           } else {
+            // Add to Markdown buffer
             if (!postData.meta.Title && line !== '') {
               postData.meta.Title = line;
             }
@@ -65,25 +71,25 @@ var PostReader = function(file, config) {
             }
             postData.markdown += line + "\n";
           }
-        }
-      })
-      .once('close', function() {
-        if (!postData.meta || !postData.markdown) {
-          reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
-        }
-        postData.meta.hasNoExtraDescription = false;
-        if (!postData.meta.Description) {
-          postData.meta.Description = descriptionBuffer || postData.markdown;
-          postData.meta.hasNoExtraDescription = true;
-        }
-        if (fileStat.mtime) {
-          postData.meta.DateModified = fileStat.mtime;
-        }
-        if (!postData.meta.Date && postData.meta.DateModified) {
-          postData.meta.Date = postData.meta.DateModified;
-        }
-        resolve( post(file, postData.markdown, postData.meta, config) );
-      });
+        })
+        .once('close', function() {
+          if (!postData.meta || !postData.markdown) {
+            reject(new Error('File '+file+' seems to be empty or cannot be parsed'));
+          }
+          postData.meta.hasNoExtraDescription = false;
+          if (!postData.meta.Description) {
+            postData.meta.Description = descriptionBuffer || postData.markdown;
+            postData.meta.hasNoExtraDescription = true;
+          }
+          if (fileStat.mtime) {
+            postData.meta.DateModified = fileStat.mtime;
+          }
+          if (!postData.meta.Date && postData.meta.DateModified) {
+            postData.meta.Date = postData.meta.DateModified;
+          }
+          resolve( post(file, postData.markdown, postData.meta, config) );
+        })
+      ;
     }
   );
 };

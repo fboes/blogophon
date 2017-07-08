@@ -1,24 +1,31 @@
 ---
-Date:      {{{date}}}
+{{#draft}}
+Draft:     yes # Remove this line to undraft this article
+{{/draft}}
+Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
 {{#keywords}}
-Keywords:  {{{keywords}}}
+Keywords:  {{#ymlQuote}}{{{keywords}}}{{/ymlQuote}}
 {{/keywords}}
 {{#classes}}
-Classes:   {{{classes}}}
+Classes:   {{#ymlQuote}}{{{classes}}}{{/ymlQuote}}
 {{/classes}}
 {{#author}}
-Author:    {{{author}}}
+Author:    {{#ymlQuote}}{{{author}}}{{/ymlQuote}}
 {{/author}}
-Twitter:   {{{title}}}
+Twitter:   {{#ymlQuote}}{{{title}}}{{/ymlQuote}}
 {{#location}}
-Location:  {{{location}}}
+Location:  {{#ymlQuote}}{{{location}}}{{/ymlQuote}}
 {{/location}}
 {{#latitude}}
-Latitude:  {{{latitude}}}
-Longitude: {{{longitude}}}
+Marker:    marker
+Latitude:  {{#ymlQuote}}{{{latitude}}}{{/ymlQuote}}
+Longitude: {{#ymlQuote}}{{{longitude}}}{{/ymlQuote}}
 {{/latitude}}
+{{#rating}}
+Rating:    {{#ymlQuote}}{{rating}}/5{{/ymlQuote}}
+{{/rating}}
 {{#link}}
-Link:      {{{link}}}
+Link:      {{#ymlQuote}}{{{link}}}{{/ymlQuote}}
 {{/link}}
 ---
 

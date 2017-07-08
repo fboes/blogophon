@@ -7,7 +7,7 @@
  * @param  {Object}  rules  Object with settings
  * @return {String}  Converted HTML
  */
-var markyMark = function markyMark(string, rules) {
+var markyMark = function(string, rules) {
   var internal = {};
   var external = {};
 
@@ -56,7 +56,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  external.convert = function convert(string) {
+  external.convert = function(string) {
     external.output       = '';
     internal.mode         = '';
     internal.currentChunk = '';
@@ -71,7 +71,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String}  c [description]
    * @return {Boolean}   [description]
    */
-  external.pushCharacter = function pushCharacter(c) {
+  external.pushCharacter = function(c) {
     if (c === '<') {
       internal.pushChunk(internal.currentChunk, c);
       internal.currentChunk = '';
@@ -94,7 +94,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} newMode  [description]
    * @return {String}          Name of new mode
    */
-  internal.pushChunk = function pushChunk(chunk, newMode) {
+  internal.pushChunk = function(chunk, newMode) {
     newMode = newMode || '';
     if (chunk) {
       switch (internal.mode) {
@@ -117,12 +117,13 @@ var markyMark = function markyMark(string, rules) {
         case '<markdown>':
           chunk = internal.convertMarkdown(chunk);
           break;
+        case '<bash>':
         case '<shell>':
           chunk = internal.convertShell(chunk);
           break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|xml|markdown|shell)/);
+            var lang = chunk.match(/(css|html|xml|markdown|shell|bash)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -143,7 +144,7 @@ var markyMark = function markyMark(string, rules) {
    * Get current state of parsed characters by joining all chunks.
    * @return {String} [description]
    */
-  external.getResults = function getResults() {
+  external.getResults = function() {
     internal.pushChunk(internal.currentChunk);
     return internal.convertResult(external.output);
   };
@@ -154,7 +155,7 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertText = function convertText(string) {
+  internal.convertText = function(string) {
     var entityMap = {
       '...': '…',
       '… …': '…',
@@ -171,38 +172,44 @@ var markyMark = function markyMark(string, rules) {
       '&lt;=': '⇐',
       '--': '—'
     };
-    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|\-\-)/g, function(s) {
+    string = string.replace(/(\.\.\.|… …|\(C\)|\(R\)|\(TM\)|\(+-\)|\(1\/4\)|\(1\/2\)|\(3\/4\)|-&gt;|=&gt;|&lt;-|&lt;=|--)/g, function(s) {
       return entityMap[s];
     });
 
     entityMap = {
-      ':)': '&#x1F60A;',
-      ':))': '&#x1F602;',
-      ':(': '&#x1F629;',
-      ':\'(': '&#x1F622;',
-      ':|': '&#x1F610;',
-      ':/': '&#x1F612;',
-      ':D': '&#x1F604;',
-      ':P': '&#x1F60B;',
-      ':p': '&#x1F60B;',
-      ':O': '&#x1F632;',
-      ':o': '&#x1F632;',
-      ':?': '&#x1F914;',
-      ':@': '&#x1F620;',
-      ':*': '&#x1F618;',
-      ';)': '&#x1F609;',
-      'B)': '&#x1F60E;',
-      'XP': '&#x1F61D;',
-      '8o': '&#x1F628;',
-      ':+1:': '&#x1F44D;',
-      ':-1:': '&#x1F44E;',
-      '&lt;3': '&#x1F495;',
-      '&lt;/3': '&#x1F494;',
-      '(!)': '&#x26A0;'
+      ':)': '1F60A',
+      ':))': '1F602',
+      ':D': '1F604',
+      ';)': '1F609',
+      'B)': '1F60E',
+      ':P': '1F60B',
+      'xP': '1F61D',
+      ':*': '1F618',
+      ':O': '1F632',
+      ':|': '1F610',
+      ':?': '1F914',
+      ':/': '1F612',
+      'xO': '1F635',
+      ':(': '1F629',
+      ":'(": '1F622',
+      ";(": '1F622',
+      ':@': '1F620',
+      ':$': '1F633',
+      '8O': '1F628',
+      '\\o/': '1F64C',
+      '8<': '2702',
+      ':+1:': '1F44D',
+      ':-1:': '1F44E',
+      '&lt;3': '2764',
+      '&lt;/3': '1F494',
+      '(!)': '26A0'
     };
-    string = string.replace(/(\W|^)(:(?:'?\(|\)|\)\)|\||\/|D|P|p|O|o|\*|\?|@)|(?:;|B)\)|XP|8o|:(?:\+|\-)1:|&lt;\?3|\(!\))(\W|$)/g, function(all, before, s, after) {
-      return before + '<span class="emoji" title="'+s+'">' + entityMap[s] + '</span>' + after;
-    });
+    string = string.replace(
+      /(\W|^)(:(?:'?\(|\)\)|[)|/DPO*?@$])|[;B]\)|;\(|x[PO]|\\o\/|8[o<]|:[+-]1:|&lt;\?3|\(!\))(\W|$)/g,
+      function(all, before, s, after) {
+        return before + '<span class="emoji emoji--' + entityMap[s] + '" title="' + s + '">&#x' + entityMap[s] + ';</span>' + after;
+      }
+    );
 
     return string
       .replace(/(\d)\s*-\s*(\d)/g, '$1–$2')
@@ -216,10 +223,10 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertTextBlock = function convertTextBlock(string) {
+  internal.convertTextBlock = function(string) {
     return string
-      .replace(/&quot;(.+?)&quot;/g, internal.rules.quotation.primary[0] + '$1' + internal.rules.quotation.primary[1])
-      .replace(/(?:'|&#39;)(.+?)(?:'|&#39;)/g, internal.rules.quotation.secondary[0] + '$1' + internal.rules.quotation.secondary[1])
+      .replace(/(&quot;)(.+?)\1/g, internal.rules.quotation.primary[0] + '$2' + internal.rules.quotation.primary[1])
+      .replace(/('|&#39;)(.+?)\1/g, internal.rules.quotation.secondary[0] + '$2' + internal.rules.quotation.secondary[1])
     ;
   };
 
@@ -236,47 +243,65 @@ var markyMark = function markyMark(string, rules) {
    */
 
   /**
+   * Find strings and comments in code and encapsulate them with HTML. For other code use `codeConverterFunction`.
+   * @param  {String}   code                  [description]
+   * @param  {Function} codeConverterFunction Convert code not being strings or comments
+   * @param  {RegExp}   breaker               [description]
+   * @return {String}                         [description]
+   */
+  internal.convertGeneralCode = function(code, codeConverterFunction, breaker) {
+    codeConverterFunction = codeConverterFunction || function(codeRest) {
+      return codeRest;
+    };
+    breaker = breaker || /(\/\*[\S\s]+?\*\/|(?:\/\/|#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
+    var myArray;
+    var chunks = [];
+    var lastIndex = 0;
+
+    code = code.replace(/&#39;/g, "'");
+    while ((myArray = breaker.exec(code)) !== null) {
+      if (lastIndex !== breaker.lastIndex - myArray[0].length) {
+        chunks.push(codeConverterFunction(code.substring(lastIndex, breaker.lastIndex - myArray[0].length)));
+      }
+      switch(myArray[0].charAt(0)) {
+        case '/':
+        case '#':
+          myArray[0] = ('<u>' + myArray[0] + '</u>').replace(/(\n)(<\/u>)$/, '$2$1');
+          break;
+        case "'":
+        case '"':
+        case '`':
+        case '&':
+          myArray[0] = '<kbd>' + myArray[0] + '</kbd>';
+          break;
+      }
+      lastIndex = breaker.lastIndex;
+      chunks.push(myArray[0]);
+    }
+    if (lastIndex !== code.length) {
+      chunks.push(codeConverterFunction(code.substring(lastIndex)));
+    }
+    return chunks.join('');
+  };
+
+  /**
    * Convert code text node
    * @param {String} string [description]
    * @return {String}       [description]
    */
-  internal.convertCode = function convertCode(string) {
-    return string
-      .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
-      .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/([\$|@|%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
-      .replace(/([\s|=|;])([\d\.]+)([\s|=|;])/g, '$1<tt>$2</tt>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
-      .replace(/((?:\\)(?:&.+?;|[^\&]))/g, '<samp>$1</samp>')
-      .replace(/((?:\/\/|\s#).+?)(\n|$)/g, '<u>$1</u>$2')
-      .replace(/(\/\*[\s\S]+?\*\/)/g, '<u>$1</u>')
-      .replace(/(\n)(\+ .+?)(\n)/g, '$1<ins>$2</ins>$3')
-      .replace(/(\n)(\- .+?)(\n)/g, '$1<del>$2</del>$3')
-    ;
-  };
-
-  /**
-   * Convert code text node
-   * @param  {String} string [description]
-   * @return {String}        [description]
-   */
-  internal.convertCss = function convertCss(string) {
-    return string
-      .replace(/(\b)(color|background-color|float|text-align|position|display)(\b)/g, '$1<b>$2</b>$3')
-      .replace(/(\b)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/(\b)((?:\.|#)[a-zA-Z0-9_\-]+)(\b)/g, '$1<i>$2</i>$3')
-      .replace(/(\b)((?:$)[a-zA-Z0-9_\-]+)(\b)/g, '$1<var>$2</var>$3')
-      .replace(/(\b)(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
-      .replace(/([^\\])(&quot;)(.*?[^\\])(&quot;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(')(.*?[^\\])(')/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([^\\])(&#39;)(.*?[^\\])(&#39;)/g, '$1<kbd>$2$3$4</kbd>')
-      .replace(/([\d\.]+[a-z]+)/g, '$1<samp>$2</samp>$3')
-      .replace(/(\/\/.+?(?:\n|$))/g, '<u>$1</u>')
-      .replace(/(\/\*[\s\S]+?\*\/)/g, '<u>$1</u>')
+  internal.convertCode = function(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([$@%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
+        .replace(/([^a-zA-Z$#\d])(-?\d[\d.]*)/g, '$1<em>$2</em>')
+        .replace(/(\b)(null|undefined|true|false)(\b)/gi, '$1<samp>$2</samp>$3')
+        .replace(/((?:\\)(?:&.+?;|[^&]))/g, '<samp>$1</samp>')
+        .replace(/(\n)([+] .+?)(\n)/g, '$1<ins>$2</ins>$3')
+        .replace(/(\n)([-] .+?)(\n)/g, '$1<del>$2</del>$3')
       ;
+    });
   };
 
   /**
@@ -284,11 +309,45 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertHtml = function convertHtml(string) {
+  internal.convertCss = function(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/([\b\s])((?:margin|padding|border)(?:-[a-z]+)?|(?:[a-z]+-)?color|float|text-align|position|display|overflow)(\s*:)/g, '$1<b>$2</b>$3')
+        .replace(/(:\s)(inherit|top|bottom|left|right|auto|center|middle|block|inline|inline-block|none|hidden|static|absolute|relative)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([\b\s])([.#][a-zA-Z][a-zA-Z0-9_-]+)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/([\b\s])(\$[a-zA-Z0-9_-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/([\b\s])(@(?:include|if|extend|mixin|function|else|elseif))(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(\D)(\d[\d.]*[a-z]+)(\b)/g, '$1<samp>$2</samp>$3')
+      ;
+    }, /(\/\*[\S\s]+?\*\/|(?:\/\/).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g);
+  };
+
+  /**
+   * Convert bash / shell text node
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertShell = function(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/(^|\b)(set|echo|cd|exit|time|sudo)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(^|\b)(if|fi|then|case|esac|function)(\b)/g, '$1<i>$2</i>$3')
+        .replace(/(\b)((?:\$)[a-zA-Z0-9_-]+)(\b)/g, '$1<var>$2</var>$3')
+        .replace(/(\n)(\$ .+?)(\n|$)/g, '$1<em>$2</em>$3')
+      ;
+    });
+  };
+
+  /**
+   * Convert code text node
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertHtml = function(string) {
     return string
       .replace(/(&lt;\/?)([a-zA-Z0-9]+)/g, '$1<i>$2</i>')
       .replace(/(&amp;(?:#x)?[a-zA-F0-9]+?;)/g, '<samp>$1</samp>')
-      .replace(/(\s)([a-zA-Z0-9_\-]+?)(=&quot;)(.+?[^\\])(&quot;)/g, '$1<var>$2</var>$3<kbd>$4</kbd>$5')
+      .replace(/(\s)([a-zA-Z0-9_-]+?)(=&quot;)(.+?[^\\])(&quot;)/g, '$1<var>$2</var>$3<kbd>$4</kbd>$5')
       .replace(/(&lt;--.+?--&gt;)/g, '<u>$1</u>')
     ;
   };
@@ -298,23 +357,11 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} string [description]
    * @return {String}        [description]
    */
-  internal.convertMarkdown = function convertMarkdown(string) {
+  internal.convertMarkdown = function(string) {
     return string
       .replace(/(\[)(.*?)(\]\()(.+?)(\))/g, '$1<b>$2</b>$3<var>$4</var>$5')
-      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=\-]{3,})(\n|\r|$)/g, '$1<tt>$2</tt>$3')
-      .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<tt>$2</tt>$3')
-    ;
-  };
-
-  /**
-   * Convert bash / shell text node
-   * @param  {String} string [description]
-   * @return {String}        [description]
-   */
-  internal.convertShell = function convertShell(string) {
-    return string
-      .replace(/(\$.+?)(\n|$)/g, '<tt>$1</tt>$2')
-      .replace(/(#.+?)(\n|$)/g, '<u>$1</u>$2')
+      .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=-]{3,})(\n|\r|$)/g, '$1<em>$2</em>$3')
+      .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<em>$2</em>$3')
     ;
   };
 
@@ -323,40 +370,59 @@ var markyMark = function markyMark(string, rules) {
    * @param  {String} html [description]
    * @return {String}      [description]
    */
-  internal.convertResult = function convertResult(html) {
+  internal.convertResult = function(html) {
     return html
       .replace(/<p>===<\/p>(\s*<[^>]+)(>)/g, '<!-- more -->$1 id="more"$2')
-      .replace(/(id="[^"]+)(" id=")/g, '$1 ')
-      .replace(/(<\/?h)3/g, '$14')
-      .replace(/(<\/?h)2/g, '$13')
-      .replace(/(<\/?h)1/g, '$12')
-      .replace(/(<h2.+?<\/h2>)/, '') // Remove title, will be put into meta.Title
+      .replace(/( id="[^"]+")( id=")/g, '$2')
+      .replace(/(<h1.+?<\/h1>)/, '') // Remove title, will be put into meta.Title
+      .replace(/(<\/?h)(\d)/g, function(all, tag, number) {
+        // Decrement headlines, so h2, will be h3
+        return tag + (Number(number)+1);
+      })
       .replace(/\/\/youtu\.be\/([a-zA-Z0-9\-_]+)/g, '//www.youtube.com/watch?v=$1')
-      .replace(/(<p>)\s*(<a[^>]+?>[^<]+?<\/a>)\s*(<\/p>)/g, function(all) { //, before, inline, after
-        return all
+      .replace(/(<p(?:\s[^>]+)?>)\s*(<a[^>]+?>[^<]+?<\/a>)\s*(<\/p>)/g, function(all, before, inline) { // after
+        return inline
           .replace(
-            /<p>\s*(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-            '<div class="video-player youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
+            /(?:<a)?[^>]*?youtube.+v=([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
+            '<div class="video-player video-player--youtube"><iframe allowfullscreen="allowfullscreen" src="https://www.youtube-nocookie.com/embed/$1?enablejsapi=1" scrolling="no"></iframe><!-- img src="https://img.youtube.com/vi/$1/hqdefault.jpg" --></div>'
           )
           .replace(
-            /<p>\s*(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
-            '<div class="video-player vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1"></iframe></div>'
+            /(?:<a)?[^>]*?vimeo.com\/(\d+)[^>]*?(?:>(.+?)<\/a>)/g,
+            '<div class="video-player video-player--vimeo"><iframe allowfullscreen="allowfullscreen" src="https://player.vimeo.com/video/$1" scrolling="no"></iframe></div>'
           )
           .replace(
-            /<p>\s*(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+\-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)?\s*<\/p>/g,
+            /(?:<a)?[^>]*?giphy.com\/gifs\/[^"]+-([a-zA-Z0-9]+)[^>]*?(?:>(.+?)<\/a>)/g,
             '<img src="https://i.giphy.com/$1.gif" alt="" />'
+          )
+          .replace(
+            /(?:<a)?[^>]*?codepen\.io\/([a-zA-Z0-9\-_]+)\/pen\/([a-zA-Z0-9\-_]+)[^>]*?(?:>(.+?)<\/a>)/g,
+            '<div class="embed embed--codepen"><iframe allowfullscreen="allowfullscreen" src="//codepen.io/$1/embed/$2/?height=265&amp;theme-id=0&amp;default-tab=result&amp;embed-version=2" height="265" scrolling="no"></iframe></div>'
+          )
+          .replace(
+            /<a[^>]+href="([^"]+gist.github.com[^"]+)".+?<\/a>/g,
+            '<div class="embed embed--github"><script src="$1.js"></script></div>'
           )
         ;
       })
-      .replace(/(<img[^>]+src="[^"]+\-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
+      .replace(/(<img[^>]+src="[^"]+-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
+      .replace(/(<)img([^>]src="[^"]+\.(mp[234g]|webm|og[gamv])(?:#[^"]*)?"+[^>]*?)\s*\/?>/, function(all, first, last, suffix) {
+        var tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
+        all = first + tag + last + ' controls="controls"></' + tag + '>';
+        return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
+      })
+      .replace(/(<img[^>]+alt=")(?:&gt;\s?)([^"]+)("[^>]*>)/g, function(all, first, alt, last) {
+        var img = '<span class="figure">' + first + alt + last + '<span class="figcaption">' + alt + '</span></span>';
+        return img.replace(/(class="figure)(".+<img[^>]+src="[^"]+#)([^"]+)(")/, '$1 $3$2$3$4');
+      })
+      .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')
+      .replace(/(<p(?:\s[^>]+)?>)\s*(<video[^>]+>\s*<\/video>)\s*<\/p>/g, '<div class="video-player video-player--html5">$2</div>')
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
-      .replace(/(<(?:img)[^>]*[^/])(>)/g, '$1 /$2')
-      .replace(/(<(?:hr|br)[^/])(>)/g, '$1 /$2')
-      .replace(/(<table>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
-        return before + content.replace(/(<tr>[\s]*)<td><strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row">$2</th>') + after;
+      .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list__item"$2')
+      .replace(/(<table[^>]*>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
+        return before + content.replace(/(<tr[^>]*>[\s]*)<td([^>]*>)<strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row"$2$3</th>') + after;
       })
-      .replace(/(<(?:p|h\d|li)>)([\s\S]+?)(<\/(?:p|h\d|li)>)/g, function(all, before, inline, after) {
+      .replace(/(<(p|h\d|li)(?:\s[^>]+)?>)([\s\S]+?)(<\/\2>)/g, function(all, before, tag, inline, after) {
         return before + internal.convertTextBlock(inline) + after;
       })
       .trim()

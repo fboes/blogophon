@@ -16,12 +16,19 @@ try {
   };
 }
 
+if (!config.language && process.env && process.env.LANG) {
+  config.language = process.env.LANG.replace(/^([a-zA-Z]+).*?$/, '$1');
+}
+
+config.theme              = config.theme         || 'default';
+config.htdocs             = config.htdocs        || {};
 config.directories        = pkg.directories;
 config.directories.user   = path.join(process.cwd(), pkg.directories.user);
 config.directories.data   = path.join(process.cwd(), pkg.directories.data);
 config.directories.htdocs = path.join(process.cwd(), pkg.directories.htdocs);
+config.htdocs.theme       = config.htdocs.theme  || 'themes/' + config.theme;
 config.directories.theme  = path.join(process.cwd(), pkg.directories.theme);
-config.directories.currentTheme = path.join(config.directories.theme, config.theme || 'default');
+config.directories.currentTheme = path.join(config.directories.theme, config.theme);
 config.isWin              = /^win/.test(process.platform);
 config.baseUrl            = config.baseUrl       || 'http://' + (require('os').hostname() || 'example.com');
 config.basePath           = config.basePath      || '/';
@@ -34,7 +41,6 @@ config.itemsPerPage       = Number(config.itemsPerPage) || 5;
 config.defaultAuthor      = config.defaultAuthor        || {};
 config.defaultAuthor.name = config.defaultAuthor.name   || config.name;
 config.defaultAuthor.email= config.defaultAuthor.email  || 'info@'+config.domain;
-config.htdocs             = config.htdocs        || {};
 config.htdocs.posts       = config.htdocs.posts  || 'posts';
 config.htdocs.tag         = config.htdocs.tag    || 'tagged';
 config.htdocs.author      = config.htdocs.author || 'authored-by';
@@ -47,6 +53,15 @@ if (config.useSpecialFeature) {
 
 try {
   config.themeConf = JSON.parse(fs.readFileSync(path.join(config.directories.currentTheme, 'theme.json'), 'utf8'));
+  config.themeConf.icons = config.themeConf.icons.map(function(icon) {
+    if (!icon.src.match(/^http/)) {
+      icon.src = config.absoluteBasePath + config.htdocs.theme + '/' + icon.src;
+    }
+    return icon;
+  });
+  if (!config.themeConf.ogImage.match(/^http/)) {
+    config.themeConf.ogImage = config.absoluteBasePath + config.htdocs.theme + '/' + config.themeConf.ogImage;
+  }
 } catch (e) {
   config.themeConf = {};
 }

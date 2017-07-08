@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html ⚡ lang="{{config.locale.language}}" dir="{{config.locale.direction}}">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>{{#meta.title}}{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}} | {{/meta.title}}{{config.name}}</title>
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
-  {{>amp_meta}}
+  {{>ampMetaHtml}}
+  {{#consolidatedProperties.ampPropertiesTeaser.hasAudio}}
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
+  {{/consolidatedProperties.ampPropertiesTeaser.hasAudio}}
+  {{#consolidatedProperties.ampPropertiesTeaser.hasIframe}}
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+  {{/consolidatedProperties.ampPropertiesTeaser.hasIframe}}
+  {{#consolidatedProperties.ampPropertiesTeaser.hasYoutube}}
+    <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
+  {{/consolidatedProperties.ampPropertiesTeaser.hasYoutube}}
+  {{#consolidatedProperties.ampPropertiesTeaser.hasVimeo}}
+    <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
+  {{/consolidatedProperties.ampPropertiesTeaser.hasVimeo}}
 </head>
 <body>
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <main>
       {{#meta.title}}
         <h2>{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h2>
@@ -18,14 +30,13 @@
         <div class="teasers">
           {{#index}}
             <article class="{{meta.Classes}}"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
-              <link itemprop="mainEntityOfPage" href="{{meta.AbsoluteUrl}}" />
               {{#meta.Image}}
                 <link itemprop="image" href="{{meta.Image}}" />
               {{/meta.Image}}
               {{^meta.Image}}
                 <link itemprop="image" href="{{config.ogImage}}" />
               {{/meta.Image}}
-              <link itemprop="url mainEntityOfPage" href="{{meta.Url}}" />
+              <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
               <header>
                 <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
                 {{#meta.Modified.locale}}
@@ -38,11 +49,11 @@
               </div>
               {{#meta.hasNoExtraDescription}}
                 {{#meta.hasExternalLink}}
-                  <p><a href="{{meta.Link}}">Weiter zur Seite…</a></p>
+                  <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
                 {{/meta.hasExternalLink}}
               {{/meta.hasNoExtraDescription}}
               {{^meta.hasNoExtraDescription}}
-                <p><a href="{{meta.AbsoluteUrlAmp}}" title="{{meta.Title}}">Weiter lesen…</a></p>
+                <p><a href="{{meta.AbsoluteUrlAmp}}" title="{{meta.Title}}">{{#i18n}}Read on…{{/i18n}}</a></p>
               {{/meta.hasNoExtraDescription}}
 
               <footer class="meta">
@@ -53,7 +64,7 @@
                   </address>
                 {{/meta.AuthorName}}
                 <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                  <link href="//cdn.3960.org/css/iphone.png" itemprop="logo" />
+                  <link href="{{config.themeConf.ogImage}}" itemprop="logo" />
                   <span itemprop="name">{{config.name}}</span>
                 </address>
               </footer>
@@ -64,18 +75,18 @@
 
       <p class="back">
         {{#prevUrl}}
-          <a href="{{prevUrl}}" rel="prev" class="prev">&laquo; <span>Vorherige Seite</span></a>
+          <a href="{{prevUrl}}" rel="prev" class="prev">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
         {{/prevUrl}}
         {{#title}}
-          <a href="{{config.basePath}}" rel="contents" id="up">Zur Übersichtsseite</a>
+          <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
         {{/title}}
         {{#nextUrl}}
-          <a href="{{nextUrl}}" rel="next" class="next"><span>Nächste Seite</span> &raquo;</a>
+          <a href="{{nextUrl}}" rel="next" class="next"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
         {{/nextUrl}}
       </p>
     </main>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>amp_closure}}
+  {{>ampClosureHtml}}
 </body>
 </html>

@@ -2,19 +2,19 @@
 <html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
-  <title>Unbekannt verzogen… | {{config.name}}</title>
+  <title>{{#i18n}}Gone with the wind…{{/i18n}} | {{config.name}}</title>
   <meta name="robots" content="noindex, follow" />
-  {{>meta}}
+  {{>metaHtml}}
 </head>
 <body class="four-oh-four">
   <div id="container">
-    {{>header}}
+    {{>headerHtml}}
     <div id="main">
       <main id="content">
-        <h2>Sorry, diese URL gibt es (nicht) mehr…</h2>
+        <h2>{{#i18n}}Sorry, this URL does not exist (anymore)…{{/i18n}}</h2>
 
         {{#index.length}}
-          <p>…aber vielleicht besteht Interesse an den jüngsten Artikeln:</p>
+          <p>{{#i18n}}…but maybe these articles will help you ease the pain:{{/i18n}}</p>
           <ul>
             {{#index}}
               <li><a href="{{meta.Url}}">{{meta.Title}}</a></li>
@@ -22,14 +22,14 @@
           </ul>
         {{/index.length}}
 
-        <p>Ansonsten gibt es mehr Artikel auf der <a href="{{config.basePath}}">Startseite</a>.</p>
+        <p>{{#i18n}}Find more articles on our <a href="{{config.basePath}}">home page</a>.{{/i18n}}</p>
       </main>
       <aside id="sidebar">
-        {{>sidebar}}
+        {{>sidebarHtml}}
       </aside>
     </div>
-    {{>footer}}
+    {{>footerHtml}}
   </div>
-  {{>closure}}
+  {{>closureHtml}}
 </body>
 </html>

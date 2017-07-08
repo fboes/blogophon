@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    font-family: $fontfamily-default;
+    line-height: 1.5;
+}
+* + h2, * + h3, * + article, * + section {
+  margin-top: 1em;
+}
+* + p, * + h4 {
+  margin-top: 0.5em;
+}
+li {
+  margin-left: 1.5em;
+  body[dir="rtl"] & {
+    margin-right: 1.5em;
+    margin-left: 0;
+  }
+}
+a {
+  color: $color-theme;
+}
+
+@include no-amp {
+  @media print {
+    @page {
+      margin: 0.5cm;
+    }
+    h1, h2, h3, h4 {
+      page-break-after: avoid;
+    }
+    h1, h2, h3, h4, p, li, tr, img {
+      page-break-inside: avoid;
+    }
+    thead {
+      display: table-header-group;
+    }
+    img {
+      max-width: 100% !important;
+    }
+  }
+}
+
+#container {
+  > header,
+  > div > main,
+  > div > aside,
+  > footer {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    @include bigger-as-container {
+      padding-left: calc(50vw - (#{$width-container / 2}) + 0.5em);
+      padding-right: calc(50vw - (#{$width-container / 2}) + 0.5em);
+    }
+  }
+
+  > header {
+    background-color: $color-theme;
+    h1 {
+      font-size: 1em;
+    }
+    a {
+      color: white;
+      text-decoration:none;
+    }
+  }
+
+  > aside {
+    border-top: 1px dashed $color-grey-dark;
+  }
+}
+
+#prevnext {
+  text-align:center;
+  padding: 2em 0;
+  a {
+    display:inline-block;
+    padding:0 1em;
+  }
+}
+
+#header,
+#sidebar,
+#footer {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+#sidebar {
+  background-color: $color-grey;
+  border-top:1px dashed $color-grey-dark;
+}
+
+#footer {
+  background-color: $color-grey;
+  color: $color-grey-dark;
+  font-size: 0.7em;
+  text-align: center;
+}
