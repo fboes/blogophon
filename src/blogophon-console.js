@@ -435,7 +435,7 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
-        answers.title = answers.title || defaults.date;
+        answers.title = answers.title || Math.round(new Date().getTime() / 1000);
         answers.date = answers.date || defaults.date;
         var markdownFilename = blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date)) + '.md';
         var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
