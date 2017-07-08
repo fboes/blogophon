@@ -12,7 +12,9 @@ Classes:   {{#ymlQuote}}{{{classes}}}{{/ymlQuote}}
 {{#author}}
 Author:    {{#ymlQuote}}{{{author}}}{{/ymlQuote}}
 {{/author}}
+{{^isMicropost}}
 Twitter:   {{#ymlQuote}}{{{title}}}{{/ymlQuote}}
+{{/isMicropost}}
 {{#location}}
 Location:  {{#ymlQuote}}{{{location}}}{{/ymlQuote}}
 {{/location}}
@@ -29,6 +31,7 @@ Link:      {{#ymlQuote}}{{{link}}}{{/ymlQuote}}
 {{/link}}
 ---
 
+{{^isMicropost}}
 {{{title}}}
 =========
 
@@ -38,4 +41,5 @@ Link:      {{#ymlQuote}}{{{link}}}{{/ymlQuote}}
 ***
 
 {{/lead}}
+{{/isMicropost}}
 {{{mainText}}}
