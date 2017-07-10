@@ -419,6 +419,7 @@ var markyMark = function(string, rules) {
       .replace(/(>)\[ \](\s)/g, '$1<input type="checkbox" />$2')
       .replace(/(>)\[[xX]\](\s)/g, '$1<input type="checkbox" checked="checked" />$2')
       .replace(/(<li)(><input type="checkbox")/g, '$1 class="task-list__item"$2')
+      .replace(/(<ul)(>[\s\S]*<li class=")(\S+)(__item")/g, '$1 class="$3"$2$3$4')
       .replace(/(<table[^>]*>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
         return before + content.replace(/(<tr[^>]*>[\s]*)<td([^>]*>)<strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row"$2$3</th>') + after;
       })

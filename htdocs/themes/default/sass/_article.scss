@@ -51,6 +51,12 @@ article {
     margin-top:2em;
     border-top: 1px solid #eee;
   }
+  ul, ol {
+    overflow: hidden;
+    &.task-list {
+      list-style: none;
+    }
+  }
   blockquote {
     color: $color-grey-dark;
     margin-left: 1em;
