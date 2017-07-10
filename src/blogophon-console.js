@@ -262,7 +262,14 @@ var BlogophonConsole = function() {
       link: '',
       location: '',
       images: false,
-      keywords: '',
+      keywords: function(answers) {
+        switch (answers.classes) {
+          case 'Micro post':
+            return 'Micro post';
+          default:
+            return '';
+        }
+      },
       date: blogophonDate(new Date()).iso,
       author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
       rating: "5",
@@ -292,6 +299,15 @@ var BlogophonConsole = function() {
 
     var questions    = [
       {
+        type: 'list',
+        name: 'classes',
+        message: 'Type of article',
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Review', 'Location', 'Micro post'],
+        default: defaults.classes,
+        filter: function(v) {
+          return (v === 'Normal article') ? null : v;
+        }
+      }, {
         type: 'input',
         name: 'title',
         message: 'Title',
@@ -305,17 +321,11 @@ var BlogophonConsole = function() {
           }
           return true;
         },
+        when: function(answers) {
+          return answers.classes !== 'Micro post';
+        },
         filter: function(v) {
           return v.trim();
-        }
-      }, {
-        type: 'list',
-        name: 'classes',
-        message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Review', 'Location'],
-        default: defaults.classes,
-        filter: function(v) {
-          return (v === 'Normal article') ? null : v;
         }
       }, {
         type: 'input',
@@ -357,12 +367,15 @@ var BlogophonConsole = function() {
         message: 'Do you want to use images?',
         default: defaults.images,
         when: function(answers) {
-          return answers.classes !== 'Images';
+          return (answers.classes !== 'Images' && answers.classes !== 'Micro post');
         }
       }, {
         type: 'input',
         name: 'keywords',
         message: 'Keywords, comma-separated',
+        when: function(answers) {
+          return answers.classes !== 'Micro post';
+        },
         default: defaults.keywords,
         filter: function(v) {
           return v.trim();
@@ -383,6 +396,9 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return blogophonDate(v).iso;
         },
+        when: function(answers) {
+          return answers.classes !== 'Micro post';
+        },
         validate: function(v) {
           return v.match(/^\d[\d:+T-]+\d$/) ? true : 'Please supply a valid date like ' + defaults.date + '.';
         }
@@ -392,7 +408,7 @@ var BlogophonConsole = function() {
         message: 'Is this a draft?',
         default: defaults.draft,
         when: function(answers) {
-          return answers.date === defaults.date;
+          return answers.classes !== 'Micro post' && answers.date === defaults.date;
         }
       }, {
         type: 'confirm',
@@ -405,7 +421,7 @@ var BlogophonConsole = function() {
         message: 'Lead / teaser text',
         default: defaults.lead,
         when: function(answers) {
-          return !answers.edit && answers.classes !== 'Link';
+          return !answers.edit && answers.classes !== 'Link' && answers.classes !== 'Micro post';
         }
       }, {
         type: 'input',
@@ -419,11 +435,14 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
+        answers.title = answers.title || Math.round(new Date().getTime() / 1000);
+        answers.date = answers.date || defaults.date;
         var markdownFilename = blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date)) + '.md';
         var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
         var templateData = answers;
-        templateData.lead     = templateData.lead     || defaults.lead(answers);
-        templateData.mainText = templateData.mainText || defaults.mainText(answers);
+        templateData.isMicropost = (answers.classes === 'Micro post');
+        templateData.lead        = templateData.lead     || defaults.lead(answers);
+        templateData.mainText    = templateData.mainText || defaults.mainText(answers);
         if (templateData.classes === 'Location') {
           templateData.latitude = 0.00001;
           templateData.longitude = 0.00001;

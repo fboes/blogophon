@@ -54,6 +54,7 @@ var Post = function(filename, markdown, meta, config) {
     if (!meta.Language) {
       meta.Language = config.locale.language;
     }
+    meta.isMicropost = (meta.Classes && /Micro post/.test(meta.Classes)) || false;
 
     if (!meta.Direction) {
       if (meta.Language === config.locale.Language) {
