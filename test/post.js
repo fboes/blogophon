@@ -75,7 +75,7 @@ exports.testReplacingMarkdown = function(test) {
   //console.log(testPost);
 
   test.equal(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
-  test.equal(testPost.meta.Description, 'Description and some internal link.', 'Description has no markdown');
+  test.equal(testPost.meta.Description, 'Description  and some internal link.', 'Description has no markdown');
   test.equal(testPost.meta.MarkdownDescription, testMarkdownDescription, '...but there is a description with markdown');
   test.ok(testPost.meta.Image.match(/some-image.jpg/));
   test.ok(testPost.meta.ProperImage.match(/some-image.jpg/));

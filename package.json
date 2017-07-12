@@ -19,14 +19,10 @@
   },
   "homepage": "https://github.com/fboes/blogophon",
   "bugs": {
-    "url" : "https://github.com/fboes/blogophon/issues",
-    "email" : "info@3960.org"
+    "url": "https://github.com/fboes/blogophon/issues",
+    "email": "info@3960.org"
   },
-  "author": {
-    "name": "Frank Boës",
-    "email": "info@3960.org",
-    "url": "https://3960.org/"
-  },
+  "author": "Frank Boës",
   "man": "./README.md",
   "preferGlobal": true,
   "keywords": [
@@ -62,7 +58,6 @@
     "htdocs": "htdocs",
     "theme": "htdocs/themes"
   },
-  "author": "Frank Boës",
   "license": "MIT",
   "dependencies": {
     "chalk": "^2.0.1",
@@ -74,6 +69,7 @@
     "marked": "^0.3.6",
     "mustache": "^2.2.1",
     "promise": "^8.0.0",
+    "remove-markdown": "^0.2.0",
     "shelljs": "^0.7.3",
     "yamljs": "^0.3.0"
   },

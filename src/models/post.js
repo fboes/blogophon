@@ -11,6 +11,7 @@ var authorUrl       = require('../helpers/author-url');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
 var imageStyles     = require('../helpers/image-styles');
+var removeMarkdown  = require('remove-markdown');
 
 /**
  * This class holds Markdown and converts it into a proper post.
@@ -230,14 +231,7 @@ var Post = function(filename, markdown, meta, config) {
    * @return {String}          [description]
    */
   internal.removeMarkdown = function(markdown) {
-    return markdown
-      .replace(/>/g, ' ')
-      .replace(/!\[([^\]]*)\]\(.+?\)/g, '')
-      .replace(/\[([^\]]*)\]\(.+?\)/g, '$1')
-      .replace(/[ ][ ]+/g, ' ')
-      .replace(/http(s)?:\S+/g, '')
-      .trim()
-    ;
+    return removeMarkdown(markdown);
   };
 
   /**
