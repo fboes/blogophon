@@ -34,7 +34,7 @@ var jsonRss = function(index, pubDate, config, title, feedUrl) {
           pubDate: item.meta.Created.rfc,
           pubDateTs: item.meta.Created.timestamp,
           guid: item.meta.Id || item.meta.AbsoluteUrl,
-          author: item.meta.AuthorEmail
+          author: item.meta.AuthorEmail + ' (' + item.meta.AuthorName + ')'
         };
 
         if (item.meta.Tags) {

@@ -23,7 +23,7 @@
         <name>{{meta.AuthorName}}</name>
         <email>{{meta.AuthorEmail}}</email>
       </author>
-      <id>{{meta.Id}}</id>
+      <id>{{config.absoluteBasePath}}#{{meta.Id}}</id>
       {{#meta.Tags}}
         <category term="{{title}}" />
       {{/meta.Tags}}
