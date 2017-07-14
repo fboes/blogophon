@@ -8,9 +8,6 @@
   <id>{{config.absoluteBasePath}}</id>
   <updated>{{pubDate}}</updated>
   <link href="{{absoluteUrl}}" rel="self" />
-  <author>
-    <name>{{config.name}}</name>
-  </author>
   {{#index}}
     <entry xml:lang="{{meta.Language}}" xml:base="{{config.absoluteBasePath}}">
       <title>{{meta.Title}}</title>
