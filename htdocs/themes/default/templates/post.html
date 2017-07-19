@@ -130,21 +130,28 @@
       </main>
       <aside id="sidebar">
         {{>sidebarHtml}}
-        {{#post.meta.Tags.length}}
-          <section>
-            <h3>Related articles</h3>
-            <ul>
-              {{#post.meta.Tags}}
-                <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">…for tag „{{title}}”</a></li>
-              {{/post.meta.Tags}}
-            </ul>
-          </section>
-        {{/post.meta.Tags.length}}
+        {{^config.specialFeatures.teasersnippets}}
+          {{#post.meta.Tags.length}}
+            <section>
+              <h3>Related articles</h3>
+              <ul>
+                {{#post.meta.Tags}}
+                  <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">…for tag „{{title}}”</a></li>
+                {{/post.meta.Tags}}
+              </ul>
+            </section>
+          {{/post.meta.Tags.length}}
+        {{/config.specialFeatures.teasersnippets}}
 
         {{#config.specialFeatures.teasersnippets}}
           <section data-ajax-url="{{config.basePath}}snippet._html">
             <!--#include virtual="{{config.basePath}}snippet._html" -->
           </section>
+          {{#post.meta.Tags}}
+            <section data-ajax-url="{{url}}snippet._html">
+              <!--#include virtual="{{url}}snippet._html" -->
+            </section>
+          {{/post.meta.Tags}}
         {{/config.specialFeatures.teasersnippets}}
 
         <section>

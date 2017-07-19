@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Linking related articles in post
 * [x] Adding article type "Micro post"
 * [x] Adding article type "Review"
 * [x] Improved drafting of articles

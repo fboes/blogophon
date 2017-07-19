@@ -254,6 +254,7 @@ var Generator = function(config) {
         var page;
         var pagedPosts = index.getPagedPosts(config.itemsPerPage);
         var urls = {
+          indexHtml:  indexUrl(path + 'index.html'),
           rss:        indexUrl(path + 'posts.rss'),
           jsonrss:    indexUrl(path + 'rss.json'),
           snippetHtml: indexUrl(path + 'snippet._html'),
@@ -289,6 +290,7 @@ var Generator = function(config) {
         if (config.specialFeatures.teasersnippets) {
           promises.push(fs.writeFileAsync( urls.snippetHtml.filename(), Mustache.render(Mustache.themeTemplates.snippetHtml, {
             index:       index.getPosts(3),
+            absoluteUrl: urls.indexHtml.absoluteUrl(),
             title:       title
           })));
         }
