@@ -121,6 +121,9 @@ var markyMark = function(string, rules) {
         case '<shell>':
           chunk = internal.convertShell(chunk);
           break;
+        case '<yaml>':
+          chunk = internal.convertYaml(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
             var lang = chunk.match(/(css|html|xml|markdown|shell|bash)/);
@@ -363,6 +366,22 @@ var markyMark = function(string, rules) {
       .replace(/(^|\n|\r)(\S.+?(?:\n|\r)[=-]{3,})(\n|\r|$)/g, '$1<em>$2</em>$3')
       .replace(/(^|\n|\r)(#+.+?)(\n|\r|$)/g, '$1<em>$2</em>$3')
     ;
+  };
+
+  /**
+   * Convert Yaml code text node
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertYaml = function(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/((?:^|\n)\s*)([a-zA-Z0-9_]+)(:)/g, '$1<i>$2</i>$3')
+        .replace(/(:\s)(null|true|false|yes|no|on|off|y|n|~)(\n|$)/gi, '$1<samp>$2</samp>$3')
+        .replace(/(:\s)(-?[0-9.]+)(\n|$)/g, '$1<em>$2</em>$3')
+        .replace(/(:\s)([\d-]+T[\d-:.]+)(\n|$)/g, '$1<em>$2</em>$3')
+      ;
+    });
   };
 
   /**
