@@ -16,7 +16,7 @@ var manifest = function(config) {
       return i;
     }),
     scope: config.baseUrl + config.basePath,
-    start_url: config.baseUrl + config.basePath +'index.html?utm_medium=manifest',
+    start_url: config.baseUrl + config.basePath +'index.html?utm_source=manifest',
     theme_color: config.themeConf.themeColor || '#ffffff',
     background_color: '#ffffff'
   };
