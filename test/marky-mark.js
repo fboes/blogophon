@@ -3,7 +3,7 @@
 var markyMark = require('../src/helpers/marky-mark');
 
 exports.testSimpleString = function(test) {
-  test.expect(13);
+  test.expect(14);
 
   var m;
 
@@ -33,8 +33,10 @@ exports.testSimpleString = function(test) {
   test.ok(m.match(/<iframe/));
 
   m = markyMark('<p><a href="https://gist.github.com/defunkt/2059">Github Gist</a></p>');
-  //console.log(m);
-  test.ok(m.match(/<script src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
+  test.ok(m.match(/<script async="async" src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
+
+  m = markyMark('<p><a href="https://jsfiddle.net/6cLkvdag/">Github Gist</a></p>');
+  test.ok(m.match(/<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/));
 
   m = markyMark('<p><img src="http://www.example.com" alt="" /></p>');
   test.ok(m.match(/src="http:\/\/www\.example\.com/));

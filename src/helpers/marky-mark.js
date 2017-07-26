@@ -419,7 +419,11 @@ var markyMark = function(string, rules) {
           )
           .replace(
             /<a[^>]+href="([^"]+gist.github.com[^"]+)".+?<\/a>/g,
-            '<div class="embed embed--github"><script src="$1.js"></script></div>'
+            '<div class="embed embed--github"><script async="async" src="$1.js"></script></div>'
+          )
+          .replace(
+            /<a[^>]+href="([^"]+jsfiddle.net\/.+?\/).+?<\/a>/g,
+            '<div class="embed embed--jsfiddle"><script async="async" src="$1embed/"></script></div>'
           )
         ;
       })
