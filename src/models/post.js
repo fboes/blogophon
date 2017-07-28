@@ -56,7 +56,6 @@ var Post = function(filename, markdown, meta, config) {
       meta.Language = config.locale.language;
     }
     meta.isMicropost = (meta.Classes && /Micro post/.test(meta.Classes)) || false;
-    meta.isRecipe = (meta.Classes && /Recipe/.test(meta.Classes)) || false;
 
     if (!meta.Direction) {
       if (meta.Language === config.locale.Language) {
@@ -136,10 +135,10 @@ var Post = function(filename, markdown, meta, config) {
     if (meta.Classes.indexOf('images') >= 0) {
       external.htmlTeaser   = internal.galleryHtml(external.htmlTeaser);
       external.html         = internal.galleryHtml(external.html);
-    } else if (meta.Classes.indexOf('recipe') >= 0) {
-      external.html         = internal.recipeHtml(external.html);
-      console.log(external.html);
     }
+    // else if (meta.Classes.indexOf('recipe') >= 0) {
+    //  external.html         = internal.recipeHtml(external.html);
+    //}
     if (meta.Description) {
       meta.MarkdownDescription = meta.Description;
       meta.Description = SuperString(internal.removeMarkdown(meta.Description)).niceShorten(320);

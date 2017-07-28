@@ -119,17 +119,6 @@ It is always wise to use image styles, as these styles scale your images to a se
 
 If you do not use image styles, consider to at least state the size of the image. This will speed up the rendering of the whole page while the image has not yet loaded.
 
-### Image gallery
-
-For having an image gallery you have to use `Classes: images` in YAML front matter.
-
-An image gallery is built by supplying a paragraph consisting only of images:
-
-```markdown
-![Subline 1](img1.jpg#default) ![Subline 2](img2.jpg#default) ![Subline 3](img3.jpg#default)
-
-```
-
 Videos & Audios
 ---------------
 
@@ -238,6 +227,7 @@ The following identifiers are supported:
 
 * `css`
 * `html` & `xml`
+* `yaml`
 * `markdown` to output Markdown examples.
 * `shell` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
 

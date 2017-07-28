@@ -56,7 +56,7 @@
                 {{^meta.Image}}
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
-                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">Permalink</a>
+                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
@@ -69,11 +69,11 @@
                 </div>
                 {{#meta.hasNoExtraDescription}}
                   {{#meta.hasExternalLink}}
-                    <p><a href="{{meta.Link}}">Go to website…</a></p>
+                    <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
                   {{/meta.hasExternalLink}}
                 {{/meta.hasNoExtraDescription}}
                 {{^meta.hasNoExtraDescription}}
-                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">Read on…</a></p>
+                  <p><a href="{{meta.Url}}" title="{{meta.Title}}">{{#i18n}}Read on…{{/i18n}}</a></p>
                 {{/meta.hasNoExtraDescription}}
                 {{#meta.Tags.length}}
                   <footer class="meta">
@@ -91,7 +91,7 @@
                       <span class="tags">
                         Tags:
                         {{#meta.Tags}}
-                          · <a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                          · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &bdquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                         {{/meta.Tags}}
                       </span>
                     {{/meta.Tags.length}}
@@ -104,18 +104,18 @@
 
         <div id="prevnext">
           {{#prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="Previous page">&laquo;</a>
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}">&laquo;</a>
           {{/prevUrl}}
           <span>
             {{#currentPage}}
-                <span>Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}</span>
+                <span>{{#i18n}}Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}{{/i18n}}</span>
             {{/currentPage}}
             {{#title}}
-              <br /><a href="{{config.basePath}}" rel="home">Back to home page</a>
+              <br /><a href="{{config.basePath}}" rel="home">{{#i18n}}Back to home page{{/i18n}}</a>
             {{/title}}
           </span>
           {{#nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="Next page">&raquo;</a>
+            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}">&raquo;</a>
           {{/nextUrl}}
         </div>
 
@@ -123,8 +123,8 @@
       <aside id="sidebar">
         {{>sidebarHtml}}
         <section>
-          <h3>Subscription</h3>
-          <p>Stay up to date with our Newsfeeds:</p>
+          <h3>{{#i18n}}Subscription{{/i18n}}</h3>
+          <p>{{#i18n}}Stay up to date with our Newsfeeds:{{/i18n}}</p>
           <ul>
             {{#config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
