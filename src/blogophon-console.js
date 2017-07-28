@@ -281,6 +281,8 @@ var BlogophonConsole = function() {
             return "![](image.jpg#default)\n\nLorem ipsum…";
           case 'Video':
             return "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+          case 'Recipe':
+            return "Introduction";
           default:
             return '';
         }
@@ -291,6 +293,8 @@ var BlogophonConsole = function() {
             return "[Lorem ipsum…](" + answers.link + ")";
           case 'Quote':
             return "> Lorem ipsum…\n> <cite>Cicero</cite>";
+          case 'Recipe':
+            return "* Ingredient\n* Ingredient\n\nInstructions…";
           default:
             return 'Lorem ipsum…';
         }
@@ -302,7 +306,7 @@ var BlogophonConsole = function() {
         type: 'list',
         name: 'classes',
         message: 'Type of article',
-        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Review', 'Location', 'Micro post'],
+        choices: ['Normal article', 'Images', 'Video', 'Link', 'Quote', 'Review', 'Location', 'Recipe', 'Micro post'],
         default: defaults.classes,
         filter: function(v) {
           return (v === 'Normal article') ? null : v;

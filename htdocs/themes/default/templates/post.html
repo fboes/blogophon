@@ -49,7 +49,7 @@
     <div id="main">
       <main id="content">
         {{#post}}
-          <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
+          <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="{{^meta.isRecipe}}http://schema.org/BlogPosting{{/meta.isRecipe}}{{#meta.isRecipe}}http://schema.org/Recipe{{/meta.isRecipe}}">
             {{#meta.Image}}
               <link itemprop="image" href="{{meta.Image}}" />
             {{/meta.Image}}
@@ -61,7 +61,7 @@
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished dt-published" class="date">{{meta.Created.locale}}</time>
               <h2 itemprop="name headline" class="p-name">{{meta.Title}}</h2>
             </header>
-            <div itemprop="articleBody" class="e-content">
+            <div{{^meta.isRecipe}} itemprop="articleBody"{{/meta.isRecipe}} class="e-content">
               {{{html}}}
 
               {{#meta.RatingObj}}

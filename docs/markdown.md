@@ -58,6 +58,8 @@ Description: |
 
 ```
 
+Thre are also [special post types](special-post-types.md), which are activated by choosing a special `Classes` value.
+
 Basic Markdown example
 ----------------------
 

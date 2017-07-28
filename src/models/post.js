@@ -56,6 +56,7 @@ var Post = function(filename, markdown, meta, config) {
       meta.Language = config.locale.language;
     }
     meta.isMicropost = (meta.Classes && /Micro post/.test(meta.Classes)) || false;
+    meta.isRecipe = (meta.Classes && /Recipe/.test(meta.Classes)) || false;
 
     if (!meta.Direction) {
       if (meta.Language === config.locale.Language) {
@@ -135,6 +136,9 @@ var Post = function(filename, markdown, meta, config) {
     if (meta.Classes.indexOf('images') >= 0) {
       external.htmlTeaser   = internal.galleryHtml(external.htmlTeaser);
       external.html         = internal.galleryHtml(external.html);
+    } else if (meta.Classes.indexOf('recipe') >= 0) {
+      external.html         = internal.recipeHtml(external.html);
+      console.log(external.html);
     }
     if (meta.Description) {
       meta.MarkdownDescription = meta.Description;
@@ -249,6 +253,24 @@ var Post = function(filename, markdown, meta, config) {
       .replace(/(<img[^>]+src="([^"]+)(?:-\d+x\d+)(\.(?:jpg|png|gif))"[^>]*>)/g, '<a href="$2$3" class="gallery__link">$1</a>')
       .replace(/(<a[^>]+)(><img[^>]+alt=")(["]+?)(")/g, '$1 title="$3"$2$3$4')
     ;
+  };
+
+  /**
+   * Add schema.org blocks for recipes
+   * @param  {String} html [description]
+   * @return {String}      [description]
+   */
+  internal.recipeHtml = function(html) {
+    return html.replace(/^([\s\S]+?)(<ul>[\s\S]+?<\/ul>)([\s\S]+?)$/, function(all, description, ingredients, instructions) {
+      return '<div itemprop="description">' + "\n"
+        + description
+        + '</div>' + "\n"
+        + ingredients.replace(/(<li)/g, '$1 itemprop="recipeIngredient"') + "\n"
+        + '<div itemprop="recipeInstructions">'
+        + instructions + "\n"
+        + '</div>'
+      ;
+    });
   };
 
   /**
