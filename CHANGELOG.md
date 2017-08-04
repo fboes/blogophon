@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Fixed `nginx.conf`
 * [x] Adding support for recipes
 * [x] Adding support for embedding JSFiddle
 * [x] Adding YAML syntax highlighting
