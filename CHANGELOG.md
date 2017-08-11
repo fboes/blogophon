@@ -3,6 +3,9 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+1.2.1
+-----
+
 * [x] Fixed `nginx.conf`
 * [x] Adding support for recipes
 * [x] Adding support for embedding JSFiddle
