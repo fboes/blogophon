@@ -40,9 +40,13 @@ var PostReader = function(file, config) {
       })
         .on('line', function(line) {
           lineNumber ++;
-          if (lineNumber === 1 && line.match(/^---$/)) {
+          if (lineNumber === 1) {
             // Start YAML parser
-            readYaml = true;
+            readYaml = line.match(/^---$/);
+            if (!readYaml) {
+              postData.meta.Title = line;
+              postData.markdown += line + "\n";
+            }
           } else if(readYaml && line.match(/^---$/)) {
             // Finish YAML parser
             readYaml = false;

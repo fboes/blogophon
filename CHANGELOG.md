@@ -3,6 +3,8 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Fixing parser for articles without YAML header
+
 1.2.1
 -----
 
