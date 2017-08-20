@@ -42,3 +42,9 @@ article footer a { text-decoration: none; }
 article address img { width: 2em; }
 article iframe { width: 100%; overflow: hidden; border: none; }
 .teasers .modified { display: none; }
+.lang-math * { color: inherit !important; }
+.lang-math u { text-decoration: none; border-bottom: 1px solid; }
+.lang-math i { display: none; }
+.lang-math .root { display: inline-block; border-top: 1px solid; padding-right: 0.1em; }
+.lang-math .division { display: inline-block; text-align: center; vertical-align: -0.7em; }
+.lang-math .division .dividend, .lang-math .division .divisor { display: block; }

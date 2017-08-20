@@ -293,3 +293,36 @@ exports.testEmoji = function(test) {
 
   test.done();
 };
+
+exports.testMath = function(test) {
+  //test.expect(2);
+
+  var m, x = '<pre><code class="lang-math">'
+  + '1 + 2*a / b - 20 &gt;= 20 &lt;= 40 ~= a != b'
+  + '</code></pre>';
+  m = markyMark(x);
+
+  test.ok(m, 'Got output');
+  test.equal(m.match(/&#x([\dA-Z]+);/g).length, 4, 'Strange mathematical symbols added');
+  test.equal(m.length, 104, 'Strange mathematical symbols added');
+
+  x = '<pre><code class="lang-math">'
+  + 'f(x) = x * a^2 + b^3'
+  + '</code></pre>';
+  m = markyMark(x);
+  test.equal(m.length, 79, 'Strange mathematical symbols added');
+
+  x = '<pre><code class="lang-math">'
+  + '2 &lt;=&gt; 3 &lt;-&gt; 4 =&gt; 2 -&gt; 1'
+  + '</code></pre>';
+  m = markyMark(x);
+  test.equal(m.length, 87, 'Strange mathematical symbols added');
+
+  x = '<pre><code class="lang-math">'
+  + '(a + 2)/(1 + 2^(2 * a) + sqrt(2)) =&gt; 2'
+  + '</code></pre>';
+  m = markyMark(x);
+  console.log("\n"+ m);
+
+  test.done();
+};

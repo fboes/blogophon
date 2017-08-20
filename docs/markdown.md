@@ -233,6 +233,17 @@ The following identifiers are supported:
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
 
+### Mathematical formular
+
+Mathematical formulas can be put into a fenced code block like this:
+
+    ```math
+    a^2 + b^2 = c^2
+    ```
+
+You can use `^`, `sqrt()`, `curt()` as well as divisions like `(…)/(…)`.
+
+
 Checkboxes
 -----------
 

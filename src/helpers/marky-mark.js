@@ -124,9 +124,12 @@ var markyMark = function(string, rules) {
         case '<yaml>':
           chunk = internal.convertYaml(chunk);
           break;
+        case '<math>':
+          chunk = internal.convertMath(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|xml|markdown|shell|bash)/);
+            var lang = chunk.match(/(css|html|xml|markdown|shell|bash|math)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -382,6 +385,71 @@ var markyMark = function(string, rules) {
         .replace(/(:\s)([\d-]+T[\d-:.]+)(\n|$)/g, '$1<em>$2</em>$3')
       ;
     });
+  };
+
+  /**
+   * Convert mathematical formulas
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertMath = function(string) {
+    var entityMap = {
+      '+': '+',
+      '-': '−',
+      '*': '×',
+      '/': '÷',
+      '+-': '±',
+      '~=': '&#x2245;',
+      '!=': '&#x2260;',
+      '&lt;&gt;': '&#x2260;',
+      '&lt;-&gt;': '&#x2194;', // ↔
+      '&lt;=&gt;': '&#x21d4;', // ⇔
+      '-&gt;': '&#x2192;', // →
+      '=&gt;': '&#x21d2;', // ⇒
+      '&gt;=': '&#x22DD;',
+      '&lt;=': '&#x22DC;',
+      'sqrt': '√',
+      'curt': '∛'
+    };
+    string = string.replace(
+      /(&lt;[=-]?&gt;|(?:[~!]|&lt;|&gt;)=|\+-|[=-]&gt;|[+*/-]|sqrt)/g,
+      function(all, s) {
+        return entityMap[s];
+      }
+    );
+    string = string
+      .replace(/(\^2)(\D|$)/g, '²$2')
+      .replace(/(\^3)(\D|$)/g, '³$2')
+      .replace(/^f(\()/, '&#x192;$1')
+    ;
+
+    while(string.match(/\([^()]+?\)/g)) {
+      string = string
+        .replace(/(^|.)\(([^()]+?)\)(.|$)/g, function(all, before, inner, after) {
+          if (before === '^') {
+            return '<sup><i>' + before + '</i>' + inner + '</sup>' + after;
+          } else if (before === '√') {
+            return before + '<span class="root square-root">' + inner + '</span>' + after;
+          } else if (before === '∛') {
+            return before + '<span class="root cube-root">' + inner + '</span>' + after;
+          } else if (before === '÷') {
+            return before + '<b>' + inner + '</b>' + after;
+          } else if (after === '÷') {
+            return before + '<u>' + inner + '</u>' + after;
+          }
+          return before + '<span>◄' + inner + '►</span>' + after;
+        })
+        .replace(/<u>(.+?)<\/u>(÷)<b>(.+?)<\/b>/g, '<div class="division"><u class="dividend">$1</u><i>$2</i><span class="divisor">$3</span></div>')
+      ;
+    }
+    string = string
+      .replace(/◄/g, '(')
+      .replace(/►/g, ')')
+      .replace(/√/g, '&#x221A;')
+      .replace(/∛/g, '&#x221B;')
+    ;
+
+    return string;
   };
 
   /**
