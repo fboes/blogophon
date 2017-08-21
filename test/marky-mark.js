@@ -322,7 +322,14 @@ exports.testMath = function(test) {
   + '(a + 2)/(1 + 2^(2 * a) + sqrt(2)) =&gt; 2'
   + '</code></pre>';
   m = markyMark(x);
-  console.log("\n"+ m);
+  test.equal(m.length, 226, 'Strange mathematical symbols added');
+
+  x = '<pre><code class="lang-math">'
+  + 'CO_2 + h_(Lighthouse)'
+  + '</code></pre>';
+  m = markyMark(x);
+  test.equal(m.length, 81, 'Strange mathematical symbols added');
+  //console.log("\n"+ m);
 
   test.done();
 };

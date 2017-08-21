@@ -420,6 +420,7 @@ var markyMark = function(string, rules) {
     string = string
       .replace(/(\^2)(\D|$)/g, '²$2')
       .replace(/(\^3)(\D|$)/g, '³$2')
+      .replace(/_(\d+)/g, '<sub>$1</sub>')
       .replace(/^f(\()/, '&#x192;$1')
     ;
 
@@ -428,6 +429,8 @@ var markyMark = function(string, rules) {
         .replace(/(^|.)\(([^()]+?)\)(.|$)/g, function(all, before, inner, after) {
           if (before === '^') {
             return '<sup><i>' + before + '</i>' + inner + '</sup>' + after;
+          } else if (before === '_') {
+            return '<sub>' + inner + '</sub>' + after;
           } else if (before === '√') {
             return before + '<span class="root square-root">' + inner + '</span>' + after;
           } else if (before === '∛') {

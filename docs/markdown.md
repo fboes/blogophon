@@ -233,7 +233,7 @@ The following identifiers are supported:
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
 
-### Mathematical formular
+### Mathematical formula
 
 Mathematical formulas can be put into a fenced code block like this:
 
@@ -241,7 +241,15 @@ Mathematical formulas can be put into a fenced code block like this:
     a^2 + b^2 = c^2
     ```
 
-You can use `^`, `sqrt()`, `curt()` as well as divisions like `(…)/(…)`.
+These symbols can be used:
+
+| Symbol    | Converts to…               |
+|-----------|----------------------------|
+| `^`       | Exponentiation; use parentheses if you want to use more than one number |
+| `_`       | Subscript; use parentheses if you want to use more than one number      |
+| `sqrt()`  | Square root                |
+| `curt()`  | Cubic root                 |
+| `(…)/(…)` | Division with fraction bar |
 
 
 Checkboxes
