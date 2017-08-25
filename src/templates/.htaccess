@@ -3,11 +3,12 @@
 # ServerName {{config.domain}}
 # DocumentRoot /var/www; # Replace with actual doc root
 
-AddCharset utf-8 .html .css .js .rss .atom .xml .ics .md .json .txt
+AddCharset utf-8 .html ._html .css .js .rss .atom .xml .ics .md .json .txt
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
 ErrorDocument 410 /404.html
 
+AddType text/plain ._html
 AddType application/json .json
 AddType application/vnd.google-earth.kml+xml .kml
 AddType text/calendar .ics

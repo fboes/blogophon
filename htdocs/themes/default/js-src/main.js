@@ -23,6 +23,15 @@
       return [a,b,c];
     };
   }
+  // https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+      thisArg = thisArg || window;
+      for (var i = 0; i < this.length; i++) {
+        callback.call(thisArg, this[i], i, this);
+      }
+    };
+  }
 
   // ---------------------------------------------------------------------------
   var imagePopup = {
@@ -63,21 +72,18 @@
   };
 
   // ---------------------------------------------------------------------------
-  Array.prototype.forEach.call(
-    document.querySelectorAll('[data-ajax-url]'),
-    function(el, i){
-      (function(el) {
-        if (el.getAttribute('data-ajax-url')) {
-          var request = new XMLHttpRequest();
-          request.open('GET', el.getAttribute('data-ajax-url'), true);
-          request.onload = function() {
-            if (this.status >= 200 && this.status < 400) {
-              el.innerHTML = this.response;
-            }
-          };
-          request.send();
-        }
-      })(el);
+  document.querySelectorAll('[data-ajax-url]').forEach(
+    function(el) {
+      if (el.getAttribute('data-ajax-url')) {
+        var request = new XMLHttpRequest();
+        request.open('GET', el.getAttribute('data-ajax-url'), true);
+        request.onload = function() {
+          if (this.status >= 200 && this.status < 400) {
+            el.innerHTML = this.response;
+          }
+        };
+        request.send();
+      }
     }
   );
 
