@@ -122,7 +122,6 @@ var markyMark = function(string, rules) {
           break;
         case '<bash>':
         case '<shell>':
-        case '<apacheconf>':
           chunk = internal.convertShell(chunk);
           break;
         case '<yaml>':
@@ -131,9 +130,12 @@ var markyMark = function(string, rules) {
         case '<ini>':
           chunk = internal.convertIni(chunk);
           break;
+        case '<apacheconf>':
+          chunk = internal.convertApacheConf(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|apacheconf|yaml|ini)/);
+            var lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|yaml|ini|apacheconf)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -392,7 +394,7 @@ var markyMark = function(string, rules) {
   };
 
   /**
-   * Convert Yaml code text node
+   * Convert INI configuration text node
    * @param  {String} string [description]
    * @return {String}        [description]
    */
@@ -402,6 +404,19 @@ var markyMark = function(string, rules) {
       .replace(/((?:^|\s+)\[)([^\]]+)(\])/g, '$1<b>$2</b>$3')
       .replace(/(^|\s+)([^;[][\S]+)(=)(.+)/g, '$1<i>$2</i>$3<kbd>$4</kbd>')
     ;
+  };
+
+  /**
+   * Convert Apache config code text node
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertApacheConf = function(string) {
+    return internal.convertGeneralCode(string, function(codeRest) {
+      return codeRest
+        .replace(/((?:^|\n)\s*)([a-zA-Z0-9_]\S+)(\s)/g, '$1<i>$2</i>$3')
+      ;
+    });
   };
 
   /**
