@@ -228,6 +228,8 @@ The following identifiers are supported:
 * `css`
 * `html` & `xml`
 * `yaml`
+* `ini`
+* `apacheconf`
 * `markdown` to output Markdown examples.
 * `shell` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
 

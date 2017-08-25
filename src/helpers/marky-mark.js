@@ -106,12 +106,15 @@ var markyMark = function(string, rules) {
           chunk = internal.convertCode(chunk);
           break;
         case '<css>':
+        case '<less>':
+        case '<sass>':
           chunk = internal.convertCss(chunk);
           break;
         case '<html>':
           chunk = internal.convertHtml(chunk);
           break;
         case '<xml>':
+        case '<xslt>':
           chunk = internal.convertHtml(chunk);
           break;
         case '<markdown>':
@@ -119,14 +122,18 @@ var markyMark = function(string, rules) {
           break;
         case '<bash>':
         case '<shell>':
+        case '<apacheconf>':
           chunk = internal.convertShell(chunk);
           break;
         case '<yaml>':
           chunk = internal.convertYaml(chunk);
           break;
+        case '<ini>':
+          chunk = internal.convertIni(chunk);
+          break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|html|xml|markdown|shell|bash)/);
+            var lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|apacheconf|yaml|ini)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -137,7 +144,7 @@ var markyMark = function(string, rules) {
           }
           break;
       }
-      external.output += chunk; // this is the perfect place for a result emitter
+      external.output += chunk; // this is the perfect place for a result event emitter
     }
     internal.mode = newMode;
     return newMode;
@@ -382,6 +389,19 @@ var markyMark = function(string, rules) {
         .replace(/(:\s)([\d-]+T[\d-:.]+)(\n|$)/g, '$1<em>$2</em>$3')
       ;
     });
+  };
+
+  /**
+   * Convert Yaml code text node
+   * @param  {String} string [description]
+   * @return {String}        [description]
+   */
+  internal.convertIni = function(string) {
+    return string
+      .replace(/(^|\s+)([;].+)/g, '$1<u>$2</u>')
+      .replace(/((?:^|\s+)\[)([^\]]+)(\])/g, '$1<b>$2</b>$3')
+      .replace(/(^|\s+)([^;[][\S]+)(=)(.+)/g, '$1<i>$2</i>$3<kbd>$4</kbd>')
+    ;
   };
 
   /**
