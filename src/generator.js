@@ -147,7 +147,10 @@ var Generator = function(config) {
           }, Mustache.themePartials)));
         }
         if (config.specialFeatures.ajax) {
-          promises.push(fs.writeFileAsync( post.meta.urlObj.filename('index', 'json'), JSON.stringify(post, undefined, 2)));
+          promises.push(fs.writeFileAsync(
+            post.meta.urlObj.filename('index', 'json'),
+            JSON.stringify(post, undefined, 2))
+          );
         }
         if (!noimages) {
           promises.push(external.buildArticleImages(post));
@@ -339,7 +342,10 @@ var Generator = function(config) {
           })));
         }
         if (config.specialFeatures.ajax) {
-          promises.push(fs.writeFileAsync( urls.ajax.filename(), JSON.stringify(index, undefined, 2)));
+          promises.push(fs.writeFileAsync(
+            urls.ajax.filename(),
+            JSON.stringify(index, undefined, 2)
+          ));
         }
 
         for (page = 0; page < pagedPosts.length; page ++) {
@@ -420,6 +426,13 @@ var Generator = function(config) {
           config: config
         }, Mustache.themePartials)));
 
+        if (config.specialFeatures.ajax) {
+          promises.push(fs.writeFileAsync(
+            indexUrl(config.htdocs.tag + '/index.json').filename(),
+            JSON.stringify(tags, undefined, 2)
+          ));
+        }
+
         Promise
           .all(promises)
           .then(function() {
@@ -468,6 +481,13 @@ var Generator = function(config) {
             },
             Mustache.themePartials)
           ));
+
+          if (config.specialFeatures.ajax) {
+            promises.push(fs.writeFileAsync(
+              indexUrl(config.htdocs.author+'/index.json').filename(),
+              JSON.stringify(authors, undefined, 2)
+            ));
+          }
 
           Promise
             .all(promises)
