@@ -58,7 +58,7 @@ Description: |
 
 ```
 
-Thre are also [special post types](special-post-types.md), which are activated by choosing a special `Classes` value.
+There are also [special post types](special-post-types.md), which are activated by choosing a special `Classes` value.
 
 Basic Markdown example
 ----------------------
@@ -119,8 +119,8 @@ It is always wise to use image styles, as these styles scale your images to a se
 
 If you do not use image styles, consider to at least state the size of the image. This will speed up the rendering of the whole page while the image has not yet loaded.
 
-Videos & Audios
----------------
+Videos & audio files
+--------------------
 
 To show video and audio files you just have to use the regular Markdown used for images:
 
