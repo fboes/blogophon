@@ -113,6 +113,9 @@ var Post = function(filename, markdown, meta, config) {
     }
     meta.MarkdownTitle = meta.Title;
     meta.Title = SuperString(internal.removeMarkdown(meta.Title)).niceShorten(320);
+    if (!meta.Keywords && meta.Tags) {
+      meta.Keywords = meta.Tags;
+    }
     if (meta.Keywords) {
       meta.Keywords = internal.listToArray(meta.Keywords);
       meta.Tags = meta.Keywords.map(function(tag){
