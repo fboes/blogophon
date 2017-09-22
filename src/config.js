@@ -41,9 +41,11 @@ config.itemsPerPage       = Number(config.itemsPerPage) || 5;
 config.defaultAuthor      = config.defaultAuthor        || {};
 config.defaultAuthor.name = config.defaultAuthor.name   || config.name;
 config.defaultAuthor.email= config.defaultAuthor.email  || 'info@'+config.domain;
+config.categories         = config.categories    || [];
 config.htdocs.posts       = config.htdocs.posts  || 'posts';
 config.htdocs.tag         = config.htdocs.tag    || 'tagged';
 config.htdocs.author      = config.htdocs.author || 'authored-by';
+config.htdocs.category    = config.htdocs.category || 'category';
 config.specialFeatures    = {};
 if (config.useSpecialFeature) {
   config.useSpecialFeature.forEach(function(v) {

@@ -6,6 +6,9 @@ Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
 {{#keywords}}
 Keywords:  {{#ymlQuote}}{{{keywords}}}{{/ymlQuote}}
 {{/keywords}}
+{{#category}}
+Category:  {{#ymlQuote}}{{{category}}}{{/ymlQuote}}
+{{/category}}
 {{#classes}}
 Classes:   {{#ymlQuote}}{{{classes}}}{{/ymlQuote}}
 {{/classes}}

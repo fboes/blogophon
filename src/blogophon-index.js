@@ -132,8 +132,8 @@ var blogophonIndex = function() {
   };
 
   /**
-   * [getTags description]
-   * @return {Array} [description]
+   * Get all tag names and build a new index of all articles matching the tag
+   * @return {Array} of Objects, `.index` contains new index
    */
   external.getTags = function() {
     if (!internal.isSorted) {
@@ -152,6 +152,27 @@ var blogophonIndex = function() {
       }
     });
     return tags;
+  };
+
+  /**
+   * Get all categories names and build a new index of all articles matching the categories
+   * @return {Array} of Objects, `.index` contains new index
+   */
+  external.getCategories = function() {
+    if (!internal.isSorted) {
+      external.sortblogophonIndex();
+    }
+    var categories = {};
+    external.index.forEach(function(post){
+      if (post.meta.CategoryObj) {
+        if (!categories[post.meta.CategoryObj.id]) {
+          categories[post.meta.CategoryObj.id] = post.meta.CategoryObj;
+          categories[post.meta.CategoryObj.id].index = blogophonIndex();
+        }
+        categories[post.meta.CategoryObj.id].index.push(post);
+      }
+    });
+    return categories;
   };
 
   /**

@@ -7,6 +7,7 @@ var markyMark       = require('../helpers/marky-mark');
 var ampify          = require('../helpers/ampify')();
 var postUrl         = require('../helpers/post-url');
 var tagUrl          = require('../helpers/tag-url');
+var categoryUrl     = require('../helpers/category-url');
 var authorUrl       = require('../helpers/author-url');
 var shareLinks      = require('../helpers/share-links');
 var blogophonDate   = require('../models/blogophon-date');
@@ -127,6 +128,15 @@ var Post = function(filename, markdown, meta, config) {
           urlObj: tagUrlObj
         };
       });
+    }
+    if (meta.Category) {
+      var categoryUrlObj = categoryUrl(meta.Category, config.htdocs.category);
+      meta.CategoryObj = {
+        title: meta.Category,
+        id: SuperString(meta.Category).asciify(),
+        url: categoryUrlObj.relativeUrl(),
+        urlObj: categoryUrlObj
+      };
     }
     if (!meta.Classes) {
       meta.Classes = ['Normal article'];

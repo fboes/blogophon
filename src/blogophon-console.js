@@ -204,6 +204,14 @@ var BlogophonConsole = function() {
         }
       }, {
         type: 'input',
+        name: 'categories',
+        message: 'Enter a comma-separated list of categories (optional)',
+        default: config.categories.join(', '),
+        filter: function(v) {
+          return v.trim().split(/,\s?/);
+        }
+      }, {
+        type: 'input',
         name: 'deployCmd',
         message: 'CLI command to copy files to your live server (optional)',
         default: config.deployCmd
@@ -270,6 +278,7 @@ var BlogophonConsole = function() {
             return '';
         }
       },
+      category: '',
       date: blogophonDate(new Date()).iso,
       author: config.defaultAuthor.name +' <'+config.defaultAuthor.email + '>',
       rating: "5",
@@ -384,6 +393,15 @@ var BlogophonConsole = function() {
         filter: function(v) {
           return v.trim();
         }
+      }, {
+        type: 'list',
+        name: 'category',
+        message: 'Category',
+        choices: config.categories,
+        when: function() {
+          return config.categories.length;
+        },
+        default: defaults.category
       }, {
         type: 'input',
         name: 'author',
