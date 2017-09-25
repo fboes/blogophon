@@ -154,7 +154,8 @@ var BlogophonConsole = function() {
           'Static path',
           'Year',
           'Year/Month',
-          'Year/Month/Day'
+          'Year/Month/Day',
+          'Category'
         ]
       }, {
         type: 'list',

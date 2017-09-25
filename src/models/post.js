@@ -77,6 +77,15 @@ var Post = function(filename, markdown, meta, config) {
     if (meta.Created.timestamp > meta.Modified.timestamp) {
       meta.Modified  = meta.Created;
     }
+    if (meta.Category) {
+      var categoryUrlObj = categoryUrl(meta.Category, config.htdocs.category);
+      meta.CategoryObj = {
+        title: meta.Category,
+        id: SuperString(meta.Category).asciify(),
+        url: categoryUrlObj.relativeUrl(),
+        urlObj: categoryUrlObj
+      };
+    }
 
     var path = config.htdocs.posts;
     if (config.postPathMode){
@@ -89,6 +98,11 @@ var Post = function(filename, markdown, meta, config) {
           break;
         case 'Year/Month/Day':
           path = meta.Created.year + '/' + meta.Created.month + '/' + meta.Created.day;
+          break;
+        case 'Category':
+          if (meta.CategoryObj) {
+            path = meta.CategoryObj.urlObj.relativeDirname();
+          }
           break;
       }
     }
@@ -128,15 +142,6 @@ var Post = function(filename, markdown, meta, config) {
           urlObj: tagUrlObj
         };
       });
-    }
-    if (meta.Category) {
-      var categoryUrlObj = categoryUrl(meta.Category, config.htdocs.category);
-      meta.CategoryObj = {
-        title: meta.Category,
-        id: SuperString(meta.Category).asciify(),
-        url: categoryUrlObj.relativeUrl(),
-        urlObj: categoryUrlObj
-      };
     }
     if (!meta.Classes) {
       meta.Classes = ['Normal article'];
