@@ -37,7 +37,7 @@
     "beepbeep": "^1.2.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
-    "gulp-live-server": "0.0.30",
+    "gulp-live-server": "0.0.31",
     "gulp-nodeunit": "0.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
@@ -60,8 +60,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "chalk": "^2.0.1",
-    "dateformat": "^2.0.0",
+    "dateformat": "^3.0.2",
     "fs-extra-promise": "^1.0.1",
     "glob": "^7.0.5",
     "gm": "^1.23.0",

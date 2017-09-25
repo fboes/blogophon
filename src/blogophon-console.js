@@ -3,7 +3,6 @@
 var inquirer       = require('inquirer');
 var fs             = require('fs-extra-promise');
 var path           = require('path');
-var chalk          = require('chalk');
 var shell          = require('shelljs');
 var config         = require('./config');
 var Mustache       = require('./helpers/blogophon-mustache');
@@ -63,7 +62,7 @@ var BlogophonConsole = function() {
       templateData,
       function(err) {
         if (err) {
-          console.error(chalk.red(markdownFilename + ' could not be written'));
+          console.error(markdownFilename + ' could not be written');
         } else {
           console.log(markdownFilename + ' created');
           if (templateData.edit) {
@@ -72,7 +71,7 @@ var BlogophonConsole = function() {
               : 'open ' + markdownFilename + ' || vi '+ markdownFilename
             ;
             shell.exec(cmd);
-            console.log(chalk.grey(cmd));
+            console.log('$ ' + cmd);
           }
           external.init();
         }
@@ -505,7 +504,7 @@ var BlogophonConsole = function() {
       function(answers) {
         var markdownFilename = path.join(config.directories.data, answers.file);
         var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
-        console.log(chalk.grey(cmd));
+        console.log('$ ' + cmd);
         shell.exec(cmd);
         external.init();
       },
