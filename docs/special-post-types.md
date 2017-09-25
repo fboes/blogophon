@@ -1,6 +1,15 @@
 Special post types
 ==================
 
+With special post types you can have your Blogophon act as…
+
+* a conventional blog or micro-blog,
+* a photo book,
+* a cook-book with recipes,
+* a travel journal with dates and locations,
+* some kind of geo-caching site (using [GeoJSON or KML](special-features.md)), or
+* a calendar (using [ICS calendars](special-features.md)).
+
 Special post types change the way your article behaves. You can choose a post type by altering the `Classes` value in your [YAML frontmatter](markdown.md).
 
 Regular post types
