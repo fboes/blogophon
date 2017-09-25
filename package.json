@@ -60,7 +60,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "chalk": "^2.0.1",
     "dateformat": "^3.0.2",
     "fs-extra-promise": "^1.0.1",
     "glob": "^7.0.5",
