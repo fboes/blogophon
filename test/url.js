@@ -5,6 +5,7 @@ var PostUrl   = require('../src/helpers/post-url');
 var AuthorUrl = require('../src/helpers/author-url');
 var TagUrl    = require('../src/helpers/tag-url');
 var IndexUrl  = require('../src/helpers/index-url');
+var CategoryUrl = require('../src/helpers/category-url');
 
 
 exports.testExtender = function(test) {
@@ -32,7 +33,7 @@ exports.testExtender = function(test) {
 };
 
 exports.testBasicTransformation = function(test) {
-  test.expect(9+3);
+  test.expect(9+3+3);
 
   var url;
 
@@ -50,6 +51,11 @@ exports.testBasicTransformation = function(test) {
   test.ok(url.relativeUrl().match(/^\S*\/tagged\/tag\/$/));
   test.ok(url.absoluteUrl().match(/^\S*\/tagged\/tag\/$/));
   test.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)tag(\/|\\)index\.html$/));
+
+  url = CategoryUrl('Category');
+  test.ok(url.relativeUrl().match(/^\S*\/category\/category\/$/));
+  test.ok(url.absoluteUrl().match(/^\S*\/category\/category\/$/));
+  test.ok(url.filename().match(/^\S+(\/|\\)category(\/|\\)category(\/|\\)index\.html$/));
 
   url = AuthorUrl('Paul Wischwedel');
   test.ok(url.relativeUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));

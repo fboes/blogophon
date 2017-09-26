@@ -221,6 +221,7 @@ var Generator = function(config) {
         var promises = [
           external.buildIndexFiles(),
           external.buildTagPages(),
+          external.buildCategoryPages(),
           external.buildMetaFiles()
         ];
 
@@ -445,6 +446,52 @@ var Generator = function(config) {
   };
 
   /**
+   * [buildCategoryPages description]
+   * @return {Promise} with first parameter of `resolve` being the number of files converted.
+   */
+  external.buildCategoryPages = function() {
+    var categories = internal.currentIndex.getCategories();
+    var categoryPages = Object.keys(categories).sort().map(function(key) {
+      return {
+        title: categories[key].title,
+        url:   categories[key].urlObj.relativeUrl()
+      };
+    });
+
+    return new Promise(
+      function(resolve, reject) {
+        var promises = Object.keys(categories).map(function(key) {
+          return external.buildIndexFiles(
+            categories[key].index,
+            '/'+categories[key].urlObj.relativeDirname()+'/',
+            categories[key].title
+          );
+        });
+
+        promises.push(fs.writeFileAsync( indexUrl(config.htdocs.category + '/index.html').filename(), Mustache.renderExtra(Mustache.themeTemplates.tagsHtml, {
+          index: categoryPages,
+          config: config
+        }, Mustache.themePartials)));
+
+        if (config.specialFeatures.ajax) {
+          promises.push(fs.writeFileAsync(
+            indexUrl(config.htdocs.category + '/index.json').filename(),
+            JSON.stringify(categories, undefined, 2)
+          ));
+        }
+
+        Promise
+          .all(promises)
+          .then(function() {
+            return resolve(promises.length);
+          })
+          .catch(reject)
+        ;
+      }
+    );
+  };
+
+  /**
    * [buildAuthorPages description]
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
@@ -508,14 +555,6 @@ var Generator = function(config) {
   external.buildMetaFiles = function() {
     return new Promise(
       function(resolve, reject) {
-        var tags = internal.currentIndex.getTags();
-        var tagPages = Object.keys(tags).sort().map(function(key) {
-          return {
-            title: tags[key].title,
-            url:   tags[key].urlObj.relativeUrl()
-          };
-        });
-
         var promises = [
           fs.writeFileAsync(
             indexUrl('404.html').filename(),
@@ -533,7 +572,6 @@ var Generator = function(config) {
             Mustache.renderExtra(
               Mustache.templates.sitemapXml, {
                 index: internal.currentIndex.getPosts(),
-                tagPages: tagPages,
                 pubDate: blogophonDate(internal.currentIndex.pubDate).iso,
                 config: config
               }
