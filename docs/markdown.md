@@ -22,38 +22,40 @@ Each YAML declaration starts with the declaration **key**, followed by `:`, a wh
 All of these declarations are optional.
 
 ```yaml
-Title:        'Title'                   # Title of document. If not set the first line of your Markdown will be used as 
-                                        # title.
+Title:        'Title'                   # Title of document. If not set the first line of your Markdown 
+                                        # will be used as title.
 Description:  'Some nice text'          # Teaser text. If not set will be generated from article text.
                                         # For details see below.
 Date:         2016-08-25T19:13:12+02:00 # Publishing date in ISO-8601.
-                                        # If not set this will be taken from the file date. If this date set into the
-                                        # future, the article will not be published until the date is reached.
+                                        # If not set this will be taken from the file date. 
+                                        # If this date set into the future, the article will not be
+                                        # published until the date is reached.
 DateModified: 2016-08-26                # Last modified date in ISO-8601.
                                         # If not set this will be taken from the file date publishing date.
 Keywords:     Tag, Tag                  # Comma-separated list of keywords / tags.
 Category:     My little category        # Category the article belongs to.
 Twitter:      '#Hashtag and some text'  # This text will be used on Twitter.
                                         # If not set will default to title of document.
-Classes:      Images                    # Sets the article type. E.g. `Images`, `Link`. This will be used as `class`
-                                        # attribute on the article, allowing for special CSS.
+Classes:      Images                    # Sets the article type. E.g. `Images`, `Link`. This will be used
+                                        # as `class` attribute on the article, allowing for special CSS.
 Location:     Lista Lighthouse, Norway  # Plain address this post is supposed to be located at.
-Marker:       marker                    # Marker symbol on for this location. You may want to use symbol names
-                                        # supplied via https://www.mapbox.com/maki-icons/.
+Marker:       marker                    # Marker symbol on for this location. You may want to use symbol 
+                                        # names supplied via https://www.mapbox.com/maki-icons/.
 Latitude:     58.109285                 # Geolocation decimal latitude in WGS84, ranging from -90 to 90.
                                         # If not given will be inferred from `Location` if given.
 Longitude:    6.5664576                 # Geolocation decimal longitude in WGS84, ranging from -180 to 180.
                                         # If not given will be inferred from `Location` if given.
 Language:     en                        # Language of current article, given in ISO 639-1 or RFC1766.
                                         # If not set will default to blog's language.
-Author:       Name <email@example.org>  # Author name and email. If not set will default to blog's main author.
+Author:       Name <email@example.org>  # Author name and email. 
+                                        # If not set will default to blog's main author.
 Image:        /post/image/image.png     # Image URL used for sharing. It is best to make this URL absolute.
                                         # If not set the first image found in the article text will be used.
-Link:         http://www.example.com/   # If given clicking on links to this article redirects to this URL instead
-                                        # of the original post's link.
-Rating:       1/5                       # Rating given in a review, with `x` out of `y`, `1` being the lowest possible
-                                        # rating.
-Draft:        yes                       # If set to `yes` this will prevent the article from being published. 
+Link:         http://www.example.com/   # If given clicking on links to this article redirects to this URL
+                                        # instead of the original post's link.
+Rating:       1/5                       # Rating given in a review, with `x` out of `y`, `1` being the lowest
+                                        # possible rating.
+Draft:        yes                       # If set to `yes` this will prevent the article from being published.
                                         # Use this for drafts.
 ```
 
