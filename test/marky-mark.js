@@ -125,8 +125,7 @@ exports.testShell = function(test) {
  * @return {[type]}      [description]
  */
 exports.testQuotation = function(test) {
-
-  test.expect(3);
+  test.expect(6);
 
   var m, x = '<h1>Delete me</h1><h2>Downgrade me</h2><p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
 
@@ -146,6 +145,18 @@ exports.testQuotation = function(test) {
   }), 'Quotation changed');
   test.ok(!m.match(/<h2>/));
   test.ok(m.match(/<h3>/));
+  test.ok(m.match(/«/));
+  test.ok(m.match(/“/));
+
+  x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> </p>";
+  m = markyMark(x, {
+    quotation: {
+      primary: ['%', '%'],
+      secondary: ['%', '%']
+    }
+  });
+  //console.log(m);
+  test.ok(!m.match(/%/));
 
   test.done();
 };
