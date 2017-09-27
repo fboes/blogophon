@@ -19,6 +19,7 @@ var imageStyles    = require('./helpers/image-styles');
 var ampify         = require('./helpers/ampify')();
 var slacked        = require('./models/slacked');
 var jsonFeed       = require('./models/json-feed');
+var categoriesUrls = require('./models/categories');
 
 /**
  * Generator used for creating the blog.
@@ -43,6 +44,7 @@ var Generator = function(config) {
   internal.translation  = translations(config.locale.language);
   internal.hashes       = hashes();
   internal.imageStyles  = imageStyles(config);
+  config.categoriesUrls = categoriesUrls(config);
 
   /**
    * Get all articles from file system and populate `index` into {Post}. Uses {PostReader}.

@@ -57,6 +57,16 @@
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
             <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
+
+            {{#meta.CategoryObj}}
+              <div itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
+                <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                  <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name">{{meta.CategoryObj.title}}</span></a>
+                  <meta itemprop="position" content="1" />
+                </span>
+              </div>
+            {{/meta.CategoryObj}}
+
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
               <h2 itemprop="name headline" class="p-name">{{meta.Title}}</h2>
