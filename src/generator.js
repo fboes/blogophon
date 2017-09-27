@@ -508,14 +508,6 @@ var Generator = function(config) {
   external.buildMetaFiles = function() {
     return new Promise(
       function(resolve, reject) {
-        var tags = internal.currentIndex.getTags();
-        var tagPages = Object.keys(tags).sort().map(function(key) {
-          return {
-            title: tags[key].title,
-            url:   tags[key].urlObj.relativeUrl()
-          };
-        });
-
         var promises = [
           fs.writeFileAsync(
             indexUrl('404.html').filename(),
@@ -533,7 +525,6 @@ var Generator = function(config) {
             Mustache.renderExtra(
               Mustache.templates.sitemapXml, {
                 index: internal.currentIndex.getPosts(),
-                tagPages: tagPages,
                 pubDate: blogophonDate(internal.currentIndex.pubDate).iso,
                 config: config
               }
