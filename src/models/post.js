@@ -1,6 +1,6 @@
 'use strict';
 
-var markdownConvert = require('marked');
+var markdownConvert = require('8fold-marked');
 var crypto          = require('crypto');
 var SuperString     = require('../helpers/super-string');
 var markyMark       = require('../helpers/marky-mark');

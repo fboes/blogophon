@@ -65,7 +65,7 @@
     "glob": "^7.0.5",
     "gm": "^1.23.0",
     "inquirer": "^3.0.1",
-    "marked": "^0.3.6",
+    "8fold-marked": "^0.3.6",
     "mustache": "^2.2.1",
     "promise": "^8.0.0",
     "remove-markdown": "^0.2.0",
