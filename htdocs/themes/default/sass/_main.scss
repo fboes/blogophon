@@ -22,6 +22,9 @@ li {
 }
 a {
   color: $color-theme;
+  &:hover {
+    color: darken($color-theme, 20%);
+  }
 }
 
 @include no-amp {
@@ -46,6 +49,7 @@ a {
 
 #container {
   > header,
+  > #navigation,
   > div > main,
   > div > aside,
   > footer {
@@ -74,6 +78,25 @@ a {
   }
 }
 
+.breadcrumb {
+  list-style: none;
+  display: block;
+  font-size: 0.8em;
+  margin-bottom: -1em;
+  li {
+    display: inline-block;
+    margin: 0;
+    &:after {
+      content: "\00BB";
+    }
+    &:last-child {
+      &:after {
+        content: '';
+      }
+    }
+  }
+}
+
 #prevnext {
   text-align:center;
   padding: 2em 0;
@@ -88,6 +111,24 @@ a {
 #footer {
   padding-top: 1em;
   padding-bottom: 1em;
+}
+
+#navigation {
+  background-color: $color-grey;
+  border-bottom:1px dashed $color-grey-dark;
+  margin-bottom: 1em;
+  padding: 0.2em 0;
+  ul {
+    list-style: none;
+    display: block;
+    li {
+      display: inline-block;
+      margin: 0 1em 0 0;
+    }
+  }
+  a {
+    text-decoration: none;
+  }
 }
 
 #sidebar {

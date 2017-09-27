@@ -6,20 +6,29 @@ body { font-family: Arial, sans-serif; line-height: 1.5; }
 li { margin-left: 1.5em; }
 body[dir="rtl"] li { margin-right: 1.5em; margin-left: 0; }
 a { color: #116bfc; }
+a:hover { color: #0240a5; }
 @media print { @page { margin: 0.5cm; }
   h1, h2, h3, h4 { page-break-after: avoid; }
   h1, h2, h3, h4, p, li, tr, img { page-break-inside: avoid; }
   thead { display: table-header-group; }
   img { max-width: 100% !important; } }
-#container > header, #container > div > main, #container > div > aside, #container > footer { padding-left: 0.5em; padding-right: 0.5em; }
-@media screen and (min-width: 640px) { #container > header, #container > div > main, #container > div > aside, #container > footer { padding-left: calc(50vw - (320px) + 0.5em); padding-right: calc(50vw - (320px) + 0.5em); } }
+#container > header, #container > #navigation, #container > div > main, #container > div > aside, #container > footer { padding-left: 0.5em; padding-right: 0.5em; }
+@media screen and (min-width: 640px) { #container > header, #container > #navigation, #container > div > main, #container > div > aside, #container > footer { padding-left: calc(50vw - (320px) + 0.5em); padding-right: calc(50vw - (320px) + 0.5em); } }
 #container > header { background-color: #116bfc; }
 #container > header h1 { font-size: 1em; }
 #container > header a { color: white; text-decoration: none; }
 #container > aside { border-top: 1px dashed #666666; }
+.breadcrumb { list-style: none; display: block; font-size: 0.8em; margin-bottom: -1em; }
+.breadcrumb li { display: inline-block; margin: 0; }
+.breadcrumb li:after { content: "\00BB"; }
+.breadcrumb li:last-child:after { content: ''; }
 #prevnext { text-align: center; padding: 2em 0; }
 #prevnext a { display: inline-block; padding: 0 1em; }
 #header, #sidebar, #footer { padding-top: 1em; padding-bottom: 1em; }
+#navigation { background-color: #dddddd; border-bottom: 1px dashed #666666; margin-bottom: 1em; padding: 0.2em 0; }
+#navigation ul { list-style: none; display: block; }
+#navigation ul li { display: inline-block; margin: 0 1em 0 0; }
+#navigation a { text-decoration: none; }
 #sidebar { background-color: #dddddd; border-top: 1px dashed #666666; }
 #footer { background-color: #dddddd; color: #666666; font-size: 0.7em; text-align: center; }
 article header .date { float: right; font-size: 0.8em; }

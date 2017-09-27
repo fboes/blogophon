@@ -49,6 +49,23 @@
     <div id="main">
       <main id="content">
         {{#post}}
+          {{#meta.CategoryObj}}
+            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
+              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
+                <meta itemprop="position" content="1" />
+              </li>
+              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name">{{meta.CategoryObj.title}}</span></a>
+                <meta itemprop="position" content="2" />
+              </li>
+              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{meta.Url}}"><span itemprop="name">{{meta.Title}}</span></a>
+                <meta itemprop="position" content="3" />
+              </li>
+            </ol>
+          {{/meta.CategoryObj}}
+
           <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="http://schema.org/BlogPosting">
             {{#meta.Image}}
               <link itemprop="image" href="{{meta.Image}}" />
@@ -57,15 +74,6 @@
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
             <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
-
-            {{#meta.CategoryObj}}
-              <div itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
-                <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                  <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name">{{meta.CategoryObj.title}}</span></a>
-                  <meta itemprop="position" content="1" />
-                </span>
-              </div>
-            {{/meta.CategoryObj}}
 
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
@@ -154,6 +162,11 @@
         {{/config.specialFeatures.teasersnippets}}
 
         {{#config.specialFeatures.teasersnippets}}
+          {{#post.meta.CategoryObj}}
+            <section data-ajax-url="{{url}}snippet._html">
+              <!--#include virtual="{{url}}snippet._html" -->
+            </section>
+          {{/post.meta.CategoryObj}}
           <section data-ajax-url="{{config.basePath}}snippet._html">
             <!--#include virtual="{{config.basePath}}snippet._html" -->
           </section>

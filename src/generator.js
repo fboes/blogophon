@@ -360,7 +360,8 @@ var Generator = function(config) {
             title:       title,
             subtitle:    (curPageObj.currentPage === 1) ? '' : SuperString(internal.translation.getString('Page %d/%d')).sprintf(curPageObj.currentPage, curPageObj.maxPages),
             absoluteUrl: curUrlObj.absoluteUrl(),
-            absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
+            absoluteUrlDirname: curUrlObj.absoluteUrlDirname(),
+            isHomepage:  (path === '/')
           };
           curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
           curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();

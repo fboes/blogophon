@@ -6,7 +6,12 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{meta.absoluteUrl}}" />
   <meta property="og:title" name="title" content="{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}" />
-  <meta property="og:description" name="description" content="{{config.description}}" />
+  {{#meta.isHomepage}}
+    <meta property="og:description" name="description" content="{{config.description}}" />
+  {{/meta.isHomepage}}
+  {{^meta.isHomepage}}
+    <meta property="og:description" name="description" content="{{#meta.title}} - {{config.description}}" />
+  {{/meta.isHomepage}}
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
   {{#config.specialFeatures.rss}}
     <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
@@ -42,6 +47,19 @@
     {{>headerHtml}}
     <div id="main">
       <main id="content">
+        {{^meta.isHomepage}}
+          <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+              <a itemprop="item" href="{{config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
+              <meta itemprop="position" content="1" />
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+              <a itemprop="item" href="{{meta.Url}}"><span itemprop="name">{{meta.title}}</span></a>
+              <meta itemprop="position" content="2" />
+            </li>
+          </ol>
+        {{/meta.isHomepage}}
+
         {{#meta.title}}
           <h2>{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h2>
         {{/meta.title}}
