@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] New template variables for first and last page on index pages
 * [x] Switched to `8fold-marked`
 * [x] Removed AMP pages from sitemap as of https://twitter.com/JohnMu/status/786588362706673664
 * [x] Adding INI syntax highlighting

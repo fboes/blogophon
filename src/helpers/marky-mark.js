@@ -238,7 +238,7 @@ var markyMark = function(string, rules) {
   internal.convertTextBlock = function(string) {
     return string
       .replace(/(&quot;)(.+?)\1/g, internal.rules.quotation.primary[0] + '$2' + internal.rules.quotation.primary[1])
-      .replace(/('|&#39;)(.+?)\1/g, internal.rules.quotation.secondary[0] + '$2' + internal.rules.quotation.secondary[1])
+      .replace(/(\B)('|&#39;)(.+?)\2/g, '$1' + internal.rules.quotation.secondary[0] + '$3' + internal.rules.quotation.secondary[1])
     ;
   };
 

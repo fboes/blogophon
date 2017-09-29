@@ -37,7 +37,6 @@ article .figure .figcaption { display: block; padding: 0.5em 0; border-bottom: 1
 article + article { margin-top: 2em; border-top: 1px solid #eee; }
 article ul.task-list, article ol.task-list { list-style: none; }
 article blockquote { color: #666666; margin-left: 1em; }
-article blockquote p { white-space: pre-line; }
 article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }
 article table { margin-bottom: 1em; }
 article table tr, article table thead, article table tbody { border-bottom: 1px solid rgba(0, 0, 0, 0.1); }

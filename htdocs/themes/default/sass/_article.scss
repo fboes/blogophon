@@ -59,9 +59,6 @@ article {
   blockquote {
     color: $color-grey-dark;
     margin-left: 1em;
-    p {
-      white-space: pre-line;
-    }
   }
   code {
     font-family: $fontfamily-monospace;
