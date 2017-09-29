@@ -10,7 +10,7 @@
     <meta property="og:description" name="description" content="{{config.description}}" />
   {{/meta.isHomepage}}
   {{^meta.isHomepage}}
-    <meta property="og:description" name="description" content="{{#meta.title}} - {{config.description}}" />
+    <meta property="og:description" name="description" content="{{meta.title}} - {{config.description}}" />
   {{/meta.isHomepage}}
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
   {{#config.specialFeatures.rss}}
@@ -54,7 +54,7 @@
               <meta itemprop="position" content="1" />
             </li>
             <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <a itemprop="item" href="{{meta.Url}}"><span itemprop="name">{{meta.title}}</span></a>
+              <a itemprop="item" href="{{firstUrl}}"><span itemprop="name">{{meta.title}}</span></a>
               <meta itemprop="position" content="2" />
             </li>
           </ol>

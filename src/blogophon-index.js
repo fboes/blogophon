@@ -253,7 +253,7 @@ var blogophonIndex = function() {
     curPage = Math.round(curPage);
     maxPage = Math.round(maxPage);
     return {
-      firstUrl: (maxPage > 1) ? external.getPageName(0, maxPage, reverse, path) : null,
+      firstUrl: external.getPageName(0, maxPage, reverse, path),
       prevUrl: external.getPageName(curPage-1, maxPage, reverse, path),
       currentUrl: external.getPageName(curPage, maxPage, reverse, path),
       nextUrl: external.getPageName(curPage+1, maxPage, reverse, path),
