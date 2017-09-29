@@ -232,12 +232,14 @@ var blogophonIndex = function() {
     curPage = Math.round(curPage);
     maxPage = Math.round(maxPage);
     return {
+      firstUrl: (maxPage > 1) ? external.getPageName(0, maxPage, reverse, path) : null,
+      prevUrl: external.getPageName(curPage-1, maxPage, reverse, path),
       currentUrl: external.getPageName(curPage, maxPage, reverse, path),
       nextUrl: external.getPageName(curPage+1, maxPage, reverse, path),
-      prevUrl: external.getPageName(curPage-1, maxPage, reverse, path),
+      lastUrl: external.getPageName(maxPage - 1, maxPage, reverse, path),
       currentPage: (curPage+1),
-      nextPage: ((curPage+2 < maxPage) ? curPage+2 : null),
       prevPage: ((curPage > 0) ? curPage : null),
+      nextPage: ((curPage+2 < maxPage) ? curPage+2 : null),
       maxPages: maxPage
     };
   };

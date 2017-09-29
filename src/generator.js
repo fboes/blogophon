@@ -359,8 +359,10 @@ var Generator = function(config) {
             absoluteUrl: curUrlObj.absoluteUrl(),
             absoluteUrlDirname: curUrlObj.absoluteUrlDirname()
           };
+          curPageObj.firstUrl = indexUrl(curPageObj.firstUrl).relativeUrl();
           curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl();
           curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl();
+          curPageObj.lastUrl = indexUrl(curPageObj.lastUrl).relativeUrl();
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.meta.AbsoluteUrlAmp = curUrlObj.absoluteUrl('amp');
           }
@@ -368,8 +370,10 @@ var Generator = function(config) {
 
           if (config.specialFeatures.acceleratedmobilepages) {
             curPageObj.ampCss = Mustache.ampCss;
+            curPageObj.firstUrl = indexUrl(curPageObj.firstUrl).relativeUrl('amp');
             curPageObj.prevUrl = indexUrl(curPageObj.prevUrl).relativeUrl('amp');
             curPageObj.nextUrl = indexUrl(curPageObj.nextUrl).relativeUrl('amp');
+            curPageObj.lastUrl = indexUrl(curPageObj.lastUrl).relativeUrl('amp');
             curPageObj.consolidatedProperties = ampify.getConsolidatedProperties(curPageObj.index);
 
             promises.push(fs.writeFileAsync(
