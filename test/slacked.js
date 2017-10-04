@@ -1,14 +1,14 @@
 'use strict';
 
-var blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../src/models/blogophon-date');
 
 exports.testBasicProperties = function(test) {
   test.expect(7);
 
-  var config = require('../src/config');
-  var pubDate = blogophonDate('2016-12-31', 'en');
+  const config = require('../src/config');
+  const pubDate = blogophonDate('2016-12-31', 'en');
 
-  var item = {
+  const item = {
     htmlTeaser: 1,
     meta: {
       AbsoluteUrl: 2,
@@ -18,7 +18,7 @@ exports.testBasicProperties = function(test) {
       tags: [6, 7]
     }
   };
-  var slacked = require('../src/models/slacked')([item], pubDate, config);
+  const slacked = require('../src/models/slacked')([item], pubDate, config);
 
   //console.log(slacked);
 

@@ -7,9 +7,9 @@
  * @param  {Object}  rules  Object with settings
  * @return {String}  Converted HTML
  */
-var markyMark = function(string, rules) {
-  var internal = {};
-  var external = {};
+const markyMark = function(string, rules) {
+  const internal = {};
+  const external = {};
 
   external.output       = '';
   internal.mode         = '';
@@ -60,7 +60,7 @@ var markyMark = function(string, rules) {
     external.output       = '';
     internal.mode         = '';
     internal.currentChunk = '';
-    for (var i = 0, len = string.length; i < len; i++) {
+    for (let i = 0, len = string.length; i < len; i++) {
       external.pushCharacter(string[i]);
     }
     return external.getResults();
@@ -135,7 +135,7 @@ var markyMark = function(string, rules) {
           break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            var lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|yaml|ini|apacheconf)/);
+            let lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|yaml|ini|apacheconf)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -168,7 +168,7 @@ var markyMark = function(string, rules) {
    * @return {String}        [description]
    */
   internal.convertText = function(string) {
-    var entityMap = {
+    let entityMap = {
       '...': '…',
       '… …': '…',
       '(C)': '©',
@@ -266,9 +266,9 @@ var markyMark = function(string, rules) {
       return codeRest;
     };
     breaker = breaker || /(\/\*[\S\s]+?\*\/|(?:\/\/|#).+?[\n\r]|&quot;.*?&quot;|'[^']*?'|`[^`]*?`)/g;
-    var myArray;
-    var chunks = [];
-    var lastIndex = 0;
+    let myArray;
+    let chunks = [];
+    let lastIndex = 0;
 
     code = code.replace(/&#39;/g, "'");
     while ((myArray = breaker.exec(code)) !== null) {
@@ -304,7 +304,7 @@ var markyMark = function(string, rules) {
   internal.convertCode = function(string) {
     return internal.convertGeneralCode(string, function(codeRest) {
       return codeRest
-        .replace(/(^|\b)(var|function|method|class|const|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
+        .replace(/(^|\b)(var|function|method|class|const|let|external|internal|protected|use|namespace|public|private)(\b)/g, '$1<b>$2</b>$3')
         .replace(/(^|\b)(and|array|break|case|die|do|echo|s?printf?|else(if)?|elsif|final|for(each|Each)?|map|try|catch|then|global|if|include(_once)?|length|list|map|new|or|require(_once)?|return|self|switch|this|throw|while)(\b)/g, '$1<i>$2</i>$3')
         .replace(/([$@%][a-zA-Z0-9_]+)/g, '<var>$1</var>')
         .replace(/([^a-zA-Z$#\d])(-?\d[\d.]*)/g, '$1<em>$2</em>')
@@ -464,12 +464,12 @@ var markyMark = function(string, rules) {
       })
       .replace(/(<img[^>]+src="[^"]+-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
       .replace(/(<)img([^>]src="[^"]+\.(mp[234g]|webm|og[gamv])(?:#[^"]*)?"+[^>]*?)\s*\/?>/, function(all, first, last, suffix) {
-        var tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
+        let tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
         all = first + tag + last + ' controls="controls"></' + tag + '>';
         return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
       })
       .replace(/(<img[^>]+alt=")(?:&gt;\s?)([^"]+)("[^>]*>)/g, function(all, first, alt, last) {
-        var img = '<span class="figure">' + first + alt + last + '<span class="figcaption">' + alt + '</span></span>';
+        let img = '<span class="figure">' + first + alt + last + '<span class="figcaption">' + alt + '</span></span>';
         return img.replace(/(class="figure)(".+<img[^>]+src="[^"]+#)([^"]+)(")/, '$1 $3$2$3$4');
       })
       .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')

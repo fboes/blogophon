@@ -10,7 +10,7 @@
  * @param  {String} title   [description]
  * @return {Object}         [description]
  */
-var slacked = function(index, pubDate, config, title) {
+const slacked = function(index, pubDate, config, title) {
   return {
     "response_type": "ephemeral",
     "text": (config.name || '') + (title ? ' | ' + title : ''),

@@ -3,8 +3,8 @@
 exports.testBasicProperties = function(test) {
   test.expect(10);
 
-  var config = require('../src/config');
-  var item = {
+  const config = require('../src/config');
+  const item = {
     htmlTeaser: 1,
     meta: {
       AbsoluteUrl: 2,
@@ -17,7 +17,7 @@ exports.testBasicProperties = function(test) {
       Latitude: 9
     }
   };
-  var geojson = require('../src/models/geo-json')([item], new Date(), config);
+  const geojson = require('../src/models/geo-json')([item], new Date(), config);
 
   test.ok(geojson.type !== undefined);
   test.ok(geojson.features !== undefined);

@@ -1,12 +1,12 @@
 'use strict';
 
-var blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../src/models/blogophon-date');
 
 exports.basicTest = function basicTest(test) {
   test.expect(10+10+12);
 
-  var germanDate  = blogophonDate('2016-12-31', 'de');
-  var englishDate = blogophonDate('2016-12-31', 'en');
+  const germanDate  = blogophonDate('2016-12-31', 'de');
+  const englishDate = blogophonDate('2016-12-31', 'en');
 
 
   test.ok(germanDate);
@@ -53,7 +53,7 @@ exports.basicTest = function basicTest(test) {
 exports.moreTests = function moreTests(test) {
   test.expect(3);
 
-  var germanDate  = blogophonDate('2016-01-01 17:59:00 +00:00', 'de');
+  let germanDate  = blogophonDate('2016-01-01 17:59:00 +00:00', 'de');
 
   test.equals(germanDate.year, '2016');
   test.equals(germanDate.month, '01');
@@ -67,7 +67,7 @@ exports.moreTests = function moreTests(test) {
 exports.exocticTimestamps = function exocticTimestamps(test) {
   test.expect(6);
 
-  var germanDate;
+  let germanDate;
   germanDate = blogophonDate('2016-08-25T19:13:12+02:00', 'de');
 
   test.equals(germanDate.year, '2016');

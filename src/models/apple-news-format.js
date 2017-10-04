@@ -6,7 +6,7 @@
  * @param  {Object} post [description]
  * @return {Object}      [description]
  */
-var appleNewsFormat = function(post) {
+const appleNewsFormat = function(post) {
   return {
     version: 1.2,
     identifier: post.meta.AbsoluteUrl,

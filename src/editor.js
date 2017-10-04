@@ -1,16 +1,16 @@
 'use strict';
 
-var glob           = require('glob');
-var fs             = require('fs-extra-promise');
-var path           = require('path');
-var shell          = require('shelljs');
-var https          = require('https');
-var blogophonDate  = require('./models/blogophon-date');
-var SuperString    = require('./helpers/super-string');
-var Mustache       = require('./helpers/blogophon-mustache');
+const glob           = require('glob');
+const fs             = require('fs-extra-promise');
+const path           = require('path');
+const shell          = require('shelljs');
+const https          = require('https');
+const blogophonDate  = require('./models/blogophon-date');
+const SuperString    = require('./helpers/super-string');
+const Mustache       = require('./helpers/blogophon-mustache');
 
-var editor = function(config) {
-  var external = {};
+const editor = function(config) {
+  const external = {};
 
   /**
    * Get listing of all Markdown files which may be edited
@@ -18,11 +18,11 @@ var editor = function(config) {
    * @return {Array}   [description]
    */
   external.makeFiles = function(separator) {
-    var files = [];
+    let files = [];
     if (!config.notInitialized) {
       files = glob.sync(config.directories.data + "/**/*.{md,md~}").map(function(v) {
-        var filename = v.replace(/^.+\/(.+?)$/, '$1');
-        var fileStat = fs.lstatSync(v);
+        let filename = v.replace(/^.+\/(.+?)$/, '$1');
+        let fileStat = fs.lstatSync(v);
         return {
           name: fileStat.mtime.toLocaleString(config.locale.language || 'en')
             + "\t" + filename + "\t" +Math.ceil(fileStat.size/1000)+' kB',
@@ -101,12 +101,12 @@ var editor = function(config) {
       host: 'nominatim.openstreetmap.org',
       path: '/search?q='+encodeURIComponent(address)+'&format=json&accept-language='+encodeURIComponent(language || 'en')
     }, function(response) {
-      var body = '';
+      let body = '';
       response.on('data', function(d) {
         body += d;
       });
       response.on('end', function() {
-        var parsed = JSON.parse(body);
+        let parsed = JSON.parse(body);
         callback(null, {
           latitude:  parsed[0] ? parsed[0].lat : null,
           longitude: parsed[0] ? parsed[0].lon : null

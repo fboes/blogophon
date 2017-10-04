@@ -1,7 +1,7 @@
 'use strict';
 
-var post = require('../src/models/post');
-var config = require('../src/config');
+const post = require('../src/models/post');
+const config = require('../src/config');
 
 exports.testErrors = function(test) {
   test.expect(5);
@@ -32,7 +32,7 @@ exports.testErrors = function(test) {
 exports.testStructure = function(test) {
   test.expect(21);
 
-  var testPost = post('test.md', 'Test', {
+  let testPost = post('test.md', 'Test', {
     Description: 'Description',
     Date: new Date()
   });
@@ -64,13 +64,13 @@ exports.testStructure = function(test) {
 exports.testReplacingMarkdown = function(test) {
   test.expect(10);
 
-  var testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
-  var testMarkdownDescription = 'Description ![](some-image.jpg) and [some internal link](internal.md).';
-  var testMeta = {
+  let testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
+  let testMarkdownDescription = 'Description ![](some-image.jpg) and [some internal link](internal.md).';
+  let testMeta = {
     Description: testMarkdownDescription,
     Date: new Date()
   };
-  var testPost = post('test.md', testMarkdown, testMeta);
+  let testPost = post('test.md', testMarkdown, testMeta);
 
   //console.log(testPost);
 
@@ -96,7 +96,7 @@ exports.testReplacingMarkdown = function(test) {
 exports.testImageParser = function(test) {
   test.expect(13);
 
-  var testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
+  let testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
     Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
     Date: new Date()
   });
@@ -104,7 +104,7 @@ exports.testImageParser = function(test) {
   test.ok(testPost.markdown);
   test.ok(testPost.meta.MarkdownDescription);
 
-  var imageStyles = testPost.getAllImagesWithStyle();
+  let imageStyles = testPost.getAllImagesWithStyle();
   //console.log(imageStyles);
   test.equal(imageStyles[0].filename, 'description.jpg');
   test.equal(imageStyles[0].style,    'default');
@@ -127,9 +127,9 @@ exports.testImageParser = function(test) {
 exports.testGallery = function(test) {
   test.expect(4);
 
-  var filename = 'test.md';
-  var markdown;
-  var testPost;
+  let filename = 'test.md';
+  let markdown;
+  let testPost;
 
   markdown = '![alt1](img1-64x48.jpg)';
   testPost = post(filename, markdown, {
@@ -168,13 +168,13 @@ exports.testGallery = function(test) {
 exports.testLinks = function(test) {
   test.expect(3);
 
-  var markdown = 'www.1test.com will not be found'
+  let markdown = 'www.1test.com will not be found'
     + 'But [this link](http://www.2test.com) will be found.'
     + 'As will be [this link](https://www.3test.com).'
     + 'An ![image](https://www.4test.com) should not be found.'
     + 'As will be [this link](https://www.5test.com/some-compilcated-foo?a#b).'
   ;
-  var testLinks = post('test.md', markdown, {
+  let testLinks = post('test.md', markdown, {
     Description: 'None',
     Date: new Date()
   }).getAllExternalLinks();

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-var application = require('./src/helpers/application')();
+const application = require('./src/helpers/application')();
 application.changeDirectory();
 
-var Generator   = require('./src/generator');
-var args        = require('./src/helpers/arguments')();
-var config      = require('./src/config');
+const Generator   = require('./src/generator');
+const args        = require('./src/helpers/arguments')();
+const config      = require('./src/config');
 
 if (args.help) {
   console.log('Usage: node generate.js [OPTIONS]');
@@ -24,20 +24,20 @@ if (args.help) {
   console.log('---- ' + new Date() + ' -----');
 }
 
-var generator = Generator(config);
+const generator = Generator(config);
 generator
   .getArticles()
-  .then(function() {
+  .then(() => {
     return generator.buildAll(args.force || args.f, args.noimages || args.I);
   })
-  .then(function() {
+  .then(() => {
     if(args.deploy || args.d || args.publish) {
       generator.deploy();
     } else {
       console.log('Done');
     }
   })
-  .catch(function(err) {
+  .catch((err) => {
     console.error(err); process.exit(1);
   })
 ;

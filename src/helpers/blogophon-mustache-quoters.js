@@ -1,9 +1,9 @@
 'use strict';
 
-var blogophonMustacheQuoters = {
+const blogophonMustacheQuoters = {
   icsQuote: function() {
     return function(text, render) {
-      var newText = render(text)
+      let newText = render(text)
         .replace(/(\n|\r|\r\n)/g, "\\n")
         .replace(/(,|;)/g, '\\$1');
       if (newText.length > 30) {

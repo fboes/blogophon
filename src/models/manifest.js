@@ -6,7 +6,7 @@
  * @param  {Object} config [description]
  * @return {Object}        [description]
  */
-var manifest = function(config) {
+const manifest = function(config) {
   return {
     lang: config.locale.language,
     name: config.name || '',

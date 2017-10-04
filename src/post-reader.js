@@ -1,10 +1,10 @@
 'use strict';
 
-var Promise        = require('promise/lib/es6-extensions');
-var fs             = require('fs');
-var readline       = require('readline');
-var yaml           = require('js-yaml');
-var post           = require('./models/post');
+const Promise        = require('promise/lib/es6-extensions');
+const fs             = require('fs');
+const readline       = require('readline');
+const yaml           = require('js-yaml');
+const post           = require('./models/post');
 
 /**
  * This class reads Markdown files into an object.
@@ -12,19 +12,19 @@ var post           = require('./models/post');
  * @param {String} file   [description]
  * @param {Object} config [description]
  */
-var PostReader = function(file, config) {
+const PostReader = function(file, config) {
   config = config || require('./config');
   if (!file) {
     throw new Error('File '+file+' is empty');
   }
 
-  var readYaml = true;
-  var lineNumber = 0;
-  var yamlBuffer = '';
-  var descriptionBuffer = '';
-  var startDescriptionBuffer = false;
-  var fileStat;
-  var postData = {
+  let readYaml = true;
+  let lineNumber = 0;
+  let yamlBuffer = '';
+  let descriptionBuffer = '';
+  let startDescriptionBuffer = false;
+  let fileStat;
+  let postData = {
     meta:     {},
     markdown: ''
   };

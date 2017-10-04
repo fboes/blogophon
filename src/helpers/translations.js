@@ -6,9 +6,9 @@
  * @param  {String} language [description]
  * @return {Object}          [description]
  */
-var translations = function(language) {
+const translations = function(language) {
   // TODO: Move languages to separate files
-  var external = {};
+  const external = {};
   external.translations = {
     de: {
       'Home': 'Startseite',

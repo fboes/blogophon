@@ -1,6 +1,6 @@
 'use strict';
 
-var dateFormat      = require('dateformat');
+const dateFormat      = require('dateformat');
 
 /**
  * Returns lots of date formats as a javascript object.
@@ -10,11 +10,11 @@ var dateFormat      = require('dateformat');
  * @param  {String} locale [description]
  * @return {Object}        [description]
  */
-var blogophonDate = function(date, locale) {
+const blogophonDate = function(date, locale) {
   if (!locale) {
     locale = 'de';
   }
-  var localeString = 'dd.mm.yyyy';
+  let localeString = 'dd.mm.yyyy';
   switch (locale) {
     case 'de':
     case 'ru':

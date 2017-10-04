@@ -1,7 +1,7 @@
 'use strict';
 
-var gm             = require('gm').subClass({imageMagick: true});
-var Promise        = require('promise/lib/es6-extensions');
+const gm             = require('gm').subClass({imageMagick: true});
+const Promise        = require('promise/lib/es6-extensions');
 
 /**
  * Converts images and replaces HTML for image integration.
@@ -9,9 +9,9 @@ var Promise        = require('promise/lib/es6-extensions');
  * @param  {Object} config [description]
  * @return {Object}        [description]
  */
-var imageStyles = function(config) {
-  var external = {};
-  var internal = {};
+const imageStyles = function(config) {
+  const external = {};
+  const internal = {};
 
   internal.jpgQuality = 85;
 
@@ -55,13 +55,13 @@ var imageStyles = function(config) {
     if (!targetFilename) {
       throw new Error('No target filename given for conversion');
     }
-    var styleData    = internal.getStyle(style);
-    var processed    = 0;
-    var maxProcessed = styleData.srcset.length;
+    let styleData    = internal.getStyle(style);
+    let processed    = 0;
+    let maxProcessed = styleData.srcset.length;
 
     return new Promise(
       function(resolve, reject) {
-        var checkProcessed = function(err) {
+        let checkProcessed = function(err) {
           if (err) {
             reject(err);
           }
@@ -101,11 +101,11 @@ var imageStyles = function(config) {
       throw new Error('No target filename given for conversion');
     }
     styles = styles || Object.keys(config.themeConf.imageStyles);
-    var processed = 0;
+    let processed = 0;
 
     return new Promise(
       function(resolve, reject) {
-        var promises = styles.map(function(style) {
+        let promises = styles.map(function(style) {
           return external.generateImagesFromStyle(sourceFilename, targetFilename, style);
         });
         Promise
@@ -147,15 +147,15 @@ var imageStyles = function(config) {
    */
   internal.parseImagesReplace = function(all, filename, style) {
     style = style || "default";
-    var html;
+    let html;
 
     if (style.match(/^\d+x\d+$/)) {
       html = '<img src="'+filename+'" ' + style.replace(/^(\d+)x(\d+)$/, 'width="$1" height="$2"');
     } else {
-      var currentStyle = internal.getStyle(style);
-      var dominantIndex = (currentStyle.srcset.length - 1);
-      var srcset = [];
-      var i;
+      let currentStyle = internal.getStyle(style);
+      let dominantIndex = (currentStyle.srcset.length - 1);
+      let srcset = [];
+      let i;
 
       html = '<img data-src="'+filename+'" src="'+external.getFilenameSrcset(filename, currentStyle.srcset[dominantIndex])+'" class="'+style+'"';
       html += ' width="'+currentStyle.srcset[dominantIndex][0]+'" height="'+currentStyle.srcset[dominantIndex][1]+'"';
@@ -182,7 +182,7 @@ var imageStyles = function(config) {
    * @return {String}           Converted filename for given style.
    */
   external.getFilename = function(filename, style, index) {
-    var currentStyle = internal.getStyle(style);
+    let currentStyle = internal.getStyle(style);
     index = index || 0;
     if (!currentStyle.srcset[index]) {
       throw new Error("Wrong image index in style: "+style + ', ' +index);

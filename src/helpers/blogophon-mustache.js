@@ -3,10 +3,10 @@
 /**
  * This adds additonal functionality to Mustache.
  */
-var Mustache       = require('mustache');
-var fs             = require('fs');
-var path           = require('path');
-var MustacheQuoters= require('./blogophon-mustache-quoters');
+const Mustache       = require('mustache');
+const fs             = require('fs');
+const path           = require('path');
+const MustacheQuoters= require('./blogophon-mustache-quoters');
 
 /**
  * Get theme templates and load them into Mustache.themeTemplates
@@ -35,13 +35,13 @@ Mustache.getTemplates = function() {
  * @return {Object}           [description]
  */
 Mustache.getTemplateObject = function(directory) {
-  var templateObject = {};
+  let templateObject = {};
   fs
     .readdirSync(directory)
     .forEach(function(filename) {
-      var absFile = path.join(directory, filename);
+      let absFile = path.join(directory, filename);
       if (fs.statSync(absFile).isFile()){
-        var key = filename
+        let key = filename
           .replace(/^[^a-zA-Z0-9]/g, '')
           .replace(/[^a-zA-Z0-9]/g, ' ')
           .replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
@@ -61,7 +61,7 @@ Mustache.getTemplateObject = function(directory) {
  * @return {String}        [description]
  */
 Mustache.escape = function(string) {
-  var entityMap = {
+  let entityMap = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
@@ -81,7 +81,7 @@ Mustache.escape = function(string) {
  * @return {String}          [description]
  */
 Mustache.renderExtra = function(template, view, partials) {
-  for (var key in MustacheQuoters) {
+  for (let key in MustacheQuoters) {
     if (!view[key]) {
       view[key] = MustacheQuoters[key];
     }

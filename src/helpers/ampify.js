@@ -1,7 +1,7 @@
 'use strict';
 
-var ampify = function() {
-  var external = {};
+const ampify = function() {
+  const external = {};
 
   /**
    * Convert regular HTML in AMP-HTML.
@@ -24,8 +24,8 @@ var ampify = function() {
       .replace(/( (width)="[^"]*")([^>]* \2="[^"]*")/g, '$3')
       .replace(/(<amp-(?:video|audio|youtube|vimeo)[^>]+) allowfullscreen=".+?"/g, '$1')
       .replace(/<div class="gallery"[^>]*>([\s\S]+?)<\/div>/g, function(all, content) {
-        var width = html.match(/width="(\d+)"/) || ['', '640'];
-        var height = html.match(/height="(\d+)"/) || ['', '360'];
+        let width = html.match(/width="(\d+)"/) || ['', '640'];
+        let height = html.match(/height="(\d+)"/) || ['', '360'];
         content = content.replace(/<\/?a(\s[^>]+)?>/g, '');
         return '<amp-carousel width="'+width[1]+'" height="'+height[1]+'" layout="responsive" type="slides">'+content+'</amp-carousel>';
       })
@@ -57,15 +57,15 @@ var ampify = function() {
    * @return {Object}       [description]
    */
   external.getConsolidatedProperties = function(index) {
-    var properties = ['ampProperties', 'ampPropertiesTeaser'];
-    var consolidatedProperties = {};
+    let properties = ['ampProperties', 'ampPropertiesTeaser'];
+    let consolidatedProperties = {};
     index.forEach(function(post) {
       properties.forEach(function(property) {
         if (post[property]) {
           if (!consolidatedProperties[property]) {
             consolidatedProperties[property] = post[property];
           } else {
-            for (var key in post[property]) {
+            for (let key in post[property]) {
               consolidatedProperties[property][key] |= post[property][key];
             }
           }

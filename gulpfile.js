@@ -1,25 +1,25 @@
 'use strict';
 
 // Include gulp
-var gulp = require('gulp');
-var pkg  = require('./package.json');
-var beep = require('beepbeep');
-var onError = function() {
+let gulp = require('gulp');
+let pkg  = require('./package.json');
+let beep = require('beepbeep');
+let onError = function() {
   beep();
   return true;
 };
 
 // Include Our Plugins
-var eslint     = require('gulp-eslint');
-var nodeunit   = require('gulp-nodeunit');
-var gls        = require('gulp-live-server');
-var plumber    = require('gulp-plumber');
-var sass       = require('gulp-sass');
-var rename     = require("gulp-rename");
-var uglify     = require('gulp-uglify');
-var postcss    = require('gulp-postcss');
-var replace    = require('gulp-replace');
-var autoprefixer = require('autoprefixer');
+let eslint     = require('gulp-eslint');
+let nodeunit   = require('gulp-nodeunit');
+let gls        = require('gulp-live-server');
+let plumber    = require('gulp-plumber');
+let sass       = require('gulp-sass');
+let rename     = require("gulp-rename");
+let uglify     = require('gulp-uglify');
+let postcss    = require('gulp-postcss');
+let replace    = require('gulp-replace');
+let autoprefixer = require('autoprefixer');
 
 // Lint Task
 gulp.task('eslint', function() {
@@ -102,7 +102,7 @@ gulp.task('build-css', function() {
 });
 
 gulp.task('serve', function() {
-  var server = gls.static(pkg.directories.htdocs);
+  let server = gls.static(pkg.directories.htdocs);
   server.start();
   gulp.watch(pkg.directories.htdocs + '/**/*', function(file) {
     /* eslint-disable */

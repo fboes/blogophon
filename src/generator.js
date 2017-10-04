@@ -1,37 +1,37 @@
 'use strict';
 
-var glob           = require("glob");
-var Promise        = require('promise/lib/es6-extensions');
-var fs             = require('fs-extra-promise');
-var path           = require('path');
-var SuperString    = require('./helpers/super-string');
-var blogophonDate  = require('./models/blogophon-date');
-var Mustache       = require('./helpers/blogophon-mustache');
-var PostReader     = require('./post-reader');
-var jsonRss        = require('./models/json-rss');
-var geoJson        = require('./models/geo-json');
-var translations   = require('./helpers/translations');
-var indexUrl       = require('./helpers/index-url');
-var blogophonIndex = require('./blogophon-index');
-var hashes         = require('./models/hashes');
-var appleNewsFormat = require('./models/apple-news-format');
-var imageStyles    = require('./helpers/image-styles');
-var ampify         = require('./helpers/ampify')();
-var slacked        = require('./models/slacked');
-var jsonFeed       = require('./models/json-feed');
-var categoriesUrls = require('./models/categories');
+let glob           = require("glob");
+let Promise        = require('promise/lib/es6-extensions');
+let fs             = require('fs-extra-promise');
+let path           = require('path');
+let SuperString    = require('./helpers/super-string');
+let blogophonDate  = require('./models/blogophon-date');
+let Mustache       = require('./helpers/blogophon-mustache');
+let PostReader     = require('./post-reader');
+let jsonRss        = require('./models/json-rss');
+let geoJson        = require('./models/geo-json');
+let translations   = require('./helpers/translations');
+let indexUrl       = require('./helpers/index-url');
+let blogophonIndex = require('./blogophon-index');
+let hashes         = require('./models/hashes');
+let appleNewsFormat = require('./models/apple-news-format');
+let imageStyles    = require('./helpers/image-styles');
+let ampify         = require('./helpers/ampify')();
+let slacked        = require('./models/slacked');
+let jsonFeed       = require('./models/json-feed');
+let categoriesUrls = require('./models/categories');
 
 /**
  * Generator used for creating the blog.
  * @constructor
  * @param {Object} config [description]
  */
-var Generator = function(config) {
+let Generator = function(config) {
   if (!config) {
     throw new Error('config is empty');
   }
-  var external = {};
-  var internal = {};
+  let external = {};
+  let internal = {};
 
   Mustache.getTemplates();
   Mustache.getThemeTemplates(path.join(config.directories.currentTheme, 'templates'));
@@ -59,7 +59,7 @@ var Generator = function(config) {
             reject(err);
           }
           // Making promises
-          var promises = files.map(function(i) {
+          let promises = files.map(function(i) {
             return PostReader(i, config);
           });
           // Checking promises
@@ -86,9 +86,9 @@ var Generator = function(config) {
    * @return {Promise}          with first parameter of `resolve` being the list of files generated.
    */
   external.buildAllArticles = function(force, noimages) {
-    var allPosts = internal.currentIndex.getPosts();
-    var skipped  = 0;
-    var generatedArticles = [];
+    let allPosts = internal.currentIndex.getPosts();
+    let skipped  = 0;
+    let generatedArticles = [];
 
     if (force && !noimages) {
       fs.removeSync(path.join(config.directories.htdocs, config.htdocs.posts, '*'));
@@ -97,7 +97,7 @@ var Generator = function(config) {
     return new Promise(
       function(resolve, reject) {
         // Making promises
-        var promises = allPosts.map(function(post) {
+        let promises = allPosts.map(function(post) {
           if (!force && internal.hashes.matchesHash(post.meta.Url, post.hash)) {
             skipped++;
           } else {
@@ -132,7 +132,7 @@ var Generator = function(config) {
     return new Promise(
       function(resolve, reject) {
         fs.ensureDirSync(post.meta.urlObj.dirname());
-        var promises = [
+        let promises = [
           fs.writeFileAsync(post.meta.urlObj.filename(), Mustache.renderExtra(Mustache.themeTemplates.postHtml, {
             post: post,
             config: config
@@ -182,15 +182,15 @@ var Generator = function(config) {
       return false;
     }
     // Target directory
-    var sourceDirectory = post.filename.replace(/\.md$/, '') + "/"; // Source directory
-    var sourceGlob      = glob.sync(sourceDirectory + "*.{png,jpg,gif}");
-    var sourceReg       = new RegExp(sourceDirectory);
-    var imageStyles     = sourceGlob ? post.getAllImagesWithStyleObject() : {};
+    let sourceDirectory = post.filename.replace(/\.md$/, '') + "/"; // Source directory
+    let sourceGlob      = glob.sync(sourceDirectory + "*.{png,jpg,gif}");
+    let sourceReg       = new RegExp(sourceDirectory);
+    let imageStyles     = sourceGlob ? post.getAllImagesWithStyleObject() : {};
 
     return new Promise(
       function(resolve, reject) {
-        var promises = sourceGlob.map(function(sourceFile) {
-          var targetFile = sourceFile.replace(sourceReg, config.directories.htdocs + post.meta.Url);
+        let promises = sourceGlob.map(function(sourceFile) {
+          let targetFile = sourceFile.replace(sourceReg, config.directories.htdocs + post.meta.Url);
           fs.copySync(sourceFile, targetFile);
           //console.log(imageStyles[path.basename(sourceFile)] || []);
           return internal.imageStyles.generateImagesWithStyles(sourceFile, targetFile, imageStyles[path.basename(sourceFile)] || []);
@@ -198,7 +198,7 @@ var Generator = function(config) {
         Promise
           .all(promises)
           .then(function(generatedImages) {
-            var processed = 0;
+            let processed = 0;
             if (promises.length > 0) {
               processed = generatedImages.reduce(function(accumulatedValue, generatedImage) {
                 return accumulatedValue + generatedImage;
@@ -220,7 +220,7 @@ var Generator = function(config) {
   external.buildSpecialPages = function() {
     return new Promise(
       function(resolve, reject) {
-        var promises = [
+        let promises = [
           external.buildIndexFiles(),
           external.buildTagPages(),
           external.buildCategoryPages(),
@@ -257,9 +257,9 @@ var Generator = function(config) {
 
     return new Promise(
       function(resolve, reject) {
-        var page;
-        var pagedPosts = index.getPagedPosts(config.itemsPerPage);
-        var urls = {
+        let page;
+        let pagedPosts = index.getPagedPosts(config.itemsPerPage);
+        let urls = {
           indexHtml:  indexUrl(path + 'index.html'),
           rss:        indexUrl(path + 'posts.rss'),
           jsonrss:    indexUrl(path + 'rss.json'),
@@ -273,8 +273,8 @@ var Generator = function(config) {
           ics:        indexUrl(path + 'posts.ics'),
           ajax:       indexUrl(path + 'index.json')
         };
-        var promises = [];
-        var pubDate = blogophonDate(index.pubDate);
+        let promises = [];
+        let pubDate = blogophonDate(index.pubDate);
         if (config.specialFeatures.rss || config.specialFeatures.facebookinstantarticles) {
           promises.push(fs.writeFileAsync( urls.rss.filename(), Mustache.render(Mustache.templates.rssXml, {
             index:       index.getPosts(10),
@@ -352,8 +352,8 @@ var Generator = function(config) {
         }
 
         for (page = 0; page < pagedPosts.length; page ++) {
-          var curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
-          var curUrlObj     = indexUrl(curPageObj.currentUrl);
+          let curPageObj    = index.getPageData(page, pagedPosts.length, false, path);
+          let curUrlObj     = indexUrl(curPageObj.currentUrl);
           curPageObj.index  = pagedPosts[page];
           curPageObj.config = config;
           curPageObj.meta   = {
@@ -408,8 +408,8 @@ var Generator = function(config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildTagPages = function() {
-    var tags = internal.currentIndex.getTags();
-    var tagPages = Object.keys(tags).sort().map(function(key) {
+    let tags = internal.currentIndex.getTags();
+    let tagPages = Object.keys(tags).sort().map(function(key) {
       return {
         title: tags[key].title,
         url:   tags[key].urlObj.relativeUrl()
@@ -421,7 +421,7 @@ var Generator = function(config) {
 
     return new Promise(
       function(resolve, reject) {
-        var promises = Object.keys(tags).map(function(key) {
+        let promises = Object.keys(tags).map(function(key) {
           return external.buildIndexFiles(
             tags[key].index,
             '/'+tags[key].urlObj.relativeDirname()+'/',
@@ -457,8 +457,8 @@ var Generator = function(config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildCategoryPages = function() {
-    var categories = internal.currentIndex.getCategories();
-    var categoryPages = Object.keys(categories).sort().map(function(key) {
+    let categories = internal.currentIndex.getCategories();
+    let categoryPages = Object.keys(categories).sort().map(function(key) {
       return {
         title: categories[key].title,
         url:   categories[key].urlObj.relativeUrl()
@@ -467,7 +467,7 @@ var Generator = function(config) {
 
     return new Promise(
       function(resolve, reject) {
-        var promises = Object.keys(categories).map(function(key) {
+        let promises = Object.keys(categories).map(function(key) {
           return external.buildIndexFiles(
             categories[key].index,
             '/'+categories[key].urlObj.relativeDirname()+'/',
@@ -503,8 +503,8 @@ var Generator = function(config) {
    * @return {Promise} with first parameter of `resolve` being the number of files converted.
    */
   external.buildAuthorPages = function() {
-    var authors = internal.currentIndex.getAuthors();
-    var authorPages = Object.keys(authors).sort().map(function(name) {
+    let authors = internal.currentIndex.getAuthors();
+    let authorPages = Object.keys(authors).sort().map(function(name) {
       return {
         title: name,
         url:   authors[name].urlObj.relativeUrl()
@@ -519,7 +519,7 @@ var Generator = function(config) {
           }
           fs.ensureDirSync(path.join(config.directories.htdocs, config.htdocs.author));
 
-          var promises = Object.keys(authors).map(function(name) {
+          let promises = Object.keys(authors).map(function(name) {
             return external.buildIndexFiles(
               authors[name].index,
               '/'+authors[name].urlObj.relativeDirname()+'/',
@@ -562,7 +562,7 @@ var Generator = function(config) {
   external.buildMetaFiles = function() {
     return new Promise(
       function(resolve, reject) {
-        var promises = [
+        let promises = [
           fs.writeFileAsync(
             indexUrl('404.html').filename(),
             Mustache.renderExtra(
@@ -641,7 +641,7 @@ var Generator = function(config) {
    * @return {Boolean} [description]
    */
   external.deploy = function() {
-    var shell = require('shelljs');
+    let shell = require('shelljs');
     if (config.deployCmd) {
       console.log('Deploying...');
       shell.exec('cd '+path.join(__dirname, '..')+'; ' + config.deployCmd);

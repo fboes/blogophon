@@ -1,14 +1,14 @@
 'use strict';
 
-var url       = require('../helpers/url');
+const url       = require('../helpers/url');
 
 /**
  * [indexUrl description]
  * @param  {String} identifier [description]
  * @return {Object}            [description]
  */
-var indexUrl = function(identifier) {
-  var external = url(identifier);
+const indexUrl = function(identifier) {
+  const external = url(identifier);
 
   external.convert = function(base, type) {
     base = base || 'index';
@@ -16,7 +16,7 @@ var indexUrl = function(identifier) {
     if (!external.identifier) {
       return null;
     } else {
-      var u = external.identifier.trim().toLowerCase().replace(/\s/g, '');
+      let u = external.identifier.trim().toLowerCase().replace(/\s/g, '');
       if (base !== 'index') {
         u = u.replace(/(^|\/)index/, '$1' + base);
       }

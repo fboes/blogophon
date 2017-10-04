@@ -9,7 +9,7 @@
  * @param  {String} image       Optional: Absolute image url
  * @return {Object} [description]
  */
-var shareLinks = function(title, link, description, siteName, image) {
+const shareLinks = function(title, link, description, siteName, image) {
   if (!link) {
     throw new Error('Missing required URL for share link');
   }
@@ -17,9 +17,9 @@ var shareLinks = function(title, link, description, siteName, image) {
   description = description || title;
   siteName    = siteName    || title;
 
-  var urlParameter = function(paramObject) {
-    var param = [];
-    for (var key in paramObject) {
+  let urlParameter = function(paramObject) {
+    let param = [];
+    for (let key in paramObject) {
       param.push(key + '=' + encodeURIComponent(paramObject[key]));
     }
     return param.join('&');
