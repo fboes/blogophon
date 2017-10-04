@@ -287,9 +287,9 @@ const BlogophonConsole = function() {
       lead: function(answers) {
         switch (answers.classes) {
           case 'Images':
-            return "![](image.jpg#default)\n\nLorem ipsum…";
+            return "![](image.jpg#default)";
           case 'Video':
-            return "https://www.youtube.com/watch?v=6A5EpqqDOdk\n\nLorem ipsum…";
+            return "https://www.youtube.com/watch?v=6A5EpqqDOdk";
           case 'Recipe':
             return "Introduction";
           default:
@@ -301,11 +301,11 @@ const BlogophonConsole = function() {
           case 'Link':
             return "[Lorem ipsum…](" + answers.link + ")";
           case 'Quote':
-            return "> Lorem ipsum…\n> <cite>Cicero</cite>";
+            return "> Lorem ipsum…\n  > <cite>Cicero</cite>";
           case 'Recipe':
             return "* Ingredient\n* Ingredient\n\nInstructions…";
           default:
-            return 'Lorem ipsum…';
+            return (answers.images ? '![](image.jpg#default)\n\n' : '') + 'Lorem ipsum…';
         }
       }
     };
