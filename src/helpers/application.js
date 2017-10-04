@@ -1,22 +1,22 @@
 'use strict';
 
-var fs   = require('fs');
-var path = require('path');
+const fs   = require('fs');
+const path = require('path');
 
 /**
  * Basic apllication stuff
  * @constructor
  * @return {Object} [description]
  */
-var application = function() {
-  var external = {};
+const application = function() {
+  const external = {};
 
   /**
    * Search upward until valid project is found, and cange into this directory.
    * @return {[type]} [description]
    */
   external.changeDirectory = function() {
-    var foundDirectory = external.findDirectory();
+    let foundDirectory = external.findDirectory();
     //console.log(foundDirectory);
     if (foundDirectory) {
       process.chdir(foundDirectory);

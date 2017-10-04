@@ -3,7 +3,7 @@
 exports.testTranslations = function(test) {
   test.expect(3);
 
-  var translations = require('../src/helpers/translations');
+  const translations = require('../src/helpers/translations');
 
   test.throws(function() {
     translations('xx');

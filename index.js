@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 'use strict';
 
-var application = require('./src/helpers/application')();
+const application = require('./src/helpers/application')();
 application.changeDirectory();
 
-var blogophonConsole = require('./src/blogophon-console');
-var args             = require('./src/helpers/arguments')();
+const blogophonConsole = require('./src/blogophon-console');
+const args             = require('./src/helpers/arguments')();
 
 if (args.help) {
   console.log('Usage: node index.js [OPTIONS]');

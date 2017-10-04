@@ -10,7 +10,7 @@
  * @param  {String} feedUrl [description]
  * @return {Object}         [description]
  */
-var jsonFeed = function(index, pubDate, config, title, feedUrl) {
+const jsonFeed = function(index, pubDate, config, title, feedUrl) {
   return {
     version: "https://jsonfeed.org/version/1",
     title: (config.name || '') + (title ? ' | ' + title : ''),
@@ -27,7 +27,7 @@ var jsonFeed = function(index, pubDate, config, title, feedUrl) {
       language: config.locale.language
     },
     items: index.map(function(post){
-      var returnPost = {
+      let returnPost = {
         id: post.meta.Id || post.meta.AbsoluteUrl,
         url: post.meta.AbsoluteUrl,
         title: post.meta.Title,

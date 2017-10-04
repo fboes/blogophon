@@ -5,8 +5,8 @@
  * @param  {String} string [description]
  * @return {url}           [description]
  */
-var SuperString = function(string) {
-  var external = {};
+const SuperString = function(string) {
+  const external = {};
   external.string = String(string);
 
   /**
@@ -15,7 +15,7 @@ var SuperString = function(string) {
    * @return {String}       [description]
    */
   external.sprintf = function() {
-    var i;
+    let i;
     if (arguments) {
       for (i = 0; i < arguments.length; ++i) {
         switch (external.string.match(/%([sdfF])/)[1]) {
@@ -87,7 +87,7 @@ var SuperString = function(string) {
    * @return {Object}  E.g. `{a:'b',c:'d'}`
    */
   external.paramsToObject = function(splitter) {
-    var obj = {}, parts, i, currItem;
+    let obj = {}, parts, i, currItem;
     splitter = splitter ? splitter : /&/;
     parts = external.string.replace(/^\?/, '').split(splitter);
     for (i=0; i < parts.length; i++) {

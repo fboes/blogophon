@@ -1,14 +1,14 @@
 'use strict';
 
-var blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../src/models/blogophon-date');
 
 exports.testBasicProperties = function(test) {
   test.expect(14);
 
-  var config = require('../src/config');
-  var pubDate = blogophonDate('2016-12-31', 'en');
+  const config = require('../src/config');
+  const pubDate = blogophonDate('2016-12-31', 'en');
 
-  var item = {
+  const item = {
     htmlTeaser: 1,
     meta: {
       AbsoluteUrl: 2,
@@ -20,7 +20,7 @@ exports.testBasicProperties = function(test) {
       tags: [6, 7]
     }
   };
-  var jsonRss = require('../src/models/json-rss')([item], pubDate, config);
+  const jsonRss = require('../src/models/json-rss')([item], pubDate, config);
 
   test.ok(jsonRss.version !== undefined);
   test.ok(jsonRss.channel !== undefined);

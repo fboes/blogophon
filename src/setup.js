@@ -1,13 +1,13 @@
 'use strict';
-var Mustache       = require('./helpers/blogophon-mustache');
-var fs             = require('fs-extra-promise');
-var path           = require('path');
-var Promise        = require('promise/lib/es6-extensions');
+const Mustache       = require('./helpers/blogophon-mustache');
+const fs             = require('fs-extra-promise');
+const path           = require('path');
+const Promise        = require('promise/lib/es6-extensions');
 
-var setup = function() {
+const setup = function() {
   Mustache.getTemplates();
 
-  var external = {};
+  const external = {};
 
   /**
    * Writes static files which will only be needed anew when the blog gets a new URL
@@ -16,12 +16,12 @@ var setup = function() {
    * @return {Promise} [description]
    */
   external.buildBasicFiles = function(config, answers) {
-    var manifest = require('./models/manifest');
+    let manifest = require('./models/manifest');
 
     fs.ensureDirSync(config.directories.data);
     fs.ensureDirSync(config.directories.htdocs);
 
-    var promises = [
+    let promises = [
       fs.writeFileAsync(
         path.join(config.directories.user,   'config.json'),
         JSON.stringify(answers, undefined, 2)),
@@ -55,10 +55,10 @@ var setup = function() {
     ];
     return Promise
       .all(promises)
-      .then(function() {
+      .then(() => {
         console.log("Wrote " + promises.length + " basic files");
       })
-      .catch(function(err) {
+      .catch((err) => {
         console.error(err);
       })
     ;

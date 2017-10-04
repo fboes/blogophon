@@ -1,13 +1,13 @@
 'use strict';
 
-var fs             = require('fs');
-var path           = require('path');
+const fs             = require('fs');
+const path           = require('path');
 
 /**
  * Returns an object with all configuration settings found in `package.json` and `config.json`.
  */
-var pkg    = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
-var config = {};
+const pkg    = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+let config   = {};
 try {
   config = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'user', 'config.json'), 'utf8'));
 } catch (e) {

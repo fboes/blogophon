@@ -5,9 +5,9 @@
  * @constructor
  * @return {blogophonIndex} [description]
  */
-var blogophonIndex = function() {
-  var external = {};
-  var internal = {};
+const blogophonIndex = function() {
+  const external = {};
+  const internal = {};
 
   external.index    = [];
   internal.isSorted = true;
@@ -71,8 +71,8 @@ var blogophonIndex = function() {
     if (!internal.isSorted) {
       external.sortblogophonIndex();
     }
-    var now   = Math.round(new Date().getTime() / 1000);
-    var count = 0, i;
+    let now   = Math.round(new Date().getTime() / 1000);
+    let count = 0, i;
     for(i = 0; i < external.index.length; i++) {
       if (external.index[i].meta.Created.timestamp > now) {
         count++;
@@ -91,10 +91,10 @@ var blogophonIndex = function() {
    * @return {[type]} [description]
    */
   external.removeDrafts = function() {
-    var newIndex = external.index.filter(function(value) {
+    let newIndex = external.index.filter(function(value) {
       return !value.meta.Draft;
     });
-    var count = external.index.length - newIndex.length;
+    let count = external.index.length - newIndex.length;
     external.index = newIndex;
     return count;
   };
@@ -107,7 +107,7 @@ var blogophonIndex = function() {
     if (!internal.isSorted) {
       external.sortblogophonIndex();
     }
-    var i;
+    let i;
     for(i = 0; i < external.index.length; i++) {
       if (i > 0 && external.index[i-1]) {
         external.index[i].prev = external.index[i-1].meta;
@@ -139,7 +139,7 @@ var blogophonIndex = function() {
     if (!internal.isSorted) {
       external.sortblogophonIndex();
     }
-    var tags = {};
+    let tags = {};
     external.index.forEach(function(post){
       if (post.meta.Tags) {
         post.meta.Tags.forEach(function(tag){
@@ -162,7 +162,7 @@ var blogophonIndex = function() {
     if (!internal.isSorted) {
       external.sortblogophonIndex();
     }
-    var authors = {};
+    let authors = {};
     external.index.forEach(function(post){
       if (post.meta.AuthorName) {
         if (!authors[post.meta.AuthorName]) {
@@ -204,7 +204,7 @@ var blogophonIndex = function() {
     if (!itemsPerPage) {
       itemsPerPage = 10;
     }
-    var pages = [], page = 0, newblogophonIndex = external.index, currentSlice = [];
+    let pages = [], page = 0, newblogophonIndex = external.index, currentSlice = [];
     if (reverse) {
       newblogophonIndex = newblogophonIndex.reverse();
     }

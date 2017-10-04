@@ -24,7 +24,7 @@ The Blogophon _generator_ works on every platform with [NodeJs](https://nodejs.o
 Installation
 ------------
 
-1. Make sure you have [Node.js](https://nodejs.org/) installed by calling `node -v`.
+1. Make sure you have [Node.js](https://nodejs.org/) with at least version 4 installed by calling `node -v`.
 1. Make sure you have [ImageMagick](http://www.imagemagick.org/) installed by calling `magick -help`. ImageMagick is needed for scaling images.
 1. Run `npm install -g blogophon` to install the Blogophon.
 1. Change to a folder you want to initialize a Blogophon blog project in.

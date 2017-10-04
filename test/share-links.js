@@ -1,11 +1,11 @@
 'use strict';
 
-var shareLink = require('../src/helpers/share-links');
+const shareLink = require('../src/helpers/share-links');
 
 exports.testBasicProperties = function(test) {
   test.expect(5);
 
-  var share = shareLink(1, 2, 3, 4);
+  const share = shareLink(1, 2, 3, 4);
 
   test.ok(share.twitter);
   test.ok(share.facebook);
@@ -19,15 +19,15 @@ exports.testBasicProperties = function(test) {
 exports.testBasicProperties = function(test) {
   test.expect(19);
 
-  var testData = {
+  let testData = {
     title: 'Gollum',
     link: 'www.example.com',
     description: 'Mordor',
     siteName: 'MiddleEarth'
   };
-  var share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
+  let share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
 
-  var testMatch = {
+  let testMatch = {
     title: function(str) {
       return str.match(new RegExp(testData.title));
     },

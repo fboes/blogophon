@@ -7,11 +7,11 @@
  * @param  {Array}  index [description]
  * @return {Object}       [description]
  */
-var geoJson = function(index) {
+const geoJson = function(index) {
   return {
     type: 'FeatureCollection',
     features: index.map(function(item){
-      var tags = [];
+      let tags = [];
       if (item.meta.Tags) {
         tags = item.meta.Tags.map(function(t){
           return t.title;

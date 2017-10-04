@@ -1,26 +1,26 @@
 'use strict';
 
-var inquirer       = require('inquirer');
-var fs             = require('fs-extra-promise');
-var path           = require('path');
-var shell          = require('shelljs');
-var config         = require('./config');
-var Mustache       = require('./helpers/blogophon-mustache');
-var setup          = require('./setup')();
-var Generator      = require('./generator');
-var blogophonDate  = require('./models/blogophon-date');
-var blogophonEditor = require('./editor')(config);
+const inquirer       = require('inquirer');
+const fs             = require('fs-extra-promise');
+const path           = require('path');
+const shell          = require('shelljs');
+const config         = require('./config');
+const Mustache       = require('./helpers/blogophon-mustache');
+const setup          = require('./setup')();
+const Generator      = require('./generator');
+const blogophonDate  = require('./models/blogophon-date');
+const blogophonEditor = require('./editor')(config);
 
 /**
  * Represents the Inquirer dialog with which to edit articles.
  * @constructor
  * @return {Object} [description]
  */
-var BlogophonConsole = function() {
-  var external     = {};
-  var internal     = {};
-  var files        = [];
-  var choicesStr   = [
+const BlogophonConsole = function() {
+  const external     = {};
+  const internal     = {};
+  let files          = [];
+  const choicesStr   = [
     'Create new article',
     'Edit existing article',
     'Rename article',
@@ -42,7 +42,7 @@ var BlogophonConsole = function() {
    * @return {Array} [description]
    */
   internal.makeChoices = function() {
-    var choices = [];
+    let choices = [];
     if (!config.notInitialized) {
       files = blogophonEditor.makeFiles(new inquirer.Separator());
       choices.push(choicesStr[0]);
@@ -66,7 +66,7 @@ var BlogophonConsole = function() {
         } else {
           console.log(markdownFilename + ' created');
           if (templateData.edit) {
-            var cmd = config.isWin
+            let cmd = config.isWin
               ? 'START ' + markdownFilename
               : 'open ' + markdownFilename + ' || vi '+ markdownFilename
             ;
@@ -85,10 +85,10 @@ var BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.setupDialog = function() {
-    var themesAvailable= fs.readdirSync(config.directories.theme).filter(function(file) {
+    let themesAvailable= fs.readdirSync(config.directories.theme).filter(function(file) {
       return fs.statSync(path.join(config.directories.theme, file)).isDirectory();
     });
-    var questions = [
+    let questions = [
       {
         type: 'input',
         name: 'name',
@@ -256,7 +256,7 @@ var BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.createArticleDialog = function() {
-    var defaults = {
+    let defaults = {
       classes: 'Normal article',
       link: '',
       location: '',
@@ -300,7 +300,7 @@ var BlogophonConsole = function() {
       }
     };
 
-    var questions    = [
+    let questions    = [
       {
         type: 'list',
         name: 'classes',
@@ -318,7 +318,7 @@ var BlogophonConsole = function() {
           if (v.trim().length <= 2) {
             return 'This title is way too short.';
           }
-          var filename = blogophonEditor.filenameFromTitle(v);
+          let filename = blogophonEditor.filenameFromTitle(v);
           if (fs.existsSync(filename)) {
             return ("File " + filename + ' already exists');
           }
@@ -440,9 +440,9 @@ var BlogophonConsole = function() {
       function(answers) {
         answers.title = answers.title || Math.round(new Date().getTime() / 1000);
         answers.date = answers.date || defaults.date;
-        var markdownFilename = blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date)) + '.md';
-        var filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
-        var templateData = answers;
+        let markdownFilename = blogophonEditor.filenameFromTitle(blogophonEditor.titleForFilename(answers.title, config, answers.date)) + '.md';
+        let filename = blogophonEditor.dirnameFromFilename(markdownFilename); // TODO: There is a class for that
+        let templateData = answers;
         templateData.isMicropost = (answers.classes === 'Micro post');
         templateData.lead        = templateData.lead     || defaults.lead(answers);
         templateData.mainText    = templateData.mainText || defaults.mainText(answers);
@@ -473,7 +473,7 @@ var BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.editArticleDialog = function() {
-    var questions = [
+    let questions = [
       {
         type: 'list',
         name: 'file',
@@ -483,8 +483,8 @@ var BlogophonConsole = function() {
     ];
     inquirer.prompt(questions).then(
       function(answers) {
-        var markdownFilename = path.join(config.directories.data, answers.file);
-        var cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
+        let markdownFilename = path.join(config.directories.data, answers.file);
+        let cmd = config.isWin ? 'START ' + markdownFilename : 'open ' + markdownFilename + ' || vi '+ markdownFilename;
         console.log('$ ' + cmd);
         shell.exec(cmd);
         external.init();
@@ -500,7 +500,7 @@ var BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.renameArticleDialog = function() {
-    var questions = [
+    let questions = [
       {
         type: 'list',
         name: 'file',
@@ -521,8 +521,8 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         if (answers.fileNew) {
-          var processed = 0, maxProcessed = 2;
-          var checkProcessed = function(err) {
+          let processed = 0, maxProcessed = 2;
+          let checkProcessed = function(err) {
             if (err) {
               console.error(err);
             }
@@ -565,7 +565,7 @@ var BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.deleteArticleDialog = function() {
-    var questions = [
+    let questions = [
       {
         type: 'list',
         name: 'file',
@@ -581,8 +581,8 @@ var BlogophonConsole = function() {
     inquirer.prompt(questions).then(
       function(answers) {
         if (answers.sure) {
-          var processed = 0, maxProcessed = 3;
-          var checkProcessed = function(err) {
+          let processed = 0, maxProcessed = 3;
+          let checkProcessed = function(err) {
             if (err) {
               console.error(err);
             }
@@ -610,7 +610,7 @@ var BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.generateDialog = function() {
-    var questions = [
+    let questions = [
       {
         type: 'confirm',
         name: 'noforce',
@@ -626,8 +626,8 @@ var BlogophonConsole = function() {
         }
       }
     ];
-    var generator = Generator(config);
-    var answers;
+    let generator = Generator(config);
+    let answers;
     inquirer
       .prompt(questions)
       .then(function(inquirerAnswers) {
@@ -659,7 +659,7 @@ var BlogophonConsole = function() {
       fs.ensureDirSync(config.directories.htdocs);
       external.setupDialog();
     } else {
-      var questions = [
+      let questions = [
         {
           type: 'list',
           name: 'action',

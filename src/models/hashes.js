@@ -1,7 +1,7 @@
 'use strict';
 
-var fs             = require('fs');
-var path           = require('path');
+const fs             = require('fs');
+const path           = require('path');
 
 /**
  * Represents all list of item hashes. This may be useful to determine if a item has been altered.
@@ -9,13 +9,13 @@ var path           = require('path');
  * @param  {String}  hashFilename  Defaults to project default
  * @constructor
  */
-var hashes = function(hashFilename) {
+const hashes = function(hashFilename) {
   hashFilename = hashFilename || path.join(process.cwd(), 'user/hashes.json');
 
-  var external = {};
+  const external = {};
 
-  var hashes = {};
-  var updatedHashes = {};
+  let hashes = {};
+  let updatedHashes = {};
   try {
     hashes = JSON.parse(fs.readFileSync(hashFilename, 'utf8'));
   } catch (e) {

@@ -1,8 +1,8 @@
 'use strict';
 
-var path           = require('path');
-var SuperString    = require('../helpers/super-string');
-var config         = require('../config');
+const path           = require('path');
+const SuperString    = require('../helpers/super-string');
+const config         = require('../config');
 
 /**
  * [url description]
@@ -10,8 +10,8 @@ var config         = require('../config');
  * @param  {String} identifier [description]
  * @return {url}    [description]
  */
-var url = function(identifier) {
-  var external = {};
+const url = function(identifier) {
+  const external = {};
 
   external.identifier = identifier ? identifier.replace(/^\/+/, '') : null;
 
@@ -34,7 +34,7 @@ var url = function(identifier) {
    * @return {String} [description]
    */
   external.relativeUrl = function(base, type) {
-    var url = external.convert(base, type);
+    let url = external.convert(base, type);
     return !url ? null : config.basePath + url.replace(/\/index\.html$/, '/');
   };
 
@@ -45,7 +45,7 @@ var url = function(identifier) {
    * @return {String} [description]
    */
   external.absoluteUrl = function(base, type) {
-    var url = external.relativeUrl(base, type);
+    let url = external.relativeUrl(base, type);
     return !url ? null : config.baseUrl + url;
   };
 
@@ -54,7 +54,7 @@ var url = function(identifier) {
    * @return {String} [description]
    */
   external.absoluteUrlDirname = function() {
-    var url = external.absoluteUrl();
+    let url = external.absoluteUrl();
     return !url ? null : path.dirname(url + '-');
   };
 
@@ -65,7 +65,7 @@ var url = function(identifier) {
    * @return {String} [description]
    */
   external.filename = function(base, type) {
-    var url = external.relativeFilename(base, type);
+    let url = external.relativeFilename(base, type);
     return !url ? null : path.join(config.directories.htdocs, url);
   };
 
@@ -74,7 +74,7 @@ var url = function(identifier) {
    * @return {String} [description]
    */
   external.dirname = function() {
-    var url = external.filename();
+    let url = external.filename();
     return !url ? null : path.dirname(url);
   };
 
@@ -85,7 +85,7 @@ var url = function(identifier) {
    * @return {[type]}      [description]
    */
   external.relativeFilename = function(base, type) {
-    var url = external.convert(base, type);
+    let url = external.convert(base, type);
     return !url ? null : url.replace(/(\/)$/, '$1index.html');
   };
 
@@ -96,7 +96,7 @@ var url = function(identifier) {
    * @return {[type]}      [description]
    */
   external.relativeDirname = function(base, type) {
-    var url = external.relativeFilename(base, type);
+    let url = external.relativeFilename(base, type);
     return !url ? null : path.dirname(url);
   };
 

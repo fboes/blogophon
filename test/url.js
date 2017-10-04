@@ -1,16 +1,16 @@
 'use strict';
 
-var Url       = require('../src/helpers/url');
-var PostUrl   = require('../src/helpers/post-url');
-var AuthorUrl = require('../src/helpers/author-url');
-var TagUrl    = require('../src/helpers/tag-url');
-var IndexUrl  = require('../src/helpers/index-url');
+const Url       = require('../src/helpers/url');
+const PostUrl   = require('../src/helpers/post-url');
+const AuthorUrl = require('../src/helpers/author-url');
+const TagUrl    = require('../src/helpers/tag-url');
+const IndexUrl  = require('../src/helpers/index-url');
 
 
 exports.testExtender = function(test) {
   test.expect(8);
 
-  var url = Url('test');
+  let url = Url('test');
 
   test.ok(url.relativeUrl());
   test.ok(url.absoluteUrl());
@@ -34,7 +34,7 @@ exports.testExtender = function(test) {
 exports.testBasicTransformation = function(test) {
   test.expect(9+3);
 
-  var url;
+  let url;
 
   url = PostUrl('ich-und-du.md');
   test.ok(url.relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
@@ -62,7 +62,7 @@ exports.testBasicTransformation = function(test) {
 exports.testSpecialTransformation = function(test) {
   test.expect(12);
 
-  var url;
+  let url;
 
   url = PostUrl('Ich-ünd-Dü.md');
   test.ok(url.relativeUrl().match(/^\S*\/posts\/ich-uend-due\/$/));

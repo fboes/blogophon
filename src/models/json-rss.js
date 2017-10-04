@@ -10,7 +10,7 @@
  * @param  {String} feedUrl [description]
  * @return {Object}         [description]
  */
-var jsonRss = function(index, pubDate, config, title, feedUrl) {
+const jsonRss = function(index, pubDate, config, title, feedUrl) {
   return {
     version: "2.0",
     channel: {
@@ -26,7 +26,7 @@ var jsonRss = function(index, pubDate, config, title, feedUrl) {
       lastBuildDate: pubDate.rfc,
       lastBuildDateTs: pubDate.timestamp,
       items: index.map(function(item){
-        var returnItem = {
+        let returnItem = {
           title: item.meta.Title,
           description: item.safeHtmlTeaser || item.htmlTeaser,
           contentEncoded: item.safeHtml || item.html,

@@ -76,6 +76,9 @@
     "env": {
       "node": true
     },
+    "parserOptions": {
+       "ecmaVersion": 6
+     },
     "globals": {},
     "rules": {
       "brace-style": 2,
@@ -133,11 +136,14 @@
       "no-multi-str": 2,
       "valid-jsdoc": [
         1
-      ]
+      ],
+      "no-var": 2
     },
     "extends": [
       "eslint:recommended"
     ]
   },
-  "engine": "node >= 0.12.0"
+  "engine": {
+    "node": ">=4"
+  }
 }

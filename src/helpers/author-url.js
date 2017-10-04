@@ -1,7 +1,7 @@
 'use strict';
 
-var url         = require('../helpers/url');
-var SuperString = require('../helpers/super-string');
+const url         = require('../helpers/url');
+const SuperString = require('../helpers/super-string');
 
 /**
  * [authorUrl description]
@@ -9,8 +9,8 @@ var SuperString = require('../helpers/super-string');
  * @param  {String} path       [description]
  * @return {Object}            [description]
  */
-var authorUrl = function(identifier, path) {
-  var external = url(identifier);
+const authorUrl = function(identifier, path) {
+  const external = url(identifier);
   external.path = path || 'authored-by';
 
   external.convert = function(base, type) {

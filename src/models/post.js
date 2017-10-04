@@ -1,17 +1,17 @@
 'use strict';
 
-var markdownConvert = require('8fold-marked');
-var crypto          = require('crypto');
-var SuperString     = require('../helpers/super-string');
-var markyMark       = require('../helpers/marky-mark');
-var ampify          = require('../helpers/ampify')();
-var postUrl         = require('../helpers/post-url');
-var tagUrl          = require('../helpers/tag-url');
-var authorUrl       = require('../helpers/author-url');
-var shareLinks      = require('../helpers/share-links');
-var blogophonDate   = require('../models/blogophon-date');
-var imageStyles     = require('../helpers/image-styles');
-var removeMarkdown  = require('remove-markdown');
+const markdownConvert = require('8fold-marked');
+const crypto          = require('crypto');
+const SuperString     = require('../helpers/super-string');
+const markyMark       = require('../helpers/marky-mark');
+const ampify          = require('../helpers/ampify')();
+const postUrl         = require('../helpers/post-url');
+const tagUrl          = require('../helpers/tag-url');
+const authorUrl       = require('../helpers/author-url');
+const shareLinks      = require('../helpers/share-links');
+const blogophonDate   = require('../models/blogophon-date');
+const imageStyles     = require('../helpers/image-styles');
+const removeMarkdown  = require('remove-markdown');
 
 /**
  * This class holds Markdown and converts it into a proper post.
@@ -21,10 +21,10 @@ var removeMarkdown  = require('remove-markdown');
  * @param {Object} meta     [description]
  * @param {Object} config   [description]
  */
-var Post = function(filename, markdown, meta, config) {
+const Post = function(filename, markdown, meta, config) {
   config = config || require('../config');
-  var external = {};
-  var internal = {};
+  const external = {};
+  const internal = {};
 
   /**
    * Convert input data into final object
@@ -77,7 +77,7 @@ var Post = function(filename, markdown, meta, config) {
       meta.Modified  = meta.Created;
     }
 
-    var path = config.htdocs.posts;
+    let path = config.htdocs.posts;
     if (config.postPathMode){
       switch (config.postPathMode) {
         case 'Year':
@@ -119,7 +119,7 @@ var Post = function(filename, markdown, meta, config) {
     if (meta.Keywords) {
       meta.Keywords = internal.listToArray(meta.Keywords);
       meta.Tags = meta.Keywords.map(function(tag){
-        var tagUrlObj = tagUrl(tag, config.htdocs.tag);
+        let tagUrlObj = tagUrl(tag, config.htdocs.tag);
         return {
           title: tag,
           id: SuperString(tag).asciify(),
@@ -149,7 +149,7 @@ var Post = function(filename, markdown, meta, config) {
     if (!meta.Author) {
       meta.Author = config.defaultAuthor.name + ' <' + config.defaultAuthor.email + '>';
     }
-    var metaAuthor = meta.Author.match(/^(.+?)(?:\s<(.+)>)?$/);
+    let metaAuthor = meta.Author.match(/^(.+?)(?:\s<(.+)>)?$/);
     if (metaAuthor) {
       meta.AuthorName   = metaAuthor[1];
       meta.AuthorEmail  = metaAuthor[2] ? metaAuthor[2].trim() : config.defaultAuthor.email;
@@ -157,7 +157,7 @@ var Post = function(filename, markdown, meta, config) {
     }
     meta.authorUrlObj = authorUrl(meta.AuthorName, config.htdocs.author);
     if (!meta.Image) {
-      var match = external.html.match(/<(?:!-- )?img.+?src="(.+?)"/);
+      let match = external.html.match(/<(?:!-- )?img.+?src="(.+?)"/);
       if (match) {
         meta.Image = match[1];
       }
@@ -177,7 +177,7 @@ var Post = function(filename, markdown, meta, config) {
       meta.Twitter = meta.Twitter.replace(/\\(#)/g, '$1');
     }
     if (meta.Rating) {
-      var match2 = meta.Rating.match(/^(\d)\/(\d)$/);
+      let match2 = meta.Rating.match(/^(\d)\/(\d)$/);
       if (match2) {
         meta.RatingObj = {
           worst: 1,
@@ -221,7 +221,7 @@ var Post = function(filename, markdown, meta, config) {
    * @return {String}          [description]
    */
   internal.markyMark = function(markdown, relUrl) {
-    var html = markyMark(markdownConvert(markdown), {language: config.locale.language}).toString();
+    let html = markyMark(markdownConvert(markdown), {language: config.locale.language}).toString();
     if (relUrl) {
       html = html.replace(/(<img[^>]+src=")([^:"]+?")/g, '$1'+relUrl+'$2');
     }
@@ -248,7 +248,7 @@ var Post = function(filename, markdown, meta, config) {
   internal.galleryHtml = function(html) {
     return html
       .replace(/<p>(\s*(?:<img[^>]+>\s*){2,})<\/p>/g, function(all, content) {
-        var count = content.match(/<img/g).length;
+        let count = content.match(/<img/g).length;
         content = content.replace(/(<img.+?>)/g, '  <div class="gallery__slide">$1</div>'+"\n");
         return '<div class="gallery gallery--' + count + '" data-gallery-count="' + count + '">' + "\n" + content + '</div>';
       })
@@ -300,7 +300,7 @@ var Post = function(filename, markdown, meta, config) {
    * @return {Object} [description]
    */
   external.toJSON = function() {
-    var json = external;
+    let json = external;
     if (json.next && json.next.Id) {
       json.next = json.next.urlObj.relativeUrl('index', 'json');
     }
@@ -315,9 +315,9 @@ var Post = function(filename, markdown, meta, config) {
    * @return {Array} of {filename, style}
    */
   external.getAllImagesWithStyle = function() {
-    var singleImage;
-    var allMarkdown = external.meta.MarkdownDescription + "\n" + markdown;
-    var all = allMarkdown.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/g) || [];
+    let singleImage;
+    let allMarkdown = external.meta.MarkdownDescription + "\n" + markdown;
+    let all = allMarkdown.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/g) || [];
     return all.map(function(i) {
       singleImage = i.match(/!\[.*?\]\(([^\s/]+?)(?:#(\S+))?\)/);
       if (singleImage[2] && singleImage[2].match(/^\d+x\d+$/)) {
@@ -331,8 +331,8 @@ var Post = function(filename, markdown, meta, config) {
   };
 
   external.getAllImagesWithStyleObject = function() {
-    var styles = external.getAllImagesWithStyle();
-    var returnObject = {};
+    let styles = external.getAllImagesWithStyle();
+    let returnObject = {};
     styles.forEach(function(s) {
       if (s.style) {
         if (!returnObject[s.filename]) {
@@ -351,9 +351,9 @@ var Post = function(filename, markdown, meta, config) {
    * @return {Array} [description]
    */
   external.getAllExternalLinks = function() {
-    var search = /<a[^>]+href="(http[^"]+)"/g;
-    var matched;
-    var externalLinks = [];
+    let search = /<a[^>]+href="(http[^"]+)"/g;
+    let matched;
+    let externalLinks = [];
     while ((matched = search.exec(external.html)) !== null) {
       externalLinks.push(matched[1]);
     }

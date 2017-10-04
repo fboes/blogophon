@@ -3,8 +3,8 @@
 exports.testGeneralFunctionality = function testGeneralFunctionality(test) {
   test.expect(3);
 
-  var config      = require('../src/config');
-  var imageStyles = require('../src/helpers/image-styles')(config);
+  const config      = require('../src/config');
+  const imageStyles = require('../src/helpers/image-styles')(config);
 
   test.ok(imageStyles !== undefined, 'imageStyles is defined');
   test.ok(imageStyles.getFilename('test.jpg').match(/test-\d+x\d+\.jpg/), 'Converted filenames match nomenclatura of FILENAME-WIDTHxHEIGHT.SUFFIX');
@@ -17,9 +17,9 @@ exports.testGeneralFunctionality = function testGeneralFunctionality(test) {
 exports.testHtmlConversion = function testHtmlConversion(test) {
   test.expect(37);
 
-  var config      = require('../src/config');
-  var imageStyles = require('../src/helpers/image-styles')(config);
-  var html;
+  const config      = require('../src/config');
+  const imageStyles = require('../src/helpers/image-styles')(config);
+  let html;
 
   html = imageStyles.replaceImgHtml('<img src="test.jpg" alt="Example image"/>');
   test.ok(html, 'replaceImgHtml is returning something');
