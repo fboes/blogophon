@@ -15,7 +15,7 @@ a:hover { color: #0240a5; }
 .breadcrumb { list-style: none; display: block; font-size: 0.8em; margin-bottom: -1em; }
 .breadcrumb li { display: inline-block; margin: 0; }
 .breadcrumb li:after { content: "\00BB"; }
-.breadcrumb li:last-child:after { content: ''; }
+.breadcrumb li:last-child { display: none; }
 #prevnext { text-align: center; padding: 2em 0; }
 #prevnext a { display: inline-block; padding: 0 1em; }
 #header, #sidebar, #footer { padding-top: 1em; padding-bottom: 1em; }

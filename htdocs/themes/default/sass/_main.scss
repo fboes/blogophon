@@ -90,9 +90,7 @@ a {
       content: "\00BB";
     }
     &:last-child {
-      &:after {
-        content: '';
-      }
+      display: none;
     }
   }
 }
