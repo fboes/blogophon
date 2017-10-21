@@ -1,20 +1,20 @@
 ![Blogophon -](blogophon.png) Development
 ===========
 
-The Blogophon supports the building of custom themes and frontend functionality. You ware free to change the styling of the pages build by the Blogophon.
+The Blogophon supports the building of custom themes and frontend functionality. You are free to change the styling of the pages build by the Blogophon.
 
 Gulp
 ----
 
 The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. If will check and compress your files while you are editing.
 
-| Command      | Description                                 |
-|--------------|---------------------------------------------|
-| `gulp`       | Starts `watch` and `serve`                  |
-| `gulp watch` | Executes `test` and `build` on file changes |
-| `gulp serve` | Starts webserver at http://localhost:3000/  |
-| `gulp test`  | Executes linters and tests                  |
-| `gulp build` | Build compressed Javascript and CSS         |
+| Command      | Description                                           |
+|--------------|-------------------------------------------------------|
+| `gulp`       | Starts `gulp watch` and `gulp serve`                  |
+| `gulp serve` | Starts webserver at http://localhost:3000/            |
+| `gulp watch` | Executes `gulp test` and `gulp build` on file changes |
+| `gulp test`  | Executes linters and tests                            |
+| `gulp build` | Build compressed Javascript and CSS                   |
 
 Webserver
 ---------
