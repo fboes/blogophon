@@ -465,6 +465,11 @@ let Generator = function(config) {
       };
     });
 
+    if (config.postPathMode !== 'Category') {
+      fs.removeSync(path.join(config.directories.htdocs, config.htdocs.category));
+      fs.ensureDirSync(path.join(config.directories.htdocs, config.htdocs.category));
+    }
+
     return new Promise(
       function(resolve, reject) {
         let promises = Object.keys(categories).map(function(key) {
