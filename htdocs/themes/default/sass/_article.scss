@@ -40,6 +40,14 @@ article {
       color: $color-grey-dark;
     }
   }
+  .gallery {
+    img {
+      &.portrait {
+        max-width: calc(50% - 1em);
+        margin: 0 0.5em 1em;
+      }
+    }
+  }
   @include no-amp {
     a.gallery__link {
       position:relative;

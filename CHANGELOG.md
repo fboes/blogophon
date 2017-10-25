@@ -3,6 +3,8 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Improved layout for gallery
+
 1.3.0
 -----
 
