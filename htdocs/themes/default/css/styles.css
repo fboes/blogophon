@@ -40,6 +40,7 @@ article img.quad, article amp-img.quad, article .figure.quad { max-width: 37.5%;
 article .figure { display: inline-block; font-size: 0.8em; }
 article .figure img { margin: 0; width: 100%; max-width: 100%; }
 article .figure .figcaption { display: block; padding: 0.5em 0; border-bottom: 1px solid; color: #666666; }
+article .gallery img.portrait { max-width: calc(50% - 1em); margin: 0 0.5em 1em; }
 article a.gallery__link { position: relative; cursor: -webkit-zoom-in; cursor: zoom-in; }
 article + article { margin-top: 2em; border-top: 1px solid #eee; }
 article ul.task-list, article ol.task-list { list-style: none; }
