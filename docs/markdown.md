@@ -124,6 +124,7 @@ Link these images into your Markdown file like this:
 ![Image description](image.jpg#quad)    _produces an image, which will be scaled to match the `quad` style_
 ![Image description](image.jpg#320x240) _mark up this image as being 320 wide and 240 high_
 ![> Image description](image.jpg)       _produces an unscaled image with visible image description_
+
 ```
 
 It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.
@@ -173,35 +174,8 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `(R)`    | ®         | Registered sign  |
 | `(TM)`   | ™         | Trade mark sign  |
 | `(+-)`   | ±         | Plus-minus sign  |
-| `:)`     | &#x1F60A; | Smiling face with smiling eyes |
-| `:))`    | &#x1F602; | Face with tears of joy |
-| `:D`     | &#x1F604; | Smiling face with open mouth and smiling eyes |
-| `;)`     | &#x1F609; | Winking face     |
-| `B)`     | &#x1F60E; | Smiling face with sunglasses |
-| `:P`     | &#x1F60B; | Face with stuck-out tongue |
-| `xP`     | &#x1F61D; | Face with stuck-out tongue and tightly-closed eyes |
-| `:*`     | &#x1F618; | Face throwing a kiss |
-| `:O`     | &#x1F632; | Astonished face  |
-| `:\|`    | &#x1F610; | Neutral face     |
-| `:?`     | &#x1F914; | Thinking face    |
-| `:/`     | &#x1F612; | Unamused face    |
-| `xO`     | &#x1F635; | Dizzy face       |
-| `:(`     | &#x1F629; | Weary face       |
-| `:'(` / `;(` | &#x1F622; | Crying face  |
-| `:@`     | &#x1F620; | Angry face       |
-| `:$`     | &#x1F633; | Flushed face     |
-| `8O`     | &#x1F628; | Fearful face     |
-| `\o/`    | &#x1F64C; | Person raising both hands in celebration |
-| `8<`     | &#x2702;  | Scissors         |
-| `:+1:`   | &#x1F44D; | Thumbs up sign   |
-| `:-1:`   | &#x1F44E; | Thumbs down sign |
-| `<3`     | &#x2764;  | Heart            |
-| `</3`    | &#x1F494; | Broken heart     |
-| `(!)`    | &#x26A0;  | Warning sign     |
 
-Please use the proper upper-/lowercasing, as some characters are intentionally lowercased to avoid replacing acronyms by mistake.
-
-For more Emojis and special characters refer to a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode), and convert a code like `U+1F680` into `&#x1F680;`.
+For more Emojis and special characters refer to the [ASCII Emojii conversion table](emojis.md), or consult a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode) and convert a code like `U+1F680` into `&#x1F680;`.
 
 Tables
 ------
