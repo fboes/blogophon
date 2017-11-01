@@ -2,7 +2,12 @@
 <html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
-  <title>{{#meta.title}}{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}} | {{/meta.title}}{{config.name}}</title>
+  {{#meta.isHomepage}}
+    <title>{{#meta.subtitle}}{{meta.subtitle}} | {{/meta.subtitle}}{{config.name}}</title>
+  {{/meta.isHomepage}}
+  {{^meta.isHomepage}}
+    <title>{{#meta.title}}{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}} | {{/meta.title}}{{config.name}}</title>
+  {{/meta.isHomepage}}
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{meta.absoluteUrl}}" />
   <meta property="og:title" name="title" content="{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}" />

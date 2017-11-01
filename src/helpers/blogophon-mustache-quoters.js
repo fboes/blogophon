@@ -22,6 +22,11 @@ const blogophonMustacheQuoters = {
       return text;
     };
   },
+  jsQuote: function() {
+    return function(text, render) {
+      return render(text).replace(/[\n|\r]/g, '\\n').replace(/(')/g, '\\$1');
+    };
+  },
   noLineBreak: function() {
     return function(text, render) {
       return render(text).replace(/\s*[\n|\r]+/g, ' ');

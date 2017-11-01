@@ -10,6 +10,8 @@
   {{#post.meta.Image}}
     <meta property="og:image" content="{{post.meta.Image}}" />
   {{/post.meta.Image}}
+  <meta property="article:published_time" content="{{post.meta.Created.iso}}" />
+  <meta property="article:modified_time" content="{{post.meta.Modified.iso}}" />
   {{#post.meta.Keywords.length}}
     <meta name="keywords" content="{{post.meta.Keywords}}" />
   {{/post.meta.Keywords.length}}
