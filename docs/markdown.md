@@ -191,6 +191,19 @@ Tables
 
 In this example the first line of the table will be treated as table header. The first column will be treated as row header, because its content is enclosed in `**`.
 
+To add a table caption simply put a headline level 5 in front of your table:
+
+```markdown
+##### Tic Tac Toe
+
+| \     | A | B | C |
+|-------|---|–––|---|
+| **1** | X | X | X |
+| **2** | O | X |   |
+| **3** |   | O | O |
+
+```
+
 [Colons can be used to align columns](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables).
 
 Fenced code blocks

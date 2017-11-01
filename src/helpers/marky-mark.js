@@ -481,6 +481,7 @@ const markyMark = function(string, rules) {
       .replace(/(<table[^>]*>)([\s\S]+?)(\/table)/g, function(all, before, content, after) {
         return before + content.replace(/(<tr[^>]*>[\s]*)<td([^>]*>)<strong>(.+?)<\/strong><\/td>/g, '$1<th scope="row"$2$3</th>') + after;
       })
+      .replace(/<h[56]([^>]*)>([\s\S]+?)<\/h[56]>(\s*)(<table>)/g, '$4$3<caption$1>$2</caption>')
       .replace(/(<(p|h\d|li)(?:\s[^>]+)?>)([\s\S]+?)(<\/\2>)/g, function(all, before, tag, inline, after) {
         return before + internal.convertTextBlock(inline) + after;
       })

@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Adding table captions with `#####` headlines
 * [x] Moved Emoji converter to separate module
 * [x] Fixed URL generator to generate better filenames and delete old categories
 * [x] Improved layout for gallery

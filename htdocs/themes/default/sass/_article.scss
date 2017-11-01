@@ -75,7 +75,10 @@ article {
   }
   table {
     margin-bottom: 1em;
-    tr, thead, tbody {
+    caption {
+      font-weight: bold;
+    }
+    tr, thead, tbody, caption {
       border-bottom:1px solid rgba(0,0,0,0.1);
       &:last-child {
         border:none;
