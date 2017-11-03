@@ -1,5 +1,7 @@
 'use strict';
 
+const emojiConvert = require('./emoji-convert');
+
 /**
  * Convert HTML in even better HTML.
  * @constructor
@@ -135,7 +137,7 @@ const markyMark = function(string, rules) {
           break;
         case '<>':
           if (chunk.match(/<code class/)) {
-            let lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|yaml|ini|apacheconf)/);
+            const lang = chunk.match(/(css|less|sass|html|xml|xslt|markdown|shell|bash|yaml|ini|apacheconf)/);
             if (lang && lang[1]) {
               newMode = '<'+lang[1]+'>';
             } else {
@@ -168,7 +170,7 @@ const markyMark = function(string, rules) {
    * @return {String}        [description]
    */
   internal.convertText = function(string) {
-    let entityMap = {
+    const entityMap = {
       '...': '…',
       '… …': '…',
       '(C)': '©',
@@ -188,40 +190,7 @@ const markyMark = function(string, rules) {
       return entityMap[s];
     });
 
-    entityMap = {
-      ':)': '1F60A',
-      ':))': '1F602',
-      ':D': '1F604',
-      ';)': '1F609',
-      'B)': '1F60E',
-      ':P': '1F60B',
-      'xP': '1F61D',
-      ':*': '1F618',
-      ':O': '1F632',
-      ':|': '1F610',
-      ':?': '1F914',
-      ':/': '1F612',
-      'xO': '1F635',
-      ':(': '1F629',
-      ":'(": '1F622',
-      ";(": '1F622',
-      ':@': '1F620',
-      ':$': '1F633',
-      '8O': '1F628',
-      '\\o/': '1F64C',
-      '8<': '2702',
-      ':+1:': '1F44D',
-      ':-1:': '1F44E',
-      '&lt;3': '2764',
-      '&lt;/3': '1F494',
-      '(!)': '26A0'
-    };
-    string = string.replace(
-      /(\W|^)(:(?:'?\(|\)\)|[)|/DPO*?@$])|[;B]\)|;\(|x[PO]|\\o\/|8[o<]|:[+-]1:|&lt;\?3|\(!\))(\W|$)/g,
-      function(all, before, s, after) {
-        return before + '<span class="emoji emoji--' + entityMap[s] + '" title="' + s + '">&#x' + entityMap[s] + ';</span>' + after;
-      }
-    );
+    string = emojiConvert(string);
 
     return string
       .replace(/(\d)\s*-\s*(\d)/g, '$1–$2')
@@ -464,12 +433,12 @@ const markyMark = function(string, rules) {
       })
       .replace(/(<img[^>]+src="[^"]+-(\d+)x(\d+)\.[^"]+")/g, '$1 width="$2" height="$3"')
       .replace(/(<)img([^>]src="[^"]+\.(mp[234g]|webm|og[gamv])(?:#[^"]*)?"+[^>]*?)\s*\/?>/, function(all, first, last, suffix) {
-        let tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
+        const tag = suffix.match(/^(?:mp[24g]|webm|og[gmv])$/) ? 'video' : 'audio';
         all = first + tag + last + ' controls="controls"></' + tag + '>';
         return all.replace(/\salt="([^"]*)"([^>]*>)/, '$2$1');
       })
       .replace(/(<img[^>]+alt=")(?:&gt;\s?)([^"]+)("[^>]*>)/g, function(all, first, alt, last) {
-        let img = '<span class="figure">' + first + alt + last + '<span class="figcaption">' + alt + '</span></span>';
+        const img = '<span class="figure">' + first + alt + last + '<span class="figcaption">' + alt + '</span></span>';
         return img.replace(/(class="figure)(".+<img[^>]+src="[^"]+#)([^"]+)(")/, '$1 $3$2$3$4');
       })
       .replace(/(<(?:img|hr|br)[^>]*[^/])(>)/g, '$1 /$2')

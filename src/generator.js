@@ -1,37 +1,37 @@
 'use strict';
 
-let glob           = require("glob");
-let Promise        = require('promise/lib/es6-extensions');
-let fs             = require('fs-extra-promise');
-let path           = require('path');
-let SuperString    = require('./helpers/super-string');
-let blogophonDate  = require('./models/blogophon-date');
-let Mustache       = require('./helpers/blogophon-mustache');
-let PostReader     = require('./post-reader');
-let jsonRss        = require('./models/json-rss');
-let geoJson        = require('./models/geo-json');
-let translations   = require('./helpers/translations');
-let indexUrl       = require('./helpers/index-url');
-let blogophonIndex = require('./blogophon-index');
-let hashes         = require('./models/hashes');
-let appleNewsFormat = require('./models/apple-news-format');
-let imageStyles    = require('./helpers/image-styles');
-let ampify         = require('./helpers/ampify')();
-let slacked        = require('./models/slacked');
-let jsonFeed       = require('./models/json-feed');
-let categoriesUrls = require('./models/categories');
+const glob           = require("glob");
+const Promise        = require('promise/lib/es6-extensions');
+const fs             = require('fs-extra-promise');
+const path           = require('path');
+const SuperString    = require('./helpers/super-string');
+const blogophonDate  = require('./models/blogophon-date');
+const Mustache       = require('./helpers/blogophon-mustache');
+const PostReader     = require('./post-reader');
+const jsonRss        = require('./models/json-rss');
+const geoJson        = require('./models/geo-json');
+const translations   = require('./helpers/translations');
+const indexUrl       = require('./helpers/index-url');
+const blogophonIndex = require('./blogophon-index');
+const hashes         = require('./models/hashes');
+const appleNewsFormat = require('./models/apple-news-format');
+const imageStyles    = require('./helpers/image-styles');
+const ampify         = require('./helpers/ampify')();
+const slacked        = require('./models/slacked');
+const jsonFeed       = require('./models/json-feed');
+const categoriesUrls = require('./models/categories');
 
 /**
  * Generator used for creating the blog.
  * @constructor
  * @param {Object} config [description]
  */
-let Generator = function(config) {
+const Generator = function(config) {
   if (!config) {
     throw new Error('config is empty');
   }
-  let external = {};
-  let internal = {};
+  const external = {};
+  const internal = {};
 
   Mustache.getTemplates();
   Mustache.getThemeTemplates(path.join(config.directories.currentTheme, 'templates'));

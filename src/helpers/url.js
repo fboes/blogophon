@@ -34,7 +34,7 @@ const url = function(identifier) {
    * @return {String} [description]
    */
   external.relativeUrl = function(base, type) {
-    let url = external.convert(base, type);
+    const url = external.convert(base, type);
     return !url ? null : config.basePath + url.replace(/\/index\.html$/, '/');
   };
 
@@ -45,7 +45,7 @@ const url = function(identifier) {
    * @return {String} [description]
    */
   external.absoluteUrl = function(base, type) {
-    let url = external.relativeUrl(base, type);
+    const url = external.relativeUrl(base, type);
     return !url ? null : config.baseUrl + url;
   };
 
@@ -54,7 +54,7 @@ const url = function(identifier) {
    * @return {String} [description]
    */
   external.absoluteUrlDirname = function() {
-    let url = external.absoluteUrl();
+    const url = external.absoluteUrl();
     return !url ? null : path.dirname(url + '-');
   };
 
@@ -65,7 +65,7 @@ const url = function(identifier) {
    * @return {String} [description]
    */
   external.filename = function(base, type) {
-    let url = external.relativeFilename(base, type);
+    const url = external.relativeFilename(base, type);
     return !url ? null : path.join(config.directories.htdocs, url);
   };
 
@@ -74,7 +74,7 @@ const url = function(identifier) {
    * @return {String} [description]
    */
   external.dirname = function() {
-    let url = external.filename();
+    const url = external.filename();
     return !url ? null : path.dirname(url);
   };
 
@@ -85,7 +85,7 @@ const url = function(identifier) {
    * @return {[type]}      [description]
    */
   external.relativeFilename = function(base, type) {
-    let url = external.convert(base, type);
+    const url = external.convert(base, type);
     return !url ? null : url.replace(/(\/)$/, '$1index.html');
   };
 
@@ -96,7 +96,7 @@ const url = function(identifier) {
    * @return {[type]}      [description]
    */
   external.relativeDirname = function(base, type) {
-    let url = external.relativeFilename(base, type);
+    const url = external.relativeFilename(base, type);
     return !url ? null : path.dirname(url);
   };
 

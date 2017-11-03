@@ -1,18 +1,18 @@
 'use strict';
 
-let markdownConvert = require('8fold-marked');
-let crypto          = require('crypto');
-let SuperString     = require('../helpers/super-string');
-let markyMark       = require('../helpers/marky-mark');
-let ampify          = require('../helpers/ampify')();
-let postUrl         = require('../helpers/post-url');
-let tagUrl          = require('../helpers/tag-url');
-let categoryUrl     = require('../helpers/category-url');
-let authorUrl       = require('../helpers/author-url');
-let shareLinks      = require('../helpers/share-links');
-let blogophonDate   = require('../models/blogophon-date');
-let imageStyles     = require('../helpers/image-styles');
-let removeMarkdown  = require('remove-markdown');
+const markdownConvert = require('8fold-marked');
+const crypto          = require('crypto');
+const SuperString     = require('../helpers/super-string');
+const markyMark       = require('../helpers/marky-mark');
+const ampify          = require('../helpers/ampify')();
+const postUrl         = require('../helpers/post-url');
+const tagUrl          = require('../helpers/tag-url');
+const categoryUrl     = require('../helpers/category-url');
+const authorUrl       = require('../helpers/author-url');
+const shareLinks      = require('../helpers/share-links');
+const blogophonDate   = require('../models/blogophon-date');
+const imageStyles     = require('../helpers/image-styles');
+const removeMarkdown  = require('remove-markdown');
 
 /**
  * This class holds Markdown and converts it into a proper post.
@@ -22,10 +22,10 @@ let removeMarkdown  = require('remove-markdown');
  * @param {Object} meta     [description]
  * @param {Object} config   [description]
  */
-let Post = function(filename, markdown, meta, config) {
+const Post = function(filename, markdown, meta, config) {
   config = config || require('../config');
-  let external = {};
-  let internal = {};
+  const external = {};
+  const internal = {};
 
   /**
    * Convert input data into final object
@@ -78,7 +78,7 @@ let Post = function(filename, markdown, meta, config) {
       meta.Modified  = meta.Created;
     }
     if (meta.Category) {
-      let categoryUrlObj = categoryUrl(meta.Category, config.htdocs.category);
+      const categoryUrlObj = categoryUrl(meta.Category, config.htdocs.category);
       meta.CategoryObj = {
         title: meta.Category,
         id: SuperString(meta.Category).asciify(),

@@ -1,7 +1,7 @@
 'use strict';
 
-let url         = require('../helpers/url');
-let SuperString = require('../helpers/super-string');
+const url         = require('../helpers/url');
+const SuperString = require('../helpers/super-string');
 
 /**
  * [categoryUrl description]
@@ -9,8 +9,8 @@ let SuperString = require('../helpers/super-string');
  * @param  {String} path       [description]
  * @return {Object}            [description]
  */
-let categoryUrl = function(identifier, path) {
-  let external = url(identifier);
+const categoryUrl = function(identifier, path) {
+  const external = url(identifier);
   external.path = path || 'category';
 
   external.convert = function(base, type) {

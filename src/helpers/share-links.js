@@ -17,7 +17,7 @@ const shareLinks = function(title, link, description, siteName, image) {
   description = description || title;
   siteName    = siteName    || title;
 
-  let urlParameter = function(paramObject) {
+  const urlParameter = function(paramObject) {
     let param = [];
     for (let key in paramObject) {
       param.push(key + '=' + encodeURIComponent(paramObject[key]));

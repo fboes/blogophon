@@ -61,7 +61,7 @@ Mustache.getTemplateObject = function(directory) {
  * @return {String}        [description]
  */
 Mustache.escape = function(string) {
-  let entityMap = {
+  const entityMap = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',

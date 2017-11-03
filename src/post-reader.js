@@ -24,7 +24,7 @@ const PostReader = function(file, config) {
   let descriptionBuffer = '';
   let startDescriptionBuffer = false;
   let fileStat;
-  let postData = {
+  const postData = {
     meta:     {},
     markdown: ''
   };

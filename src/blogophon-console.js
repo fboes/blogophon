@@ -66,7 +66,7 @@ const BlogophonConsole = function() {
         } else {
           console.log(markdownFilename + ' created');
           if (templateData.edit) {
-            let cmd = config.isWin
+            const cmd = config.isWin
               ? 'START ' + markdownFilename
               : 'open ' + markdownFilename + ' || vi '+ markdownFilename
             ;
@@ -85,10 +85,10 @@ const BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.setupDialog = function() {
-    let themesAvailable= fs.readdirSync(config.directories.theme).filter(function(file) {
+    const themesAvailable= fs.readdirSync(config.directories.theme).filter(function(file) {
       return fs.statSync(path.join(config.directories.theme, file)).isDirectory();
     });
-    let questions = [
+    const questions = [
       {
         type: 'input',
         name: 'name',
@@ -265,7 +265,7 @@ const BlogophonConsole = function() {
    * @return {[type]} [description]
    */
   external.createArticleDialog = function() {
-    let defaults = {
+    const defaults = {
       classes: 'Normal article',
       link: '',
       location: '',
@@ -310,7 +310,7 @@ const BlogophonConsole = function() {
       }
     };
 
-    let questions    = [
+    const questions    = [
       {
         type: 'list',
         name: 'classes',
@@ -492,7 +492,7 @@ const BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.editArticleDialog = function() {
-    let questions = [
+    const questions = [
       {
         type: 'list',
         name: 'file',
@@ -519,7 +519,7 @@ const BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.renameArticleDialog = function() {
-    let questions = [
+    const questions = [
       {
         type: 'list',
         name: 'file',
@@ -584,7 +584,7 @@ const BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.deleteArticleDialog = function() {
-    let questions = [
+    const questions = [
       {
         type: 'list',
         name: 'file',
@@ -629,7 +629,7 @@ const BlogophonConsole = function() {
    * @return {void} [description]
    */
   external.generateDialog = function() {
-    let questions = [
+    const questions = [
       {
         type: 'confirm',
         name: 'noforce',
@@ -678,7 +678,7 @@ const BlogophonConsole = function() {
       fs.ensureDirSync(config.directories.htdocs);
       external.setupDialog();
     } else {
-      let questions = [
+      const questions = [
         {
           type: 'list',
           name: 'action',
