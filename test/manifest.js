@@ -3,8 +3,8 @@
 exports.testBasicProperties = function(test) {
   test.expect(5);
 
-  const config = require('../src/config');
-  const manifest = require('../src/models/manifest')(config);
+  const config = require('../lib/config');
+  const manifest = require('../lib/models/manifest')(config);
 
   // console.log(manifest);
 

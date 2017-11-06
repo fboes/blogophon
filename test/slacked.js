@@ -1,11 +1,11 @@
 'use strict';
 
-const blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../lib/models/blogophon-date');
 
 exports.testBasicProperties = function(test) {
   test.expect(7);
 
-  const config = require('../src/config');
+  const config = require('../lib/config');
   const pubDate = blogophonDate('2016-12-31', 'en');
 
   const item = {
@@ -18,7 +18,7 @@ exports.testBasicProperties = function(test) {
       tags: [6, 7]
     }
   };
-  const slacked = require('../src/models/slacked')([item], pubDate, config);
+  const slacked = require('../lib/models/slacked')([item], pubDate, config);
 
   //console.log(slacked);
 

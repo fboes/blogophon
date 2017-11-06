@@ -1,11 +1,11 @@
 'use strict';
 
-const blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../lib/models/blogophon-date');
 
 exports.testBasicProperties = function(test) {
   test.expect(11);
 
-  const config = require('../src/config');
+  const config = require('../lib/config');
   const pubDate = blogophonDate('2016-12-31', 'en');
 
   const item = {
@@ -21,7 +21,7 @@ exports.testBasicProperties = function(test) {
       Language: 'en'
     }
   };
-  const jsonFeed = require('../src/models/json-feed')([item], pubDate, config, 'title', 'url');
+  const jsonFeed = require('../lib/models/json-feed')([item], pubDate, config, 'title', 'url');
 
   //console.log(jsonFeed);
 

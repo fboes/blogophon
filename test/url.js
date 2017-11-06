@@ -1,10 +1,10 @@
 'use strict';
 
-const Url       = require('../src/helpers/url');
-const PostUrl   = require('../src/helpers/post-url');
-const AuthorUrl = require('../src/helpers/author-url');
-const TagUrl    = require('../src/helpers/tag-url');
-const IndexUrl  = require('../src/helpers/index-url');
+const Url       = require('../lib/helpers/url');
+const PostUrl   = require('../lib/helpers/post-url');
+const AuthorUrl = require('../lib/helpers/author-url');
+const TagUrl    = require('../lib/helpers/tag-url');
+const IndexUrl  = require('../lib/helpers/index-url');
 
 
 exports.testExtender = function(test) {

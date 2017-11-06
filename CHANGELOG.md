@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Changed internal file system structure to match Node.js standards
 * [x] Adding table captions with `#####` headlines
 * [x] Moved Emoji converter to separate module
 * [x] Fixed URL generator to generate better filenames and delete old categories

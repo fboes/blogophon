@@ -1,7 +1,7 @@
 'use strict';
 
-const post = require('../src/models/post');
-const config = require('../src/config');
+const post = require('../lib/models/post');
+const config = require('../lib/config');
 
 exports.testErrors = function(test) {
   test.expect(5);

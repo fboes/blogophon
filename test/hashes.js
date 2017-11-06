@@ -1,6 +1,6 @@
 'use strict';
 
-const hashes = require('../src/models/hashes')('test.json');
+const hashes = require('../lib/models/hashes')('test.json');
 
 exports.testHashesFunctionality = function testHashesFunctionality(test) {
   test.expect(6);

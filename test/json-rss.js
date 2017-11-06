@@ -1,11 +1,11 @@
 'use strict';
 
-const blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../lib/models/blogophon-date');
 
 exports.testBasicProperties = function(test) {
   test.expect(14);
 
-  const config = require('../src/config');
+  const config = require('../lib/config');
   const pubDate = blogophonDate('2016-12-31', 'en');
 
   const item = {
@@ -20,7 +20,7 @@ exports.testBasicProperties = function(test) {
       tags: [6, 7]
     }
   };
-  const jsonRss = require('../src/models/json-rss')([item], pubDate, config);
+  const jsonRss = require('../lib/models/json-rss')([item], pubDate, config);
 
   test.ok(jsonRss.version !== undefined);
   test.ok(jsonRss.channel !== undefined);

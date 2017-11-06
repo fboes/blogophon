@@ -15,7 +15,7 @@ You do not have to use `blogophon` to generate your blog. All operations can be 
 
 ## Generate HTML files manually
 
-1. Run [`blogophon-generate`](../generate.js) to make the Blogophon Generator generate all HTML files in the folder you are in.
+1. Run [`blogophon-generate`](../bin/blogophon-generate) to make the Blogophon Generator generate all HTML files in the folder you are in.
 
 `blogophon-generate` has some options:
 

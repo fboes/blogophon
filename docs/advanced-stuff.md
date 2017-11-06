@@ -6,7 +6,7 @@ In this document you will find some stuff for hardcore CLI wizards and server gu
 Other means of editing articles
 -------------------------------
 
-If you do not want to use [`blogophon`](../index.js), [read the manual operations instructions](manual.md).
+If you do not want to use [`blogophon`](../bin/blogophon), [read the manual operations instructions](manual.md).
 
 Cronjob
 -------
@@ -79,8 +79,8 @@ In certain environments you may not be able to install the Blogophon globally. T
 
 1. Run `npm install blogophon` in a folder you have access to.
 
-* All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/index.js`
-* All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/generate.js`
+* All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/bin/blogophon`
+* All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/bin/blogophon-generate`
 
 Google Webmaster search console
 -------------------------------

@@ -1,6 +1,6 @@
 'use strict';
 
-const blogophonDate = require('../src/models/blogophon-date');
+const blogophonDate = require('../lib/models/blogophon-date');
 
 exports.basicTest = function basicTest(test) {
   test.expect(10+10+12);

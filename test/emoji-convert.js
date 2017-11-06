@@ -1,6 +1,6 @@
 'use strict';
 
-const emojiConvert = require('../src/helpers/emoji-convert');
+const emojiConvert = require('../lib/helpers/emoji-convert');
 
 exports.testBasic = function(test) {
   test.expect(5);

@@ -1,6 +1,6 @@
 'use strict';
 
-const PostReader = require('../src/post-reader');
+const PostReader = require('../lib/post-reader');
 
 exports.testErrors = function(test) {
   test.expect(7);

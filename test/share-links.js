@@ -1,6 +1,6 @@
 'use strict';
 
-const shareLink = require('../src/helpers/share-links');
+const shareLink = require('../lib/helpers/share-links');
 
 exports.testBasicProperties = function(test) {
   test.expect(5);

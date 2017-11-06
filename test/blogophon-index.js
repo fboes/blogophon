@@ -3,7 +3,7 @@
 exports.testGeneralFunctionality = function(test) {
   test.expect(1);
 
-  const index = require('../src/blogophon-index');
+  const index = require('../lib/blogophon-index');
 
   test.ok(index(), 'Index does compile');
 

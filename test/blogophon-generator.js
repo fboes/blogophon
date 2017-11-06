@@ -1,6 +1,6 @@
 'use strict';
 
-const blogophonConsole = require('../src/blogophon-console');
+const blogophonConsole = require('../lib/blogophon-console');
 
 exports.testGeneralFunctionality = function(test) {
   test.expect(1);

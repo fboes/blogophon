@@ -1,6 +1,6 @@
 'use strict';
 
-const application = require('../src/helpers/application')();
+const application = require('../lib/helpers/application')();
 
 exports.testapplicationProperties = function testapplicationProperties(test) {
   test.expect(1);

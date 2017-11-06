@@ -1,6 +1,6 @@
 'use strict';
 
-const markyMark = require('../src/helpers/marky-mark');
+const markyMark = require('../lib/helpers/marky-mark');
 
 exports.testSimpleString = function(test) {
   test.expect(14);

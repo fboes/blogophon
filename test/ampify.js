@@ -1,6 +1,6 @@
 'use strict';
 
-const ampify = require('../src/helpers/ampify')();
+const ampify = require('../lib/helpers/ampify')();
 
 exports.testAmpifyBasic = function testAmpifyBasic(test) {
   test.expect(1);
