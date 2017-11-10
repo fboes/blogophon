@@ -3,7 +3,7 @@ Emojis
 
 | Markdown / HTML | Results in… | Description    |
 |----------|-------------|----------------|
-| `:)`     | &#x1F60A; | Smiling face with smiling eyes |
+| `:)`     | &#x263A;  | Smiling face     |
 | `:o)`    | &#x1F921; | Clown face       |
 | `:))`    | &#x1F602; | Face with tears of joy |
 | `:D`     | &#x1F604; | Smiling face with open mouth and smiling eyes |
@@ -17,7 +17,7 @@ Emojis
 | `:?`     | &#x1F914; | Thinking face    |
 | `:/`     | &#x1F612; | Unamused face    |
 | `xO`     | &#x1F635; | Dizzy face       |
-| `:(`     | &#x1F629; | Weary face       |
+| `:(`     | &#x2639;  | Frowning face |
 | `:'(` / `;(` | &#x1F622; | Crying face  |
 | `:@`     | &#x1F620; | Angry face       |
 | `:$`     | &#x1F633; | Flushed face     |
