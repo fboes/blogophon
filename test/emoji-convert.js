@@ -44,7 +44,7 @@ exports.testHtmlEntities = function(test) {
   let convertedHtml = emojiConvert('<strong>I am :)</strong>');
   test.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
   test.ok(convertedHtml.match(/&#[a-zA-Z0-9]+;/));
-  test.equal(convertedHtml, '<strong>I am <span class="emoji emoji--263a" title=":)">&#x263A;</span></strong>');
+  test.equal(convertedHtml, '<strong>I am <span class="emoji emoji--1f60a" title=":)">&#x1F60A;</span></strong>');
 
   convertedHtml = emojiConvert('<strong>I am :/</strong>');
   test.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
@@ -60,7 +60,7 @@ exports.testHtmlEntities = function(test) {
   convertedHtml = emojiConvert('<strong>I am :-)</strong>');
   test.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
   test.ok(convertedHtml.match(/&#[a-zA-Z0-9]+;/));
-  test.equal(convertedHtml, '<strong>I am <span class="emoji emoji--263a" title=":-)">&#x263A;</span></strong>');
+  test.equal(convertedHtml, '<strong>I am <span class="emoji emoji--1f60a" title=":-)">&#x1F60A;</span></strong>');
 
   convertedHtml = emojiConvert('<strong>I am x-O</strong>');
   test.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
