@@ -32,4 +32,6 @@ Emojis
 
 Please use the proper upper-/lowercasing, as some characters are intentionally lowercased to avoid replacing acronyms by mistake.
 
+Optionally you can add noses to your ASCII smilies, so `:)` is equal to `:-)`, `:(` is equal to `:-(`.
+
 For more Emojis and special characters consult a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode) and convert a code like `U+1F680` into `&#x1F680;`.

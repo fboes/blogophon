@@ -5,7 +5,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 
 * [x] Changed internal file system structure to match Node.js standards
 * [x] Adding table captions with `#####` headlines
-* [x] Moved Emoji converter to separate module
+* [x] Moved Emoji converter to separate module and added more Emojis
 * [x] Fixed URL generator to generate better filenames and delete old categories
 * [x] Improved layout for gallery
 
