@@ -17,7 +17,7 @@ Emojis
 | `:?`     | &#x1F914; | Thinking face    |
 | `:/`     | &#x1F612; | Unamused face    |
 | `xO`     | &#x1F635; | Dizzy face       |
-| `:(`     | &#x2639;  | Frowning face |
+| `:(`     | &#x1F641; | Slightly frowning face |
 | `:'(` / `;(` | &#x1F622; | Crying face  |
 | `:@`     | &#x1F620; | Angry face       |
 | `:$`     | &#x1F633; | Flushed face     |
