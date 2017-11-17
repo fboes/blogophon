@@ -18,8 +18,14 @@ Get the path to your blog by typing `pwd`. Then edit your Crontab: `crontab -e`
 Add one of these lines:
 
 ```
-58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate >/dev/null 2>&1 # Midnight, daily without log
-58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate --log >> logs/generate.log 2>&1 # Midnight, daily with log
+# Midnight, daily without log
+58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate >/dev/null 2>&1
+
+# Midnight, daily with log
+58 23 * * * cd PATH_TO_YOUR_BLOG && blogophon-generate --log >> logs/generate.log 2>&1
+
+# Every 30 minutes, but only one job at a time
+*/30 * * * * cd PATH_TO_YOUR_BLOG && flock -xn ~/blogophon.lck -c "blogophon-generate >/dev/null 2>&1"
 ```
 
 For more exotic execution times check http://crontab-generator.org/. And keep in mind to check the timezone your crontab will be executed in.
