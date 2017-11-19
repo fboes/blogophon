@@ -107,7 +107,9 @@ exports.testShell = function(test) {
   m = markyMark(
     '<pre><code class="lang-shell">$ rm -rf *'+
     "\n$ rm -rf ."+
+    "\n$ cd %USERPROFILE%"+
     "\n# Nasty nasty"+
+    "\necho $DING"+
     "\nx files have been deleted"+
     "\n</code></pre>"
   );
