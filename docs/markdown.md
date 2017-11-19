@@ -229,7 +229,7 @@ The following identifiers are supported:
 * `ini`
 * `apacheconf`
 * `markdown` to output Markdown examples.
-* `shell` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
+* `shell`, `dos` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
 
