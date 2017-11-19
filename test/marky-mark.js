@@ -105,7 +105,7 @@ exports.testShell = function(test) {
   let m;
 
   m = markyMark(
-    '<pre><code class="lang-shell">'+
+    '<pre><code class="lang-shell">$ rm -rf *'+
     "\n$ rm -rf ."+
     "\n# Nasty nasty"+
     "\nx files have been deleted"+
