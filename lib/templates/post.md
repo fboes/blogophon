@@ -3,9 +3,9 @@
 Draft:     yes # Remove this line to undraft this article
 {{/draft}}
 Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
-{{#keywords}}
-Keywords:  {{#ymlQuote}}{{{keywords}}}{{/ymlQuote}}
-{{/keywords}}
+{{#tags}}
+Tags:      {{#ymlQuote}}{{{tags}}}{{/ymlQuote}}
+{{/tags}}
 {{#category}}
 Category:  {{#ymlQuote}}{{{category}}}{{/ymlQuote}}
 {{/category}}

@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* [x] Improved editing of tags and dates
 * [x] Added update instructions
 * [x] Changed internal file system structure to match Node.js standards
 * [x] Adding table captions with `#####` headlines

@@ -32,7 +32,7 @@ Date:         2016-08-25T19:13:12+02:00 # Publishing date in ISO-8601.
                                         # published until the date is reached.
 DateModified: 2016-08-26                # Last modified date in ISO-8601.
                                         # If not set this will be taken from the file date publishing date.
-Keywords:     Tag, Tag                  # Comma-separated list of keywords / tags.
+Tags:         Tag, Tag                  # Comma-separated list of tags / keywords.
 Category:     My little category        # Category the article belongs to.
 Twitter:      '#Hashtag and some text'  # This text will be used on Twitter.
                                         # If not set will default to title of document.
