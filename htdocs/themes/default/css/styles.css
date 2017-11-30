@@ -53,7 +53,7 @@ article table tr, article table thead, article table tbody, article table captio
 article table tr:last-child, article table thead:last-child, article table tbody:last-child, article table caption:last-child { border: none; }
 article table td, article table th { padding: 0.1em 1em 0.1em 0; }
 article table td:last-child, article table th:last-child { padding-right: 0; }
-article table .table-cell--right { white-space: nowrap; }
+article table .table-cell--left, article table .table-cell--right, article table .table-cell--center { white-space: nowrap; }
 article .location, article .permalink { display: none; }
 article input[type="checkbox"] { vertical-align: -0.15em; }
 article footer { color: #666666; overflow: hidden; font-size: 0.8em; }

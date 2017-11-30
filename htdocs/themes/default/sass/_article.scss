@@ -94,7 +94,9 @@ article {
         padding-right:0;
       }
     }
-    .table-cell--right {
+    .table-cell--left,
+    .table-cell--right,
+    .table-cell--center {
       white-space: nowrap;
     }
   }
