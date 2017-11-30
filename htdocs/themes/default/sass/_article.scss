@@ -94,6 +94,9 @@ article {
         padding-right:0;
       }
     }
+    .table-cell--right {
+      white-space: nowrap;
+    }
   }
   .location, .permalink {
     display: none;
