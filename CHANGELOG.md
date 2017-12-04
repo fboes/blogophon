@@ -9,6 +9,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Adding table captions with `#####` headlines
 * :gift: Moved Emoji converter to separate module and added more Emojis
 * :gift: Improved layout for gallery
+* :pill: Switched back to `marked`
 * :pill: Fixed URL generator to generate better filenames and delete old categories
 * :bomb: Changed internal file system structure to match Node.js standards
 
