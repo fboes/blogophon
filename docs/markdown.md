@@ -31,7 +31,7 @@ Date:         2016-08-25T19:13:12+02:00 # Publishing date in ISO-8601.
                                         # If this date set into the future, the article will not be
                                         # published until the date is reached.
 DateModified: 2016-08-26                # Last modified date in ISO-8601.
-                                        # If not set this will be taken from the file date publishing date.
+                                        # If not set this will be taken from the file's last modified date.
 Tags:         Tag, Tag                  # Comma-separated list of tags / keywords.
 Category:     My little category        # Category the article belongs to.
 Twitter:      '#Hashtag and some text'  # This text will be used on Twitter.
