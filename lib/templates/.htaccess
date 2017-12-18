@@ -2,6 +2,24 @@
 # See https://github.com/h5bp/server-configs-apache
 # ServerName {{config.domain}}
 # DocumentRoot /var/www; # Replace with actual doc root
+{{#config.isHttps}}
+  <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  </IfModule>
+#</VirtualHost>
+
+#<VirtualHost *:443>
+# See https://github.com/h5bp/server-configs-apache
+# ServerName {{config.domain}}
+# DocumentRoot /var/www; # Replace with actual doc root
+
+# SSLEngine on
+# SSLCertificateFile      /etc/apache2/certificates/{{config.domain}}/cert.pem
+# SSLCertificateKeyFile   /etc/apache2/certificates/{{config.domain}}/privkey.pem
+# SSLCertificateChainFile /etc/apache2/certificates/{{config.domain}}/chain.pem
+{{/config.isHttps}}
 
 AddCharset utf-8 .html ._html .css .js .rss .atom .xml .ics .md .json .txt
 DirectoryIndex index.html
