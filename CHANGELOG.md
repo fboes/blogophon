@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Markdown articles accessible via http
 * :gift: Adding `<div class="table-wrapper"></div>` around `<table>…</table>`
 * :gift: Improved editing of tags and dates
 * :gift: Added update instructions

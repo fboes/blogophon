@@ -37,9 +37,9 @@
   {{#config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/rss+json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
   {{/config.specialFeatures.jsonrss}}
-  {{#config.specialFeatures.jsonforslack}}
-    <link rel="alternate" type="application/json" title="{{config.name}} Slack-JSON" href="{{config.absoluteBasePath}}slack.json" />
-  {{/config.specialFeatures.jsonforslack}}
+  {{#config.specialFeatures.markdown}}
+    <link rel="alternate" type="text/markdown" title="{{post.meta.Title}}" href="{{config.absoluteBasePath}}article.md" />
+  {{/config.specialFeatures.markdown}}
   {{#config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{post.meta.AbsoluteUrlAmp}}" />
   {{/config.specialFeatures.acceleratedmobilepages}}
