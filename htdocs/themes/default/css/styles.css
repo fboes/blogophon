@@ -1,8 +1,8 @@
 @charset "UTF-8";
 * { margin: 0; padding: 0; }
 body { font-family: Arial, sans-serif; line-height: 1.5; }
-* + h2, * + h3, * + article, * + section { margin-top: 1em; }
-* + p, * + h4 { margin-top: 0.5em; }
+* + h1, * + h2, * + article, * + section { margin-top: 1em; }
+* + p, * + h3 { margin-top: 0.5em; }
 li { margin-left: 1.5em; }
 body[dir="rtl"] li { margin-right: 1.5em; margin-left: 0; }
 a { color: #116bfc; }
@@ -14,8 +14,7 @@ a:hover { color: #0240a5; }
   img { max-width: 100% !important; } }
 #container > header, #container > #navigation, #container > div > main, #container > div > aside, #container > footer { padding-left: 0.5em; padding-right: 0.5em; }
 @media screen and (min-width: 640px) { #container > header, #container > #navigation, #container > div > main, #container > div > aside, #container > footer { padding-left: calc(50vw - (320px) + 0.5em); padding-right: calc(50vw - (320px) + 0.5em); } }
-#container > header { background-color: #116bfc; }
-#container > header h1 { font-size: 1em; }
+#container > header { background-color: #116bfc; font-size: 1em; }
 #container > header a { color: white; text-decoration: none; }
 #container > aside { border-top: 1px dashed #666666; }
 .breadcrumb { list-style: none; display: block; font-size: 0.8em; margin-bottom: -1em; }
@@ -30,9 +29,13 @@ a:hover { color: #0240a5; }
 #navigation ul li { display: inline-block; margin: 0 1em 0 0; }
 #navigation a { text-decoration: none; }
 #sidebar { background-color: #dddddd; border-top: 1px dashed #666666; }
+#sidebar h2 { display: none; }
+#sidebar h2 + section { margin-top: 0; }
 #footer { background-color: #dddddd; color: #666666; font-size: 0.7em; text-align: center; }
+article header h1 { font-size: 2em; }
 article header .date { float: right; font-size: 0.8em; }
 body[dir="rtl"] article header .date { float: left; }
+article header + div { margin-top: 0.5em; }
 article img, article amp-img, article .figure { float: left; margin: 0 1em 1em 0; max-width: 100%; height: auto; }
 body[dir="rtl"] article img, body[dir="rtl"] article amp-img, body[dir="rtl"] article .figure { float: right; }
 article img.default, article amp-img.default, article .figure.default { width: 100%; margin: 0 0 1em; float: none; }

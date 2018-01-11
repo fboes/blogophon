@@ -127,7 +127,7 @@ exports.testShell = function(test) {
  * @return {[type]}      [description]
  */
 exports.testQuotation = function(test) {
-  test.expect(6);
+  test.expect(10);
 
   let m, x = '<h1>Delete me</h1><h2>Downgrade me</h2><p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
 
@@ -145,10 +145,18 @@ exports.testQuotation = function(test) {
       secondary: ['‚', '‘']
     }
   }), 'Quotation changed');
-  test.ok(!m.match(/<h2>/));
-  test.ok(m.match(/<h3>/));
+  test.ok(!m.match(/<h1>/), 'h1 removal happened');
+  test.ok(!m.match(/<h2>/), 'Headline downgraded happened');
+  test.ok(m.match(/<h3>/), 'Headline downgraded happened');
   test.ok(m.match(/«/));
   test.ok(m.match(/“/));
+
+  m = markyMark(x, {
+    headline: 1
+  });
+  test.ok(!m.match(/<h1>/), 'h1 removal happened');
+  test.ok(m.match(/<h2>/), 'No headline downgraded happened');
+  test.ok(!m.match(/<h3>/), 'No headline downgraded happened');
 
   x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> </p>";
   m = markyMark(x, {

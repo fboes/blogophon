@@ -3,6 +3,8 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :bomb: Improved heading structure in HTML output
+
 1.4.0
 -----
 

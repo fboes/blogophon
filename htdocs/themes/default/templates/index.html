@@ -66,7 +66,7 @@
         {{/meta.isHomepage}}
 
         {{#meta.title}}
-          <h2>{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h2>
+          <h1>{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h1>
         {{/meta.title}}
 
         {{#index.length}}
@@ -85,7 +85,7 @@
                   {{#meta.Modified.locale}}
                     <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time>
                   {{/meta.Modified.locale}}
-                  <h4 itemprop="name headline" class="p-name"><a href="{{meta.Link}}">{{meta.Title}}</a></h4>
+                  <h2 itemprop="name headline" class="p-name"><a href="{{meta.Link}}">{{meta.Title}}</a></h2>
                 </header>
                 <div itemprop="description" class="p-summary">
                   {{{htmlTeaser}}}

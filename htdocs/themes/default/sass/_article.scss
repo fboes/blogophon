@@ -1,11 +1,17 @@
 article {
   header {
+    h1 {
+      font-size: 2em;
+    }
     .date {
       float: right;
       font-size: 0.8em;
       body[dir="rtl"] & {
         float: left;
       }
+    }
+    & + div {
+      margin-top: 0.5em;
     }
   }
   img, amp-img, .figure {

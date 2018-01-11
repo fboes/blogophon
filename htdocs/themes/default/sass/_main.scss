@@ -7,10 +7,10 @@ body {
     font-family: $fontfamily-default;
     line-height: 1.5;
 }
-* + h2, * + h3, * + article, * + section {
+* + h1, * + h2, * + article, * + section {
   margin-top: 1em;
 }
-* + p, * + h4 {
+* + p, * + h3 {
   margin-top: 0.5em;
 }
 li {
@@ -64,9 +64,7 @@ a {
 
   > header {
     background-color: $color-theme;
-    h1 {
-      font-size: 1em;
-    }
+    font-size: 1em;
     a {
       color: white;
       text-decoration:none;
@@ -132,6 +130,13 @@ a {
 #sidebar {
   background-color: $color-grey;
   border-top:1px dashed $color-grey-dark;
+
+  h2 {
+    display: none;
+    & + section {
+      margin-top: 0;
+    }
+  }
 }
 
 #footer {

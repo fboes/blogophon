@@ -1,6 +1,7 @@
 {
   "name":"Default",
   "themeColor": "#116bfc",
+  "articleHeadlineLevel": 1,
   "imageStyles": {
     "quad": {
       "srcset": [
