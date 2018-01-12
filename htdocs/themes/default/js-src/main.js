@@ -42,6 +42,7 @@
       this.el.innerHTML = '<img src="#" alt="" />';
       document.body.appendChild(this.el);
       document.body.addEventListener('click', imagePopup.remove);
+      document.addEventListener('keyup', imagePopup.removeOnEsc);
       window.onpopstate = function(event) {
         if (event.state && event.state.image) {
           if (!imagePopup.el) {
@@ -57,10 +58,16 @@
       event.preventDefault();
       event.stopPropagation();
       document.body.removeEventListener('click', imagePopup.remove);
+      document.removeEventListener('keyup', imagePopup.removeOnEsc);
       document.body.removeChild(imagePopup.el);
       imagePopup.el = null;
       if (!noPushState) {
         history.pushState({}, '', window.location.pathname);
+      }
+    },
+    removeOnEsc: function(event) {
+      if(event.keyCode === 27) {
+        imagePopup.remove(event);
       }
     },
     setImage: function(href, noPushState) {
