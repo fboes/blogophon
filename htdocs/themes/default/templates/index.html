@@ -79,7 +79,7 @@
                 {{^meta.Image}}
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
-                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
+                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">{{#i18n}}Permalink{{/i18n}}</a>
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
@@ -127,7 +127,7 @@
 
         <div id="prevnext">
           {{#prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}">&laquo;</a>
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
           {{/prevUrl}}
           <span>
             {{#currentPage}}
@@ -138,7 +138,7 @@
             {{/title}}
           </span>
           {{#nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}">&raquo;</a>
+            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}" aria-label="{{#i18n}}Next page{{/i18n}}"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
           {{/nextUrl}}
         </div>
 

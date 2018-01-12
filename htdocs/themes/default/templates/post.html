@@ -75,7 +75,7 @@
             {{^meta.Image}}
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
-            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
+            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">{{#i18n}}Permalink{{/i18n}}</a>
 
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
@@ -137,13 +137,13 @@
           </article>
           <div id="prevnext">
             {{#prev.Url}}
-              <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}">&laquo;</a>
+              <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
             {{/prev.Url}}
             <span style="display:inline-block;">
               <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
             </span>
             {{#next.Url}}
-              <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}">&raquo;</a>
+              <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
             {{/next.Url}}
           </div>
         {{/post}}

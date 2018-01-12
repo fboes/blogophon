@@ -17,6 +17,7 @@ a:hover { color: #0240a5; }
 .breadcrumb li:last-child { display: none; }
 #prevnext { text-align: center; padding: 2em 0; }
 #prevnext a { display: inline-block; padding: 0 1em; }
+#prevnext a span { display: none; }
 #header, #sidebar, #footer { padding-top: 1em; padding-bottom: 1em; }
 #navigation { background-color: #dddddd; border-bottom: 1px dashed #666666; margin-bottom: 1em; padding: 0.2em 0; }
 #navigation ul { list-style: none; display: block; }
