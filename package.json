@@ -66,7 +66,7 @@
     "mustache": "^2.2.1",
     "promise": "^8.0.0",
     "remove-markdown": "^0.2.0",
-    "shelljs": "^0.7.3",
+    "shelljs": "^0.8.0",
     "yamljs": "^0.3.0"
   },
   "eslintConfig": {
