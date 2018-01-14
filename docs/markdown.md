@@ -105,17 +105,30 @@ And this part will only be shown on article pages.
 
 If you do not use one of the methods mentioned above, the Blogophon will build a **teaser text from article text** by using the first 160 characters.
 
-Images
-------
+Attachments
+-----------
 
-Put images for your articles into a folder having the same name as the corresponding Markdown file:
+Attachment files are files you want to use for your article. These files may be images, audio and video files, or any other type of document you can think of.
+
+Put attachment files for your articles into a folder having the same name as the corresponding Markdown file:
 
 ```
 /user/posts/example.md         # Markdown file
-/user/posts/example/image.jpg  # Image folder with example image
+/user/posts/example/image.jpg  # Attachment file folder with example image
 ```
 
-Link these images into your Markdown file like this:
+Attachments can be easily linked to from your article by just using the file name without any additional path names (see below).
+
+Remember to use _safe file names_. A safe file name must only consist of the following characters:
+
+* Letters from A-Z, omitting special characters like `ü`, `è` etc.
+* Numbers
+* Dashes and dots (`-`, `_`, `.`)
+
+Images
+------
+
+Link images from your attachment directory into your Markdown file like this:
 
 ```markdown
 
@@ -137,13 +150,11 @@ Videos & audio files
 To show video and audio files you just have to use the regular Markdown used for images:
 
 ```markdown
-![Audio description](/media/audio.mp3)    _produces an audio player_
-![Video description](/media/video.mp4)    _produces an video player_
-![Video description](/media/video.webm)   _produces an video player_
+![Audio description](audio.mp3)    _produces an audio player_
+![Video description](video.mp4)    _produces an video player_
+![Video description](video.webm)   _produces an video player_
 
 ```
-
-Remember to use valid URLs for your video / audio files. You may want to upload this kind of files directly to `htdocs/media`.
 
 ### Youtube & Vimeo
 
