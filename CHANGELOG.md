@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Supporting SVG & WebP images
 * :gift: Converting images folder into general attachment files folder
 * :gift: Improved accessibility
 * :gift: Pressing ESC in browser closes image popups
