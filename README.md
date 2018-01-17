@@ -8,7 +8,7 @@ A live example of this blog generator can be found at [3960! Journal](http://jou
 **Features**
 
 * The Blogophon generates static HTML files from [Markdown articles](docs/markdown.md). These HTML files can be synchronized to remote servers and are fully independent of the Blogophon generator.
-* It uses simple, fast and [hackable templating](docs/theming.md) via Mustache. It also supports multiple themes.
+* It uses simple, fast and [hackable templating](docs/development.md) via Mustache. It also supports multiple themes.
 * Generates a bunch of way to find your articles: Regular index pages, tag pages, author pages.
 * The Blogophon comes with a built-in image-scaler, which leads to responsive images.
 * The default theme puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph).
