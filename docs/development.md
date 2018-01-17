@@ -6,7 +6,7 @@ The Blogophon supports the building of custom themes and frontend functionality.
 Gulp
 ----
 
-The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. If will check and compress your files while you are editing.
+The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. It will check and compress your files while you are editing.
 
 | Command      | Description                                           |
 |--------------|-------------------------------------------------------|
