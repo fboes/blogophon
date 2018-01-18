@@ -140,9 +140,9 @@ Link images from your attachment directory into your Markdown file like this:
 
 ```
 
-It is always wise to use image styles, as these styles scale your images to a sensible size. Image styles will also produce responsive image variants.
+It is always wise to use image styles for JPGs, GIFs, PNGs and SVGs. These styles scale your images to a sensible size. For bitmap images using styles will also produce responsive image variants.
 
-If you do not use image styles, consider to at least state the size of the image. This will speed up the rendering of the whole page while the image has not yet loaded.
+If you do not use image styles, consider to at least state the size of the image. This will tell the browser what size of image to expect and speed up the rendering of the whole page while the image has not yet loaded.
 
 Videos & audio files
 --------------------

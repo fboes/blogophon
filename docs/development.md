@@ -33,6 +33,10 @@ To develop a new theme follow these steps:
 1. Run `gulp` to start the SASS- & JS-compiler. This will also reload your browser on theme changes if you have the [LiveReload plugin](http://livereload.com/extensions/) installed.
 1. Start making modifications to your copied theme files.
 
+Take special note of `theme.json`, as it contains settings for your theme like settings for responsive images, images and icons.
+
+### Template variables
+
 Keep in mind that every property in the article's [YAML frontmatter](markdown.md) will become a Mustache `post.meta` variable. This may help you in adding extra article properties to your template.
 
 There is also a Mustache `config` variable, which will contain all settings from your `user/config.json`.
