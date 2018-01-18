@@ -3,6 +3,11 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+1.4.2
+-----
+
+* :pill: Fixed broken image generator
+
 1.4.1
 -----
 
