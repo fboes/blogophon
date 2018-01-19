@@ -3,6 +3,11 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+1.4.3
+-----
+
+* :pill: Fixed broken page generator
+
 1.4.2
 -----
 
