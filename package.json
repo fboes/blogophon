@@ -11,7 +11,7 @@
     "start": "node ./bin/blogophon",
     "generate": "node ./bin/blogophon-generate",
     "precommit": "npm test",
-    "test": "eslint *.js bin/* src/**/*.js test/**/*.js && nodeunit test --reporter minimal && npm outdated"
+    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && nodeunit test --reporter minimal && npm outdated"
   },
   "homepage": "https://github.com/fboes/blogophon",
   "bugs": {

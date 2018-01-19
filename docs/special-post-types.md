@@ -44,7 +44,12 @@ Description of your recipe
 * Ingredient B
 * Ingredient C
 
-Instructions for your recipe
+Instructions
+------------
+
+1. Instruction 1
+2. Instruction 2
+3. Instruction 3
 
 ```
 
