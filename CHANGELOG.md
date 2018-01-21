@@ -3,7 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
-* :pill: Better schema.org HTML for recipes (in theory)
+* :pill: Better schema.org HTML for recipes
 
 1.4.3
 -----
