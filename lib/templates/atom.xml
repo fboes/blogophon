@@ -27,6 +27,9 @@
       {{#meta.Latitude}}
         <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
       {{/meta.Latitude}}
+      {{#meta.Enclosure}}
+        <link rel="enclosure" href="{{url}}" length="{{length}}" type="{{type}}" />
+      {{/meta.Enclosure}}
     </entry>
   {{/index}}
 </feed>

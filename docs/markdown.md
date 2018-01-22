@@ -156,6 +156,16 @@ To show video and audio files you just have to use the regular Markdown used for
 
 ```
 
+If you want to use the Blogophon for [podcasts](https://en.wikipedia.org/wiki/Podcast), you will have to add the metadata to the YAML front matter section of your article:
+
+```yaml
+Enclosure:
+  - url:    audio.mp3   # file name
+    type:   audio/mp3   # MIME type of your file
+    length: 1024        # file size in bytes
+
+```
+
 ### Youtube & Vimeo
 
 For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
