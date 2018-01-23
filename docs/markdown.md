@@ -110,14 +110,20 @@ Attachments
 
 Attachment files are files you want to use for your article. These files may be images, audio and video files, or any other type of document you can think of.
 
-Put attachment files for your articles into a folder having the same name as the corresponding Markdown file:
+Put attachment files for your articles into a folder having the same name as the corresponding Markdown file without the file suffix `.md`:
 
 ```
-/user/posts/example.md         # Markdown file
-/user/posts/example/image.jpg  # Attachment file folder with example image
+/user/posts/example.md           # Markdown file
+/user/posts/example/image.jpg    # Attachment file folder with example image
+/user/posts/example/example.pdf  # Attachment file folder with example PDF document
 ```
 
-Attachments can be easily linked to from your article by just using the file name without any additional path names (see below).
+Attachments can be easily linked to from your article by putting linking the file name without any additional path names:
+
+```markdown
+This is a [link to your file](example.pdf) in Markdown.
+
+```
 
 Remember to use _safe file names_. A safe file name must only consist of the following characters:
 
@@ -144,6 +150,8 @@ It is always wise to use image styles for JPGs, GIFs, PNGs and SVGs. These style
 
 If you do not use image styles, consider to at least state the size of the image. This will tell the browser what size of image to expect and speed up the rendering of the whole page while the image has not yet loaded.
 
+See [instructions for attachments](#attachments) on how to upload files.
+
 Videos & audio files
 --------------------
 
@@ -156,15 +164,13 @@ To show video and audio files you just have to use the regular Markdown used for
 
 ```
 
-If you want to use the Blogophon for [podcasts](https://en.wikipedia.org/wiki/Podcast), you will have to add the metadata to the YAML front matter section of your article:
+If you want to use the Blogophon for [podcasts](https://en.wikipedia.org/wiki/Podcast), you will have to add an `Enclosure` link to the YAML front matter section of your article:
 
 ```yaml
-Enclosure:
-  - url:    audio.mp3   # file name
-    type:   audio/mp3   # MIME type of your file
-    length: 1024        # file size in bytes
-
+Enclosure: audio.mp3
 ```
+
+See [instructions for attachments](#attachments) on how to upload files.
 
 ### Youtube & Vimeo
 
