@@ -164,7 +164,11 @@ To show video and audio files you just have to use the regular Markdown used for
 
 ```
 
-If you want to use the Blogophon for [podcasts](https://en.wikipedia.org/wiki/Podcast), you will have to add an `Enclosure` link to the YAML front matter section of your article:
+Supported file types for audio: `.m4a`, `.mp3`, `.oga`, `.ogg`.
+
+Supported file types for video: `.m4v`, `.mp4`, `.mpg`, `.ogv`, `.webm`.
+
+If you want to use the Blogophon for [podcasts](https://en.wikipedia.org/wiki/Podcast) or video casts, you will have to add an `Enclosure` property to the YAML front matter section of your article, containing the attachment(s):
 
 ```yaml
 Enclosure: audio.mp3

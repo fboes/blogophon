@@ -20,7 +20,7 @@ Some post types give you the ability to add special styling, but do not alter th
 `Images`
 --------
 
-This class of articles is built like a regular article, but every image used in this article will have a special JavaScript attached to it, which show multiple images in a row as gallery. This also adds functionality to open images in a bigger version by clicking on them.
+This class of articles is built like a regular article, but every image used in this article will have a special JavaScript attached to it, which will show multiple images in a row as a gallery. This also adds functionality to open images in a bigger version by clicking on them.
 
 An image gallery is built by supplying a paragraph consisting only of images:
 

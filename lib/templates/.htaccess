@@ -26,16 +26,19 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 ErrorDocument 410 /404.html
 
-AddType text/plain ._html
 AddType application/json .json
 AddType application/vnd.google-earth.kml+xml .kml
+AddType audio/mp4 .m4a
+AddType audio/mpeg .mp3
+AddType audio/ogg ogg oga
+AddType image/svg+xml svg svgz
 AddType text/calendar .ics
-AddType text/plain .md
+AddType text/plain _html md
 AddType text/xml xml rss atom
-AddType video/mp4 .mp4
+AddType video/mp4 mp4 m4v
+AddType video/mpeg .mpg
 AddType video/ogg .ogv
 AddType video/webm .webm
-AddType image/svg+xml svg svgz
 AddEncoding gzip svgz
 
 <IfModule mod_headers.c>
