@@ -5,7 +5,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 
 * :gift: Support for podcasts / RSS enclosures
 * :pill: Fixed audio and video file types and adding more file types
-* :pill: Better schema.org HTML for recipes (in theory)
+* :pill: Better schema.org HTML for recipes
 
 1.4.3
 -----
