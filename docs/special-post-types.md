@@ -53,6 +53,14 @@ Instructions
 
 ```
 
+Additionally you may put [schema.org data for recipes](http://schema.org/Recipe) directly into your Markdown (but not into your list of ingredients and instructions):
+
+```markdown
+Preparation time: 15 minutes.<meta itemprop="prepTime" content="PT15M" />
+Cooking time: 45 minutes.<meta itemprop="cookTime" content="PT45M">
+
+```
+
 `Micro post`
 --------
 
