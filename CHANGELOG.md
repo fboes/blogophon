@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Adding wordcount for articles via `meta.Wordcount`
 * :gift: Support for podcasts / RSS enclosures
 * :pill: Fixed audio and video file types and adding more file types
 * :pill: Better schema.org HTML for recipes

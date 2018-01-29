@@ -75,6 +75,7 @@
             {{^meta.Image}}
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
+            <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
             <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">{{#i18n}}Permalink{{/i18n}}</a>
 
             <header>
@@ -124,7 +125,7 @@
                 <span class="tags">
                   Tags:
                   {{#meta.Tags}}
-                    · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &bdquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                    · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &ldquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
                   {{/meta.Tags}}
                 </span>
               {{/meta.Tags.length}}
@@ -156,7 +157,7 @@
               <h3>{{#i18n}}Related articles{{/i18n}}</h3>
               <ul>
                 {{#post.meta.Tags}}
-                  <li><a rel="tag" href="{{url}}" title="More articles with &bdquo;{{title}}&rdquo;">{{#i18n}}…for tag „{{title}}”{{/i18n}}</a></li>
+                  <li><a rel="tag" href="{{url}}" title="More articles with &ldquo;{{title}}&rdquo;">{{#i18n}}…for tag „{{title}}”{{/i18n}}</a></li>
                 {{/post.meta.Tags}}
               </ul>
             </section>
