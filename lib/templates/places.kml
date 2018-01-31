@@ -18,11 +18,9 @@
             <when>{{meta.Created.iso}}</when>
           </TimeStamp>
           <ExtendedData>
-            {{#meta.Keywords}}
-              <Data name="Keywords">
-                <value>{{meta.Keywords}}</value>
-              </Data>
-            {{/meta.Keywords}}
+            <Data name="Keywords">
+              <value>{{meta.Keywords}}</value>
+            </Data>
             {{#meta.Marker}}
               <Data name="Marker">
                 <value>{{meta.Marker}}</value>
