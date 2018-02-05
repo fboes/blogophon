@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Adding MIME type to favicons, supporting SVG favicons
 * :gift: Adding wordcount for articles via `meta.Wordcount`
 * :gift: Support for podcasts / RSS enclosures
 * :pill: General fix to meta files like GEO-JSON, Apple News Format, KML etc.

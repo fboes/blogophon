@@ -33,7 +33,13 @@ To develop a new theme follow these steps:
 1. Run `gulp` to start the SASS- & JS-compiler. This will also reload your browser on theme changes if you have the [LiveReload plugin](http://livereload.com/extensions/) installed.
 1. Start making modifications to your copied theme files.
 
-Take special note of `theme.json`, as it contains settings for your theme like settings for responsive images, images and icons.
+Take special note of `theme.json`, as it contains settings for your theme like settings for responsive images, images and icons:
+
+| Key | Description |
+|-----|-------------|
+| `themeColor`           | Hex colour code, will be used e.g. for URL bar in Google Chrome mobile. |
+| `articleHeadlineLevel` | `1` means all article headings will be output as is. Setting it to `2` will convert headings of level 1 to heading level 2 etc. |
+| `icons`                | As defined in [Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest), but sizes may contain `any` as in the [`sizes`-attribute used in `<link>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link). |
 
 ### Template variables
 

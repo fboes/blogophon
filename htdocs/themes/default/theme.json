@@ -37,15 +37,23 @@
   "icons": [
     {
       "src": "img/favicon-96x96.png",
-      "sizes": "96x96"
+      "sizes": "96x96",
+      "type": "image/png"
     },
     {
       "src": "img/favicon-144x144.png",
-      "sizes": "144x144"
+      "sizes": "144x144",
+      "type": "image/png"
     },
     {
       "src": "img/favicon-196x196.png",
-      "sizes": "196x196"
+      "sizes": "196x196",
+      "type": "image/png"
+    },
+    {
+      "src": "img/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ],
   "ogImage": "img/favicon-196x196.png"
