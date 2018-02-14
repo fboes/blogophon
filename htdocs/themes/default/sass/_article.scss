@@ -66,6 +66,11 @@ article {
     border-top: 1px solid #eee;
   }
   ul, ol {
+    li {
+      left: 2em;
+      position: relative;
+      margin-left: 0;
+    }
     &.task-list {
       list-style: none;
     }

@@ -40,6 +40,7 @@ article .figure img { margin: 0; width: 100%; max-width: 100%; }
 article .figure .figcaption { display: block; padding: 0.5em 0; border-bottom: 1px solid; color: #666666; }
 article .gallery img.portrait { max-width: calc(50% - 1em); margin: 0 0.5em 1em; }
 article + article { margin-top: 2em; border-top: 1px solid #eee; }
+article ul li, article ol li { left: 2em; position: relative; margin-left: 0; }
 article ul.task-list, article ol.task-list { list-style: none; }
 article blockquote { color: #666666; margin-left: 1em; }
 article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }
