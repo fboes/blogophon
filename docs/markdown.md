@@ -196,15 +196,15 @@ Special characters
 
 There are some Markdown codes in the Blogophon to add special characters like Emojis to your HTML output:
 
-| Markdown | Results in… | Description    |
-|----------|-------------|----------------|
-| `&shy;`  |           | [Soft hyphen](https://en.wikipedia.org/wiki/Soft_hyphen), to break words across lines by inserting visible hyphens |
-| `&nbsp;` |           | Non-breaking space, prevents an automatic line break at its position |
-| `--`     | —         | [Em dash](http://www.thepunctuationguide.com/em-dash.html) |
-| `(C)`    | ©         | Copyright sign   |
-| `(R)`    | ®         | Registered sign  |
-| `(TM)`   | ™         | Trade mark sign  |
-| `(+-)`   | ±         | Plus-minus sign  |
+| Markdown | Results in… | Description                                                                                                        |
+| -------- | ----------- | ------------------------------------------------------------------------------------------------------------------ |
+| `&shy;`  |             | [Soft hyphen](https://en.wikipedia.org/wiki/Soft_hyphen), to break words across lines by inserting visible hyphens |
+| `&nbsp;` |             | Non-breaking space, prevents an automatic line break at its position                                               |
+| `--`     | —           | [Em dash](http://www.thepunctuationguide.com/em-dash.html)                                                         |
+| `(C)`    | ©           | Copyright sign                                                                                                     |
+| `(R)`    | ®           | Registered sign                                                                                                    |
+| `(TM)`   | ™           | Trade mark sign                                                                                                    |
+| `(+-)`   | ±           | Plus-minus sign                                                                                                    |
 
 For more Emojis and special characters refer to the [ASCII Emojii conversion table](emojis.md), or consult a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode) and convert a code like `U+1F680` into `&#x1F680;`.
 
@@ -212,11 +212,11 @@ Tables
 ------
 
 ```markdown
-| \     | A | B | C |
-|-------|---|–––|---|
-| **1** | X | X | X |
-| **2** | O | X |   |
-| **3** |   | O | O |
+| \     | A   | B   | C   |
+| ----- | --- | --- | --- |
+| **1** | X   | X   | X   |
+| **2** | O   | X   |     |
+| **3** |     | O   | O   |
 
 ```
 
@@ -227,11 +227,11 @@ To add a table caption simply put a headline level 5 in front of your table:
 ```markdown
 ##### Tic Tac Toe
 
-| \     | A | B | C |
-|-------|---|–––|---|
-| **1** | X | X | X |
-| **2** | O | X |   |
-| **3** |   | O | O |
+| \     | A   | B   | C   |
+| ----- | --- | --- | --- |
+| **1** | X   | X   | X   |
+| **2** | O   | X   |     |
+| **3** |     | O   | O   |
 
 ```
 

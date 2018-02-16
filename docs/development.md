@@ -9,7 +9,7 @@ Gulp
 The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. It will check and compress your files while you are editing.
 
 | Command      | Description                                           |
-|--------------|-------------------------------------------------------|
+| ------------ | ----------------------------------------------------- |
 | `gulp`       | Starts `gulp watch` and `gulp serve`                  |
 | `gulp serve` | Starts webserver at http://localhost:3000/            |
 | `gulp watch` | Executes `gulp test` and `gulp build` on file changes |
@@ -35,8 +35,8 @@ To develop a new theme follow these steps:
 
 Take special note of `theme.json`, as it contains settings for your theme like settings for responsive images, images and icons:
 
-| Key | Description |
-|-----|-------------|
+| Key                    | Description   |
+| ---------------------- | ------------- |
 | `themeColor`           | Hex colour code, will be used e.g. for URL bar in Google Chrome mobile. |
 | `articleHeadlineLevel` | `1` means all article headings will be output as is. Setting it to `2` will convert headings of level 1 to heading level 2 etc. |
 | `icons`                | As defined in [Web App Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest), but sizes may contain `any` as in the [`sizes`-attribute used in `<link>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link). |
