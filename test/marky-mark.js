@@ -145,7 +145,7 @@ exports.testQuotation = function(test) {
       secondary: ['‚', '‘']
     }
   }), 'Quotation changed');
-  test.ok(!m.match(/<h1>/), 'h1 removal happened');
+  test.ok(!m.match(/<h1>/), '<h1> removal happened');
   test.ok(!m.match(/<h2>/), 'Headline downgraded happened');
   test.ok(m.match(/<h3>/), 'Headline downgraded happened');
   test.ok(m.match(/«/));
@@ -154,11 +154,11 @@ exports.testQuotation = function(test) {
   m = markyMark(x, {
     headline: 1
   });
-  test.ok(!m.match(/<h1>/), 'h1 removal happened');
+  test.ok(!m.match(/<h1>/), '<h1> removal did not happen');
   test.ok(m.match(/<h2>/), 'No headline downgraded happened');
   test.ok(!m.match(/<h3>/), 'No headline downgraded happened');
 
-  x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> </p>";
+  x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> <img href=\"example.jpg\"><hr></p>";
   m = markyMark(x, {
     quotation: {
       primary: ['%', '%'],

@@ -3,10 +3,15 @@
 const ampify = require('../lib/helpers/ampify')();
 
 exports.testAmpifyBasic = function testAmpifyBasic(test) {
-  test.expect(1);
+  test.expect(2);
 
-  const html = '<img src="#" alt="" />';
-  test.equal(ampify.ampifyHtml(html), '<amp-img layout="responsive" src="#" alt=""></amp-img>');
+  let html    = '<img src="#" alt="" />';
+  let ampHtml = ampify.ampifyHtml(html);
+  test.equal(ampHtml, '<amp-img layout="responsive" src="#" alt=""></amp-img>');
+
+  html    = '<img src="#" alt="">';
+  ampHtml = ampify.ampifyHtml(html);
+  test.equal(ampHtml, '<amp-img layout="responsive" src="#" alt=""></amp-img>');
 
   test.done();
 };
