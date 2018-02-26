@@ -45,12 +45,12 @@ AddEncoding gzip svgz
   Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
-{{#config.specialFeatures.teasersnippets}}
+{{#config.specialFeatures.serversideincludes}}
   <IfModule mime_module>
     Options +Includes
     AddOutputFilter INCLUDES .html
   </IfModule>
-{{/config.specialFeatures.teasersnippets}}
+{{/config.specialFeatures.serversideincludes}}
 
 #<IfModule mod_expires.c>
 #  ExpiresActive on

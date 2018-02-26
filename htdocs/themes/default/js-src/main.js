@@ -86,7 +86,7 @@
         request.open('GET', el.getAttribute('data-ajax-url'), true);
         request.onload = function() {
           if (this.status >= 200 && this.status < 400) {
-            el.innerHTML = this.response;
+            el.outerHTML = this.response;
           }
         };
         request.send();

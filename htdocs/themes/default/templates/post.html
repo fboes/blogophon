@@ -166,17 +166,28 @@
 
         {{#config.specialFeatures.teasersnippets}}
           {{#post.meta.CategoryObj}}
-            <section data-ajax-url="{{url}}snippet._html">
+            {{#config.specialFeatures.serversideincludes}}
               <!--#include virtual="{{url}}snippet._html" -->
-            </section>
+            {{/config.specialFeatures.serversideincludes}}
+            {{^config.specialFeatures.serversideincludes}}
+              <section data-ajax-url="{{url}}snippet._html"></section>
+            {{/config.specialFeatures.serversideincludes}}
           {{/post.meta.CategoryObj}}
-          <section data-ajax-url="{{config.basePath}}snippet._html">
+
+          {{#config.specialFeatures.serversideincludes}}
             <!--#include virtual="{{config.basePath}}snippet._html" -->
-          </section>
+          {{/config.specialFeatures.serversideincludes}}
+          {{^config.specialFeatures.serversideincludes}}
+            <section data-ajax-url="{{config.basePath}}snippet._html"></section>
+          {{/config.specialFeatures.serversideincludes}}
+
           {{#post.meta.Tags}}
-            <section data-ajax-url="{{url}}snippet._html">
+            {{#config.specialFeatures.serversideincludes}}
               <!--#include virtual="{{url}}snippet._html" -->
-            </section>
+            {{/config.specialFeatures.serversideincludes}}
+            {{^config.specialFeatures.serversideincludes}}
+              <section data-ajax-url="{{url}}snippet._html"></section>
+            {{/config.specialFeatures.serversideincludes}}
           {{/post.meta.Tags}}
         {{/config.specialFeatures.teasersnippets}}
 
