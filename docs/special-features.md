@@ -118,7 +118,7 @@ Exports all indexes as `index.json`, containing references to the AJAX articles.
 Server Side Includes
 --------------------
 
-Check this option of you web server supports [Server Side Includes](https://en.wikipedia.org/wiki/Server_Side_Includes). This vastly improves the integration of teaser snippets and other semi-dynamic content.
+Check this option if your web server supports [Server Side Includes](https://en.wikipedia.org/wiki/Server_Side_Includes). This improves browser and search engine performance by replacing all AJAX snippets with Server Side Includes. These snippets are used for generating related links etc.
 
 ---
 

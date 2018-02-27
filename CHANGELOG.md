@@ -3,7 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
-* :gift: Added documentation for AJAX, SSI and ESI snippet inclusion
+* :gift: Added mechanism to switch between AJAX snippets and Server Side Includes
 * :gift: Markdown now supports links without extra link syntax
 * :gift: Adding MIME type to favicons, supporting SVG favicons
 * :gift: Adding wordcount for articles via `meta.Wordcount`
