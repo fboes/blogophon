@@ -33,7 +33,8 @@ AddType audio/mpeg .mp3
 AddType audio/ogg ogg oga
 AddType image/svg+xml svg svgz
 AddType text/calendar .ics
-AddType text/plain _html md
+AddType text/markdown md
+AddType text/x-html _html
 AddType text/xml xml rss atom
 AddType video/mp4 mp4 m4v
 AddType video/mpeg .mpg
@@ -55,14 +56,15 @@ AddEncoding gzip svgz
 #<IfModule mod_expires.c>
 #  ExpiresActive on
 #  ExpiresDefault                          "access plus 1 hour"
-#  ExpiresByType image/vnd.microsoft.icon  "access plus 2 weeks"
-#  ExpiresByType image/png                 "access plus 2 weeks"
-#  ExpiresByType image/jpg                 "access plus 2 weeks"
-#  ExpiresByType image/jpeg                "access plus 2 weeks"
-#  ExpiresByType image/svg+xml             "access plus 2 weeks"
-#  ExpiresByType text/css                  "access plus 2 weeks"
 #  ExpiresByType application/javascript    "access plus 2 weeks"
+#  ExpiresByType image/jpeg                "access plus 2 weeks"
+#  ExpiresByType image/jpg                 "access plus 2 weeks"
+#  ExpiresByType image/png                 "access plus 2 weeks"
+#  ExpiresByType image/svg+xml             "access plus 2 weeks"
+#  ExpiresByType image/vnd.microsoft.icon  "access plus 2 weeks"
+#  ExpiresByType text/css                  "access plus 2 weeks"
 #  ExpiresByType text/javascript           "access plus 2 weeks"
+#  ExpiresByType text/x-html               "access plus 2 weeks"
 #</IfModule>
 
 # General Blogophon redirects
