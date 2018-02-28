@@ -6,6 +6,9 @@
   <title>{{config.name}} | {{title}}</title>
   <link href="{{config.absoluteBasePath}}" />
   <id>{{config.absoluteBasePath}}</id>
+  {{#config.copyright}}
+    <rights>{{config.copyright}}</rights>
+  {{/config.copyright}}
   <updated>{{pubDate}}</updated>
   <link href="{{absoluteUrl}}" rel="self" />
   {{#index}}
