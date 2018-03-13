@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Added issue template for filing Github issues and improved development documentation
 * :gift: Added configuration field for copyright notice which will show up on all pages and feeds
 * :gift: Changed `Expires` headers to have HTML snippets perform better
 * :gift: Added mechanism to switch between AJAX snippets and Server Side Includes

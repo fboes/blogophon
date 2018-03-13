@@ -65,3 +65,7 @@ Cooking time: 45 minutes.<meta itemprop="cookTime" content="PT45M">
 --------
 
 A micro post is meant for [micro blogging](https://en.wikipedia.org/wiki/Microblogging). These posts are rather short (e.g. 160 characters), and do not have a title.
+
+---
+
+Return to [table of contents](README.md).
