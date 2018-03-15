@@ -46,4 +46,4 @@ Making changes
 Further reading
 ---------------
 
-* [docs/development.md](Theming development guide)
+* [Theme development guide](docs/development.md)

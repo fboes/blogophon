@@ -41,7 +41,6 @@
     "gulp-sass": "^3.0.0",
     "gulp-uglify": "^3.0.0",
     "husky": "^0.14.3",
-    "js-yaml": "^3.11.0",
     "nodeunit": "^0.11.0"
   },
   "directories": {
@@ -58,6 +57,7 @@
   "dependencies": {
     "dateformat": "^3.0.2",
     "fs-extra-promise": "^1.0.1",
+    "js-yaml": "^3.11.0",
     "glob": "^7.0.5",
     "gm": "^1.23.0",
     "inquirer": "^5.0.0",
@@ -66,8 +66,7 @@
     "mustache": "^2.2.1",
     "promise": "^8.0.0",
     "remove-markdown": "^0.2.0",
-    "shelljs": "^0.8.0",
-    "yamljs": "^0.3.0"
+    "shelljs": "^0.8.0"
   },
   "eslintConfig": {
     "env": {
