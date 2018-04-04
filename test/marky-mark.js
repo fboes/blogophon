@@ -316,3 +316,30 @@ exports.testEmoji = function(test) {
 
   test.done();
 };
+
+exports.testTableColspan = function(test) {
+  test.expect(2);
+
+  const x = `<table>
+<caption id="test">Test</caption>
+<thead>
+<tr>
+<th style="text-align:right">Ich und du</th>
+<th style="text-align:left">Müllers Kuh</th>
+<th>Müllers Esel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"></td>
+<td style="text-align:left">Das bist du und so    ⁴</td>
+</tr>
+</tbody>
+</table>`;
+
+  let m = markyMark(x);
+  test.ok(m, 'Got output');
+  test.equal(m.match(/colspan="\d"/g).length, 1, 'Colspan added');
+
+  test.done();
+};

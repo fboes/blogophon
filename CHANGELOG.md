@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Added `colspan` for tables
 * :gift: Added issue template for filing Github issues and improved development documentation
 * :gift: Added configuration field for copyright notice which will show up on all pages and feeds
 * :gift: Changed `Expires` headers to have HTML snippets perform better
@@ -11,6 +12,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Adding MIME type to favicons, supporting SVG favicons
 * :gift: Adding wordcount for articles via `meta.Wordcount`
 * :gift: Support for podcasts / RSS enclosures
+* :pill: Fixed `<caption>` for tables
 * :pill: Fixed broken NPM dependencies
 * :pill: Converting relative links to absolute links in syndication files
 * :pill: XHTML fixes
