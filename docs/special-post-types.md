@@ -1,4 +1,4 @@
-Special post types
+![Blogophon -](blogophon.png) Special post types
 ==================
 
 With special post types you can have your Blogophon act as…
