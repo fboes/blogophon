@@ -3,6 +3,11 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Add CSS variable `--gallery-count` to gallery HTML
+
+1.4.4
+-----
+
 * :gift: Added `colspan` for tables
 * :gift: Added issue template for filing Github issues and improved development documentation
 * :gift: Added configuration field for copyright notice which will show up on all pages and feeds
