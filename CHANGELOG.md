@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Add configurable HTML snippets for analytics
 * :gift: Add CSS variable `--gallery-count` to gallery HTML
 
 1.4.4
