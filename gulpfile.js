@@ -91,7 +91,7 @@ gulp.task('build-css', function() {
     .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
     .pipe(postcss([
       autoprefixer({
-        browsers: ['last 2 versions', '> 0.5%', 'ie 8-11']
+        browsers: ['cover 97%']
       })
     ]))
     .pipe(rename(function(path){

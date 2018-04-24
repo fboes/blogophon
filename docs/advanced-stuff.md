@@ -68,7 +68,7 @@ The Blogophon RSS feed allows for other services to automatically re-publish new
 1. Click on your user account and select "New applet".
 2. For `if [this]` select "Feed > New feed item".
 3. Add the feed URL of your blog (e.g. `http://www.example.com/posts.rss`). You may also choose to use the RSS feed of a special tag (e.g. `http://www.example.com/tagged/…/posts.rss`).
-4. For `then [that]` select "Twitter > Post a tweet", "Facebook > Create a link post", "Slack > Post to channel", or whatever service you want to use.
+4. For `then [that]` select "Twitter > Post a tweet", "Facebook > Create a link post", or whatever service you want to use.
 5. Allow IFTTT to access the service you selected.
 6. Configure how your blog post's URL and title will be posted to the service you selected.
 
@@ -83,11 +83,11 @@ If you are not able to globally install the Blogophon
 
 In certain environments you may not be able to install the Blogophon globally. Thankfully there is a way to locally install the Blogophon.
 
-1. Optional: If you do not need the development tools, call `export NODE_ENV=production` (Linux / MacOSX) / `SET NODE_ENV=production` (Windows) to set Node to production state.
-1. Run `npm install blogophon` in a folder you have access to.
+1. Optional: If you do not need the development tools, call `export NODE_ENV=production` (Linux / MacOSX) or `SET NODE_ENV=production` (Windows) to set Node to production state.
+1. Run `npm init && npm install blogophon` in a folder you have access to.
 
-* All commands relating to `blogophon` may now be called by executing `node node_modules/blogophon/bin/blogophon`
-* All commands relating to `blogophon-generate` may now be called by executing `node node_modules/blogophon/bin/blogophon-generate`
+* All commands relating to `blogophon` may now be called by executing `node node_modules/.bin/blogophon`
+* All commands relating to `blogophon-generate` may now be called by executing `node node_modules/.bin/blogophon-generate`
 
 Google Webmaster search console
 -------------------------------

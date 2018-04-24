@@ -58,7 +58,7 @@
                 <meta itemprop="position" content="1" />
               </li>
               <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name">{{meta.CategoryObj.title}}</span></a>
+                <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name" class="p-category">{{meta.CategoryObj.title}}</span></a>
                 <meta itemprop="position" content="2" />
               </li>
               <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
@@ -76,11 +76,14 @@
               <link itemprop="image" href="{{config.ogImage}}" />
             {{/meta.Image}}
             <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
-            <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">{{#i18n}}Permalink{{/i18n}}</a>
 
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
-              <h1 itemprop="name headline" class="p-name">{{meta.Title}}</h1>
+              <h1>
+                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true" rel="bookmark">
+                  <span itemprop="name headline" class="p-name">{{meta.Title}}</span>
+                </a>
+              </h1>
             </header>
             <div itemprop="articleBody" class="e-content">
               {{{html}}}

@@ -51,7 +51,7 @@
   <div id="container">
     {{>headerHtml}}
     <div id="main">
-      <main id="content">
+      <main id="content" class="h-feed">
         {{^meta.isHomepage}}
           <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
             <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
@@ -59,14 +59,14 @@
               <meta itemprop="position" content="1" />
             </li>
             <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <a itemprop="item" href="{{firstUrl}}"><span itemprop="name">{{meta.title}}</span></a>
+              <a itemprop="item" href="{{firstUrl}}" class="u-url"><span itemprop="name">{{meta.title}}</span></a>
               <meta itemprop="position" content="2" />
             </li>
           </ol>
         {{/meta.isHomepage}}
 
         {{#meta.title}}
-          <h1>{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h1>
+          <h1 class="p-name">{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h1>
         {{/meta.title}}
 
         {{#index.length}}
@@ -80,13 +80,17 @@
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
                 <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
-                <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">{{#i18n}}Permalink{{/i18n}}</a>
+
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
                   {{#meta.Modified.locale}}
                     <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time>
                   {{/meta.Modified.locale}}
-                  <h2 itemprop="name headline" class="p-name"><a href="{{meta.Link}}">{{meta.Title}}</a></h2>
+                  <h2>
+                    <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">
+                      <span  itemprop="name headline" class="p-name">{{meta.Title}}</span>
+                    </a>
+                  </h2>
                 </header>
                 <div itemprop="description" class="p-summary">
                   {{{htmlTeaser}}}
