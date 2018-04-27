@@ -3,7 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
-* :gift: Improve `h-entry` & `h-feed` microformats for better syndication
+* :gift: Improve `h-entry`, `h-feed` & `h-card` [microformats](https://indieweb.org/microformats2) for better syndication
 * :gift: Add configurable HTML snippets for analytics
 * :gift: Add CSS variable `--gallery-count` to gallery HTML
 

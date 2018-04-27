@@ -107,8 +107,8 @@
                   <footer class="meta">
                     {{#meta.AuthorName}}
                       <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-                        <link itemprop="image" href="{{meta.AuthorImage}}" />
-                        <span itemprop="name">{{meta.AuthorName}}</span>
+                        <img itemprop="image" class="u-photo" src="{{meta.AuthorImage}}" alt="{{meta.AuthorName}}" />
+                        <span itemprop="name" class="p-name">{{meta.AuthorName}}</span>
                       </address>
                     {{/meta.AuthorName}}
                     <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
