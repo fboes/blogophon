@@ -62,12 +62,13 @@ exports.testCodeHighlighting = function(test) {
     "There is also _italic_ and __bold__ but not _ unbold _.\n"+
     "And some `code` or stuff like that, but it's ` on some place\n"+
     "* And some `code` or stuff like that\n"+
+    "Add CSS variable `--gallery-count` to gallery HTML.\n"+
     "And some `code` or stuff * like * that, and an http://www.example.com URL\n"+
     '</code></pre>'
   );
   //console.log(m);
   test.ok(m !== undefined, 'String is not undefined');
-  test.equals(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 15 * 2);
+  test.equals(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 16 * 2);
 
   test.done();
 };
