@@ -58,12 +58,16 @@ exports.testCodeHighlighting = function(test) {
   test.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
 
   m = markyMark('<pre><code class="lang-markdown">'+
-     "H1\n=====\n\nH2\n-----\n\n[Links](#) with some *italic* and **bold** text.\n\n### Headline\n"+
+    "H1\n=====\n\nH2\n-----\n\n[Links](#) with some *italic* and **bold** and _bold_ text.\n\n### Headline\n"+
+    "There is also _italic_ and __bold__ but not _ unbold _.\n"+
+    "And some `code` or stuff like that, but it's ` on some place\n"+
+    "* And some `code` or stuff like that\n"+
+    "And some `code` or stuff * like * that, and an http://www.example.com URL\n"+
     '</code></pre>'
   );
   //console.log(m);
   test.ok(m !== undefined, 'String is not undefined');
-  test.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
+  test.equals(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 15 * 2);
 
   test.done();
 };

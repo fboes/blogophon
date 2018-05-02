@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Improve code styling for Markdown code examples in blog posts
 * :gift: Improve `h-entry`, `h-feed` & `h-card` [microformats](https://indieweb.org/microformats2) for better syndication
 * :gift: Add configurable HTML snippets for analytics
 * :gift: Add CSS variable `--gallery-count` to gallery HTML
