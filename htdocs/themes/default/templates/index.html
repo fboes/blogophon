@@ -79,6 +79,7 @@
                 {{^meta.Image}}
                   <link itemprop="image" href="{{config.ogImage}}" />
                 {{/meta.Image}}
+                <link itemprop="url mainEntityOfPage" href="{{meta.AbsoluteUrl}}" class="permalink u-url" rel="bookmark" />
                 <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
 
                 <header>
@@ -87,8 +88,8 @@
                     <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time>
                   {{/meta.Modified.locale}}
                   <h2>
-                    <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">
-                      <span  itemprop="name headline" class="p-name">{{meta.Title}}</span>
+                    <a href="{{meta.Link}}">
+                      <span itemprop="name headline" class="p-name">{{meta.Title}}</span>
                     </a>
                   </h2>
                 </header>

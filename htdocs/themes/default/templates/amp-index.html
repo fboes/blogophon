@@ -36,14 +36,15 @@
               {{^meta.Image}}
                 <link itemprop="image" href="{{config.ogImage}}" />
               {{/meta.Image}}
+              <link itemprop="url mainEntityOfPage" href="{{meta.AbsoluteUrl}}" class="permalink u-url" rel="bookmark" />
               <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
-              <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url" aria-hidden="true">{{#i18n}}Permalink{{/i18n}}</a>
+
               <header>
                 <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
                 {{#meta.Modified.locale}}
                   <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time>
                 {{/meta.Modified.locale}}
-                <h2 itemprop="name headline"><a href="{{meta.AbsoluteUrlAmp}}" rel="bookmark">{{meta.Title}}</a></h2>
+                <h2 itemprop="name headline"><a href="{{meta.AbsoluteUrlAmp}}">{{meta.Title}}</a></h2>
               </header>
               <div itemprop="description">
                 {{{ampHtmlTeaser}}}
