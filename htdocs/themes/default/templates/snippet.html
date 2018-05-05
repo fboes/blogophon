@@ -5,7 +5,7 @@
 {{#index.length}}
   <ul class="teasers">
     {{#index}}
-      <li><a href="{{meta.Url}}">{{meta.Title}}</a></li>
+      <li><a href="{{meta.Url}}"{{^meta.isDefaultLanguage}} hreflang="{{meta.Language}}" class="lang-{{meta.Language}}"{{/meta.isDefaultLanguage}}>{{meta.Title}}</a>{{^meta.isDefaultLanguage}} ({{meta.Language}}){{/meta.isDefaultLanguage}}</li>
     {{/index}}
   </ul>
 {{/index.length}}
