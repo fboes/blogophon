@@ -36,8 +36,8 @@
     "gulp-nodeunit": "0.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
+    "gulp-rename": "^1.2.3",
+    "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.0",
     "gulp-uglify": "^3.0.0",
     "husky": "^0.14.3",
@@ -57,16 +57,16 @@
   "dependencies": {
     "dateformat": "^3.0.2",
     "fs-extra-promise": "^1.0.1",
-    "js-yaml": "^3.11.0",
     "glob": "^7.0.5",
     "gm": "^1.23.0",
     "inquirer": "^5.0.0",
     "inquirer-datepicker-prompt": "^0.4.2",
+    "js-yaml": "^3.11.0",
     "marked": "^0.3.15",
     "mustache": "^2.2.1",
     "promise": "^8.0.0",
     "remove-markdown": "^0.2.0",
-    "shelljs": "^0.8.0"
+    "shelljs": "^0.8.2"
   },
   "eslintConfig": {
     "env": {
