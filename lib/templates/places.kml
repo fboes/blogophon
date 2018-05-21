@@ -3,7 +3,7 @@
   <name>{{config.name}} | {{title}}</name>
   <Folder>
     {{#index}}
-      {{#meta.Latitude}}
+      {{#if meta.Latitude}}
         <Placemark id="{{meta.Id}}">
           <name>{{meta.Title}}</name>
           <visibility>1</visibility>
@@ -11,9 +11,9 @@
           <Point>
             <coordinates>{{meta.Longitude}},{{meta.Latitude}}</coordinates>
           </Point>
-          {{#meta.Location}}
+          {{#if meta.Location}}
             <address>{{meta.Location}}</address>
-          {{/meta.Location}}
+          {{/if}}
           <TimeStamp>
             <when>{{meta.Created.iso}}</when>
           </TimeStamp>
@@ -21,15 +21,15 @@
             <Data name="Keywords">
               <value>{{meta.Keywords}}</value>
             </Data>
-            {{#meta.Marker}}
+            {{#if meta.Marker}}
               <Data name="Marker">
                 <value>{{meta.Marker}}</value>
               </Data>
-            {{/meta.Marker}}
+            {{/if}}
           </ExtendedData>
           <atom:link href="{{meta.AbsoluteLink}}" />
         </Placemark>
-      {{/meta.Latitude}}
+      {{/if}}
     {{/index}}
   </Folder>
 </kml>

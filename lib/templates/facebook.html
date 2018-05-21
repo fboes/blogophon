@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="{{meta.Language}}" dir="{{meta.Direction}}" prefix="op: http://media.facebook.com/op#">
 <head>
   <meta charset="utf-8">
@@ -9,26 +9,26 @@
   <meta property="og:url" content="{{meta.AbsoluteUrl}}" />
   <meta property="og:title" content="{{meta.Title}}" />
   <meta property="og:description" content="{{meta.Description}}" />
-  {{#meta.Image}}
+  {{#if meta.Image}}
     <meta property="og:image" content="{{meta.Image}}" />
-  {{/meta.Image}}
+  {{/if}}
   <link rel="canonical" href="{{meta.AbsoluteUrl}}">
 </head>
 <body>
   <article>
     <header>
-      {{#meta.Image}}
+      {{#if meta.Image}}
         <figure>
           <img src="{{meta.Image}}" />
           <figcaption></figcaption>
         </figure>
-      {{/meta.Image}}
+      {{/if}}
       <h1>{{meta.Title}}</h1>
       <time class="op-published" datetime="{{meta.Created.iso}}">{{meta.Created.locale}}</time>
       <time class="op-modified" datetime="{{meta.Modified.iso}}">{{meta.Modified.locale}}</time>
-      {{#meta.AuthorName}}
+      {{#if meta.AuthorName}}
         <address><a>{{meta.AuthorName}}</a></address>
-      {{/meta.AuthorName}}
+      {{/if}}
     </header>
     {{{safeHtml}}}
   </article>

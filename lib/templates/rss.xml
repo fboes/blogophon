@@ -10,12 +10,12 @@
     <link>{{config.absoluteBasePath}}</link>
     <description>{{config.description}}</description>
     <language>{{config.locale.language}}</language>
-    {{#config.copyright}}
+    {{#if config.copyright}}
       <copyright>{{config.copyright}}</copyright>
-    {{/config.copyright}}
+    {{/if}}
     <lastBuildDate>{{pubDate}}</lastBuildDate>
     <atom:link href="{{absoluteUrl}}" rel="self" type="application/rss+xml" />
-    {{#index}}
+    {{#each index}}
       <item>
         <title>{{meta.Title}}</title>
         <description><![CDATA[{{{safeHtmlTeaser}}}]]></description>
@@ -24,16 +24,16 @@
         <content:encoded><![CDATA[{{>contentHtml}}]]></content:encoded>
         <author>{{meta.AuthorEmail}} ({{meta.AuthorName}})</author>
         <guid isPermaLink="false">{{meta.Id}}</guid>
-        {{#meta.Tags}}
+        {{#each meta.Tags}}
           <category>{{title}}</category>
-        {{/meta.Tags}}
-        {{#meta.Latitude}}
+        {{/each}}
+        {{#if meta.Latitude}}
           <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
-        {{/meta.Latitude}}
-        {{#meta.Enclosure}}
+        {{/if}}
+        {{#if meta.Enclosure}}
           <enclosure url="{{url}}" length="{{length}}" type="{{type}}" />
-        {{/meta.Enclosure}}
+        {{/if}}
       </item>
-    {{/index}}
+    {{/each}}
   </channel>
 </rss>

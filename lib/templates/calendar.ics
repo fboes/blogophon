@@ -5,7 +5,7 @@ X-WR-CALNAME;CHARSET=UTF-8:{{#icsQuote}}{{{config.name}}} | {{{title}}}{{/icsQuo
 X-WR-TIMEZONE;VALUE=TEXT:Europe/Berlin
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-{{#index}}
+{{#each index}}
 BEGIN:VEVENT
 DTSTART;VALUE=DATE:{{{meta.Created.icsDay}}}
 DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
@@ -13,16 +13,16 @@ URL:{{#icsQuote}}{{{meta.AbsoluteLink}}}{{/icsQuote}}
 SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
 DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}
 DTSTAMP:{{{pubDate}}}
-{{#meta.Location}}
+{{#if meta.Location}}
 LOCATION;CHARSET=UTF-8:{{#icsQuote}}{{meta.Location}}{{/icsQuote}}
-{{/meta.Location}}
-{{#meta.Latitude}}
+{{/if}}
+{{#if meta.Latitude}}
 GEO:{{meta.Latitude}};{{meta.Longitude}}
-{{/meta.Latitude}}
-{{#meta.Keywords}}
+{{/if}}
+{{#each meta.Keywords}}
 CATEGORIES;CHARSET=UTF-8:{{#icsQuote}}{{meta.Keywords}}{{/icsQuote}}
-{{/meta.Keywords}}
+{{/each}}
 UID:{{#icsQuote}}{{{meta.Id}}}{{/icsQuote}}
 END:VEVENT
-{{/index}}
+{{/each}}
 END:VCALENDAR
