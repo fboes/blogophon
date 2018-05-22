@@ -13,6 +13,7 @@ A live example of this blog generator can be found at [3960! Journal](http://jou
 * The Blogophon comes with a built-in image-scaler for responsive images.
 * The default theme puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph).
 * A ton of [special features](docs/special-features.md) like RSS/ATOM newsfeeds, Accelerated Mobile Pages (AMP), Facebook Instant Articles, etc.
+* As the Blogophon only consists of static pages, there is no personal data (cookies, etc.) aggregated by your blog - therefore it is easy to comply with any form of privacy protection law (like the [GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)).
 
 Requirements
 ------------
