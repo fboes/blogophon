@@ -2,7 +2,7 @@
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
   <name>{{config.name}} | {{title}}</name>
   <Folder>
-    {{#index}}
+    {{#each index}}
       {{#if meta.Latitude}}
         <Placemark id="{{meta.Id}}">
           <name>{{meta.Title}}</name>
@@ -30,6 +30,6 @@
           <atom:link href="{{meta.AbsoluteLink}}" />
         </Placemark>
       {{/if}}
-    {{/index}}
+    {{/each}}
   </Folder>
 </kml>

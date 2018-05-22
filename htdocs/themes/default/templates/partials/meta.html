@@ -1,28 +1,27 @@
 <meta property="og:site_name" name="application-name" content="{{config.name}}" />
-{{^post.meta.Image}}
-  {{#config.themeConf.ogImage}}
+{{#unless post.meta.Image}}
+  {{#if config.themeConf.ogImage}}
     <meta property="og:image" content="{{config.themeConf.ogImage}}" />
-  {{/config.themeConf.ogImage}}
-{{/post.meta.Image}}
-{{#config.twitterAccount}}
-  {{#post.meta.ProperImage}}
+  {{/if}}
+{{/unless}}
+{{#if config.twitterAccount}}
+  {{#if post.meta.ProperImage}}
     <meta name="twitter:card" content="summary_large_image" />
-  {{/post.meta.ProperImage}}
-  {{^post.meta.ProperImage}}
+  {{else}}
     <meta name="twitter:card" content="summary" />
-  {{/post.meta.ProperImage}}
+  {{/if}}
   <meta name="twitter:site" content="@{{config.twitterAccount}}" />
   <meta name="twitter:creator" content="@{{config.twitterAccount}}" />
-{{/config.twitterAccount}}
-{{#config.themeConf.themeColor}}
+{{/if}}
+{{#if config.themeConf.themeColor}}
   <meta name="theme-color" content="{{config.themeConf.themeColor}}" />
-{{/config.themeConf.themeColor}}
+{{/if}}
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="msapplication-config" content="{{config.absoluteBasePath}}browserconfig.xml" />
 <link rel="stylesheet" href="{{config.absoluteBasePath}}{{config.htdocs.theme}}/css/styles.css?v=1.0.0" />
-{{#config.themeConf.icons}}
+{{#if config.themeConf.icons}}
 <link rel="icon" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
-{{/config.themeConf.icons}}
+{{/if}}
 <link rel="apple-touch-icon" href="{{config.themeConf.ogImage}}" />
 <link rel="manifest" href="{{config.absoluteBasePath}}manifest.json" />
 <link rel="search" href="{{config.absoluteBasePath}}opensearch.xml" type="application/opensearchdescription+xml" title="{{config.name}}" />

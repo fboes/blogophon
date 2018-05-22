@@ -1,9 +1,9 @@
 <nav itemscope="itemscope" itemtype="http://www.schema.org/SiteNavigationElement" id="navigation">
   <ul>
     <li><a href="{{config.basePath}}">{{#i18n}}Home page{{/i18n}}</a></li>
-    {{#config.categoriesUrls}}
+    {{#each config.categoriesUrls}}
       <li><a href="{{url}}">{{title}}</a></li>
-    {{/config.categoriesUrls}}
+    {{/each}}
     <li><a href="{{config.basePath}}tagged/">{{#i18n}}All tags{{/i18n}}</a></li>
   </ul>
 </nav>

@@ -4,9 +4,9 @@
   <h3>{{#i18n}}Links{{/i18n}}</h3>
   <ul>
     <li><a href="{{config.basePath}}tagged/">{{#i18n}}All tags{{/i18n}}</a></li>
-    {{#config.twitterAccount}}
+    {{#if config.twitterAccount}}
       <li><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">{{#i18n}}Twitter feed{{/i18n}}</a></li>
-    {{/config.twitterAccount}}
+    {{/if}}
   </ul>
 </section>
 

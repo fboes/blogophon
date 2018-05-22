@@ -1,12 +1,12 @@
 <section class="snippet">
-{{#title}}
-  <h3><a href="{{absoluteUrl}}">{{title}}{{#subtitle}}, {{subtitle}}{{/subtitle}}</a></h3>
-{{/title}}
-{{#index.length}}
+{{#if title}}
+  <h3><a href="{{absoluteUrl}}">{{title}}{{#if subtitle}}, {{subtitle}}{{/if}}</a></h3>
+{{/if}}
+{{#if index}}
   <ul class="teasers">
-    {{#index}}
+    {{#each index}}
       <li><a href="{{meta.Url}}"{{^meta.isDefaultLanguage}} hreflang="{{meta.Language}}" class="lang-{{meta.Language}}"{{/meta.isDefaultLanguage}}>{{meta.Title}}</a>{{^meta.isDefaultLanguage}} ({{meta.Language}}){{/meta.isDefaultLanguage}}</li>
-    {{/index}}
+    {{/each}}
   </ul>
-{{/index.length}}
+{{/if}}
 </section>
