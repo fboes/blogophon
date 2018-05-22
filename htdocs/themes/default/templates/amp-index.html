@@ -33,7 +33,7 @@
               {{#if meta.Image}}
                 <link itemprop="image" href="{{meta.Image}}" />
               {{else}}
-                <link itemprop="image" href="{{config.ogImage}}" />
+                <link itemprop="image" href="{{../config.ogImage}}" />
               {{/if}}
               <link itemprop="url mainEntityOfPage" href="{{meta.AbsoluteUrl}}" class="permalink u-url" rel="bookmark" />
               <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
@@ -64,8 +64,8 @@
                   </address>
                 {{/if}}
                 <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                  <link href="{{config.themeConf.ogImage}}" itemprop="logo" />
-                  <span itemprop="name">{{config.name}}</span>
+                  <link href="{{../config.themeConf.ogImage}}" itemprop="logo" />
+                  <span itemprop="name">{{../config.name}}</span>
                 </address>
               </footer>
             </article>

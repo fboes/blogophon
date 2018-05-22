@@ -12,16 +12,16 @@ DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
 URL:{{#icsQuote}}{{{meta.AbsoluteLink}}}{{/icsQuote}}
 SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
 DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}
-DTSTAMP:{{{pubDate}}}
+DTSTAMP:{{{../pubDate}}}
 {{#if meta.Location}}
 LOCATION;CHARSET=UTF-8:{{#icsQuote}}{{meta.Location}}{{/icsQuote}}
 {{/if}}
 {{#if meta.Latitude}}
 GEO:{{meta.Latitude}};{{meta.Longitude}}
 {{/if}}
-{{#each meta.Keywords}}
+{{#if meta.Keywords}}
 CATEGORIES;CHARSET=UTF-8:{{#icsQuote}}{{meta.Keywords}}{{/icsQuote}}
-{{/each}}
+{{/if}}
 UID:{{#icsQuote}}{{{meta.Id}}}{{/icsQuote}}
 END:VEVENT
 {{/each}}

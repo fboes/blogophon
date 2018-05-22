@@ -30,9 +30,9 @@
         {{#if meta.Latitude}}
           <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
         {{/if}}
-        {{#if meta.Enclosure}}
+        {{#each meta.Enclosure}}
           <enclosure url="{{url}}" length="{{length}}" type="{{type}}" />
-        {{/if}}
+        {{/each}}
       </item>
     {{/each}}
   </channel>

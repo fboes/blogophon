@@ -31,7 +31,7 @@
           {{#if meta.Image}}
             <link itemprop="image" href="{{meta.Image}}" />
           {{else}}
-            <link itemprop="image" href="{{config.ogImage}}" />
+            <link itemprop="image" href="{{../config.ogImage}}" />
           {{/if}}
           <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
           <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
@@ -64,8 +64,8 @@
             </address>
             {{/if}}
             <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-              <link href="{{config.themeConf.ogImage}}" itemprop="logo" />
-              <span itemprop="name">{{config.name}}</span>
+              <link href="{{../config.themeConf.ogImage}}" itemprop="logo" />
+              <span itemprop="name">{{../config.name}}</span>
             </address>
             <span class="share">
               <amp-social-share type="twitter"></amp-social-share>
@@ -77,7 +77,7 @@
           {{#if prev.AbsoluteUrlAmp}}
             <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
           {{/if}}
-          <a href="{{config.basePath}}amp.html" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
+          <a href="{{../config.basePath}}amp.html" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
           {{#if next.AbsoluteUrlAmp}}
             <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
           {{/if}}

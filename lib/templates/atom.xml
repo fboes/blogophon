@@ -12,7 +12,7 @@
   <updated>{{pubDate}}</updated>
   <link href="{{absoluteUrl}}" rel="self" />
   {{#each index}}
-    <entry xml:lang="{{meta.Language}}" xml:base="{{config.absoluteBasePath}}">
+    <entry xml:lang="{{meta.Language}}" xml:base="{{../config.absoluteBasePath}}">
       <title>{{meta.Title}}</title>
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
@@ -23,16 +23,16 @@
         <name>{{meta.AuthorName}}</name>
         <email>{{meta.AuthorEmail}}</email>
       </author>
-      <id>{{config.absoluteBasePath}}#{{meta.Id}}</id>
-      {{#if meta.Tags}}
+      <id>{{../config.absoluteBasePath}}#{{meta.Id}}</id>
+      {{#each meta.Tags}}
         <category term="{{title}}" />
-      {{/if}}
+      {{/each}}
       {{#if meta.Latitude}}
         <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
       {{/if}}
-      {{#if meta.Enclosure}}
+      {{#each meta.Enclosure}}
         <link rel="enclosure" href="{{url}}" length="{{length}}" type="{{type}}" />
-      {{/if}}
+      {{/each}}
     </entry>
   {{/each}}
 </feed>
