@@ -90,8 +90,8 @@
               {{#if meta.RatingObj}}
                   <p itemscope itemtype="http://schema.org/Rating">
                     <strong>{{#i18n}}Rating:{{/i18n}}</strong>
-                    <meta itemprop="worstRating" content="{{worst}}" />
-                    <span itemprop="ratingValue">{{value}}</span>/<span itemprop="bestRating">{{best}}</span>
+                    <meta itemprop="worstRating" content="{{meta.RatingObj.worst}}" />
+                    <span itemprop="ratingValue">{{meta.RatingObj.value}}</span>/<span itemprop="bestRating">{{meta.RatingObj.best}}</span>
                   </p>
               {{/if}}
               {{#if meta.Latitude}}
