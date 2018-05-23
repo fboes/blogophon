@@ -70,7 +70,7 @@
         {{#if index}}
           <div class="teasers">
             {{#each index}}
-              <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="{{meta.Schema}}">
+              <article class="{{meta.Classes}} h-entry"{{#unless meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/unless}} itemscope itemtype="{{meta.Schema}}">
                 {{#if meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
                 {{else}}

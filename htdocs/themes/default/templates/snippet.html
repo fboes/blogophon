@@ -5,7 +5,7 @@
 {{#if index}}
   <ul class="teasers">
     {{#each index}}
-      <li><a href="{{meta.Url}}"{{^meta.isDefaultLanguage}} hreflang="{{meta.Language}}" class="lang-{{meta.Language}}"{{/meta.isDefaultLanguage}}>{{meta.Title}}</a>{{^meta.isDefaultLanguage}} ({{meta.Language}}){{/meta.isDefaultLanguage}}</li>
+      <li><a href="{{meta.Url}}"{{#unless meta.isDefaultLanguage}} hreflang="{{meta.Language}}" class="lang-{{meta.Language}}"{{/unless}}>{{meta.Title}}</a>{{^meta.isDefaultLanguage}} ({{meta.Language}}){{/meta.isDefaultLanguage}}</li>
     {{/each}}
   </ul>
 {{/if}}
