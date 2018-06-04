@@ -60,12 +60,12 @@
     "glob": "^7.0.5",
     "gm": "^1.23.0",
     "handlebars": "^4.0.11",
-    "inquirer": "^5.0.0",
+    "inquirer": "^6.0.0",
     "inquirer-datepicker-prompt": "^0.4.2",
     "js-yaml": "^3.11.0",
     "marked": "^0.4.0",
     "promise": "^8.0.0",
-    "remove-markdown": "^0.2.0",
+    "remove-markdown": "^0.3.0",
     "shelljs": "^0.8.2"
   },
   "eslintConfig": {
