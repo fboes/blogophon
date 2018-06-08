@@ -28,7 +28,7 @@
     "static site generator"
   ],
   "devDependencies": {
-    "autoprefixer": "^8.3.0",
+    "autoprefixer": "^8.6.1",
     "beepbeep": "^1.2.2",
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
