@@ -8,7 +8,7 @@
         <square310x310logo src="http://cdn.3960.org/images/tile-558x558.png"/>
         <TileColor>{{config.themeConf.themeColor}}</TileColor>
      </tile>
-    {{#config.specialFeatures.microsofttiles}}
+    {{#if config.specialFeatures.microsofttiles}}
        <notification>
           <polling-uri  src="{{config.absoluteBasePath}}notifications/livetile-1.xml"/>
           <polling-uri2 src="{{config.absoluteBasePath}}notifications/livetile-2.xml"/>
@@ -18,6 +18,6 @@
           <frequency>30</frequency>
           <cycle>1</cycle>
        </notification>
-    {{/config.specialFeatures.microsofttiles}}
+    {{/if}}
    </msapplication>
 </browserconfig>

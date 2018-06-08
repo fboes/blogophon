@@ -1,48 +1,48 @@
 ---
-{{#draft}}
+{{#if draft}}
 Draft:     yes # Remove this line to undraft this article
-{{/draft}}
+{{/if}}
 Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
-{{#tags}}
+{{#if tags}}
 Tags:      {{#ymlQuote}}{{{tags}}}{{/ymlQuote}}
-{{/tags}}
-{{#category}}
+{{/if}}
+{{#if category}}
 Category:  {{#ymlQuote}}{{{category}}}{{/ymlQuote}}
-{{/category}}
-{{#classes}}
+{{/if}}
+{{#if classes}}
 Classes:   {{#ymlQuote}}{{{classes}}}{{/ymlQuote}}
-{{/classes}}
-{{#author}}
+{{/if}}
+{{#if author}}
 Author:    {{#ymlQuote}}{{{author}}}{{/ymlQuote}}
-{{/author}}
-{{^isMicropost}}
+{{/if}}
+{{#unless isMicropost}}
 Twitter:   {{#ymlQuote}}{{{title}}}{{/ymlQuote}}
-{{/isMicropost}}
-{{#location}}
+{{/unless}}
+{{#if location}}
 Location:  {{#ymlQuote}}{{{location}}}{{/ymlQuote}}
-{{/location}}
-{{#latitude}}
+{{/if}}
+{{#if latitude}}
 Marker:    marker
 Latitude:  {{#ymlQuote}}{{{latitude}}}{{/ymlQuote}}
 Longitude: {{#ymlQuote}}{{{longitude}}}{{/ymlQuote}}
-{{/latitude}}
-{{#rating}}
+{{/if}}
+{{#if rating}}
 Rating:    {{#ymlQuote}}{{rating}}/5{{/ymlQuote}}
-{{/rating}}
-{{#link}}
+{{/if}}
+{{#if link}}
 Link:      {{#ymlQuote}}{{{link}}}{{/ymlQuote}}
-{{/link}}
+{{/if}}
 ---
 
-{{^isMicropost}}
+{{#unless isMicropost}}
 {{{title}}}
 =========
 
-{{#lead}}
+{{#if lead}}
 {{{lead}}}
 
 ***
 
-{{/lead}}
-{{/isMicropost}}
+{{/if}}
+{{/unless}}
 {{{mainText}}}

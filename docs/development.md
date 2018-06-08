@@ -26,12 +26,12 @@ This webserver will also spawn a [LiveReload](http://livereload.com/) service. G
 Theming
 -------
 
-To develop a new theme follow these steps:
+The themes of the Blogophon use [Handlebars templating](https://handlebarsjs.com/). To develop a new theme follow these steps:
 
 1. Copy `htdocs/theme/default/` to `htdocs/theme/YOUR_THEME_NAME`.
 1. Call `blogophon` and choose your new theme `YOUR_THEME_NAME`.
 1. Run `gulp` to start the SASS- & JS-compiler. This will also reload your browser on theme changes if you have the [LiveReload plugin](http://livereload.com/extensions/) installed.
-1. Start making modifications to your copied theme files.
+1. Start making modifications to your copied Handlebars theme files.
 
 Take special note of `theme.json`, as it contains settings for your theme like settings for responsive images, images and icons:
 
@@ -43,9 +43,9 @@ Take special note of `theme.json`, as it contains settings for your theme like s
 
 ### Template variables
 
-Keep in mind that every property in the article's [YAML frontmatter](markdown.md) will become a Mustache `post.meta` variable. This may help you in adding extra article properties to your template.
+Keep in mind that every property in the article's [YAML frontmatter](markdown.md) will become a Handlebars `post.meta` variable. This may help you in adding extra article properties to your template.
 
-There is also a Mustache `config` variable, which will contain all settings from your `user/config.json`.
+There is also a Handlebars `config` variable, which will contain all settings from your `user/config.json`.
 
 ---
 

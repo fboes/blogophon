@@ -7,42 +7,42 @@
   <meta property="og:url" content="{{post.meta.AbsoluteUrl}}" />
   <meta property="og:title" name="title" content="{{post.meta.Title}}" />
   <meta property="og:description" name="description" content="{{#noNewline}}{{post.meta.Description}}{{/noNewline}}" />
-  {{#post.meta.Image}}
+  {{#if post.meta.Image}}
     <meta property="og:image" content="{{post.meta.Image}}" />
-  {{/post.meta.Image}}
+  {{/if}}
   <meta property="article:published_time" content="{{post.meta.Created.iso}}" />
   <meta property="article:modified_time" content="{{post.meta.Modified.iso}}" />
-  {{#post.meta.Keywords.length}}
+  {{#if post.meta.Keywords.length}}
     <meta name="keywords" content="{{post.meta.Keywords}}" />
-  {{/post.meta.Keywords.length}}
-  {{#post.meta.Latitude}}
+  {{/if}}
+  {{#if post.meta.Latitude}}
     <meta name="ICBM" content="{{post.meta.Latitude}}, {{post.meta.Longitude}}" />
     <meta name="geo.position" content="{{post.meta.Latitude}};{{post.meta.Longitude}}" />
     <meta name="geo.position.latitude" content="{{post.meta.Latitude}}" />
     <meta name="geo.position.longitude" content="{{post.meta.Longitude}}" />
-  {{/post.meta.Latitude}}
-  {{#post.meta.Location}}
+  {{/if}}
+  {{#if post.meta.Location}}
     <meta name="geo.placename" content="{{post.meta.Location}}" />
-  {{/post.meta.Location}}
+  {{/if}}
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
-  {{#config.specialFeatures.rss}}
+  {{#if config.specialFeatures.rss}}
     <link rel="alternate" type="application/rss+xml" title="{{config.name}} RSS" href="{{config.absoluteBasePath}}posts.rss" />
-  {{/config.specialFeatures.rss}}
-  {{#config.specialFeatures.atom}}
+  {{/if}}
+  {{#if config.specialFeatures.atom}}
     <link rel="alternate" type="application/atom+xml" title="{{config.name}} ATOM" href="{{config.absoluteBasePath}}posts.atom" />
-  {{/config.specialFeatures.atom}}
-  {{#config.specialFeatures.jsonfeed}}
+  {{/if}}
+  {{#if config.specialFeatures.jsonfeed}}
     <link rel="alternate" type="application/json" title="{{config.name}} JSON Feed" href="{{config.absoluteBasePath}}feed.json" />
-  {{/config.specialFeatures.jsonfeed}}
-  {{#config.specialFeatures.jsonrss}}
+  {{/if}}
+  {{#if config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/rss+json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
-  {{/config.specialFeatures.jsonrss}}
-  {{#config.specialFeatures.markdown}}
+  {{/if}}
+  {{#if config.specialFeatures.markdown}}
     <link rel="alternate" type="text/markdown" title="{{post.meta.Title}}" href="{{config.absoluteBasePath}}article.md" />
-  {{/config.specialFeatures.markdown}}
-  {{#config.specialFeatures.acceleratedmobilepages}}
+  {{/if}}
+  {{#if config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{post.meta.AbsoluteUrlAmp}}" />
-  {{/config.specialFeatures.acceleratedmobilepages}}
+  {{/if}}
   {{>metaHtml}}
 </head>
 <body class="post">
@@ -50,11 +50,11 @@
     {{>headerHtml}}
     <div id="main">
       <main id="content">
-        {{#post}}
-          {{#meta.CategoryObj}}
+        {{#with post}}
+          {{#if meta.CategoryObj}}
             <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
               <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="{{config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
+                <a itemprop="item" href="{{../config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
                 <meta itemprop="position" content="1" />
               </li>
               <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
@@ -66,15 +66,14 @@
                 <meta itemprop="position" content="3" />
               </li>
             </ol>
-          {{/meta.CategoryObj}}
+          {{/if}}
 
-          <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="{{meta.Schema}}">
-            {{#meta.Image}}
+          <article class="{{meta.Classes}} h-entry"{{#unless meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/unless}} itemscope itemtype="{{meta.Schema}}">
+            {{#if meta.Image}}
               <link itemprop="image" href="{{meta.Image}}" />
-            {{/meta.Image}}
-            {{^meta.Image}}
-              <link itemprop="image" href="{{config.ogImage}}" />
-            {{/meta.Image}}
+            {{else}}
+              <link itemprop="image" href="{{../config.ogImage}}" />
+            {{/if}}
             <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
 
             <header>
@@ -88,50 +87,53 @@
             <div itemprop="articleBody" class="e-content">
               {{{html}}}
 
-              {{#meta.RatingObj}}
+              {{#if meta.RatingObj}}
                   <p itemscope itemtype="http://schema.org/Rating">
                     <strong>{{#i18n}}Rating:{{/i18n}}</strong>
-                    <meta itemprop="worstRating" content="{{worst}}" />
-                    <span itemprop="ratingValue">{{value}}</span>/<span itemprop="bestRating">{{best}}</span>
+                    <meta itemprop="worstRating" content="{{meta.RatingObj.worst}}" />
+                    <span itemprop="ratingValue">{{meta.RatingObj.value}}</span>/<span itemprop="bestRating">{{meta.RatingObj.best}}</span>
                   </p>
-              {{/meta.RatingObj}}
-              {{#meta.Latitude}}
+              {{/if}}
+              {{#if meta.Latitude}}
                 <div class="location" itemprop="contentLocation" itemscope itemtype="http://schema.org/Place">
-                  {{#meta.Location}}
+                  {{#if meta.Location}}
                     <span itemprop="name" class="p-location">{{meta.Location}}</span>
-                  {{/meta.Location}}
+                  {{/if}}
                   <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
                     <meta itemprop="latitude" content="{{meta.Latitude}}" />
                     <meta itemprop="longitude" content="{{meta.Longitude}}" />
                   </div>
                 </div>
-              {{/meta.Latitude}}
-              {{#meta.hasExternalLink}}
+              {{/if}}
+              {{#if meta.hasExternalLink}}
                 <p><a href="{{meta.Link}}">Go to website…</a></p>
-              {{/meta.hasExternalLink}}
+              {{/if}}
             </div>
             <footer class="meta">
-              {{#config.twitterAccount}}
-                <p><a href="http://twitter.com/{{config.twitterAccount}}" rel="me">{{#i18n}}Comment &amp; discuss on Twitter{{/i18n}}</a></p>
-              {{/config.twitterAccount}}
-              {{#meta.Modified.locale}}
+              {{#if ../config.twitterAccount}}
+                <p><a href="http://twitter.com/{{../config.twitterAccount}}" rel="me">{{#i18n}}Comment &amp; discuss on Twitter{{/i18n}}</a></p>
+              {{/if}}
+              {{#if meta.Modified.locale}}
                 <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time></p>
-              {{/meta.Modified.locale}}
-              {{#meta.AuthorName}}
+              {{/if}}
+              {{#if meta.AuthorName}}
                 <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                   <img itemprop="image" class="u-photo" src="{{meta.AuthorImage}}" alt="{{meta.AuthorName}}" />
                   <span itemprop="name" class="p-name">{{meta.AuthorName}}</span>
                 </address>
-              {{/meta.AuthorName}}
-              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><img src="{{config.themeConf.ogImage}}" alt="" itemprop="logo" /> <span itemprop="name">{{config.name}}</span></address>
-              {{#meta.Tags.length}}
+              {{/if}}
+              <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <img src="{{../config.themeConf.ogImage}}" alt="" itemprop="logo" />
+                <span itemprop="name">{{../config.name}}</span>
+              </address>
+              {{#if meta.Tags}}
                 <span class="tags">
                   Tags:
-                  {{#meta.Tags}}
+                  {{#each meta.Tags}}
                     · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &ldquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
-                  {{/meta.Tags}}
+                  {{/each}}
                 </span>
-              {{/meta.Tags.length}}
+              {{/if}}
               <span class="share">
                 <a href="{{share.twitter}}" target="social" class="twitter" rel="nofollow" aria-label="Share via Twitter"><span>{{#i18n}}Share via Twitter{{/i18n}}</span></a>
                 <a href="{{share.facebook}}" target="social" class="facebook" rel="nofollow" aria-label="Share via Facebook"><span>{{#i18n}}Share via Facebook{{/i18n}}</span></a>
@@ -140,79 +142,76 @@
             </footer>
           </article>
           <div id="prevnext">
-            {{#prev.Url}}
+            {{#if prev.Url}}
               <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
-            {{/prev.Url}}
+            {{/if}}
             <span style="display:inline-block;">
-              <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
+              <a href="{{../config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
             </span>
-            {{#next.Url}}
+            {{#if next.Url}}
               <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
-            {{/next.Url}}
+            {{/if}}
           </div>
-        {{/post}}
+        {{/with}}
       </main>
       <aside id="sidebar">
         {{>sidebarHtml}}
-        {{^config.specialFeatures.teasersnippets}}
-          {{#post.meta.Tags.length}}
+        {{#unless config.specialFeatures.teasersnippets}}
+          {{#if post.meta.Tags}}
             <section>
               <h3>{{#i18n}}Related articles{{/i18n}}</h3>
               <ul>
-                {{#post.meta.Tags}}
+                {{#each post.meta.Tags}}
                   <li><a rel="tag" href="{{url}}" title="More articles with &ldquo;{{title}}&rdquo;">{{#i18n}}…for tag „{{title}}”{{/i18n}}</a></li>
-                {{/post.meta.Tags}}
+                {{/each}}
               </ul>
             </section>
-          {{/post.meta.Tags.length}}
-        {{/config.specialFeatures.teasersnippets}}
+          {{/if}}
+        {{/unless}}
 
-        {{#config.specialFeatures.teasersnippets}}
-          {{#post.meta.CategoryObj}}
-            {{#config.specialFeatures.serversideincludes}}
-              <!--#include virtual="{{url}}snippet._html" -->
-            {{/config.specialFeatures.serversideincludes}}
-            {{^config.specialFeatures.serversideincludes}}
-              <section data-ajax-url="{{url}}snippet._html"></section>
-            {{/config.specialFeatures.serversideincludes}}
-          {{/post.meta.CategoryObj}}
+        {{#if config.specialFeatures.teasersnippets}}
+          {{#if post.meta.CategoryObj}}
+            {{#if config.specialFeatures.serversideincludes}}
+              <!--#include virtual="{{post.meta.CategoryObj.url}}snippet._html" -->
+            {{else}}
+              <section data-ajax-url="{{post.meta.CategoryObj.url}}snippet._html"></section>
+            {{/if}}
+          {{/if}}
 
-          {{#config.specialFeatures.serversideincludes}}
+          {{#if config.specialFeatures.serversideincludes}}
             <!--#include virtual="{{config.basePath}}snippet._html" -->
-          {{/config.specialFeatures.serversideincludes}}
-          {{^config.specialFeatures.serversideincludes}}
+          {{else}}
             <section data-ajax-url="{{config.basePath}}snippet._html"></section>
-          {{/config.specialFeatures.serversideincludes}}
+          {{/if}}
 
-          {{#post.meta.Tags}}
-            {{#config.specialFeatures.serversideincludes}}
+          {{#each post.meta.Tags}}
+            {{#if config.specialFeatures.serversideincludes}}
               <!--#include virtual="{{url}}snippet._html" -->
-            {{/config.specialFeatures.serversideincludes}}
-            {{^config.specialFeatures.serversideincludes}}
+            {{else}}
               <section data-ajax-url="{{url}}snippet._html"></section>
-            {{/config.specialFeatures.serversideincludes}}
-          {{/post.meta.Tags}}
-        {{/config.specialFeatures.teasersnippets}}
+            {{/if}}
+          {{/each}}
+        {{/if}}
 
         <section>
           <h3>{{#i18n}}Subscription{{/i18n}}</h3>
           <p>{{#i18n}}Stay up to date with our Newsfeeds:{{/i18n}}</p>
           <ul>
-            {{#config.specialFeatures.rss}}
+            {{#if config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.rss">RSS-Feed</a></li>
-            {{/config.specialFeatures.rss}}
-            {{#config.specialFeatures.atom}}
+            {{/if}}
+            {{#if config.specialFeatures.atom}}
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
-            {{/config.specialFeatures.atom}}
-            {{#config.specialFeatures.jsonfeed}}
+            {{/if}}
+            {{#if config.specialFeatures.jsonfeed}}
               <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}feed.json">JSON Feed</a></li>
-            {{/config.specialFeatures.jsonfeed}}
-            {{#config.specialFeatures.jsonrss}}
+            {{/if}}
+            {{#if config.specialFeatures.jsonrss}}
               <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
-            {{/config.specialFeatures.jsonrss}}
-            {{#config.specialFeatures.jsonforslack}}
+            {{/if}}
+            {{#if config.specialFeatures.jsonforslack}}
               <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}slack.json">Slack-JSON</a></li>
-            {{/config.specialFeatures.jsonforslack}}
+            {{/if}}
           </ul>
         </section>
       </aside>

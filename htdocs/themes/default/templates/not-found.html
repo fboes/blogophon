@@ -13,14 +13,14 @@
       <main id="content">
         <h1>{{#i18n}}Sorry, this URL does not exist (anymore)…{{/i18n}}</h1>
 
-        {{#index.length}}
+        {{#if index}}
           <p>{{#i18n}}…but maybe these articles will help you ease the pain:{{/i18n}}</p>
           <ul>
-            {{#index}}
-              <li><a href="{{meta.Url}}"{{^meta.isDefaultLanguage}} hreflang="{{meta.Language}}" class="lang-{{meta.Language}}"{{/meta.isDefaultLanguage}}>{{meta.Title}}</a>{{^meta.isDefaultLanguage}} ({{meta.Language}}){{/meta.isDefaultLanguage}}</li>
-            {{/index}}
+            {{#each index}}
+              <li><a href="{{meta.Url}}"{{#unless meta.isDefaultLanguage}} hreflang="{{meta.Language}}" class="lang-{{meta.Language}}"{{/unless}}>{{meta.Title}}</a>{{^meta.isDefaultLanguage}} ({{meta.Language}}){{/meta.isDefaultLanguage}}</li>
+            {{/each}}
           </ul>
-        {{/index.length}}
+        {{/if}}
 
         <p>{{#i18n}}Find more articles on our <a href="{{config.basePath}}">home page</a>.{{/i18n}}</p>
       </main>

@@ -2,7 +2,7 @@
 # See https://github.com/h5bp/server-configs-apache
 # ServerName {{config.domain}}
 # DocumentRoot /var/www; # Replace with actual doc root
-{{#config.isHttps}}
+{{#if config.isHttps}}
   <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{HTTPS} off
@@ -19,7 +19,7 @@
 # SSLCertificateFile      /etc/apache2/certificates/{{config.domain}}/cert.pem
 # SSLCertificateKeyFile   /etc/apache2/certificates/{{config.domain}}/privkey.pem
 # SSLCertificateChainFile /etc/apache2/certificates/{{config.domain}}/chain.pem
-{{/config.isHttps}}
+{{/if}}
 
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
@@ -50,12 +50,12 @@ ErrorDocument 410 /404.html
   Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
-{{#config.specialFeatures.serversideincludes}}
+{{#if config.specialFeatures.serversideincludes}}
   Options +Includes
   <IfModule mod_mime.c>
     AddOutputFilter INCLUDES html
   </IfModule>
-{{/config.specialFeatures.serversideincludes}}
+{{/if}}
 
 #<IfModule mod_expires.c>
 #  ExpiresActive on

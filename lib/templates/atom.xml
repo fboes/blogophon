@@ -6,13 +6,13 @@
   <title>{{config.name}} | {{title}}</title>
   <link href="{{config.absoluteBasePath}}" />
   <id>{{config.absoluteBasePath}}</id>
-  {{#config.copyright}}
+  {{#if config.copyright}}
     <rights>{{config.copyright}}</rights>
-  {{/config.copyright}}
+  {{/if}}
   <updated>{{pubDate}}</updated>
   <link href="{{absoluteUrl}}" rel="self" />
-  {{#index}}
-    <entry xml:lang="{{meta.Language}}" xml:base="{{config.absoluteBasePath}}">
+  {{#each index}}
+    <entry xml:lang="{{meta.Language}}" xml:base="{{../config.absoluteBasePath}}">
       <title>{{meta.Title}}</title>
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}]]></content>
@@ -23,16 +23,16 @@
         <name>{{meta.AuthorName}}</name>
         <email>{{meta.AuthorEmail}}</email>
       </author>
-      <id>{{config.absoluteBasePath}}#{{meta.Id}}</id>
-      {{#meta.Tags}}
+      <id>{{../config.absoluteBasePath}}#{{meta.Id}}</id>
+      {{#each meta.Tags}}
         <category term="{{title}}" />
-      {{/meta.Tags}}
-      {{#meta.Latitude}}
+      {{/each}}
+      {{#if meta.Latitude}}
         <georss:point>{{meta.Latitude}} {{meta.Longitude}}</georss:point>
-      {{/meta.Latitude}}
-      {{#meta.Enclosure}}
+      {{/if}}
+      {{#each meta.Enclosure}}
         <link rel="enclosure" href="{{url}}" length="{{length}}" type="{{type}}" />
-      {{/meta.Enclosure}}
+      {{/each}}
     </entry>
-  {{/index}}
+  {{/each}}
 </feed>

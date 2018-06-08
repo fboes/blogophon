@@ -17,15 +17,15 @@
       <main id="content">
         <h1>{{#i18n}}All authors{{/i18n}}</h1>
 
-        {{#index.length}}
+        {{#if index}}
           <nav>
             <ul>
-              {{#index}}
+              {{#each index}}
                 <li><a href="{{url}}" title="{{#i18n}}More articles by {{title}}{{/i18n}}">{{title}}</a></li>
-              {{/index}}
+              {{/each}}
             </ul>
           </nav>
-        {{/index.length}}
+        {{/if}}
 
       </main>
       <aside id="sidebar">

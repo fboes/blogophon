@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-{{#post}}
+{{#with post}}
   <tile>
     <visual lang="{{post.meta.Language}}" version="2">
       <binding template="TileSquare150x150Text04">
@@ -10,4 +10,4 @@
       </binding>
     </visual>
   </tile>
-{{/post}}
+{{/with}}

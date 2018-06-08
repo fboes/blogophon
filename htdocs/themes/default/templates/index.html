@@ -2,49 +2,47 @@
 <html lang="{{config.locale.language}}" dir="{{config.locale.direction}}" prefix="og: http://ogp.me/ns#">
 <head>
   <meta charset="UTF-8" />
-  {{#meta.isHomepage}}
-    <title>{{#meta.subtitle}}{{meta.subtitle}} | {{/meta.subtitle}}{{config.name}}</title>
-  {{/meta.isHomepage}}
-  {{^meta.isHomepage}}
-    <title>{{#meta.title}}{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}} | {{/meta.title}}{{config.name}}</title>
-  {{/meta.isHomepage}}
+  {{#if meta.isHomepage}}
+    <title>{{#if meta.subtitle}}{{meta.subtitle}} | {{/if}}{{config.name}}</title>
+  {{else}}
+    <title>{{#if meta.title}}{{meta.title}}{{#if meta.subtitle}}, {{meta.subtitle}}{{/if}} | {{/if}}{{config.name}}</title>
+  {{/if}}
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{meta.absoluteUrl}}" />
-  <meta property="og:title" name="title" content="{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}" />
-  {{#meta.isHomepage}}
+  <meta property="og:title" name="title" content="{{meta.title}}{{#if meta.subtitle}}, {{meta.subtitle}}{{/if}}" />
+  {{#if meta.isHomepage}}
     <meta property="og:description" name="description" content="{{config.description}}" />
-  {{/meta.isHomepage}}
-  {{^meta.isHomepage}}
+  {{else}}
     <meta property="og:description" name="description" content="{{meta.title}} - {{config.description}}" />
-  {{/meta.isHomepage}}
+  {{/if}}
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
-  {{#config.specialFeatures.rss}}
+  {{#if config.specialFeatures.rss}}
     <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
-  {{/config.specialFeatures.rss}}
-  {{#config.specialFeatures.atom}}
+  {{/if}}
+  {{#if config.specialFeatures.atom}}
     <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
-  {{/config.specialFeatures.atom}}
-  {{#config.specialFeatures.jsonfeed}}
+  {{/if}}
+  {{#if config.specialFeatures.jsonfeed}}
     <link rel="alternate" type="application/json" title="{{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
-  {{/config.specialFeatures.jsonfeed}}
-  {{#config.specialFeatures.jsonrss}}
+  {{/if}}
+  {{#if config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/rss+json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
-  {{/config.specialFeatures.jsonrss}}
-  {{#config.specialFeatures.jsonforslack}}
+  {{/if}}
+  {{#if config.specialFeatures.jsonforslack}}
     <link rel="alternate" type="application/json" title="{{meta.title}} Slack-JSON" href="{{meta.absoluteUrlDirname}}/slack.json" />
-  {{/config.specialFeatures.jsonforslack}}
-  {{#config.specialFeatures.geojson}}
+  {{/if}}
+  {{#if config.specialFeatures.geojson}}
     <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
-  {{/config.specialFeatures.geojson}}
-  {{#config.specialFeatures.kml}}
+  {{/if}}
+  {{#if config.specialFeatures.kml}}
     <link rel="alternate" type="application/vnd.google-earth.kml+xml" title="{{meta.title}} KML" href="{{meta.absoluteUrlDirname}}/network.kml" />
-  {{/config.specialFeatures.kml}}
-  {{#config.specialFeatures.icscalendar}}
+  {{/if}}
+  {{#if config.specialFeatures.icscalendar}}
     <link rel="alternate" type="text/calendar" title="{{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
-  {{/config.specialFeatures.icscalendar}}
-  {{#config.specialFeatures.acceleratedmobilepages}}
+  {{/if}}
+  {{#if config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}" />
-  {{/config.specialFeatures.acceleratedmobilepages}}
+  {{/if}}
   {{>metaHtml}}
 </head>
 <body class="index">
@@ -52,7 +50,7 @@
     {{>headerHtml}}
     <div id="main">
       <main id="content" class="h-feed">
-        {{^meta.isHomepage}}
+        {{#unless meta.isHomepage}}
           <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
             <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
               <a itemprop="item" href="{{config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
@@ -63,30 +61,29 @@
               <meta itemprop="position" content="2" />
             </li>
           </ol>
-        {{/meta.isHomepage}}
+        {{/unless}}
 
-        {{#meta.title}}
-          <h1 class="p-name">{{meta.title}}{{#meta.subtitle}}, {{meta.subtitle}}{{/meta.subtitle}}</h1>
-        {{/meta.title}}
+        {{#if meta.title}}
+          <h1 class="p-name">{{meta.title}}{{#if meta.subtitle}}, {{meta.subtitle}}{{/if}}</h1>
+        {{/if}}
 
-        {{#index.length}}
+        {{#if index}}
           <div class="teasers">
-            {{#index}}
-              <article class="{{meta.Classes}} h-entry"{{^meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/meta.isDefaultLanguage}} itemscope itemtype="{{meta.Schema}}">
-                {{#meta.Image}}
+            {{#each index}}
+              <article class="{{meta.Classes}} h-entry"{{#unless meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/unless}} itemscope itemtype="{{meta.Schema}}">
+                {{#if meta.Image}}
                   <link itemprop="image" href="{{meta.Image}}" />
-                {{/meta.Image}}
-                {{^meta.Image}}
+                {{else}}
                   <link itemprop="image" href="{{config.ogImage}}" />
-                {{/meta.Image}}
+                {{/if}}
                 <link itemprop="url mainEntityOfPage" href="{{meta.AbsoluteUrl}}" class="permalink u-url" />
                 <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
 
                 <header>
                   <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
-                  {{#meta.Modified.locale}}
+                  {{#if meta.Modified.locale}}
                     <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified dt-updated">{{meta.Modified.locale}}</time>
-                  {{/meta.Modified.locale}}
+                  {{/if}}
                   <h2>
                     <a href="{{meta.Link}}" rel="bookmark">
                       <span itemprop="name headline" class="p-name">{{meta.Title}}</span>
@@ -96,56 +93,55 @@
                 <div itemprop="description" class="p-summary">
                   {{{htmlTeaser}}}
                 </div>
-                {{#meta.hasNoExtraDescription}}
-                  {{#meta.hasExternalLink}}
+                {{#if meta.hasNoExtraDescription}}
+                  {{#if meta.hasExternalLink}}
                     <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
-                  {{/meta.hasExternalLink}}
-                {{/meta.hasNoExtraDescription}}
-                {{^meta.hasNoExtraDescription}}
+                  {{/if}}
+                {{else}}
                   <p><a href="{{meta.Url}}" title="{{meta.Title}}">{{#i18n}}Read on…{{/i18n}}</a></p>
-                {{/meta.hasNoExtraDescription}}
-                {{#meta.Tags.length}}
+                {{/if}}
+                {{#if meta.Tags}}
                   <footer class="meta">
-                    {{#meta.AuthorName}}
+                    {{#if meta.AuthorName}}
                       <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                         <img itemprop="image" class="u-photo" src="{{meta.AuthorImage}}" alt="{{meta.AuthorName}}" />
                         <span itemprop="name" class="p-name">{{meta.AuthorName}}</span>
                       </address>
-                    {{/meta.AuthorName}}
+                    {{/if}}
                     <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                      <link href="{{config.themeConf.ogImage}}" itemprop="logo" />
-                      <span itemprop="name">{{config.name}}</span>
+                      <link href="{{../config.themeConf.ogImage}}" itemprop="logo" />
+                      <span itemprop="name">{{../config.name}}</span>
                     </address>
-                    {{#meta.Tags.length}}
+                    {{#if meta.Tags}}
                       <span class="tags">
                         Tags:
-                        {{#meta.Tags}}
+                        {{#each meta.Tags}}
                           · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &ldquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
-                        {{/meta.Tags}}
+                        {{/each}}
                       </span>
-                    {{/meta.Tags.length}}
+                    {{/if}}
                   </footer>
-                {{/meta.Tags.length}}
+                {{/if}}
               </article>
-            {{/index}}
+            {{/each}}
           </div>
-        {{/index.length}}
+        {{/if}}
 
         <div id="prevnext">
-          {{#prevUrl}}
+          {{#if prevUrl}}
             <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
-          {{/prevUrl}}
+          {{/if}}
           <span>
-            {{#currentPage}}
+            {{#if currentPage}}
                 <span>{{#i18n}}Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}{{/i18n}}</span>
-            {{/currentPage}}
-            {{#title}}
+            {{/if}}
+            {{#if title}}
               <br /><a href="{{config.basePath}}" rel="home">{{#i18n}}Back to home page{{/i18n}}</a>
-            {{/title}}
+            {{/if}}
           </span>
-          {{#nextUrl}}
+          {{#if nextUrl}}
             <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}" aria-label="{{#i18n}}Next page{{/i18n}}"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
-          {{/nextUrl}}
+          {{/if}}
         </div>
 
       </main>
@@ -155,27 +151,27 @@
           <h3>{{#i18n}}Subscription{{/i18n}}</h3>
           <p>{{#i18n}}Stay up to date with our Newsfeeds:{{/i18n}}</p>
           <ul>
-            {{#config.specialFeatures.rss}}
+            {{#if config.specialFeatures.rss}}
               <li><a type="application/rss+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.rss">RSS-Feed: {{meta.title}}</a></li>
-            {{/config.specialFeatures.rss}}
-            {{#config.specialFeatures.atom}}
+            {{/if}}
+            {{#if config.specialFeatures.atom}}
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
-            {{/config.specialFeatures.atom}}
-            {{#config.specialFeatures.jsonfeed}}
+            {{/if}}
+            {{#if config.specialFeatures.jsonfeed}}
               <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}feed.json">JSON Feed: {{meta.title}}</a></li>
-            {{/config.specialFeatures.jsonfeed}}
-            {{#config.specialFeatures.jsonrss}}
+            {{/if}}
+            {{#if config.specialFeatures.jsonrss}}
               <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
-            {{/config.specialFeatures.jsonrss}}
-            {{#config.specialFeatures.jsonforslack}}
+            {{/if}}
+            {{#if config.specialFeatures.jsonforslack}}
               <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}slack.json">Slack-JSON: {{meta.title}}</a></li>
-            {{/config.specialFeatures.jsonforslack}}
-            {{#config.specialFeatures.geojson}}
+            {{/if}}
+            {{#if config.specialFeatures.geojson}}
               <li><a type="application/vnd.geo+json" rel="alternate" href="{{config.absoluteUrlDirname}}geo.json">GeoJSON: {{meta.title}}</a></li>
-            {{/config.specialFeatures.geojson}}
-            {{#config.specialFeatures.kml}}
+            {{/if}}
+            {{#if config.specialFeatures.kml}}
               <li><a type="application/vnd.google-earth.kml+xml" rel="alternate" href="{{config.absoluteUrlDirname}}network.kml">Google Earth KML: {{meta.title}}</a></li>
-            {{/config.specialFeatures.kml}}
+            {{/if}}
           </ul>
         </section>
       </aside>
