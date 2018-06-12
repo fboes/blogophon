@@ -1,6 +1,6 @@
 {
   "name": "blogophon",
-  "version": "1.4.4",
+  "version": "1.5.0",
   "description": "A Static Site Generator supporting Markdown, responsive images, RSS and other RESTable files. Built with Node.js and minimal dependencies.",
   "main": "./bin/blogophon",
   "repository": {
