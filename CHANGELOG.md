@@ -3,6 +3,11 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Add SQL syntax highlighting in Markdown articles
+
+1.5.0
+-----
+
 * :bomb: Change template engine from Mustache to [Handlebars](https://handlebarsjs.com/)
 * :gift: Add `hreflang`-attribute to links leading to articles with different language
 * :gift: Improve code styling for Markdown code examples in blog posts
