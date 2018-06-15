@@ -1,7 +1,6 @@
 #<VirtualHost *:80>
 # See https://github.com/h5bp/server-configs-apache
 # ServerName {{config.domain}}
-# DocumentRoot /var/www; # Replace with actual doc root
 {{#if config.isHttps}}
   <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -11,15 +10,15 @@
 #</VirtualHost>
 
 #<VirtualHost *:443>
-# See https://github.com/h5bp/server-configs-apache
 # ServerName {{config.domain}}
-# DocumentRoot /var/www; # Replace with actual doc root
 
 # SSLEngine on
 # SSLCertificateFile      /etc/apache2/certificates/{{config.domain}}/cert.pem
 # SSLCertificateKeyFile   /etc/apache2/certificates/{{config.domain}}/privkey.pem
 # SSLCertificateChainFile /etc/apache2/certificates/{{config.domain}}/chain.pem
 {{/if}}
+
+# DocumentRoot /var/www; # Replace with actual doc root
 
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
