@@ -1,86 +1,76 @@
 'use strict';
 
+const assert = require('assert');
 const blogophonDate = require('../lib/models/blogophon-date');
 
-exports.basicTest = function basicTest(test) {
-  test.expect(10+10+12);
+describe('Blogophon Date', function() {
+  it('should convert English and German dates', function() {
+    const germanDate  = blogophonDate('2016-12-31', 'de');
+    const englishDate = blogophonDate('2016-12-31', 'en');
 
-  const germanDate  = blogophonDate('2016-12-31', 'de');
-  const englishDate = blogophonDate('2016-12-31', 'en');
+    assert.ok(germanDate);
+    assert.ok(germanDate.locale);
+    assert.ok(germanDate.iso);
+    assert.ok(germanDate.rfc);
+    assert.ok(germanDate.ics);
+    assert.ok(germanDate.icsDay);
+    assert.ok(germanDate.timestamp);
+    assert.ok(germanDate.year);
+    assert.ok(germanDate.month);
+    assert.ok(germanDate.day);
 
+    assert.ok(englishDate);
+    assert.ok(englishDate.locale);
+    assert.ok(englishDate.iso);
+    assert.ok(englishDate.rfc);
+    assert.ok(englishDate.ics);
+    assert.ok(englishDate.icsDay);
+    assert.ok(englishDate.timestamp);
+    assert.ok(englishDate.year);
+    assert.ok(englishDate.month);
+    assert.ok(englishDate.day);
 
-  test.ok(germanDate);
-  test.ok(germanDate.locale);
-  test.ok(germanDate.iso);
-  test.ok(germanDate.rfc);
-  test.ok(germanDate.ics);
-  test.ok(germanDate.icsDay);
-  test.ok(germanDate.timestamp);
-  test.ok(germanDate.year);
-  test.ok(germanDate.month);
-  test.ok(germanDate.day);
+    assert.ok(englishDate.locale !== germanDate.locale);
+    assert.equal(germanDate.iso, englishDate.iso);
+    assert.ok(germanDate.iso.match(/[+-]\d+:\d+$/), 'Proper timezone at the end of string');
+    assert.equal(germanDate.rfc, englishDate.rfc);
+    assert.ok(germanDate.rfc.match(/[+-]\d+$/), 'Proper timezone at the end of string');
+    assert.equal(germanDate.ics, englishDate.ics);
+    assert.ok(germanDate.ics.match(/^\d+T\d+.$/), 'String like 20060910T220000Z');
+    assert.ok(germanDate.icsDay.match(/^\d+$/), 'String like 20060910');
+    assert.equal(germanDate.year, '2016');
+    assert.equal(germanDate.month, '12');
+    assert.equal(germanDate.day, '31');
+    assert.equal(germanDate.timestamp, englishDate.timestamp);
 
-  test.ok(englishDate);
-  test.ok(englishDate.locale);
-  test.ok(englishDate.iso);
-  test.ok(englishDate.rfc);
-  test.ok(englishDate.ics);
-  test.ok(englishDate.icsDay);
-  test.ok(englishDate.timestamp);
-  test.ok(englishDate.year);
-  test.ok(englishDate.month);
-  test.ok(englishDate.day);
+    //console.log(englishDate);
+    //console.log(germanDate);
+  });
 
-  test.ok(englishDate.locale !== germanDate.locale);
-  test.equals(germanDate.iso, englishDate.iso);
-  test.ok(germanDate.iso.match(/[+-]\d+:\d+$/), 'Proper timezone at the end of string');
-  test.equals(germanDate.rfc, englishDate.rfc);
-  test.ok(germanDate.rfc.match(/[+-]\d+$/), 'Proper timezone at the end of string');
-  test.equals(germanDate.ics, englishDate.ics);
-  test.ok(germanDate.ics.match(/^\d+T\d+.$/), 'String like 20060910T220000Z');
-  test.ok(germanDate.icsDay.match(/^\d+$/), 'String like 20060910');
-  test.equals(germanDate.year, '2016');
-  test.equals(germanDate.month, '12');
-  test.equals(germanDate.day, '31');
-  test.equals(germanDate.timestamp, englishDate.timestamp);
+  it('moreTests', function() {
+    let germanDate  = blogophonDate('2016-01-01 17:59:00 +00:00', 'de');
 
-  //console.log(englishDate);
-  //console.log(germanDate);
+    assert.equal(germanDate.year, '2016');
+    assert.equal(germanDate.month, '01');
+    assert.equal(germanDate.day, '01');
 
-  test.done();
-};
+    //console.log(germanDate);
+  });
 
-exports.moreTests = function moreTests(test) {
-  test.expect(3);
+  it('exocticTimestamps', function() {
+    let germanDate;
+    germanDate = blogophonDate('2016-08-25T19:13:12+02:00', 'de');
 
-  let germanDate  = blogophonDate('2016-01-01 17:59:00 +00:00', 'de');
+    assert.equal(germanDate.year, '2016');
+    assert.equal(germanDate.month, '08');
+    assert.equal(germanDate.day, '25');
 
-  test.equals(germanDate.year, '2016');
-  test.equals(germanDate.month, '01');
-  test.equals(germanDate.day, '01');
+    germanDate = blogophonDate(new Date('2016-08-25T19:13:12+02:00'), 'de');
 
-  //console.log(germanDate);
+    assert.equal(germanDate.year, '2016');
+    assert.equal(germanDate.month, '08');
+    assert.equal(germanDate.day, '25');
 
-  test.done();
-};
-
-exports.exocticTimestamps = function exocticTimestamps(test) {
-  test.expect(6);
-
-  let germanDate;
-  germanDate = blogophonDate('2016-08-25T19:13:12+02:00', 'de');
-
-  test.equals(germanDate.year, '2016');
-  test.equals(germanDate.month, '08');
-  test.equals(germanDate.day, '25');
-
-  germanDate = blogophonDate(new Date('2016-08-25T19:13:12+02:00'), 'de');
-
-  test.equals(germanDate.year, '2016');
-  test.equals(germanDate.month, '08');
-  test.equals(germanDate.day, '25');
-
-  //console.log(germanDate);
-
-  test.done();
-};
+    //console.log(germanDate);
+  });
+});

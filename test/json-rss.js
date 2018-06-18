@@ -1,41 +1,40 @@
 'use strict';
 
+const assert = require('assert');
 const blogophonDate = require('../lib/models/blogophon-date');
 
-exports.testBasicProperties = function(test) {
-  test.expect(14);
+describe('JSON-RSS', function() {
+  it('should have basic properties', function() {
+    const config = require('../lib/config');
+    const pubDate = blogophonDate('2016-12-31', 'en');
 
-  const config = require('../lib/config');
-  const pubDate = blogophonDate('2016-12-31', 'en');
+    const item = {
+      htmlTeaser: 1,
+      meta: {
+        AbsoluteUrl: 2,
+        Title: 3,
+        Created: {
+          rfc: 4,
+          timestamp: 5
+        },
+        tags: [6, 7]
+      }
+    };
+    const jsonRss = require('../lib/models/json-rss')([item], pubDate, config);
 
-  const item = {
-    htmlTeaser: 1,
-    meta: {
-      AbsoluteUrl: 2,
-      Title: 3,
-      Created: {
-        rfc: 4,
-        timestamp: 5
-      },
-      tags: [6, 7]
-    }
-  };
-  const jsonRss = require('../lib/models/json-rss')([item], pubDate, config);
-
-  test.ok(jsonRss.version !== undefined);
-  test.ok(jsonRss.channel !== undefined);
-  test.ok(jsonRss.channel.title !== undefined);
-  test.ok(jsonRss.channel.link !== undefined);
-  test.ok(jsonRss.channel.description !== undefined);
-  test.ok(jsonRss.channel.language !== undefined);
-  test.equals(jsonRss.channel.lastBuildDateTs, 1483142400);
-  test.ok(jsonRss.channel.items[0] !== undefined);
-  test.ok(jsonRss.channel.items[0].title !== undefined);
-  test.ok(jsonRss.channel.items[0].link !== undefined);
-  test.ok(jsonRss.channel.items[0].description !== undefined);
-  test.ok(jsonRss.channel.items[0].pubDate !== undefined);
-  test.equals(jsonRss.channel.items[0].pubDate, 4);
-  test.equals(jsonRss.channel.items[0].pubDateTs, 5);
-
-  test.done();
-};
+    assert.ok(jsonRss.version !== undefined);
+    assert.ok(jsonRss.channel !== undefined);
+    assert.ok(jsonRss.channel.title !== undefined);
+    assert.ok(jsonRss.channel.link !== undefined);
+    assert.ok(jsonRss.channel.description !== undefined);
+    assert.ok(jsonRss.channel.language !== undefined);
+    assert.equal(jsonRss.channel.lastBuildDateTs, 1483142400);
+    assert.ok(jsonRss.channel.items[0] !== undefined);
+    assert.ok(jsonRss.channel.items[0].title !== undefined);
+    assert.ok(jsonRss.channel.items[0].link !== undefined);
+    assert.ok(jsonRss.channel.items[0].description !== undefined);
+    assert.ok(jsonRss.channel.items[0].pubDate !== undefined);
+    assert.equal(jsonRss.channel.items[0].pubDate, 4);
+    assert.equal(jsonRss.channel.items[0].pubDateTs, 5);
+  });
+});

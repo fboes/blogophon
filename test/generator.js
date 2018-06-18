@@ -1,13 +1,13 @@
 'use strict';
 
-exports.testCompilability = function(test) {
-  //test.expect(2);
+const assert = require('assert');
 
-  const generator = require('../lib/generator');
+describe('Generator', function() {
+  it('should test Compilability', function() {
+    const generator = require('../lib/generator');
 
-  test.throws(function() {
-    generator();
-  }, Error);
-
-  test.done();
-};
+    assert.throws(function() {
+      generator();
+    }, Error);
+  });
+});

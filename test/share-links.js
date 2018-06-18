@@ -1,73 +1,68 @@
 'use strict';
 
+const assert = require('assert');
 const shareLink = require('../lib/helpers/share-links');
 
-exports.testBasicProperties = function(test) {
-  test.expect(5);
+describe('Share-Links', function() {
+  it('should have basic properties', function() {
+    const share = shareLink(1, 2, 3, 4);
 
-  const share = shareLink(1, 2, 3, 4);
+    assert.ok(share.twitter);
+    assert.ok(share.facebook);
+    assert.ok(share.gplus);
+    assert.ok(share.whatsapp);
+    assert.ok(share.email);
+  });
 
-  test.ok(share.twitter);
-  test.ok(share.facebook);
-  test.ok(share.gplus);
-  test.ok(share.whatsapp);
-  test.ok(share.email);
+  it('should have basic properties', function() {
+    let testData = {
+      title: 'Gollum',
+      link: 'www.example.com',
+      description: 'Mordor',
+      siteName: 'MiddleEarth'
+    };
+    let share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
 
-  test.done();
-};
+    let testMatch = {
+      title: function(str) {
+        return str.match(new RegExp(testData.title));
+      },
+      link: function(str) {
+        return str.match(new RegExp(testData.link));
+      },
+      description: function(str) {
+        return str.match(new RegExp(testData.description));
+      },
+      siteName: function(str) {
+        return str.match(new RegExp(testData.siteName));
+      }
+    };
 
-exports.testBasicProperties = function(test) {
-  test.expect(19);
+    assert.ok(share.twitter);
+    assert.ok(testMatch.link(share.twitter));
+    assert.ok(testMatch.description(share.twitter));
 
-  let testData = {
-    title: 'Gollum',
-    link: 'www.example.com',
-    description: 'Mordor',
-    siteName: 'MiddleEarth'
-  };
-  let share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
+    assert.ok(share.facebook);
+    assert.ok(testMatch.link(share.facebook));
 
-  let testMatch = {
-    title: function(str) {
-      return str.match(new RegExp(testData.title));
-    },
-    link: function(str) {
-      return str.match(new RegExp(testData.link));
-    },
-    description: function(str) {
-      return str.match(new RegExp(testData.description));
-    },
-    siteName: function(str) {
-      return str.match(new RegExp(testData.siteName));
-    }
-  };
+    assert.ok(share.gplus);
+    assert.ok(testMatch.link(share.gplus));
 
-  test.ok(share.twitter);
-  test.ok(testMatch.link(share.twitter));
-  test.ok(testMatch.description(share.twitter));
+    assert.ok(share.whatsapp);
+    assert.ok(testMatch.link(share.whatsapp));
+    assert.ok(testMatch.title(share.whatsapp));
 
-  test.ok(share.facebook);
-  test.ok(testMatch.link(share.facebook));
+    assert.ok(share.email);
+    assert.ok(testMatch.link(share.email));
+    assert.ok(testMatch.title(share.whatsapp));
 
-  test.ok(share.gplus);
-  test.ok(testMatch.link(share.gplus));
+    assert.ok(share.wordpress);
+    assert.ok(testMatch.link(share.wordpress));
 
-  test.ok(share.whatsapp);
-  test.ok(testMatch.link(share.whatsapp));
-  test.ok(testMatch.title(share.whatsapp));
+    assert.ok(share.tumblr);
+    assert.ok(testMatch.link(share.tumblr));
 
-  test.ok(share.email);
-  test.ok(testMatch.link(share.email));
-  test.ok(testMatch.title(share.whatsapp));
-
-  test.ok(share.wordpress);
-  test.ok(testMatch.link(share.wordpress));
-
-  test.ok(share.tumblr);
-  test.ok(testMatch.link(share.tumblr));
-
-  test.ok(share.pocket);
-  test.ok(testMatch.link(share.pocket));
-
-  test.done();
-};
+    assert.ok(share.pocket);
+    assert.ok(testMatch.link(share.pocket));
+  });
+});

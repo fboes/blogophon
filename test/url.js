@@ -1,5 +1,6 @@
 'use strict';
 
+const assert    = require('assert');
 const Url       = require('../lib/helpers/url');
 const PostUrl   = require('../lib/helpers/post-url');
 const AuthorUrl = require('../lib/helpers/author-url');
@@ -7,109 +8,91 @@ const TagUrl    = require('../lib/helpers/tag-url');
 const IndexUrl  = require('../lib/helpers/index-url');
 
 
-exports.testExtender = function(test) {
-  test.expect(8);
+describe('URL', function() {
+  it('should test Extender', function() {
+    let url = Url('test');
 
-  let url = Url('test');
+    assert.ok(url.relativeUrl());
+    assert.ok(url.absoluteUrl());
+    assert.ok(url.filename());
+    assert.ok(url.dirname());
 
-  test.ok(url.relativeUrl());
-  test.ok(url.absoluteUrl());
-  test.ok(url.filename());
-  test.ok(url.dirname());
+    assert.ok(url.relativeUrl().match(/\/$/), 'No index.html at the end');
+    assert.ok(url.filename().match(/[/\\]index\.html$/));
+    assert.ok(!url.dirname().match(/[/\\]index\.html$/), 'No index.html at the end');
+    assert.ok(!url.dirname().match(/[/\\]$/), 'No trailing slash');
 
-  test.ok(url.relativeUrl().match(/\/$/), 'No index.html at the end');
-  test.ok(url.filename().match(/[/\\]index\.html$/));
-  test.ok(!url.dirname().match(/[/\\]index\.html$/), 'No index.html at the end');
-  test.ok(!url.dirname().match(/[/\\]$/), 'No trailing slash');
+    /*console.log([
+      url.relativeUrl(),
+      url.filename(),
+      url.dirname()
+    ]);*/
+  });
 
-  /*console.log([
-    url.relativeUrl(),
-    url.filename(),
-    url.dirname()
-  ]);*/
+  it('should test BasicTransformation', function() {
+    let url;
 
-  test.done();
-};
+    url = PostUrl('ich-und-du.md');
+    assert.ok(url.relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-und-du(\/|\\)index\.html$/), 'Filename matching');
 
-exports.testBasicTransformation = function(test) {
-  test.expect(9+3);
+    url = IndexUrl('Tag');
+    assert.ok(url.relativeUrl().match(/^\S*\/tag$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/tag$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)tag$/));
 
-  let url;
+    url = TagUrl('Tag');
+    assert.ok(url.relativeUrl().match(/^\S*\/tagged\/tag\/$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/tagged\/tag\/$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)tag(\/|\\)index\.html$/));
 
-  url = PostUrl('ich-und-du.md');
-  test.ok(url.relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/posts\/ich-und-du\/$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-und-du(\/|\\)index\.html$/), 'Filename matching');
+    url = AuthorUrl('Paul Wischwedel');
+    assert.ok(url.relativeUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)authored-by(\/|\\)paul-wischwedel(\/|\\)index\.html$/));
+  });
 
-  url = IndexUrl('Tag');
-  test.ok(url.relativeUrl().match(/^\S*\/tag$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/tag$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)tag$/));
+  it('should test SpecialTransformation', function() {
+    let url;
 
-  url = TagUrl('Tag');
-  test.ok(url.relativeUrl().match(/^\S*\/tagged\/tag\/$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/tagged\/tag\/$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)tag(\/|\\)index\.html$/));
+    url = PostUrl('Ich-ünd-Dü.md');
+    assert.ok(url.relativeUrl().match(/^\S*\/posts\/ich-uend-due\/$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/posts\/ich-uend-due\/$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-uend-due(\/|\\)index\.html$/), 'Filename matching Umlauts');
 
-  url = AuthorUrl('Paul Wischwedel');
-  test.ok(url.relativeUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/authored-by\/paul-wischwedel\/$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)authored-by(\/|\\)paul-wischwedel(\/|\\)index\.html$/));
+    url = TagUrl('Ich bin ein merkwürdiges Tag');
+    assert.ok(url.relativeUrl().match(/^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)ich-bin-ein-merkwuerdiges-tag(\/|\\)index\.html$/));
 
-  test.done();
-};
+    url = IndexUrl('/Tag');
+    assert.ok(url.relativeUrl().match(/^\S*\/tag$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/tag$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)tag$/));
 
-exports.testSpecialTransformation = function(test) {
-  test.expect(12);
+    url = IndexUrl('////Tag');
+    assert.ok(url.relativeUrl().match(/^\S*\/tag$/));
+    assert.ok(url.absoluteUrl().match(/^\S*\/tag$/));
+    assert.ok(url.filename().match(/^\S+(\/|\\)tag$/));
+  });
 
-  let url;
+  it('should test Posts', function() {
+    assert.ok(PostUrl('users/posts/ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+    assert.ok(PostUrl('/users/posts/ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+  });
 
-  url = PostUrl('Ich-ünd-Dü.md');
-  test.ok(url.relativeUrl().match(/^\S*\/posts\/ich-uend-due\/$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/posts\/ich-uend-due\/$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-uend-due(\/|\\)index\.html$/), 'Filename matching Umlauts');
+  it('should test EmptyTransformation', function() {
+    assert.strictEqual(PostUrl(null).relativeUrl(), null);
+    assert.strictEqual(PostUrl(null).absoluteUrl(), null);
+    assert.strictEqual(PostUrl(null).filename(), null);
 
-  url = TagUrl('Ich bin ein merkwürdiges Tag');
-  test.ok(url.relativeUrl().match(/^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)tagged(\/|\\)ich-bin-ein-merkwuerdiges-tag(\/|\\)index\.html$/));
+    assert.strictEqual(IndexUrl(null).relativeUrl(), null);
+    assert.strictEqual(IndexUrl(null).absoluteUrl(), null);
+    assert.strictEqual(IndexUrl(null).filename(), null);
 
-  url = IndexUrl('/Tag');
-  test.ok(url.relativeUrl().match(/^\S*\/tag$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/tag$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)tag$/));
-
-  url = IndexUrl('////Tag');
-  test.ok(url.relativeUrl().match(/^\S*\/tag$/));
-  test.ok(url.absoluteUrl().match(/^\S*\/tag$/));
-  test.ok(url.filename().match(/^\S+(\/|\\)tag$/));
-
-  test.done();
-};
-
-exports.testPosts = function(test) {
-  test.expect(2);
-
-  test.ok(PostUrl('users/posts/ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
-  test.ok(PostUrl('/users/posts/ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
-
-  test.done();
-};
-
-exports.testEmptyTransformation = function(test) {
-  test.expect(9);
-
-  test.strictEqual(PostUrl(null).relativeUrl(), null);
-  test.strictEqual(PostUrl(null).absoluteUrl(), null);
-  test.strictEqual(PostUrl(null).filename(), null);
-
-  test.strictEqual(IndexUrl(null).relativeUrl(), null);
-  test.strictEqual(IndexUrl(null).absoluteUrl(), null);
-  test.strictEqual(IndexUrl(null).filename(), null);
-
-  test.strictEqual(TagUrl(null).relativeUrl(), null);
-  test.strictEqual(TagUrl(null).absoluteUrl(), null);
-  test.strictEqual(TagUrl(null).filename(), null);
-
-  test.done();
-};
+    assert.strictEqual(TagUrl(null).relativeUrl(), null);
+    assert.strictEqual(TagUrl(null).absoluteUrl(), null);
+    assert.strictEqual(TagUrl(null).filename(), null);
+  });
+});

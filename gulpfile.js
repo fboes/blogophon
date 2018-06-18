@@ -11,7 +11,7 @@ let onError = function() {
 
 // Include Our Plugins
 let eslint     = require('gulp-eslint');
-let nodeunit   = require('gulp-nodeunit');
+let mocha      = require('gulp-mocha');
 let gls        = require('gulp-live-server');
 let plumber    = require('gulp-plumber');
 let sass       = require('gulp-sass');
@@ -38,11 +38,11 @@ gulp.task('eslint', function() {
 });
 
 // Node Unit
-gulp.task('nodeunit', function() {
-  return gulp.src(pkg.directories.test + '/**/*.js')
+gulp.task('mocha', function() {
+  return gulp.src(pkg.directories.test + '/**/*.js', {read: false})
     .pipe(plumber({errorHandler: onError}))
-    .pipe(nodeunit({
-      reporter: 'minimal'
+    .pipe(mocha({
+      reporter: 'dot'
     }))
   ;
 });
@@ -121,6 +121,6 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('test',    ['eslint', 'nodeunit']);
+gulp.task('test',    ['eslint', 'mocha']);
 gulp.task('build',   ['build-js', 'build-css']);
 gulp.task('default', ['serve', 'watch']);

@@ -1,11 +1,11 @@
 'use strict';
 
-exports.testGeneralFunctionality = function(test) {
-  test.expect(1);
+const assert = require('assert');
 
-  const index = require('../lib/blogophon-index');
+describe('Blogophon Index', function() {
+  it('should test GeneralFunctionality', function() {
+    const index = require('../lib/blogophon-index');
 
-  test.ok(index(), 'Index does compile');
-
-  test.done();
-};
+    assert.ok(index(), 'Index does compile');
+  });
+});

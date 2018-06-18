@@ -1,19 +1,19 @@
 'use strict';
 
-exports.testTranslations = function(test) {
-  test.expect(3);
+const assert = require('assert');
 
-  const translations = require('../lib/helpers/translations');
+describe('Translations', function() {
+  it('should test Translations', function() {
+    const translations = require('../lib/helpers/translations');
 
-  test.throws(function() {
-    translations('xx');
-  }, Error);
+    assert.throws(function() {
+      translations('xx');
+    }, Error);
 
-  // Fallback on unknown string
-  test.equal(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');
+    // Fallback on unknown string
+    assert.equal(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');
 
-  // No fallback on known string
-  test.ok(translations('ru').getString('Home') !== 'Home');
-
-  test.done();
-};
+    // No fallback on known string
+    assert.ok(translations('ru').getString('Home') !== 'Home');
+  });
+});

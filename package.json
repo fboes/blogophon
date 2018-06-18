@@ -11,7 +11,7 @@
     "start": "node ./bin/blogophon",
     "generate": "node ./bin/blogophon-generate",
     "precommit": "npm test",
-    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && nodeunit test --reporter minimal && npm outdated"
+    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && npm outdated"
   },
   "homepage": "https://github.com/fboes/blogophon",
   "bugs": {
@@ -33,7 +33,7 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.0",
     "gulp-live-server": "0.0.31",
-    "gulp-nodeunit": "0.1.0",
+    "gulp-mocha": "^6.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^7.0.0",
     "gulp-rename": "^1.2.3",
@@ -41,7 +41,7 @@
     "gulp-sass": "^4.0.0",
     "gulp-uglify": "^3.0.0",
     "husky": "^0.14.3",
-    "nodeunit": "^0.11.0"
+    "mocha": "^5.2.0"
   },
   "directories": {
     "doc": "docs",
@@ -70,7 +70,8 @@
   },
   "eslintConfig": {
     "env": {
-      "node": true
+      "node": true,
+      "mocha": true
     },
     "parserOptions": {
       "ecmaVersion": 6

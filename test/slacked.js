@@ -1,10 +1,9 @@
 'use strict';
 
+const assert = require('assert');
 const blogophonDate = require('../lib/models/blogophon-date');
 
-exports.testBasicProperties = function(test) {
-  test.expect(7);
-
+describe('Slacked', function() {
   const config = require('../lib/config');
   const pubDate = blogophonDate('2016-12-31', 'en');
 
@@ -22,13 +21,25 @@ exports.testBasicProperties = function(test) {
 
   //console.log(slacked);
 
-  test.ok(slacked.text !== undefined);
-  test.ok(slacked.attachments !== undefined);
-  test.ok(slacked.attachments[0] !== undefined);
-  test.ok(slacked.attachments[0].title !== undefined);
-  test.ok(slacked.attachments[0].title_link !== undefined);
-  test.ok(slacked.attachments[0].text !== undefined);
-  test.ok(slacked.attachments[0].ts !== undefined);
-
-  test.done();
-};
+  it('should have a text', function() {
+    assert.equal(true, slacked.text !== undefined);
+  });
+  it('should have attachments', function() {
+    assert.equal(true, slacked.attachments !== undefined);
+  });
+  it('should have a first attachment', function() {
+    assert.equal(true, slacked.attachments[0] !== undefined);
+  });
+  it('should have a title for the first attachment', function() {
+    assert.equal(true, slacked.attachments[0].title !== undefined);
+  });
+  it('should have a title_link for the first attachment', function() {
+    assert.equal(true, slacked.attachments[0].title_link !== undefined);
+  });
+  it('should have a text for the first attachment', function() {
+    assert.equal(true, slacked.attachments[0].text !== undefined);
+  });
+  it('should have a timestamp for the first attachment', function() {
+    assert.equal(true, slacked.attachments[0].ts !== undefined);
+  });
+});

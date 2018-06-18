@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :bomb: Switch unit tests to use [Mocha](https://mochajs.org/) instead of Nodeunit
 * :gift: Add SQL syntax highlighting in Markdown articles
 
 1.5.0

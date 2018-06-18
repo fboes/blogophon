@@ -1,19 +1,19 @@
 'use strict';
 
-exports.testBasicProperties = function(test) {
-  test.expect(6);
+const assert = require('assert');
 
-  const config = require('../lib/config');
-  const manifest = require('../lib/models/manifest')(config);
+describe('Manifest', function() {
+  it('should have basic properties', function() {
+    const config = require('../lib/config');
+    const manifest = require('../lib/models/manifest')(config);
 
-  // console.log(manifest);
+    // console.log(manifest);
 
-  test.ok(manifest.lang !== undefined,        'Language is defined');
-  test.ok(manifest.name !== undefined,        'Name is defined');
-  test.ok(manifest.description !== undefined, 'Description is defined');
-  test.ok(manifest.theme_color !== undefined, 'Theme color is defined');
-  test.ok(manifest.start_url !== undefined,   'Start URL is defined');
-  test.ok(manifest.icons !== undefined,   'Icons are defined');
-
-  test.done();
-};
+    assert.ok(manifest.lang !== undefined,        'Language is defined');
+    assert.ok(manifest.name !== undefined,        'Name is defined');
+    assert.ok(manifest.description !== undefined, 'Description is defined');
+    assert.ok(manifest.theme_color !== undefined, 'Theme color is defined');
+    assert.ok(manifest.start_url !== undefined,   'Start URL is defined');
+    assert.ok(manifest.icons !== undefined,   'Icons are defined');
+  });
+});
