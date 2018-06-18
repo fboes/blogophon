@@ -4,7 +4,7 @@ const assert = require('assert');
 const config = require('../lib/config');
 
 describe('Config', function() {
-  it('should test ConfigProperties', function() {
+  it('should have all required properties', function() {
     assert.ok(config.locale,      'config.locale is present');
     assert.ok(config.locale.language,   'config.locale.language is present');
     assert.ok(config.locale.direction,  'config.locale.direction is present');
