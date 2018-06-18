@@ -4,24 +4,24 @@ const assert = require('assert');
 const blogophonDate = require('../lib/models/blogophon-date');
 
 describe('JSON-RSS', function() {
+  const config = require('../lib/config');
+  const pubDate = blogophonDate('2016-12-31', 'en');
+
+  const item = {
+    htmlTeaser: 1,
+    meta: {
+      AbsoluteUrl: 2,
+      Title: 3,
+      Created: {
+        rfc: 4,
+        timestamp: 5
+      },
+      tags: [6, 7]
+    }
+  };
+  const jsonRss = require('../lib/models/json-rss')([item], pubDate, config);
+
   it('should have basic properties', function() {
-    const config = require('../lib/config');
-    const pubDate = blogophonDate('2016-12-31', 'en');
-
-    const item = {
-      htmlTeaser: 1,
-      meta: {
-        AbsoluteUrl: 2,
-        Title: 3,
-        Created: {
-          rfc: 4,
-          timestamp: 5
-        },
-        tags: [6, 7]
-      }
-    };
-    const jsonRss = require('../lib/models/json-rss')([item], pubDate, config);
-
     assert.ok(jsonRss.version !== undefined);
     assert.ok(jsonRss.channel !== undefined);
     assert.ok(jsonRss.channel.title !== undefined);

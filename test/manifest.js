@@ -3,12 +3,11 @@
 const assert = require('assert');
 
 describe('Manifest', function() {
+  const config = require('../lib/config');
+  const manifest = require('../lib/models/manifest')(config);
+  // console.log(manifest);
+
   it('should have basic properties', function() {
-    const config = require('../lib/config');
-    const manifest = require('../lib/models/manifest')(config);
-
-    // console.log(manifest);
-
     assert.ok(manifest.lang !== undefined,        'Language is defined');
     assert.ok(manifest.name !== undefined,        'Name is defined');
     assert.ok(manifest.description !== undefined, 'Description is defined');

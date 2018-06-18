@@ -4,7 +4,7 @@ const assert = require('assert');
 const hashes = require('../lib/models/hashes')('test.json');
 
 describe('Hashes', function() {
-  it('should test HashesFunctionality', function() {
+  it('should have hashes', function() {
     assert.ok(hashes, 'Hashes loaded on empty file');
     assert.ok(!hashes.matchesHash('Test Key', 'Test Hash'), 'No hash present');
     assert.ok(hashes.update('Test Key', 'Test Hash'),       'Setting hash');

@@ -4,14 +4,16 @@ const assert = require('assert');
 const emojiConvert = require('../lib/helpers/emoji-convert');
 
 describe('Emoji Convert', function() {
+  let convertedHtml;
 
-  it('should test Basic', function() {
-    let convertedHtml = emojiConvert('I am HTML');
+  it('should not convert basic HTML', function() {
+    convertedHtml = emojiConvert('I am HTML');
     assert.equal(convertedHtml, 'I am HTML');
 
     convertedHtml = emojiConvert('<strong>I am HTML</strong>');
     assert.equal(convertedHtml, '<strong>I am HTML</strong>');
-
+  });
+  it('should convert simple smilies', function() {
     convertedHtml = emojiConvert('<strong>I am :)</strong>', true);
     assert.ok(!convertedHtml.match(/&#[a-zA-Z0-9]+;/));
     assert.notEqual(convertedHtml, '<strong>I am :)</strong>');
@@ -23,12 +25,11 @@ describe('Emoji Convert', function() {
     convertedHtml = emojiConvert('8&lt;');
     assert.ok(convertedHtml.match(/&#[a-zA-Z0-9]+;/));
     assert.notEqual(convertedHtml, '8&lt;');
-
     //console.log(convertedHtml);
   });
 
-  it('should test HtmlEntities', function() {
-    let convertedHtml = emojiConvert('<strong>I am :)</strong>');
+  it('should add an extra <span>', function() {
+    convertedHtml = emojiConvert('<strong>I am :)</strong>');
     assert.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
     assert.ok(convertedHtml.match(/&#[a-zA-Z0-9]+;/));
     assert.equal(convertedHtml, '<strong>I am <span class="emoji emoji--1f60a" title=":)">&#x1F60A;</span></strong>');
@@ -42,8 +43,9 @@ describe('Emoji Convert', function() {
     assert.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
     assert.ok(convertedHtml.match(/&#[a-zA-Z0-9]+;/));
     assert.equal(convertedHtml, '<strong>I am <span class="emoji emoji--1f635" title="xO">&#x1F635;</span></strong>');
+  });
 
-    // With noses
+  it('should also work with smilies with noses', function() {
     convertedHtml = emojiConvert('<strong>I am :-)</strong>');
     assert.ok(convertedHtml.match(/<span class="emoji emoji--[\da-z]+"/), 'Extra HTML for Emojis present');
     assert.ok(convertedHtml.match(/&#[a-zA-Z0-9]+;/));

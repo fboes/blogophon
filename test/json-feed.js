@@ -4,27 +4,26 @@ const assert = require('assert');
 const blogophonDate = require('../lib/models/blogophon-date');
 
 describe('JsonFeed', function() {
+  const config = require('../lib/config');
+  const pubDate = blogophonDate('2016-12-31', 'en');
+
+  const item = {
+    htmlTeaser: 1,
+    html: 33,
+    meta: {
+      AbsoluteUrl: 2,
+      Title: 3,
+      Created: blogophonDate('2017-05-18'),
+      Modified: blogophonDate('2016-05-19'),
+      tags: [6, 7],
+      Description: 8,
+      Language: 'en'
+    }
+  };
+  const jsonFeed = require('../lib/models/json-feed')([item], pubDate, config, 'title', 'url');
+  //console.log(jsonFeed);
+
   it('should have basic properties', function() {
-    const config = require('../lib/config');
-    const pubDate = blogophonDate('2016-12-31', 'en');
-
-    const item = {
-      htmlTeaser: 1,
-      html: 33,
-      meta: {
-        AbsoluteUrl: 2,
-        Title: 3,
-        Created: blogophonDate('2017-05-18'),
-        Modified: blogophonDate('2016-05-19'),
-        tags: [6, 7],
-        Description: 8,
-        Language: 'en'
-      }
-    };
-    const jsonFeed = require('../lib/models/json-feed')([item], pubDate, config, 'title', 'url');
-
-    //console.log(jsonFeed);
-
     assert.ok(jsonFeed.version !== undefined);
     assert.ok(jsonFeed.title !== undefined);
     assert.ok(jsonFeed.home_page_url !== undefined);

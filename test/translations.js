@@ -3,7 +3,7 @@
 const assert = require('assert');
 
 describe('Translations', function() {
-  it('should test Translations', function() {
+  it('should translate stuff', function() {
     const translations = require('../lib/helpers/translations');
 
     assert.throws(function() {
