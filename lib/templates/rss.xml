@@ -21,7 +21,7 @@
         <description><![CDATA[{{{safeHtmlTeaser}}}]]></description>
         <link>{{meta.AbsoluteLink}}?utm_source=newsfeed</link>
         <pubDate>{{meta.Created.rfc}}</pubDate>
-        <content:encoded><![CDATA[{{>contentHtml config=../config}}]]></content:encoded>
+        <content:encoded><![CDATA[{{>contentHtml config=../config}}{{#unless ../config.specialFeatures.facebookinstantarticles}}{{{trackReplace ../config.htmlAnalyticsFeed meta.AbsoluteLink meta.Title}}}{{/unless}}]]></content:encoded>
         <author>{{meta.AuthorEmail}} ({{meta.AuthorName}})</author>
         <guid isPermaLink="false">{{meta.Id}}</guid>
         {{#each meta.Tags}}
