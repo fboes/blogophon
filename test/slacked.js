@@ -1,11 +1,10 @@
 'use strict';
 
 const assert = require('assert');
-const blogophonDate = require('../lib/models/blogophon-date');
 
 describe('Slacked', function() {
   const config = require('../lib/config');
-  const pubDate = blogophonDate('2016-12-31', 'en');
+  const pubDate = '2016-12-31';
 
   const item = {
     htmlTeaser: 1,

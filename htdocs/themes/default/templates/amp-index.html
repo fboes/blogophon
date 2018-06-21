@@ -39,9 +39,9 @@
               <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
 
               <header>
-                <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
-                {{#if meta.Modified.locale}}
-                  <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time>
+                <time datetime="{{dateFormat meta.Created 'iso'}}" itemprop="datePublished" class="date">{{dateFormat meta.Created 'locale' meta.Language}}</time>
+                {{#if meta.Modified}}
+                  <time datetime="{{dateFormat meta.Modified 'iso'}}" itemprop="dateModified" class="modified">{{dateFormat meta.Modified 'locale' meta.Language}}</time>
                 {{/if}}
                 <h2 itemprop="name headline"><a href="{{meta.AbsoluteUrlAmp}}">{{meta.Title}}</a></h2>
               </header>

@@ -47,6 +47,8 @@ Keep in mind that every property in the article's [YAML frontmatter](markdown.md
 
 There is also a Handlebars `config` variable, which will contain all settings from your `user/config.json`.
 
+Last but not least have a look at [`lib/helpers/blogophon-handlebars-quoters.js`](../lib/helpers/blogophon-handlebars-quoters.js) on what (block) helpers are available for you to use.
+
 ---
 
 Return to [table of contents](README.md).

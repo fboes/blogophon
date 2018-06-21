@@ -9,9 +9,7 @@ describe('GeoJson', function() {
     meta: {
       AbsoluteUrl: 2,
       Title: 3,
-      Created: {
-        rfc: 4
-      },
+      Created: new Date('2017-05-18'),
       tags: [6, 7],
       Longitude: 8,
       Latitude: 9

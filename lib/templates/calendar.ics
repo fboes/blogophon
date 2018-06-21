@@ -7,8 +7,8 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 {{#each index}}
 BEGIN:VEVENT
-DTSTART;VALUE=DATE:{{{meta.Created.icsDay}}}
-DTEND;VALUE=DATE:{{{meta.Created.icsDay}}}
+DTSTART;VALUE=DATE:{{{dateFormat meta.Created 'icsDay'}}}
+DTEND;VALUE=DATE:{{{dateFormat meta.Created 'icsDay'}}}
 URL:{{#icsQuote}}{{{meta.AbsoluteLink}}}{{/icsQuote}}
 SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
 DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}

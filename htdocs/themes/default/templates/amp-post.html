@@ -36,7 +36,7 @@
           <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
           <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
           <header>
-            <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date">{{meta.Created.locale}}</time>
+            <time datetime="{{dateFormat meta.Created 'iso'}}" itemprop="datePublished" class="date">{{dateFormat meta.Created 'locale' meta.Language}}</time>
             <h1 itemprop="name headline">{{meta.Title}}</h1>
           </header>
           <div itemprop="articleBody">
@@ -46,8 +46,8 @@
             {{/if}}
           </div>
           <footer class="meta">
-            {{#if meta.Modified.locale}}
-              <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{meta.Modified.iso}}" itemprop="dateModified" class="modified">{{meta.Modified.locale}}</time></p>
+            {{#if meta.Modified}}
+              <p>{{#i18n}}Last modified{{/i18n}} <time datetime="{{dateFormat meta.Modified 'iso'}}" itemprop="dateModified" class="modified">{{dateFormat meta.Modified 'locale' meta.Language}}</time></p>
             {{/if}}
             {{#if meta.Tags}}
               <span class="tags">
