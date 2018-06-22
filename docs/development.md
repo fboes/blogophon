@@ -49,6 +49,21 @@ There is also a Handlebars `config` variable, which will contain all settings fr
 
 Last but not least have a look at [`lib/helpers/blogophon-handlebars-quoters.js`](../lib/helpers/blogophon-handlebars-quoters.js) on what (block) helpers are available for you to use.
 
+```html
+<!-- Translate string -->
+{{#i18n}}All tags{{/i18n}}
+
+<!-- output meta.Created as ISO 8601 formatted date -->
+{{dateFormat meta.Created 'iso'}}
+
+<!-- output meta.Created as date formatted in given locales standard format -->
+{{dateFormat meta.Created 'locale' meta.Language}}
+
+<!-- Replace %url and %title in config.htmlAnalyticsFeed with meta.AbsoluteLink & meta.Title -->
+{{{trackReplace config.htmlAnalyticsFeed meta.AbsoluteLink meta.Title}}}
+
+```
+
 ---
 
 Return to [table of contents](README.md).
