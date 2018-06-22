@@ -81,7 +81,7 @@
 
                 <header>
                   <time datetime="{{dateFormat meta.Created 'iso'}}" itemprop="datePublished" class="date dt-published">{{dateFormat meta.Created 'locale' meta.Language}}</time>
-                  {{#if meta.Modified.locale}}
+                  {{#if meta.Modified}}
                     <time datetime="{{dateFormat meta.Modified 'iso'}}" itemprop="dateModified" class="modified dt-updated">{{dateFormat meta.Modified 'locale' meta.Language}}</time>
                   {{/if}}
                   <h2>
