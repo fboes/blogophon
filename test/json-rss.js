@@ -32,7 +32,7 @@ describe('JSON-RSS', function() {
 
   it('should have date properties', function() {
     assert.ok(jsonRss.channel.items[0].pubDate !== undefined);
-    assert.equal(jsonRss.channel.items[0].pubDate, 'Sat, 31 Dec 2016 01:00:00 +0100');
+    assert.ok(jsonRss.channel.items[0].pubDate.match(/Sat, 31 Dec 2016/));
     assert.equal(jsonRss.channel.items[0].pubDateTs, 1483142400);
   });
 });
