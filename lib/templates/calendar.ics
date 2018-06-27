@@ -2,7 +2,7 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//3960.org//BLOGOPHON//DE
 X-WR-CALNAME;CHARSET=UTF-8:{{#icsQuote}}{{{config.name}}} | {{{title}}}{{/icsQuote}}
-X-WR-TIMEZONE;VALUE=TEXT:Europe/Berlin
+X-WR-TIMEZONE;VALUE=TEXT:{{#icsQuote}}{{{config.timeZone}}}{{/icsQuote}}
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 {{#each index}}
