@@ -74,7 +74,7 @@
             {{else}}
               <link itemprop="image" href="{{../config.ogImage}}" />
             {{/if}}
-            <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
+            {{#ifEquals meta.Schema 'http://schema.org/BlogPosting'}}<meta itemprop="wordCount" content="{{meta.Wordcount}}" />{{/ifEquals}}
 
             <header>
               <time datetime="{{meta.Created.iso}}" itemprop="datePublished" class="date dt-published">{{meta.Created.locale}}</time>
@@ -84,7 +84,7 @@
                 </a>
               </h1>
             </header>
-            <div itemprop="articleBody" class="e-content">
+            <div{{#ifEquals meta.Schema 'http://schema.org/BlogPosting'}} itemprop="articleBody"{{/ifEquals}} class="e-content">
               {{{html}}}
 
               {{#if meta.RatingObj}}
