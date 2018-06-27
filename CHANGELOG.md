@@ -5,9 +5,11 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 
 * :bomb: Move timestamp conversion into templates, freeing models of converted timestamps
 * :bomb: Switch unit tests to use [Mocha](https://mochajs.org/) instead of Nodeunit
+* :pill: Fix timezone for ICS files
 * :gift: Add tracking pixel to newsfeeds, with `%url` and `%title` as replacements
 * :gift: Add SQL syntax highlighting in Markdown articles
 * :gift: Add more Handlebar helpers like `asciify` and `niceShorten`
+* :gift: Fix schema.org recipes by removing some properties by adding `ifEquals` Handlebars helper
 
 1.5.0
 -----

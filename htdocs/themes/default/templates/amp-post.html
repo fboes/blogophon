@@ -33,13 +33,13 @@
           {{else}}
             <link itemprop="image" href="{{../config.ogImage}}" />
           {{/if}}
-          <meta itemprop="wordCount" content="{{meta.Wordcount}}" />
+          {{#ifEquals meta.Schema 'http://schema.org/BlogPosting'}}<meta itemprop="wordCount" content="{{meta.Wordcount}}" />{{/ifEquals}}
           <a href="{{meta.AbsoluteUrl}}" title="{{meta.Title}}" itemprop="url mainEntityOfPage" class="permalink u-url">{{#i18n}}Permalink{{/i18n}}</a>
           <header>
             <time datetime="{{dateFormat meta.Created 'iso'}}" itemprop="datePublished" class="date">{{dateFormat meta.Created 'locale' meta.Language}}</time>
             <h1 itemprop="name headline">{{meta.Title}}</h1>
           </header>
-          <div itemprop="articleBody">
+          <div{{#ifEquals meta.Schema 'http://schema.org/BlogPosting'}} itemprop="articleBody"{{/ifEquals}}>
             {{{ampHtml}}}
             {{#if meta.hasExternalLink}}
               <p><a href="{{meta.Link}}">{{#i18n}}Go to website…{{/i18n}}</a></p>
