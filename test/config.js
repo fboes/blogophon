@@ -22,7 +22,6 @@ describe('Config', function() {
     assert.ok(config.htdocs.author, 'config.htdocs.author is present');
   });
   it('should have time properties', function() {
-    console.log(config);
     assert.ok(config.timeZone,      'config.timeZone is present');
   });
 });
