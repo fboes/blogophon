@@ -24,4 +24,7 @@ describe('Config', function() {
   it('should have time properties', function() {
     assert.ok(config.timeZone,      'config.timeZone is present');
   });
+  it('should have a Blogophon version string', function() {
+    assert.ok(config.generator,     'config.generator is present');
+  });
 });
