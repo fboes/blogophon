@@ -31,7 +31,7 @@
     "autoprefixer": "^8.6.1",
     "beepbeep": "^1.2.2",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^4.0.0",
+    "gulp-eslint": "^5.0.0",
     "gulp-live-server": "0.0.31",
     "gulp-mocha": "^6.0.0",
     "gulp-plumber": "^1.1.0",
