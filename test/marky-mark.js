@@ -169,10 +169,10 @@ describe('MarkyMark', function() {
     //console.log(m);
 
     assert.ok(m);
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\/\//));
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>namespace<\/\1>/));
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$classname<\/\1>/));
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$foo<\/\1>/));
+    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\/\//g));
+    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>namespace<\/\1>/g));
+    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$classname<\/\1>/g));
+    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$foo<\/\1>/g));
   });
 
   it('should do more code highlighting for Shell / Bash', function() {
@@ -181,7 +181,7 @@ describe('MarkyMark', function() {
     m = markyMark(x);
     //console.log(m);
     assert.ok(m, 'Got output');
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
+    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length > 0, 'Markup added');
     assert.ok(m.match(/<u>#/), 'Comments found');
 
     x = '<pre><code class="lang-bash">#!/bin/bash\nset -e\ncd `dirname $0`/..\nif [ ! -e build/config.sh ]; then\n  cp build/_config.sh build/config.sh\nfi\nsource build/config.sh\n\nif [ &quot;$LOCAL_DB_HOST&quot; ]; then\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;CREATE DATABASE IF NOT EXISTS $LOCAL_DB_DB&quot;\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;GRANT ALL ON $LOCAL_DB_DB.* TO \'$LOCAL_DB_USR\'@\'localhost\' IDENTIFIED BY \'$LOCAL_DB_PWD\'&quot;\nfi\nif [ -f build/mysql/dbdump.sql ]; then\n  build/import-dbdump.sh\nfi\n\nif [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32mDirectory access\\x1B[m ===&quot;\n  echo &quot;&quot;\nfi\n\nfunction make_writable_directory {\n  mkdir -p $1 && chmod -R ugo+rwX $1\n  if [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n    echo &quot;semanage fcontext -a -t httpd_sys_rw_content_t &quot;$LOCAL_DIRECTORY/$1(/.*)?&quot;&quot;\n  fi\n}\n\n# mkdir -p tmp\n# make_writable_directory htdocs/files\n#[ -h TARGET ] || ln -s SOURCE TARGET\n#[ -f TARGET ] || cp SOURCE TARGET\n\nif [ ! -d /vagrant ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \x1B[32mApache2 vhost config\x1B[m ===&quot;\n  echo &quot;&quot;\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g&quot; build/apache/macro-broilerplate.conf\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g;s#localhost#$LOCAL_HOST#g&quot; build/apache/httpd-vhost.conf\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32m/etc/hosts\\x1B[m === &quot;\n  echo &quot;&quot;\n  echo &quot;127.0.0.1    $LOCAL_HOST&quot;\n  echo &quot;"\n  [ -d node_modules ] || npm install\nelse\n  [ -d node_modules ] || sudo npm install --no-bin-links\nfi</code></pre>';
@@ -189,7 +189,7 @@ describe('MarkyMark', function() {
     m = markyMark(x);
     //console.log(m);
     assert.ok(m, 'Got output');
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
+    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length > 0, 'Markup added');
     assert.ok(m.match(/<u>#/), 'Comments found');
   });
 
@@ -257,7 +257,27 @@ describe('MarkyMark', function() {
     m = markyMark(x);
     //console.log(m);
     assert.ok(m, 'Got output');
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/), 'Markup added');
+    assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
+  });
+
+  it('should do code highlighting for SQL', function() {
+    let m, x = `<pre><code class="lang-sql">SELECT
+  CONCAT(
+    &quot;UPDATE articles_prices SET price = &quot;,
+    IF(personal_offers.personal_offer = 0, products.products_price, personal_offers.personal_offer),
+    &quot; WHERE articles_prices.ean = &quot;,
+    QUOTE(REPLACE(products.products_model,' ','-')),
+    &quot;;&quot;
+  ) AS '#query'
+  FROM personal_offers
+  JOIN products ON products.id = personal_offers.products_id
+  WHERE personal_offers.type = 1
+;</code></pre>`;
+
+    m = markyMark(x);
+    //console.log(m);
+    assert.ok(m, 'Got output');
+    assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 24, 'Markup added');
   });
 
   it('should convert ASCII art to Emojis', function() {
