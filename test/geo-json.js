@@ -3,7 +3,7 @@
 const assert = require('assert');
 
 describe('GeoJson', function() {
-  const config = require('../lib/config');
+  const config = require('../lib/config')(__dirname);
   const item = {
     htmlTeaser: 1,
     meta: {

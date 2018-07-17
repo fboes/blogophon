@@ -3,7 +3,7 @@
 const assert = require('assert');
 
 describe('Manifest', function() {
-  const config = require('../lib/config');
+  const config = require('../lib/config')(__dirname);
   const manifest = require('../lib/models/manifest')(config);
   // console.log(manifest);
 

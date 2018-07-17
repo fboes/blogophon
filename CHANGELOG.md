@@ -11,6 +11,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Add more Handlebar helpers like `asciify` and `niceShorten`
 * :gift: Fix schema.org recipes by removing some properties by adding `ifEquals` Handlebars helper
 * :gift: Add `--version` CLI option to all CLI tools
+* :gift: Make configuration testable
 
 1.5.0
 -----

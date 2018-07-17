@@ -4,7 +4,7 @@ const assert = require('assert');
 
 describe('Image Styles', function() {
   it('should test GeneralFunctionality', function() {
-    const config      = require('../lib/config');
+    const config      = require('../lib/config')();
     const imageStyles = require('../lib/helpers/image-styles')(config);
 
     assert.ok(imageStyles !== undefined, 'imageStyles is defined');
@@ -15,7 +15,7 @@ describe('Image Styles', function() {
   });
 
   it('should test HtmlConversion', function() {
-    const config      = require('../lib/config');
+    const config      = require('../lib/config')();
     const imageStyles = require('../lib/helpers/image-styles')(config);
     let html;
 

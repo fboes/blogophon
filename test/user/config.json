@@ -1,0 +1,51 @@
+{
+  "name": "This is a very long title for your blog",
+  "baseUrl": "https://www.example.com",
+  "basePath": "/",
+  "description": "This is a test",
+  "locale": {
+    "language": "de",
+    "direction": "ltr"
+  },
+  "postPathMode": "Static path",
+  "postFileMode": "Date-Title",
+  "itemsPerPage": 5,
+  "defaultAuthor": {
+    "name": "Frank Boës",
+    "email": "info@3960.org"
+  },
+  "twitterAccount": "fboes",
+  "copyright": "(C) 2015-2018",
+  "tags": [
+    "The Testing",
+    "The Cool",
+    "Webdevelop"
+  ],
+  "categories": [
+    "Blogophon",
+    "Not Blogophon"
+  ],
+  "useSpecialFeature": [
+    "Teaser snippets",
+    "RSS",
+    "ATOM",
+    "JSON Feed",
+    "JSON for Slack",
+    "JSON-RSS",
+    "Markdown",
+    "Apple News",
+    "Facebook Instant Articles",
+    "Accelerated Mobile Pages",
+    "Microsoft tiles",
+    "ICS-Calendar",
+    "GeoJSON",
+    "KML",
+    "AJAX",
+    "Server Side Includes"
+  ],
+  "deployCmd": "",
+  "htmlAnalytics": "<!-- Add analytics here -->",
+  "htmlAnalyticsAmp": "<!-- AMP analytics here -->",
+  "htmlAnalyticsFeed": "<!-- Add Feed analytics here with %url and %title -->",
+  "theme": "default"
+}

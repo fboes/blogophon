@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const post = require('../lib/models/post');
-const config = require('../lib/config');
+const config = require('../lib/config')(__dirname);
 
 describe('Post', function() {
   it('should test Errors', function() {

@@ -3,7 +3,7 @@
 const assert = require('assert');
 
 describe('Slacked', function() {
-  const config = require('../lib/config');
+  const config = require('../lib/config')(__dirname);
   const pubDate = '2016-12-31';
 
   const item = {
