@@ -4,264 +4,452 @@ const assert = require('assert');
 const markyMark = require('../lib/helpers/marky-mark');
 
 describe('MarkyMark', function() {
-  it('should convert simple strings', function() {
-    let m;
+  describe('Simple HTML improvement', function() {
 
-    m = markyMark('<p><a href="test">Test 12x24</a> - &quot;Test&quot;</p>');
-    assert.ok(m.match(/Test 12/));
-    assert.ok(m !== undefined, 'String is not undefined');
+    it('should convert simple strings', function() {
+      let m;
 
-    m = markyMark(
-      '<p>&quot;Meine vierjährige Tochter hat gesagt, dass sie sofort alle Buchstaben lernen will.&quot;</p>'+
-    '<p>&quot;Na, dann gib ihr mal eine <a href="http://www.fileformat.info/info/charset/UTF-8/list.htm">UTF-8-Tabelle</a>.&quot;</p>'
-    );
-    //console.log(m);
-    assert.ok(m !== undefined, 'String is not undefined');
-    assert.ok(m.match(/Tochter hat gesagt/));
-    assert.ok(m.match(/dann gib ihr mal eine/));
-    assert.ok(m.match(/www\.fileformat\.info/));
+      m = markyMark('<p><a href="test">Test 12x24</a> - &quot;Test&quot;</p>');
+      assert.ok(m.match(/Test 12/));
+      assert.ok(m !== undefined, 'String is not undefined');
 
-    m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg">Dunkirk</a></p>');
-    assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
+      m = markyMark(
+        '<p>&quot;Meine vierjährige Tochter hat gesagt, dass sie sofort alle Buchstaben lernen will.&quot;</p>'+
+      '<p>&quot;Na, dann gib ihr mal eine <a href="http://www.fileformat.info/info/charset/UTF-8/list.htm">UTF-8-Tabelle</a>.&quot;</p>'
+      );
+      //console.log(m);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.ok(m.match(/Tochter hat gesagt/));
+      assert.ok(m.match(/dann gib ihr mal eine/));
+      assert.ok(m.match(/www\.fileformat\.info/));
 
-    m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg?t=2m19s">Dunkirk</a></p>');
-    assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
-    assert.ok(!m.match(/t=2m19s/));
-
-    m = markyMark('<p><a href="http://codepen.io/larsenwork/pen/MpjXrb">Codepen</a></p>');
-    assert.ok(m.match(/codepen\.io\/larsenwork\/embed\/MpjXrb\//));
-    assert.ok(m.match(/<iframe/));
-
-    m = markyMark('<p><a href="https://gist.github.com/defunkt/2059">Github Gist</a></p>');
-    assert.ok(m.match(/<script async="async" src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
-
-    m = markyMark('<p><a href="https://jsfiddle.net/6cLkvdag/">Github Gist</a></p>');
-    assert.ok(m.match(/<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/));
-
-    m = markyMark('<p><img src="http://www.example.com" alt="" /></p>');
-    assert.ok(m.match(/src="http:\/\/www\.example\.com/));
-  });
-
-  it('should do code highlighting', function() {
-    let m;
-
-    m = markyMark('<p id="more">Mein Anwendungsfall: Ich warte auf eine bestimmte Anzahl von Events, und löse mein eigenes Event aus, wenn alle meine Sub-Events erfolgreich abgeschlossen haben. Bisher sah das so aus (schon mit der Kraft von <a href="/posts/nodejs-pattern-array-foreach/"><code>Array.forEach</code></a>):</p>  <pre><code class="lang-javascript">  var files = [\'a.txt\',\'b.txt\',\'c.txt\'];  /*var processed = 0;*/  var checkProcessed  = function(err) {    if (err) {      console.log("Error!");    }    if (++processed === files.length) {      console.log("Done!");    }  };  files.forEach(function(file) {    fs.writeFile(file, "Test test test", checkProcessed);  }); // Comment  </code></pre>');
-    assert.ok(m !== undefined, 'String is not undefined');
-    assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
-
-    m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
-    assert.ok(m !== undefined, 'String is not undefined');
-    assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
-
-    m = markyMark('<pre><code class="lang-markdown">'+
-    "H1\n=====\n\nH2\n-----\n\n[Links](#) with some *italic* and **bold** and _bold_ text.\n\n### Headline\n"+
-    "There is also _italic_ and __bold__ but not _ unbold _.\n"+
-    "And some `code` or stuff like that, but it's ` on some place\n"+
-    "* And some `code` or stuff like that\n"+
-    "Add CSS variable `--gallery-count` to gallery HTML.\n"+
-    "And some `code` or stuff * like * that, and an http://www.example.com URL\n"+
-    '</code></pre>'
-    );
-    //console.log(m);
-    assert.ok(m !== undefined, 'String is not undefined');
-    assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 16 * 2);
-  });
-
-  it('should do code highlighting for Diffs', function() {
-
-    let m;
-
-    m = markyMark(
-      '<pre><code class="lang-javascript">'+
-    "\n- var test = 1;"+
-    "\n+ var test = 2;"+
-    "\n</code></pre>"
-    );
-    //console.log(m);
-    assert.ok(m !== undefined, 'String is not undefined');
-    assert.ok(m.match(/<ins>/));
-    assert.ok(m.match(/<del>/));
-  });
-
-  it('should do code highlighting for Shell / Bash', function() {
-
-    let m;
-
-    m = markyMark(
-      '<pre><code class="lang-shell">$ rm -rf *'+
-    "\n$ rm -rf ."+
-    "\n$ cd %USERPROFILE%"+
-    "\n# Nasty nasty"+
-    "\necho $DING"+
-    "\nx files have been deleted"+
-    "\n</code></pre>"
-    );
-    //console.log(m);
-    assert.ok(m !== undefined, 'String is not undefined');
-    assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp)>/));
-    assert.ok(m.match(/<\/?(u)>/));
-  });
-
-  it('should use proper quotes', function() {
-    let m, x = '<h1>Delete me</h1><h2>Downgrade me</h2><p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
-
-    m = markyMark(x, {
-      quotation: {
-        primary: ['«', '»'],
-        secondary: ['“', '”']
-      }
+      m = markyMark('<p><img src="http://www.example.com" alt="" /></p>');
+      assert.ok(m.match(/src="http:\/\/www\.example\.com/));
     });
-    //console.log(m);
 
-    assert.ok(m !== markyMark(x, {
-      quotation: {
-        primary: ['„', '“'],
-        secondary: ['‚', '‘']
-      }
-    }), 'Quotation changed');
-    assert.ok(!m.match(/<h1>/), '<h1> removal happened');
-    assert.ok(!m.match(/<h2>/), 'Headline downgraded happened');
-    assert.ok(m.match(/<h3>/), 'Headline downgraded happened');
-    assert.ok(m.match(/«/));
-    assert.ok(m.match(/“/));
+    it('should use proper quotes', function() {
+      let m, x = '<h1>Delete me</h1><h2>Downgrade me</h2><p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
 
-    m = markyMark(x, {
-      headline: 1
+      m = markyMark(x, {
+        quotation: {
+          primary: ['«', '»'],
+          secondary: ['“', '”']
+        }
+      });
+      //console.log(m);
+
+      assert.ok(m !== markyMark(x, {
+        quotation: {
+          primary: ['„', '“'],
+          secondary: ['‚', '‘']
+        }
+      }), 'Quotation changed');
+      assert.ok(!m.match(/<h1>/), '<h1> removal happened');
+      assert.ok(!m.match(/<h2>/), 'Headline downgraded happened');
+      assert.ok(m.match(/<h3>/), 'Headline downgraded happened');
+      assert.ok(m.match(/«/));
+      assert.ok(m.match(/“/));
+
+      m = markyMark(x, {
+        headline: 1
+      });
+      assert.ok(!m.match(/<h1>/), '<h1> removal did not happen');
+      assert.ok(m.match(/<h2>/), 'No headline downgraded happened');
+      assert.ok(!m.match(/<h3>/), 'No headline downgraded happened');
+
+      x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> <img href=\"example.jpg\"><hr></p>";
+      m = markyMark(x, {
+        quotation: {
+          primary: ['%', '%'],
+          secondary: ['%', '%']
+        }
+      });
+      //console.log(m);
+      assert.ok(!m.match(/%/));
     });
-    assert.ok(!m.match(/<h1>/), '<h1> removal did not happen');
-    assert.ok(m.match(/<h2>/), 'No headline downgraded happened');
-    assert.ok(!m.match(/<h3>/), 'No headline downgraded happened');
+  });
 
-    x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> <img href=\"example.jpg\"><hr></p>";
-    m = markyMark(x, {
-      quotation: {
-        primary: ['%', '%'],
-        secondary: ['%', '%']
-      }
+  describe('Tables', function() {
+    it('should make HTML tables even nicer', function() {
+      let m, x = `<table>
+  <thead>
+    <tr><th>Model</th><th style="text-align:right">Pathfinder</th><th style="text-align:right">Hauler</th><th style="text-align:right">Diamondback Scout</th></tr></thead><tbody>
+    <tr><td><strong>Manufacturer</strong></td><td style="text-align:right">Zorgon Peterson</td><td style="text-align:right">Zorgon Peterson</td><td style="text-align:right">Lakon Spaceways</td></tr>
+    <tr><td><strong>Type</strong></td><td style="text-align:right">Light Explorer</td><td style="text-align:right">Light Freighter</td><td style="text-align:right">Light Combat Explorer</td></tr>
+    <tr><td><strong>Cost</strong></td><td style="text-align:right">~460,000 CR</td><td style="text-align:right">52,720 Cr</td><td style="text-align:right">564,320 Cr</td></tr>
+    <tr><td><strong>Top Speed</strong></td><td style="text-align:right">230 m/s</td><td style="text-align:right">200 m/s</td><td style="text-align:right">280 m/s</td></tr>
+    <tr><td><strong>Boost Speed</strong></td><td style="text-align:right">340 m/s</td><td style="text-align:right">300 m/s</td><td style="text-align:right">380 m/s</td></tr>
+    <tr><td><strong>Manoeuvrability</strong></td><td style="text-align:right">8</td><td style="text-align:right">6</td><td style="text-align:right">8</td></tr>
+    <tr><td><strong>Hull Mass</strong></td><td style="text-align:right">45 t</td><td style="text-align:right">14 t</td><td style="text-align:right">170 t</td></tr>
+    <tr><td><strong>Max. Cargo Capacity</strong></td><td style="text-align:right">20 t</td><td style="text-align:right">22 t</td><td style="text-align:right">28 t</td></tr>
+    <tr><td><strong>Max. Jump Range</strong></td><td style="text-align:right">38 Ly</td><td style="text-align:right">37 Ly</td><td style="text-align:right">30 Ly</td></tr>
+    <tr><td><strong>Landing Pad Size</strong></td><td style="text-align:right">Small</td><td style="text-align:right">Small</td><td style="text-align:right">Small</td></tr>
+    <tr><td><strong>Power Plant</strong></td><td style="text-align:right">2</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr>
+    <tr><td><strong>Thrusters</strong></td><td style="text-align:right">3</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr>
+    <tr><td><strong>Frame Shift Drive</strong></td><td style="text-align:right">3</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr>
+    <tr><td><strong>Life Support</strong></td><td style="text-align:right">1</td><td style="text-align:right">1</td><td style="text-align:right">2</td></tr>
+    <tr><td><strong>Power Distributor</strong></td><td style="text-align:right">1</td><td style="text-align:right">1</td><td style="text-align:right">2</td></tr>
+    <tr><td><strong>Sensors</strong></td><td style="text-align:right">2</td><td style="text-align:right">1</td><td style="text-align:right">3</td></tr>
+    <tr><td><strong>Fuel Tank</strong></td><td style="text-align:right">2</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr>
+    <tr><td><strong>Hardpoints Medium</strong></td><td style="text-align:right">-</td><td style="text-align:right">-</td><td style="text-align:right">2x</td></tr>
+    <tr><td><strong>Hardpoints Small</strong></td><td style="text-align:right">2x</td><td style="text-align:right">1x</td><td style="text-align:right">2x</td></tr>
+    <tr><td><strong>Utility Mounts</strong></td><td style="text-align:right">1x</td><td style="text-align:right">2x</td><td style="text-align:right">4x</td></tr>
+    <tr><td><strong>Size 3 Compartments</strong></td><td style="text-align:right">1x</td><td style="text-align:right">2x</td><td style="text-align:right">3x</td></tr>
+    <tr><td><strong>Size 2 Compartments</strong></td><td style="text-align:right">2x</td><td style="text-align:right">1x</td><td style="text-align:right">1x</td></tr>
+    <tr><td><strong>Size 1 Compartments</strong></td><td style="text-align:right">2x</td><td style="text-align:right">1x</td><td style="text-align:right">-</td></tr>
+  </tbody>
+</table>`;
+      m = markyMark(x);
+      //console.log(m, m.match(/<th[> ]/g).length);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<th[> ]/g).length, 27, 'Markup added');
+      assert.ok(m.match(/<div class="table-wrapper"/), 'Table wrapper added');
+      assert.ok(m.match(/ class="table-cell--right"/g), 'Table cell class added');
+      assert.ok(!m.match(/<td><strong>/), 'Markup removed');
     });
-    //console.log(m);
-    assert.ok(!m.match(/%/));
+
+    it('should do col spanning in tables if asked to do so', function() {
+      const x = `<table>
+  <caption id="test">Test</caption>
+  <thead>
+    <tr>
+      <th style="text-align:right">Ich und du</th>
+      <th style="text-align:left">Müllers Kuh</th>
+      <th>Müllers Esel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:right"></td>
+      <td style="text-align:left">Das bist du und so    ⁴</td>
+    </tr>
+  </tbody>
+</table>`;
+
+      let m = markyMark(x);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/colspan="\d"/g).length, 1, 'Colspan added');
+    });
   });
 
-  it('should do code highlighting for PHP', function() {
+  describe('Audio, video, images', function() {
+    it('should convert video, audio and image tags', function() {
+      let m;
 
-    let m, x = '              <p>Autoloading ist in PHP eine feine Sache. Statt jede einzelne Klasse mittels eigenem <code>require_once</code> einzubinden, kann man bei existierendem Autoloader einfach durch Aufruf der Klasse diese Laden.</p>'+"\n"+
-  '<!-- more -->'+"\n"+
-  '<p id="more">Eine Klasse legt man dabei einfach in einer Verzeichnisstruktur ab, z.B. unter <code>Example/Foo.php</code>. Das Innere der Datei sieht dann wie folgt aus:</p>'+"\n"+
-  '<pre><code class="lang-php">namespace Example;'+"\n"+
-  ''+"\n"+
-  'class Foo'+"\n"+
-  '{'+"\n"+
-  '  // Stuff here'+"\n"+
-  '}'+"\n"+
-  '</code></pre>'+"\n"+
-  '<p>Der kleinste Autoloader der Welt sieht dann wie folgt aus, und verarbeitet alle in PHP unbekannte Klassen:</p>'+"\n"+
-  '<pre><code class="lang-php">function __autoload($classname)'+"\n"+
-  '{  '+"\n"+
-  '  require_once($classname.<i class="c5">&#39;.php&#39;);'+"\n"+
-  '}'+"\n"+
-  '</code></pre>'+"\n"+
-  '<p>Und die Klasse setzt man dann nach eingeschalteten Autoloader wie folgt ein:</p>'+"\n"+
-  '<pre><code class="lang-php">$foo = new \\Example\\Foo();'+"\n"+
-  '</code></pre>';
+      m = markyMark('<img src="video.jpg" alt="Description" />');
+      assert.ok(m.match(/<img/), 'Image tag still present');
+      assert.ok(!m.match(/<(video|audio)/), 'No audio/video tag present');
 
-    m = markyMark(x);
-    //console.log(m);
+      m = markyMark('<img src="video.mp4" alt="Description" />');
+      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+      assert.ok(m.match(/<video.+?>Description<\/video>/), 'Video tag with description is present');
 
-    assert.ok(m);
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\/\//g));
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>namespace<\/\1>/g));
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$classname<\/\1>/g));
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$foo<\/\1>/g));
+      m = markyMark('<img src="video.mp4#12x24" alt="" />');
+      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+      assert.ok(m.match(/<video/), 'Video tag is present');
+
+      m = markyMark('<img src="video.mp3" alt="" />');
+      assert.ok(!m.match(/<(img|video)/), 'Image tag is gone');
+      assert.ok(m.match(/<audio/), 'Audio tag is present');
+
+      m = markyMark('<p><img src="video.mp4" alt="" /></p>');
+      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+      assert.ok(m.match(/<video/), 'Video tag is present');
+      assert.ok(m.match(/<div class="video/), 'Wrapper div tag is present');
+      assert.ok(!m.match(/<p/), 'P tag is gone');
+
+      m = markyMark('<p>Inline video: <img src="video.mp4" alt="" /></p>');
+      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
+      assert.ok(m.match(/<video/), 'Video tag is present');
+      assert.ok(!m.match(/<div class="video/), 'Wrapper div tag is not present');
+      assert.ok(m.match(/<p/), 'P tag is still there');
+
+      m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
+      assert.ok(m.match(/<(img|video)/), 'Image tag is present');
+      assert.ok(m.match(/figure/), 'figure is present');
+      assert.ok(m.match(/figcaption/), 'figcaption is present');
+
+      m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
+      assert.ok(m.match(/<(img|video)/), 'Image tag is present');
+      assert.ok(m.match(/figure/), 'figure is present');
+      assert.ok(m.match(/"figure default"/), 'new class is present');
+      //console.log(m);
+    });
+
+    it('should do embedding of Youtube, Vimeo & co', function() {
+      let m;
+
+      m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg">Dunkirk</a></p>');
+      assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
+
+      m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg?t=2m19s">Dunkirk</a></p>');
+      assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
+      assert.ok(!m.match(/t=2m19s/));
+
+      m = markyMark('<p><a href="http://codepen.io/larsenwork/pen/MpjXrb">Codepen</a></p>');
+      assert.ok(m.match(/codepen\.io\/larsenwork\/embed\/MpjXrb\//));
+      assert.ok(m.match(/<iframe/));
+
+      m = markyMark('<p><a href="https://gist.github.com/defunkt/2059">Github Gist</a></p>');
+      assert.ok(m.match(/<script async="async" src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
+
+      m = markyMark('<p><a href="https://jsfiddle.net/6cLkvdag/">Github Gist</a></p>');
+      assert.ok(m.match(/<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/));
+    });
   });
 
-  it('should do more code highlighting for Shell / Bash', function() {
-    let m, x = '<pre><code class="lang-shell">#!/bin/bash\nset -e\ncd `dirname $0`/..\nif [ ! -e build/config.sh ]; then\n  cp build/_config.sh build/config.sh\nfi\nsource build/config.sh\n\nif [ &quot;$LOCAL_DB_HOST&quot; ]; then\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;CREATE DATABASE IF NOT EXISTS $LOCAL_DB_DB&quot;\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;GRANT ALL ON $LOCAL_DB_DB.* TO \'$LOCAL_DB_USR\'@\'localhost\' IDENTIFIED BY \'$LOCAL_DB_PWD\'&quot;\nfi\nif [ -f build/mysql/dbdump.sql ]; then\n  build/import-dbdump.sh\nfi\n\nif [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32mDirectory access\\x1B[m ===&quot;\n  echo &quot;&quot;\nfi\n\nfunction make_writable_directory {\n  mkdir -p $1 && chmod -R ugo+rwX $1\n  if [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n    echo &quot;semanage fcontext -a -t httpd_sys_rw_content_t &quot;$LOCAL_DIRECTORY/$1(/.*)?&quot;&quot;\n  fi\n}\n\n# mkdir -p tmp\n# make_writable_directory htdocs/files\n#[ -h TARGET ] || ln -s SOURCE TARGET\n#[ -f TARGET ] || cp SOURCE TARGET\n\nif [ ! -d /vagrant ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32mApache2 vhost config\\x1B[m ===&quot;\n  echo &quot;&quot;\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g&quot; build/apache/macro-broilerplate.conf\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g;s#localhost#$LOCAL_HOST#g&quot; build/apache/httpd-vhost.conf\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32m/etc/hosts\\x1B[m === &quot;\n  echo &quot;&quot;\n  echo &quot;127.0.0.1    $LOCAL_HOST&quot;\n  echo &quot;"\n  [ -d node_modules ] || npm install\nelse\n  [ -d node_modules ] || sudo npm install --no-bin-links\nfi</code></pre>';
+  describe('Syntax highlighting', function() {
+    it('should do code highlighting for Javascript', function() {
+      let m;
 
-    m = markyMark(x);
-    //console.log(m);
-    assert.ok(m, 'Got output');
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length > 0, 'Markup added');
-    assert.ok(m.match(/<u>#/), 'Comments found');
+      m = markyMark(`
+<p id="more">Mein Anwendungsfall: Ich warte auf eine bestimmte Anzahl von Events, und löse mein eigenes Event aus, wenn alle meine Sub-Events erfolgreich abgeschlossen haben. Bisher sah das so aus (schon mit der Kraft von <a href="/posts/nodejs-pattern-array-foreach/"><code>Array.forEach</code></a>):</p>
+<pre><code class="lang-javascript">
+  var files = ['a.txt','b.txt','c.txt'];
+  /*var processed = 0;*/
+  var checkProcessed  = function(err) {
+    if (err) {
+      console.log("Error!");
+    }
+    if (++processed === files.length) {
+      console.log("Done!");
+    }
+  };
+  files.forEach(function(file) {
+    fs.writeFile(file, "Test test test", checkProcessed
+  }); // Comment
+</code></pre>
+        `);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
+    });
 
-    x = '<pre><code class="lang-bash">#!/bin/bash\nset -e\ncd `dirname $0`/..\nif [ ! -e build/config.sh ]; then\n  cp build/_config.sh build/config.sh\nfi\nsource build/config.sh\n\nif [ &quot;$LOCAL_DB_HOST&quot; ]; then\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;CREATE DATABASE IF NOT EXISTS $LOCAL_DB_DB&quot;\n  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;GRANT ALL ON $LOCAL_DB_DB.* TO \'$LOCAL_DB_USR\'@\'localhost\' IDENTIFIED BY \'$LOCAL_DB_PWD\'&quot;\nfi\nif [ -f build/mysql/dbdump.sql ]; then\n  build/import-dbdump.sh\nfi\n\nif [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32mDirectory access\\x1B[m ===&quot;\n  echo &quot;&quot;\nfi\n\nfunction make_writable_directory {\n  mkdir -p $1 && chmod -R ugo+rwX $1\n  if [ -x &quot;/usr/sbin/sestatus&quot; ]; then\n    echo &quot;semanage fcontext -a -t httpd_sys_rw_content_t &quot;$LOCAL_DIRECTORY/$1(/.*)?&quot;&quot;\n  fi\n}\n\n# mkdir -p tmp\n# make_writable_directory htdocs/files\n#[ -h TARGET ] || ln -s SOURCE TARGET\n#[ -f TARGET ] || cp SOURCE TARGET\n\nif [ ! -d /vagrant ]; then\n  echo &quot;&quot;\n  echo -e &quot;=== \x1B[32mApache2 vhost config\x1B[m ===&quot;\n  echo &quot;&quot;\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g&quot; build/apache/macro-broilerplate.conf\n  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g;s#localhost#$LOCAL_HOST#g&quot; build/apache/httpd-vhost.conf\n  echo &quot;&quot;\n  echo -e &quot;=== \\x1B[32m/etc/hosts\\x1B[m === &quot;\n  echo &quot;&quot;\n  echo &quot;127.0.0.1    $LOCAL_HOST&quot;\n  echo &quot;"\n  [ -d node_modules ] || npm install\nelse\n  [ -d node_modules ] || sudo npm install --no-bin-links\nfi</code></pre>';
+    it('should do code highlighting for HTML', function() {
+      let m;
 
-    m = markyMark(x);
-    //console.log(m);
-    assert.ok(m, 'Got output');
-    assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length > 0, 'Markup added');
-    assert.ok(m.match(/<u>#/), 'Comments found');
-  });
+      m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
+    });
 
-  it('should make HTML tables even nicer', function() {
-    let m, x = '<table><thead><tr><th>Model</th><th style="text-align:right">Pathfinder</th><th style="text-align:right">Hauler</th><th style="text-align:right">Diamondback Scout</th></tr></thead><tbody><tr><td><strong>Manufacturer</strong></td><td style="text-align:right">Zorgon Peterson</td><td style="text-align:right">Zorgon Peterson</td><td style="text-align:right">Lakon Spaceways</td></tr><tr><td><strong>Type</strong></td><td style="text-align:right">Light Explorer</td><td style="text-align:right">Light Freighter</td><td style="text-align:right">Light Combat Explorer</td></tr><tr><td><strong>Cost</strong></td><td style="text-align:right">~460,000 CR</td><td style="text-align:right">52,720 Cr</td><td style="text-align:right">564,320 Cr</td></tr><tr><td><strong>Top Speed</strong></td><td style="text-align:right">230 m/s</td><td style="text-align:right">200 m/s</td><td style="text-align:right">280 m/s</td></tr><tr><td><strong>Boost Speed</strong></td><td style="text-align:right">340 m/s</td><td style="text-align:right">300 m/s</td><td style="text-align:right">380 m/s</td></tr><tr><td><strong>Manoeuvrability</strong></td><td style="text-align:right">8</td><td style="text-align:right">6</td><td style="text-align:right">8</td></tr><tr><td><strong>Hull Mass</strong></td><td style="text-align:right">45 t</td><td style="text-align:right">14 t</td><td style="text-align:right">170 t</td></tr><tr><td><strong>Max. Cargo Capacity</strong></td><td style="text-align:right">20 t</td><td style="text-align:right">22 t</td><td style="text-align:right">28 t</td></tr><tr><td><strong>Max. Jump Range</strong></td><td style="text-align:right">38 Ly</td><td style="text-align:right">37 Ly</td><td style="text-align:right">30 Ly</td></tr><tr><td><strong>Landing Pad Size</strong></td><td style="text-align:right">Small</td><td style="text-align:right">Small</td><td style="text-align:right">Small</td></tr><tr><td><strong>Power Plant</strong></td><td style="text-align:right">2</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr><tr><td><strong>Thrusters</strong></td><td style="text-align:right">3</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr><tr><td><strong>Frame Shift Drive</strong></td><td style="text-align:right">3</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr><tr><td><strong>Life Support</strong></td><td style="text-align:right">1</td><td style="text-align:right">1</td><td style="text-align:right">2</td></tr><tr><td><strong>Power Distributor</strong></td><td style="text-align:right">1</td><td style="text-align:right">1</td><td style="text-align:right">2</td></tr><tr><td><strong>Sensors</strong></td><td style="text-align:right">2</td><td style="text-align:right">1</td><td style="text-align:right">3</td></tr><tr><td><strong>Fuel Tank</strong></td><td style="text-align:right">2</td><td style="text-align:right">2</td><td style="text-align:right">4</td></tr><tr><td><strong>Hardpoints Medium</strong></td><td style="text-align:right">-</td><td style="text-align:right">-</td><td style="text-align:right">2x</td></tr><tr><td><strong>Hardpoints Small</strong></td><td style="text-align:right">2x</td><td style="text-align:right">1x</td><td style="text-align:right">2x</td></tr><tr><td><strong>Utility Mounts</strong></td><td style="text-align:right">1x</td><td style="text-align:right">2x</td><td style="text-align:right">4x</td></tr><tr><td><strong>Size 3 Compartments</strong></td><td style="text-align:right">1x</td><td style="text-align:right">2x</td><td style="text-align:right">3x</td></tr><tr><td><strong>Size 2 Compartments</strong></td><td style="text-align:right">2x</td><td style="text-align:right">1x</td><td style="text-align:right">1x</td></tr><tr><td><strong>Size 1 Compartments</strong></td><td style="text-align:right">2x</td><td style="text-align:right">1x</td><td style="text-align:right">-</td></tr></tbody></table>';
-    m = markyMark(x);
-    //console.log(m);
-    assert.ok(m, 'Got output');
-    assert.ok(m.match(/<th>/), 'Markup added');
-    assert.ok(m.match(/<th /), 'Markup added');
-    assert.ok(m.match(/<div class="table-wrapper"/), 'Table wrapper added');
-    assert.ok(m.match(/ class="table-cell--right"/), 'Table cell class added');
-    assert.ok(!m.match(/<td><strong>/), 'Markup removed');
-  });
+    it('should do code highlighting for Markdown', function() {
+      let m = markyMark(`<pre><code class="lang-markdown">
+H1
+=====
 
-  it('should convert video, audio and image tags', function() {
-    let m;
+H2
+-----
 
-    m = markyMark('<img src="video.jpg" alt="Description" />');
-    assert.ok(m.match(/<img/), 'Image tag still present');
-    assert.ok(!m.match(/<(video|audio)/), 'No audio/video tag present');
+[Links](#) with some *italic* and **bold** and _bold_ text.
 
-    m = markyMark('<img src="video.mp4" alt="Description" />');
-    assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-    assert.ok(m.match(/<video.+?>Description<\/video>/), 'Video tag with description is present');
+### Headline
 
-    m = markyMark('<img src="video.mp4#12x24" alt="" />');
-    assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-    assert.ok(m.match(/<video/), 'Video tag is present');
+There is also _italic_ and __bold__ but not _ unbold _.
+And some \`code\` or stuff like that, but it's only one \` on some places.
 
-    m = markyMark('<img src="video.mp3" alt="" />');
-    assert.ok(!m.match(/<(img|video)/), 'Image tag is gone');
-    assert.ok(m.match(/<audio/), 'Audio tag is present');
+* And some \`code\` or stuff like that
 
-    m = markyMark('<p><img src="video.mp4" alt="" /></p>');
-    assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-    assert.ok(m.match(/<video/), 'Video tag is present');
-    assert.ok(m.match(/<div class="video/), 'Wrapper div tag is present');
-    assert.ok(!m.match(/<p/), 'P tag is gone');
+Add CSS variable \`--gallery-count\` to gallery HTML.
+And some \`code\` or stuff * like * that, and an http://www.example.com URL
+</code></pre>`
+      );
+      //console.log(m);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 16 * 2);
+    });
 
-    m = markyMark('<p>Inline video: <img src="video.mp4" alt="" /></p>');
-    assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-    assert.ok(m.match(/<video/), 'Video tag is present');
-    assert.ok(!m.match(/<div class="video/), 'Wrapper div tag is not present');
-    assert.ok(m.match(/<p/), 'P tag is still there');
+    it('should do code highlighting for Diffs', function() {
+      let m = markyMark(
+        `<pre><code class="lang-javascript">'+
+- var test = 1;
++ var test = 2;
+</code></pre>`
+      );
+      //console.log(m);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.ok(m.match(/<ins>/));
+      assert.ok(m.match(/<del>/));
+    });
 
-    m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
-    assert.ok(m.match(/<(img|video)/), 'Image tag is present');
-    assert.ok(m.match(/figure/), 'figure is present');
-    assert.ok(m.match(/figcaption/), 'figcaption is present');
+    it('should do code highlighting for PHP', function() {
 
-    m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
-    assert.ok(m.match(/<(img|video)/), 'Image tag is present');
-    assert.ok(m.match(/figure/), 'figure is present');
-    assert.ok(m.match(/"figure default"/), 'new class is present');
-    //console.log(m);
-  });
+      let m, x = `<p>Autoloading ist in PHP eine feine Sache. Statt jede einzelne Klasse mittels eigenem <code>require_once</code> einzubinden, kann man bei existierendem Autoloader einfach durch Aufruf der Klasse diese Laden.</p>
+<!-- more -->
+<p id="more">Eine Klasse legt man dabei einfach in einer Verzeichnisstruktur ab, z.B. unter <code>Example/Foo.php</code>. Das Innere der Datei sieht dann wie folgt aus:</p>
+<pre><code class="lang-php">namespace Example;
 
-  it('should do code highlighting for CSS', function() {
-    let m, x = '<pre><code class="lang-css">* { margin: 0; padding: 0; }'+"\n"
-    +'* + h1, * + h2, * + h3, * + h4 { margin-top: 1.2em; }'+"\n"
-    +'#identifier { margin-top: 0.5em; }'+"\n"
-    +'.class { margin-top: 0.2em; }</code></pre>';
+class Foo
+{
+  // Stuff here
+}
+</code></pre>
+<p>Der kleinste Autoloader der Welt sieht dann wie folgt aus, und verarbeitet alle in PHP unbekannte Klassen:</p>
+<pre><code class="lang-php">function __autoload($classname)
+{
+  require_once($classname.<i class="c5">&#39;.php&#39;);
+}
+</code></pre>
+<p>Und die Klasse setzt man dann nach eingeschalteten Autoloader wie folgt ein:</p>
+<pre><code class="lang-php">$foo = new \\Example\\Foo();
+</code></pre>`;
 
-    m = markyMark(x);
-    //console.log(m);
-    assert.ok(m, 'Got output');
-    assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
-  });
+      m = markyMark(x);
+      //console.log(m);
 
-  it('should do code highlighting for SQL', function() {
-    let m, x = `<pre><code class="lang-sql">SELECT
+      assert.ok(m);
+      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\/\//g));
+      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>namespace<\/\1>/g));
+      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$classname<\/\1>/g));
+      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$foo<\/\1>/g));
+    });
+
+
+    it('should do code highlighting for Shell / Bash', function() {
+      let m;
+
+      m = markyMark(
+        `<pre><code class="lang-shell">$ rm -rf *
+$ rm -rf .
+$ cd %USERPROFILE%
+# Nasty nasty
+echo $DING
+x files have been deleted
+</code></pre>`
+      );
+      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
+      assert.ok(m.match(/<\/?(u)>/));
+
+      let x = `<pre><code class="lang-shell">#!/bin/bash
+set -e
+cd \`dirname $0\`/..
+if [ ! -e build/config.sh ]; then
+  cp build/_config.sh build/config.sh
+  fi
+source build/config.sh
+
+if [ &quot;$LOCAL_DB_HOST&quot; ]; then
+  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;CREATE DATABASE IF NOT EXISTS $LOCAL_DB_DB&quot;
+  mysql -h $LOCAL_DB_HOST -u root -proot --execute &quot;GRANT ALL ON $LOCAL_DB_DB.* TO '$LOCAL_DB_USR'@'localhost' IDENTIFIED BY '$LOCAL_DB_PWD'&quot;
+  fi
+if [ -f build/mysql/dbdump.sql ]; then
+  build/import-dbdump.sh
+  fi
+
+if [ -x &quot;/usr/sbin/sestatus&quot; ]; then
+  echo &quot;&quot;
+  echo -e &quot;=== \\x1B[32mDirectory access\\x1B[m ===&quot;
+  echo &quot;&quot;
+  fi
+
+function make_writable_directory {
+  mkdir -p $1 && chmod -R ugo+rwX $1
+  if [ -x &quot;/usr/sbin/sestatus&quot; ]; then
+    echo &quot;semanage fcontext -a -t httpd_sys_rw_content_t &quot;$LOCAL_DIRECTORY/$1(/.*)?&quot;&quot;
+  fi
+}
+
+# mkdir -p tmp
+# make_writable_directory htdocs/files
+#[ -h TARGET ] || ln -s SOURCE TARGET
+#[ -f TARGET ] || cp SOURCE TARGET
+
+if [ ! -d /vagrant ]; then
+  echo &quot;&quot;
+  echo -e &quot;=== \\x1B[32mApache2 vhost config\\x1B[m ===&quot;
+  echo &quot;&quot;
+  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g&quot; build/apache/macro-broilerplate.conf
+  sed &quot;s#/var/www#$LOCAL_DIRECTORY#g;s#localhost#$LOCAL_HOST#g&quot; build/apache/httpd-vhost.conf
+  echo &quot;&quot;
+  echo -e &quot;=== \\x1B[32m/etc/hosts\\x1B[m === &quot;
+  echo &quot;&quot;
+  echo &quot;127.0.0.1    $LOCAL_HOST&quot;
+  echo &quot;"
+  [ -d node_modules ] || npm install
+  else
+  [ -d node_modules ] || sudo npm install --no-bin-links
+fi</code></pre>`;
+
+      m = markyMark(x);
+      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 65, 'Markup added');
+      assert.ok(m.match(/<u>#/), 'Comments found');
+
+      x = `<pre><code class="lang-bash">git config --global user.name YOUR NAME
+git config --global user.email YOURMAIL@example.com
+git config --global tag.sort version:refname
+git config --global core.autocrlf false # https://stackoverflow.com/a/13154031/3232532
+git config --global alias.chmod 'update-index --add --chmod=+x' # FILE: Makes files executable in Git
+git config --global alias.reset-unpushed 'reset HEAD~1' # Undo last commits which have not been pushed
+git config --global alias.reset-pushed 'revert HEAD' # Undo last commits which have been pushed
+git config --global alias.tag-current 'describe --tags' # Shows current tag
+git config --global alias.tag-sorted 'tag --sort=v:refname' # Show tags sorted
+git config --global alias.remove-keep 'rm --cached -r' # FILE: Remove from Git but keep locally
+git config --global alias.acp '!f() { git add -A && git commit -m &quot;$@&quot; && git push; }; f' # Add, commit, push, https://stackoverflow.com/a/35049625/3232532
+git config --global alias.graph 'git log --oneline --graph' # Show commits as graph
+
+# git show: Diff of latest commit
+# git branch -r: Show all branches</code></pre>`;
+
+      m = markyMark(x);
+      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 18, 'Markup added');
+      assert.ok(m.match(/<u>#/), 'Comments found');
+
+      x = `<pre><code class="lang-bash">#!/bin/bash
+set -e
+cd \`dirname $0\`/..
+
+npm update
+npm test
+rm package-lock.json
+npm version patch
+git push --follow-tags
+npm publish</code></pre>`;
+
+      m = markyMark(x);
+      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 5, 'Markup added');
+      assert.ok(m.match(/<u>#/), 'Comments found');
+
+      x = `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
+</code></pre>`;
+
+      m = markyMark(x);
+      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 5, 'Markup added');
+    });
+
+    it('should do code highlighting for CSS', function() {
+      let m, x = `<pre><code class="lang-css">
+* {
+  margin: 0;
+  padding: 0;
+}
+* + h1, * + h2, * + h3, * + h4 {
+  margin-top: 1.2em;
+}
+#identifier {
+  margin-top: 0.5em;
+}
+.class {
+  margin-top: 0.2em;
+}
+</code></pre>`;
+
+      m = markyMark(x);
+      //console.log(m);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
+    });
+
+    it('should do code highlighting for SQL', function() {
+      let m, x = `<pre><code class="lang-sql">SELECT
   CONCAT(
     &quot;UPDATE articles_prices SET price = &quot;,
     IF(personal_offers.personal_offer = 0, products.products_price, personal_offers.personal_offer),
@@ -274,40 +462,21 @@ describe('MarkyMark', function() {
   WHERE personal_offers.type = 1
 ;</code></pre>`;
 
-    m = markyMark(x);
-    //console.log(m);
-    assert.ok(m, 'Got output');
-    assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 24, 'Markup added');
+      m = markyMark(x);
+      //console.log(m);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 24, 'Markup added');
+    });
+
   });
+  describe('Emojis', function() {
 
-  it('should convert ASCII art to Emojis', function() {
-    let m, x = ':) and ;) and \\o/ ';
-    m = markyMark(x);
+    it('should convert ASCII art to Emojis', function() {
+      let m, x = ':) and ;) and \\o/ ';
+      m = markyMark(x);
 
-    assert.ok(m, 'Got output');
-    assert.equal(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
-  });
-
-  it('should do col spanning in tables if asked to do so', function() {
-    const x = `<table>
-<caption id="test">Test</caption>
-<thead>
-<tr>
-<th style="text-align:right">Ich und du</th>
-<th style="text-align:left">Müllers Kuh</th>
-<th>Müllers Esel</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right"></td>
-<td style="text-align:left">Das bist du und so    ⁴</td>
-</tr>
-</tbody>
-</table>`;
-
-    let m = markyMark(x);
-    assert.ok(m, 'Got output');
-    assert.equal(m.match(/colspan="\d"/g).length, 1, 'Colspan added');
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
+    });
   });
 });
