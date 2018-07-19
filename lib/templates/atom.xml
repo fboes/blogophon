@@ -9,7 +9,7 @@
   {{#if config.copyright}}
     <rights>{{config.copyright}}</rights>
   {{/if}}
-  <updated>{{pubDate}}</updated>
+  <updated>{{dateFormat pubDate 'rfc3339'}}</updated>
   <link href="{{absoluteUrl}}" rel="self" />
   {{#each index}}
     <entry xml:lang="{{meta.Language}}" xml:base="{{../config.absoluteBasePath}}">
@@ -17,8 +17,8 @@
       <summary type="html"><![CDATA[{{{safeHtmlTeaser}}}]]></summary>
       <content type="html"><![CDATA[{{{safeHtml}}}{{{trackReplace ../config.htmlAnalyticsFeed meta.AbsoluteLink meta.Title}}}]]></content>
       <link href="{{meta.AbsoluteLink}}?utm_source=newsfeed" />
-      <published>{{dateFormat meta.Created 'iso'}}</published>
-      <updated>{{dateFormat meta.Modified 'iso'}}</updated>
+      <published>{{dateFormat meta.Created 'rfc3339'}}</published>
+      <updated>{{dateFormat meta.Modified 'rfc3339'}}</updated>
       <author>
         <name>{{meta.AuthorName}}</name>
         <email>{{meta.AuthorEmail}}</email>

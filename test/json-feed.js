@@ -12,7 +12,7 @@ describe('JsonFeed', function() {
       AbsoluteUrl: 2,
       Title: 3,
       Created: new Date('2017-05-18'),
-      Modified: new Date('2016-05-19'),
+      Modified: new Date('2017-05-28'),
       tags: [6, 7],
       Description: 8,
       Language: 'en'
@@ -22,16 +22,25 @@ describe('JsonFeed', function() {
   //console.log(jsonFeed);
 
   it('should have basic properties', function() {
-    assert.ok(jsonFeed.version !== undefined);
-    assert.ok(jsonFeed.title !== undefined);
-    assert.ok(jsonFeed.home_page_url !== undefined);
-    assert.ok(jsonFeed.feed_url !== undefined);
-    assert.ok(jsonFeed.description !== undefined);
+    assert.ok(jsonFeed.version);
+    assert.ok(jsonFeed.title);
+    assert.ok(jsonFeed.home_page_url);
+    assert.ok(jsonFeed.feed_url);
+    assert.ok(jsonFeed.description);
+  });
+
+  it('should have items with properties', function() {
+    assert.equal(jsonFeed.items.length, 1);
     assert.ok(jsonFeed.items[0]);
     assert.ok(jsonFeed.items[0].url);
     assert.ok(jsonFeed.items[0].title);
     assert.ok(jsonFeed.items[0].summary);
     assert.ok(jsonFeed.items[0].date_published);
     assert.ok(jsonFeed.items[0].date_modified);
+  });
+
+  it('should have proper dates', function() {
+    assert.ok(jsonFeed.items[0].date_published.match(/^2017-05-18T/));
+    assert.ok(jsonFeed.items[0].date_modified.match(/^2017-05-28T/));
   });
 });

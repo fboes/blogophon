@@ -10,19 +10,26 @@ describe('GeoJson', function() {
       AbsoluteUrl: 2,
       Title: 3,
       Created: new Date('2017-05-18'),
-      tags: [6, 7],
+      Modified: new Date('2017-05-28'),
+      Tags: [6, 7],
       Longitude: 8,
-      Latitude: 9
+      Latitude: 9,
+      Description: 'Lorem ipsum'
     }
   };
   const geojson = require('../lib/models/geo-json')([item], new Date(), config);
 
   it('should have basic properties', function() {
-    assert.ok(geojson.type !== undefined);
-    assert.ok(geojson.features !== undefined);
-    assert.ok(geojson.features[0] !== undefined);
-    assert.ok(geojson.features[0].properties !== undefined);
-    assert.ok(geojson.features[0].properties.title !== undefined);
+    assert.ok(geojson.type);
+    assert.equal(geojson.features.length, 1);
+    assert.ok(geojson.features[0]);
+    assert.ok(geojson.features[0].properties);
+    assert.ok(geojson.features[0].properties.title);
+    assert.ok(geojson.features[0].properties.summary);
+  });
+  it('should have proper dates', function() {
+    assert.ok(geojson.features[0].properties.date_published.match(/^2017-05-18T/));
+    assert.ok(geojson.features[0].properties.date_modified.match(/^2017-05-28T/));
   });
   it('should have a geometry with coordinates', function() {
     assert.ok(geojson.features[0].geometry !== undefined);

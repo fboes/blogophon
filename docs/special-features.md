@@ -92,6 +92,8 @@ All required links will be added to your page.
 
 GeoJson will show all pages with geo coordinates. You may [add geo coordinates to any article](markdown.md). GeoJSON can be digested by Google Maps or Leaflet.js.
 
+The `properties` of each location will be structured like an `item` in [JSON Feed](https://jsonfeed.org/), without `id` & `content_text`, but with a `marker-symbol`.
+
 KML
 -------
 

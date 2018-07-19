@@ -24,8 +24,8 @@
         </figure>
       {{/if}}
       <h1>{{meta.Title}}</h1>
-      <time class="op-published" datetime="{{dateFormat meta.Created 'iso'}}">{{dateFormat meta.Created 'locale' meta.Language}}</time>
-      <time class="op-modified" datetime="{{dateFormat meta.Modified 'iso'}}">{{dateFormat meta.Modified 'locale' meta.Language}}</time>
+      <time class="op-published" datetime="{{dateFormat meta.Created 'iso8601'}}">{{dateFormat meta.Created 'locale' meta.Language}}</time>
+      <time class="op-modified" datetime="{{dateFormat meta.Modified 'iso8601'}}">{{dateFormat meta.Modified 'locale' meta.Language}}</time>
       {{#if meta.AuthorName}}
         <address><a>{{meta.AuthorName}}</a></address>
       {{/if}}

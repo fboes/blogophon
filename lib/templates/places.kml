@@ -15,7 +15,7 @@
             <address>{{meta.Location}}</address>
           {{/if}}
           <TimeStamp>
-            <when>{{dateFormat meta.Created 'iso'}}</when>
+            <when>{{dateFormat meta.Created 'iso8601'}}</when>
           </TimeStamp>
           <ExtendedData>
             <Data name="Keywords">

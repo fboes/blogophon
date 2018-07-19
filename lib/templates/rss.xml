@@ -20,7 +20,8 @@
         <title>{{meta.Title}}</title>
         <description><![CDATA[{{{safeHtmlTeaser}}}]]></description>
         <link>{{meta.AbsoluteLink}}?utm_source=newsfeed</link>
-        <pubDate>{{dateFormat meta.Created 'rfc'}}</pubDate>
+        <pubDate>{{dateFormat meta.Created 'rfc2822'}}</pubDate>
+        <atom:updated>{{dateFormat meta.Modified 'rfc3339'}}</atom:updated>
         <content:encoded><![CDATA[{{>contentHtml config=../config}}{{#unless ../config.specialFeatures.facebookinstantarticles}}{{{trackReplace ../config.htmlAnalyticsFeed meta.AbsoluteLink meta.Title}}}{{/unless}}]]></content:encoded>
         <author>{{meta.AuthorEmail}} ({{meta.AuthorName}})</author>
         <guid isPermaLink="false">{{meta.Id}}</guid>

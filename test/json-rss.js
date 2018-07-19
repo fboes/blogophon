@@ -11,6 +11,7 @@ describe('JSON-RSS', function() {
       AbsoluteUrl: 2,
       Title: 3,
       Created: new Date('2016-12-31'),
+      Modified: new Date('2017-01-01'),
       tags: [6, 7]
     }
   };
