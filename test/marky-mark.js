@@ -318,7 +318,7 @@ x files have been deleted
       );
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m !== undefined, 'String is not undefined');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 12, 'Markup added');
       assert.ok(m.match(/<\/?(u)>/));
 
       let x = `<pre><code class="lang-shell">#!/bin/bash
@@ -374,7 +374,7 @@ fi</code></pre>`;
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 65, 'Markup added');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 87, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
 
       x = `<pre><code class="lang-bash">git config --global user.name YOUR NAME
@@ -396,7 +396,7 @@ git config --global alias.graph 'git log --oneline --graph' # Show commits as gr
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 18, 'Markup added');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 31, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
 
       x = `<pre><code class="lang-bash">#!/bin/bash
@@ -413,7 +413,7 @@ npm publish</code></pre>`;
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 5, 'Markup added');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 7, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
 
       x = `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
@@ -422,7 +422,14 @@ npm publish</code></pre>`;
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 5, 'Markup added');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 8, 'Markup added');
+
+      x = `<pre><code class="language-bash">npm install glob --save-dev   # Installiert das Paket \`glob\`</code></pre>`;
+      m = markyMark(x);
+      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
+      assert.ok(m, 'Got output');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 2, 'Markup added');
+      assert.ok(m.match(/<u>#/), 'Comments found');
     });
 
     it('should do code highlighting for CSS', function() {
@@ -465,7 +472,7 @@ npm publish</code></pre>`;
       m = markyMark(x);
       //console.log(m);
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 24, 'Markup added');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 25, 'Markup added');
     });
 
   });
