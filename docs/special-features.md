@@ -52,6 +52,13 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 This JSON is understood by [Slack's slash command](https://slack.com/apps/A0F82E8CA-slash-commands), so you can have a Slack bot telling you about current articles.
 
+Webmentions
+-----------
+
+Whenever you publish an article linking to other websites, these websites will be notified via [Webmentions](https://indieweb.org/Webmention).
+
+Please note: The Blogophon is currently not able to receive Webmentions.
+
 Markdown
 --------
 

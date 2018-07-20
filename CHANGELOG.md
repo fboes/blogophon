@@ -14,6 +14,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Add `--version` CLI option to all CLI tools
 * :gift: Make configuration testable
 * :gift: Improve Bash syntax highlighting in Markdown articles
+* :gift: Add [Webmention](https://indieweb.org/Webmention) to notify other blogs of links
 
 1.5.0
 -----

@@ -47,6 +47,7 @@ ErrorDocument 410 /404.html
 
 <IfModule mod_headers.c>
   Header set Access-Control-Allow-Origin "*"
+  #Header set Link "<https://www.example.com/endpoint>; rel=webmention"
 </IfModule>
 
 {{#if config.specialFeatures.serversideincludes}}
