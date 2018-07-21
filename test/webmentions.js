@@ -81,8 +81,23 @@ describe('Webmentions', function() {
     'https://webmention.rocks/test/23/page'
   ];
   discoverUrls.forEach(function(url) {
-    it.skip('should discover endpoint URLs on test URL ' + url, function() {
-      assert.ok(webmentions.sendMentions('https://3960.org/sandbox/webmention.html', [url]));
+    it.skip('should discover endpoint URLs on test URL ' + url, function(done) {
+      this.timeout(10000);
+      webmentions
+        .sendMentions('https://3960.org/sandbox/webmention.php', [url])
+        .then(function() {
+          // if (result >= 400) {
+          //   result.forEach(function(r) {
+          //     console.log(r, url);
+          //   });
+          // }
+          assert.ok(true);
+        })
+        .catch(function() {
+          assert.ok(false);
+        })
+        .then(done, done)
+      ;
     });
   });
 });
