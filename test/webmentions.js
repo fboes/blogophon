@@ -21,7 +21,7 @@ describe('Webmentions', function() {
     externalUrls = webmentions.findExternalLinks({
       meta: {
         hasExternalLink: true,
-        Link: 'https://www.example.com/'
+        Link: 'https://www.example-mention.com/'
       }
     });
     assert.equal(externalUrls.length, 1);
@@ -29,7 +29,7 @@ describe('Webmentions', function() {
     externalUrls = webmentions.findExternalLinks({
       meta: {
         hasExternalLink: true,
-        Link: 'https://www.example.com/'
+        Link: 'https://www.example-mention.com/'
       },
       html: `I am a <a href="/internal">Link</a>.`
     });
@@ -38,20 +38,25 @@ describe('Webmentions', function() {
     externalUrls = webmentions.findExternalLinks({
       meta: {
         hasExternalLink: true,
-        Link: 'https://www.example.com/'
+        Link: 'https://www.example-mention.com/'
       },
-      html: `I am a <a href="https://www.example.com/external">Link</a>.`
+      html: `I am a <a href="https://www.example-mention.com/external">Link</a>.`
     });
     assert.equal(externalUrls.length, 2);
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
         hasExternalLink: true,
-        Link: 'https://www.example.com/identical'
+        Link: 'https://www.example-mention.com/identical'
       },
-      html: `I am a <a href="https://www.example.com/identical">Link</a>.`
+      html: `I am a <a href="https://www.example-mention.com/identical">Link</a>.`
     });
     assert.equal(externalUrls.length, 1);
+
+    externalUrls = webmentions.findExternalLinks({
+      html: `I am a <a href="https://www.amazon.com/identical">unmentionable Link</a>.`
+    });
+    assert.equal(externalUrls.length, 0);
     //console.log(externalUrls);
   });
 
