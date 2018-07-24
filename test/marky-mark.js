@@ -67,6 +67,23 @@ describe('MarkyMark', function() {
       //console.log(m);
       assert.ok(!m.match(/%/));
     });
+    it('should have some class(es)', function() {
+      let m, x = '<a href="https://www.example.com" title="nomention">Test</a>';
+      m = markyMark(x);
+      assert.ok(m.match(/class/));
+      assert.ok(!m.match(/title/));
+
+      x = '<a href="https://www.example.com" title="nofollow">Test</a>';
+      m = markyMark(x);
+      assert.ok(m.match(/rel/));
+      assert.ok(!m.match(/class/));
+      assert.ok(!m.match(/title/));
+
+      x = '<a href="https://www.example.com" title="nofun">Test</a>';
+      m = markyMark(x);
+      assert.ok(!m.match(/class/));
+      assert.ok(m.match(/title/));
+    });
   });
 
   describe('Tables', function() {
