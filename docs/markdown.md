@@ -55,8 +55,9 @@ Link:         http://www.example.com/   # If given clicking on links to this art
                                         # instead of the original post's link.
 Rating:       1/5                       # Rating given in a review, with `x` out of `y`, `1` being the lowest
                                         # possible rating.
-Draft:        yes                       # If set to `yes` this will prevent the article from being published.
+Draft:        true                      # If set to `true` this will prevent the article from being published.
                                         # Use this for drafts.
+NoWebmention: true                      # If set to `true` no Webmentions will be sent.
 ```
 
 Because the teaser text uses Markdown (see below), you may also use multiline description field for YAML frontmatter like this:
@@ -83,6 +84,10 @@ Title of your document
 Some paragraph with **bold** text, linking to [an example](https://www.example.com/).
 
 Another paragraph with some _italic_ text. And there is also `typewriter-style code`.
+
+This [example](https://www.example.com/ "nomention") will not be mentioned used for Webmentions.
+
+This [example](https://www.example.com/ "nofollow") will not followed by search engine robots.
 
 ```
 

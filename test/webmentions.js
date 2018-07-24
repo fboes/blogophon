@@ -25,6 +25,7 @@ describe('Webmentions', function() {
       }
     });
     assert.equal(externalUrls.length, 1);
+    assert.equal(externalUrls[0], 'https://www.example.com/');
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -34,6 +35,7 @@ describe('Webmentions', function() {
       html: `I am a <a href="/internal">Link</a>.`
     });
     assert.equal(externalUrls.length, 1);
+    assert.equal(externalUrls[0], 'https://www.example.com/');
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -43,6 +45,15 @@ describe('Webmentions', function() {
       html: `I am a <a href="https://www.example.com/external">Link</a>.`
     });
     assert.equal(externalUrls.length, 2);
+    assert.equal(externalUrls[0], 'https://www.example.com/');
+    assert.equal(externalUrls[1], 'https://www.example.com/external');
+
+    externalUrls = webmentions.findExternalLinks({
+      html: `I am a <a href="https://www.example.com/external">Link</a> and <a href="https://www.example.com/external2">so am I</a>.`
+    });
+    assert.equal(externalUrls.length, 2);
+    assert.equal(externalUrls[0], 'https://www.example.com/external');
+    assert.equal(externalUrls[1], 'https://www.example.com/external2');
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -52,7 +63,33 @@ describe('Webmentions', function() {
       html: `I am a <a href="https://www.example.com/identical">Link</a>.`
     });
     assert.equal(externalUrls.length, 1);
+    assert.equal(externalUrls[0], 'https://www.example.com/identical');
+
     //console.log(externalUrls);
+  });
+
+  it('should ignore some external URLs', function() {
+    let externalUrls;
+
+    externalUrls = webmentions.findExternalLinks({
+      meta: {
+        NoWebmention: true,
+        hasExternalLink: true,
+        Link: 'https://www.example.com/'
+      },
+      html: `I am a <a href="https://www.example.com/external">Link</a>.`
+    });
+    assert.equal(externalUrls.length, 0);
+
+    externalUrls = webmentions.findExternalLinks({
+      meta: {
+        hasExternalLink: true,
+        Link: 'https://www.example.com/'
+      },
+      html: `I am a <a href="https://www.example.com/external" class="nomention">Link</a>.`
+    });
+    assert.equal(externalUrls.length, 1);
+    assert.equal(externalUrls[0], 'https://www.example.com/');
   });
 
   const discoverUrls = [
