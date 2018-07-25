@@ -41,6 +41,11 @@
       "type": "image/png"
     },
     {
+      "src": "img/favicon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
       "src": "img/favicon-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
@@ -48,6 +53,11 @@
     {
       "src": "img/favicon-196x196.png",
       "sizes": "196x196",
+      "type": "image/png"
+    },
+    {
+      "src": "img/favicon-270x270.png",
+      "sizes": "270x270",
       "type": "image/png"
     },
     {
