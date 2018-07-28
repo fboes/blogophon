@@ -62,7 +62,26 @@ Last but not least have a look at [`lib/helpers/blogophon-handlebars-quoters.js`
 <!-- Replace %url and %title in config.htmlAnalyticsFeed with meta.AbsoluteLink & meta.Title -->
 {{{trackReplace config.htmlAnalyticsFeed meta.AbsoluteLink meta.Title}}}
 
+<!-- Test if two strings are equal -->
+{{#ifEquals tag 'new'}}It's new!{{/ifEquals}}
+
+<!--  Test if first string matches against rgeular expression -->
+{{#ifMatches tag '[Nn]ew'}}It's new!{{/ifMatches}}
+
 ```
+
+### Favicons
+
+The Blogophon uses special icon sizes defined in your `theme.json` for special purposes:
+
+| Size    | Purpose |
+| ------- | ------- |
+| 128×128 | Will be used as icon for RSS feeds, ATOM feeds, JSON-RSS, Feed-Json and `browserconfig.xml` |
+| 270×270 | Will be used in `browserconfig.xml` |
+| 558×270 | Will be used in `browserconfig.xml` |
+| 558×558 | Will be used in `browserconfig.xml` |
+
+The base template will als use any icon's filename containing `apple-touch-icon` as Apple Touch Icon.
 
 ---
 
