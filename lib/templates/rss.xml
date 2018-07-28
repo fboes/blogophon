@@ -13,6 +13,14 @@
     {{#if config.copyright}}
       <copyright>{{config.copyright}}</copyright>
     {{/if}}
+    <generator>{{config.generator}}</generator>
+    {{#if config.themeConf.icon128.src}}
+      <image>
+        <url>{{config.themeConf.icon128.src}}</url>
+        <title>{{config.name}}</title>
+        <link>{{config.absoluteBasePath}}</link>
+      </image>
+    {{/if}}
     <lastBuildDate>{{pubDate}}</lastBuildDate>
     <atom:link href="{{absoluteUrl}}" rel="self" type="application/rss+xml" />
     {{#each index}}

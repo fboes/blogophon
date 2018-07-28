@@ -11,6 +11,10 @@
   {{/if}}
   <updated>{{dateFormat pubDate 'rfc3339'}}</updated>
   <link href="{{absoluteUrl}}" rel="self" />
+  <generator>{{config.generator}}</generator>
+  {{#if config.themeConf.icon128.src}}
+    <icon>{{config.themeConf.icon128.src}}</icon>
+  {{/if}}
   {{#each index}}
     <entry xml:lang="{{meta.Language}}" xml:base="{{../config.absoluteBasePath}}">
       <title>{{meta.Title}}</title>

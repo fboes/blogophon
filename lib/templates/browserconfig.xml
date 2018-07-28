@@ -2,10 +2,22 @@
 <browserconfig>
    <msapplication>
      <tile>
-        <square70x70logo src="http://cdn.3960.org/images/tile-128x128.png"/>
-        <square150x150logo src="http://cdn.3960.org/images/tile-270x270.png"/>
-        <wide310x150logo src="http://cdn.3960.org/images/tile-558x270.png"/>
-        <square310x310logo src="http://cdn.3960.org/images/tile-558x558.png"/>
+        {{#each config.themeConf.icons}}
+          {{#ifEquals type 'image/png'}}
+            {{#ifEquals sizes '128x128'}}
+              <square70x70logo src="{{src}}"/>
+            {{/ifEquals}}
+            {{#ifEquals sizes '270x270'}}
+              <square150x150logo src="{{src}}"/>
+            {{/ifEquals}}
+            {{#ifEquals sizes '558x270'}}
+              <wide310x150logo src="{{src}}"/>
+            {{/ifEquals}}
+            {{#ifEquals sizes '558x558'}}
+              <square310x310logo src="{{src}}"/>
+            {{/ifEquals}}
+          {{/ifEquals}}
+        {{/each}}
         <TileColor>{{config.themeConf.themeColor}}</TileColor>
      </tile>
     {{#if config.specialFeatures.microsofttiles}}

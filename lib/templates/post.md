@@ -1,6 +1,6 @@
 ---
 {{#if draft}}
-Draft:     yes # Remove this line to undraft this article
+Draft:     true # Remove this line to undraft this article
 {{/if}}
 Date:      {{#ymlQuote}}{{{date}}}{{/ymlQuote}}
 {{#if tags}}
