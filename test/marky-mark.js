@@ -492,7 +492,43 @@ npm publish</code></pre>`;
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 25, 'Markup added');
     });
 
+    it('should do code highlighting for ABC', function() {
+      let m = markyMark(`<pre><code class="lang-abc">
+X:1
+T:Speed the Plough
+M:4/4
+C:Trad.
+K:G
+[|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|
+GABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|
+|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|
+g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
+| (d e f) !trill!g | [CEGc] |
+|:DEF FED| % this is an end of line comment
+% this is a comment line with !trill!
+DEF [r:and this is a remark with a | or so] FED:|]
+</code></pre>`
+      );
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 66);
+
+      m = markyMark(`<pre><code class="lang-abc">[|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|
+GABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|
+|:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|
+g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
+| (d e f) !trill!g | [CEGc] |
+|:DEF FED| % this is an end of line comment
+% this is a comment line with !trill!
+DEF [r:and this is a remark with a | or so] FED:|]
+</code></pre>`
+      );
+      //console.log(m);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 56);
+    });
   });
+
+
   describe('Emojis', function() {
 
     it('should convert ASCII art to Emojis', function() {

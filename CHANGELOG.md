@@ -17,6 +17,8 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Improve Bash syntax highlighting in Markdown articles
 * :gift: Add [Webmention](https://indieweb.org/Webmention) to notify other blogs of links
 * :gift: Add favicons to feeds
+* :gift: Add new properties to `manifest.json`
+* :gift: Add [abc music notation](http://abcnotation.com/wiki/abc:standard:v2.1) syntax highlighter
 
 1.5.0
 -----
