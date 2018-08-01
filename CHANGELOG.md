@@ -16,6 +16,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Make configuration testable
 * :gift: Improve Bash syntax highlighting in Markdown articles
 * :gift: Add favicons to feeds
+* :gift: Add new properties to `manifest.json`
 
 1.5.0
 -----

@@ -17,4 +17,9 @@ describe('Manifest', function() {
     assert.ok(manifest.start_url !== undefined,   'Start URL is defined');
     assert.ok(manifest.icons !== undefined,       'Icons are defined');
   });
+
+  it('should have extra properties', function() {
+    assert.ok(manifest.orientation !== undefined, 'orientation is defined');
+    assert.ok(manifest.display !== undefined,     'display is defined');
+  });
 });
