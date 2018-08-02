@@ -76,7 +76,7 @@ There is a [sample nginx configuration](nginx.conf) to use for your server.
 Automatically publish to external services
 ------------------------------------------
 
-The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter or Facebook. This idea is called [POSSE](https://indieweb.org/POSSE) (Publish (on your) Own Site, Syndicate Elsewhere).
+The Blogophon RSS feed allows for other services to automatically re-publish news about your new articles. This can be used to promote your articles on services like Twitter. This idea is called [POSSE](https://indieweb.org/POSSE) (Publish (on your) Own Site, Syndicate Elsewhere).
 
 ### IFTT
 
@@ -85,7 +85,7 @@ The Blogophon RSS feed allows for other services to automatically re-publish new
 1. Click on your user account and select "New applet".
 2. For `if [this]` select "Feed > New feed item".
 3. Add the feed URL of your blog (e.g. `http://www.example.com/posts.rss`). You may also choose to use the RSS feed of a special tag (e.g. `http://www.example.com/tagged/…/posts.rss`).
-4. For `then [that]` select "Twitter > Post a tweet", "Facebook > Create a link post", or whatever service you want to use.
+4. For `then [that]` select "Twitter > Post a tweet", or whatever service you want to use.
 5. Allow IFTTT to access the service you selected.
 6. Configure how your blog post's URL and title will be posted to the service you selected.
 
