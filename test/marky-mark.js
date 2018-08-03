@@ -456,7 +456,8 @@ npm publish</code></pre>`,
 RewriteRule  /url_1/  https://%{HTTP_HOST}/url_a/  [R=301,L]
 RewriteRule  /url_2/  https://%{HTTP_HOST}/url_b/  [R=301,L]
 </code></pre>`,
-        expected: 10
+        expected: 6,
+        hasComments: true
       },
       // -----------------------------------------------------------------------
       {
