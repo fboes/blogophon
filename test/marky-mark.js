@@ -391,6 +391,8 @@ fi</code></pre>`;
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 87, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
 
@@ -413,6 +415,8 @@ git config --global alias.graph 'git log --oneline --graph' # Show commits as gr
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 31, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
 
@@ -430,6 +434,8 @@ npm publish</code></pre>`;
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 7, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
 
@@ -445,6 +451,8 @@ npm publish</code></pre>`;
       m = markyMark(x);
       //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
       assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 2, 'Markup added');
       assert.ok(m.match(/<u>#/), 'Comments found');
     });
@@ -469,6 +477,8 @@ npm publish</code></pre>`;
       m = markyMark(x);
       //console.log(m);
       assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
     });
 
@@ -487,9 +497,22 @@ npm publish</code></pre>`;
 ;</code></pre>`;
 
       m = markyMark(x);
-      //console.log(m);
       assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/));
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
       assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 25, 'Markup added');
+
+      x = `<pre><code class="lang-sql"># Update prices
+UPDATE articles_prices SET price = 12.40 WHERE articles_prices.ean = 'ABC 1';
+UPDATE articles_prices SET price = 19.49 WHERE articles_prices.ean = 'ABC 2';
+UPDATE articles_prices SET price = 14.99 WHERE articles_prices.ean = 'ABC 3';</code></pre>`;
+
+      m = markyMark(x);
+      // console.log(m);
+      assert.ok(m, 'Got output');
+      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
+      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 19, 'Markup added');
     });
 
     it('should do code highlighting for ABC', function() {
