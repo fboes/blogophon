@@ -288,9 +288,10 @@ And some \`code\` or stuff * like * that, and an http://www.example.com URL
       assert.ok(m.match(/<del>/));
     });
 
-    it('should do code highlighting for PHP', function() {
-
-      let m, x = `<p>Autoloading ist in PHP eine feine Sache. Statt jede einzelne Klasse mittels eigenem <code>require_once</code> einzubinden, kann man bei existierendem Autoloader einfach durch Aufruf der Klasse diese Laden.</p>
+    const tests = [
+      {
+        language: 'PHP',
+        snippet: `<p>Autoloading ist in PHP eine feine Sache. Statt jede einzelne Klasse mittels eigenem <code>require_once</code> einzubinden, kann man bei existierendem Autoloader einfach durch Aufruf der Klasse diese Laden.</p>
 <!-- more -->
 <p id="more">Eine Klasse legt man dabei einfach in einer Verzeichnisstruktur ab, z.B. unter <code>Example/Foo.php</code>. Das Innere der Datei sieht dann wie folgt aus:</p>
 <pre><code class="lang-php">namespace Example;
@@ -308,37 +309,25 @@ class Foo
 </code></pre>
 <p>Und die Klasse setzt man dann nach eingeschalteten Autoloader wie folgt ein:</p>
 <pre><code class="lang-php">$foo = new \\Example\\Foo();
-</code></pre>`;
-
-      m = markyMark(x);
-      //console.log(m);
-
-      assert.ok(m);
-      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\/\//g));
-      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>namespace<\/\1>/g));
-      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$classname<\/\1>/g));
-      assert.ok(m.match(/<(b|i|var|em|kbd|samp|u)>\$foo<\/\1>/g));
-    });
-
-
-    it('should do code highlighting for Shell / Bash', function() {
-      let m;
-
-      m = markyMark(
-        `<pre><code class="lang-shell">$ rm -rf *
+</code></pre>`,
+        expected: 22
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Shell',
+        snippet: `<pre><code class="lang-shell">$ rm -rf *
 $ rm -rf .
 $ cd %USERPROFILE%
 # Nasty nasty
 echo $DING
 x files have been deleted
-</code></pre>`
-      );
-      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 12, 'Markup added');
-      assert.ok(m.match(/<\/?(u)>/));
-
-      let x = `<pre><code class="lang-shell">#!/bin/bash
+</code></pre>`,
+        expected: 12 * 2
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Shell',
+        snippet: `<pre><code class="lang-shell">#!/bin/bash
 set -e
 cd \`dirname $0\`/..
 if [ ! -e build/config.sh ]; then
@@ -386,17 +375,14 @@ if [ ! -d /vagrant ]; then
   [ -d node_modules ] || npm install
   else
   [ -d node_modules ] || sudo npm install --no-bin-links
-fi</code></pre>`;
-
-      m = markyMark(x);
-      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 87, 'Markup added');
-      assert.ok(m.match(/<u>#/), 'Comments found');
-
-      x = `<pre><code class="lang-bash">git config --global user.name YOUR NAME
+fi</code></pre>`,
+        expected: 87 * 2,
+        hasComments: true
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: '',
+        snippet: `<pre><code class="lang-bash">git config --global user.name YOUR NAME
 git config --global user.email YOURMAIL@example.com
 git config --global tag.sort version:refname
 git config --global core.autocrlf false # https://stackoverflow.com/a/13154031/3232532
@@ -410,17 +396,14 @@ git config --global alias.acp '!f() { git add -A && git commit -m &quot;$@&quot;
 git config --global alias.graph 'git log --oneline --graph' # Show commits as graph
 
 # git show: Diff of latest commit
-# git branch -r: Show all branches</code></pre>`;
-
-      m = markyMark(x);
-      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 31, 'Markup added');
-      assert.ok(m.match(/<u>#/), 'Comments found');
-
-      x = `<pre><code class="lang-bash">#!/bin/bash
+# git branch -r: Show all branches</code></pre>`,
+        expected: 62,
+        hasComments: true
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Bash',
+        snippet: `<pre><code class="lang-bash">#!/bin/bash
 set -e
 cd \`dirname $0\`/..
 
@@ -429,36 +412,27 @@ npm test
 rm package-lock.json
 npm version patch
 git push --follow-tags
-npm publish</code></pre>`;
-
-      m = markyMark(x);
-      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 7, 'Markup added');
-      assert.ok(m.match(/<u>#/), 'Comments found');
-
-      x = `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
-</code></pre>`;
-
-      m = markyMark(x);
-      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
-      assert.ok(m, 'Got output');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 8, 'Markup added');
-
-      x = `<pre><code class="language-bash">npm install glob --save-dev   # Installiert das Paket \`glob\`</code></pre>`;
-      m = markyMark(x);
-      //console.log(m, m.match(/<(b|i|var|em|kbd|samp|u)>/g).length);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 2, 'Markup added');
-      assert.ok(m.match(/<u>#/), 'Comments found');
-    });
-
-    it('should do code highlighting for CSS', function() {
-      let m, x = `<pre><code class="lang-css">
+npm publish</code></pre>`,
+        expected: 14
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Shell',
+        snippet: `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
+</code></pre>`,
+        expected: 16
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Bash',
+        snippet: `<pre><code class="language-bash">npm install glob --save-dev   # Installiert das Paket \`glob\`</code></pre>`,
+        expected: 4
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'CSS',
+        snippet: `<pre><code class="lang-css">
+    }
 * {
   margin: 0;
   padding: 0;
@@ -472,18 +446,23 @@ npm publish</code></pre>`;
 .class {
   margin-top: 0.2em;
 }
-</code></pre>`;
-
-      m = markyMark(x);
-      //console.log(m);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 10, 'Markup added');
-    });
-
-    it('should do code highlighting for SQL', function() {
-      let m, x = `<pre><code class="lang-sql">SELECT
+</code></pre>`,
+        expected: 20
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Apache Configuration',
+        snippet: `<pre><code class="lang-apacheconf"># Apache redirects
+RewriteRule  /url_1/  https://%{HTTP_HOST}/url_a/  [R=301,L]
+RewriteRule  /url_2/  https://%{HTTP_HOST}/url_b/  [R=301,L]
+</code></pre>`,
+        expected: 6,
+        hasComments: true
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'SQL',
+        snippet: `<pre><code class="lang-sql">SELECT
   CONCAT(
     &quot;UPDATE articles_prices SET price = &quot;,
     IF(personal_offers.personal_offer = 0, products.products_price, personal_offers.personal_offer),
@@ -494,29 +473,22 @@ npm publish</code></pre>`;
   FROM personal_offers
   JOIN products ON products.id = personal_offers.products_id
   WHERE personal_offers.type = 1
-;</code></pre>`;
-
-      m = markyMark(x);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/));
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 25, 'Markup added');
-
-      x = `<pre><code class="lang-sql"># Update prices
+;</code></pre>`,
+        expected: 50
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'SQL',
+        snippet: `<pre><code class="lang-sql"># Update prices
 UPDATE articles_prices SET price = 12.40 WHERE articles_prices.ean = 'ABC 1';
 UPDATE articles_prices SET price = 19.49 WHERE articles_prices.ean = 'ABC 2';
-UPDATE articles_prices SET price = 14.99 WHERE articles_prices.ean = 'ABC 3';</code></pre>`;
-
-      m = markyMark(x);
-      // console.log(m);
-      assert.ok(m, 'Got output');
-      assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-      assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
-      assert.equal(m.match(/<(b|i|var|em|kbd|samp|u)>/g).length, 19, 'Markup added');
-    });
-
-    it('should do code highlighting for ABC', function() {
-      let m = markyMark(`<pre><code class="lang-abc">
+UPDATE articles_prices SET price = 14.99 WHERE articles_prices.ean = 'ABC 3';</code></pre>`,
+        expected: 38
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'abc',
+        snippet: `<pre><code class="lang-abc">
 X:1
 T:Speed the Plough
 M:4/4
@@ -530,12 +502,13 @@ g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
 |:DEF FED| % this is an end of line comment
 % this is a comment line with !trill!
 DEF [r:and this is a remark with a | or so] FED:|]
-</code></pre>`
-      );
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 66);
-
-      m = markyMark(`<pre><code class="lang-abc">[|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|
+</code></pre>`,
+        expected: 66
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'abc',
+        snippet: `<pre><code class="lang-abc">[|:GABc dedB|dedB dedB|c2ec B2dB|c2A2 A2BA|
 GABc dedB|dedB dedB|c2ec B2dB|A2F2 G4:|
 |:g2gf gdBd|g2f2 e2d2|c2ec B2dB|c2A2 A2df|
 g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
@@ -543,11 +516,30 @@ g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
 |:DEF FED| % this is an end of line comment
 % this is a comment line with !trill!
 DEF [r:and this is a remark with a | or so] FED:|]
-</code></pre>`
-      );
-      //console.log(m);
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 56);
+</code></pre>`,
+        expected: 56
+      }
+    ];
+
+    tests.forEach(function(test) {
+      it('should do code highlighting for ' + test.language, function() {
+        const m = markyMark(test.snippet);
+        // if (test.language === 'Apache Configuration') {
+        //   console.log(m);
+        // }
+        assert.ok(m, 'Got output');
+        assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
+        assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
+        let tagsFound = m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length;
+        if (test.expected) {
+          assert.equal(tagsFound, test.expected, 'Markup added');
+        } else {
+          assert.ok(tagsFound > 0, 'Markup added with ' + tagsFound + ' tags');
+        }
+        if (test.hasComments) {
+          assert.ok(m.match(/<u>/), 'Comments found');
+        }
+      });
     });
   });
 
