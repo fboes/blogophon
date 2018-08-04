@@ -314,7 +314,7 @@ class Foo
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Shell',
+        language: 'Shell (simple example)',
         snippet: `<pre><code class="lang-shell">$ rm -rf *
 $ rm -rf .
 $ cd %USERPROFILE%
@@ -326,7 +326,7 @@ x files have been deleted
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Shell',
+        language: 'Shell (long example)',
         snippet: `<pre><code class="lang-shell">#!/bin/bash
 set -e
 cd \`dirname $0\`/..
@@ -381,7 +381,7 @@ fi</code></pre>`,
       },
       // -----------------------------------------------------------------------
       {
-        language: '',
+        language: 'Bash (git config)',
         snippet: `<pre><code class="lang-bash">git config --global user.name YOUR NAME
 git config --global user.email YOURMAIL@example.com
 git config --global tag.sort version:refname
@@ -402,7 +402,7 @@ git config --global alias.graph 'git log --oneline --graph' # Show commits as gr
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Bash',
+        language: 'Bash (npm publish)',
         snippet: `<pre><code class="lang-bash">#!/bin/bash
 set -e
 cd \`dirname $0\`/..
@@ -417,14 +417,15 @@ npm publish</code></pre>`,
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Shell',
+        language: 'Shell (mysql)',
         snippet: `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
+$ mysqldump -h $HOSTNAME -u $USERNAME -p$PASSWORD --skip-comments --add-drop-table --single-transaction --quick $DATABASE &lt; dbdump-$(date "+%Y-%m-%d-%H-%M").sql
 </code></pre>`,
-        expected: 16
+        expected: 42
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Bash',
+        language: 'Bash (with `...`)',
         snippet: `<pre><code class="language-bash">npm install glob --save-dev   # Installiert das Paket \`glob\`</code></pre>`,
         expected: 4
       },
@@ -524,9 +525,9 @@ DEF [r:and this is a remark with a | or so] FED:|]
     tests.forEach(function(test) {
       it('should do code highlighting for ' + test.language, function() {
         const m = markyMark(test.snippet);
-        // if (test.language === 'Apache Configuration') {
-        //   console.log(m);
-        // }
+        if (test.output) {
+          console.log(m);
+        }
         assert.ok(m, 'Got output');
         assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
         assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
