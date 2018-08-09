@@ -80,6 +80,9 @@ describe('URL', function() {
   it('should test Posts', function() {
     assert.ok(PostUrl('users/posts/ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
     assert.ok(PostUrl('/users/posts/ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+    assert.ok(PostUrl('\\users\\posts\\ich-und-du.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+    assert.ok(PostUrl('/users/posts/ich-und-du/index.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
+    assert.ok(PostUrl('\\users\\posts\\ich-und-du\\index.md').relativeUrl().match(/^\S*\/posts\/ich-und-du\/$/));
   });
 
   it('should test EmptyTransformation', function() {

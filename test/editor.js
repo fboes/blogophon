@@ -16,11 +16,14 @@ describe('Ampify', function() {
 
   it('should do filenameFromTitle', function() {
     assert.equal(editor.filenameFromTitle('Foo and Bar'), path.join(config.directories.data, 'foo-bar', 'index.md'));
+    assert.equal(editor.filenameFromTitle('Foo and Bar', 0), path.join(config.directories.data, 'foo-bar.md'));
+    assert.equal(editor.filenameFromTitle('Foo and Bar', 1), path.join(config.directories.data, 'foo-bar', 'index.md'));
   });
 
-  it('should do dirnameFromFilename', function() {
-    assert.equal(editor.dirnameFromFilename('/post/bla/index.md'), path.dirname('/post/bla/index.md'));
-    assert.equal(editor.dirnameFromFilename('/post/bla/index.md'), '/post/bla');
+  it('should do getAttachmentDirectoryFromFilename', function() {
+    assert.equal(editor.getAttachmentDirectoryFromFilename('/post/bla/index.md'), path.dirname('/post/bla/index.md'));
+    assert.equal(editor.getAttachmentDirectoryFromFilename('/post/bla/index.md'), '/post/bla');
+    assert.equal(editor.getAttachmentDirectoryFromFilename('/post/bla.md'), '/post/bla');
   });
 
   it('should do isSlugInDirectory', function() {
