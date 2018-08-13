@@ -58,7 +58,7 @@ Editor
 
 If you use [Sublime Text](https://www.sublimetext.com/) for editing your Markdown files, consider installing [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended). It supports YAML frontmatter and code block syntax highlighting in Markdown files. Also [Markdown​Live​Preview](https://packagecontrol.io/packages/MarkdownLivePreview) will show ow your Markdown will finally look like.
 
-If you use [Microsoft Visual Studio Code](https://code.visualstudio.com/) for editing your Markdown files, consider installing [Markdown Preview Enhanced](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced). It shows a nice preview of your article while you are writing Markdown.
+If you use [Microsoft Visual Studio Code](https://code.visualstudio.com/) you can toggle the built-in Markdown preview by pressing `Ctrl + K`, followed by a `V`.
 
 If you use [Github Atom](https://atom.io/) you can toggle the built-in Markdown preview by pressing `Ctrl + Shift + M`.
 
