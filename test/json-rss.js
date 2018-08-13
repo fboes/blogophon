@@ -24,7 +24,7 @@ describe('JSON-RSS', function() {
     assert.ok(jsonRss.channel.link !== undefined);
     assert.ok(jsonRss.channel.description !== undefined);
     assert.ok(jsonRss.channel.language !== undefined);
-    assert.equal(jsonRss.channel.lastBuildDateTs, 1483142400);
+    assert.ok(jsonRss.channel.atomUpdated !== undefined);
     assert.ok(jsonRss.channel.items[0] !== undefined);
     assert.ok(jsonRss.channel.items[0].title !== undefined);
     assert.ok(jsonRss.channel.items[0].link !== undefined);
@@ -34,6 +34,7 @@ describe('JSON-RSS', function() {
   it('should have date properties', function() {
     assert.ok(jsonRss.channel.items[0].pubDate !== undefined);
     assert.ok(jsonRss.channel.items[0].pubDate.match(/Sat, 31 Dec 2016/));
-    assert.equal(jsonRss.channel.items[0].pubDateTs, 1483142400);
+    assert.ok(jsonRss.channel.items[0].atomUpdated !== undefined);
+    assert.ok(jsonRss.channel.items[0].atomPublished !== undefined);
   });
 });
