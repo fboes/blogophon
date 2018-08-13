@@ -17,7 +17,7 @@
     {{#if config.themeConf.icon128.src}}
       <image>
         <url>{{config.themeConf.icon128.src}}</url>
-        <title>{{config.name}}</title>
+        <title>{{config.name}} | {{title}}</title>
         <link>{{config.absoluteBasePath}}</link>
       </image>
     {{/if}}
