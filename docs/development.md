@@ -8,6 +8,16 @@ Gulp
 
 The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. It will check and compress your files while you are editing.
 
+To install all tools required for Gulp execute these commands from the project root directory:
+
+```bash
+npm install gulp -g
+npm install
+```
+
+Afterwards these commands become available:
+
+
 | Command      | Description                                           |
 | ------------ | ----------------------------------------------------- |
 | `gulp`       | Starts `gulp watch` and `gulp serve`                  |
