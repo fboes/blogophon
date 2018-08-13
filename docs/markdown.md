@@ -117,7 +117,15 @@ Attachments
 
 Attachment files are files you want to use for your article. These files may be images, audio and video files, or any other type of document you can think of.
 
-Put attachment files for your articles into a folder having the same name as the corresponding Markdown file without the file suffix `.md`:
+Put attachment files into the same directory as your article:
+
+```
+/user/posts/example/index.md     # Markdown file
+/user/posts/example/image.jpg    # Attachment file folder with example image
+/user/posts/example/example.pdf  # Attachment file folder with example PDF document
+```
+
+If you are using the old method of creating Markdown files, put attachments into a folder having the same name as the corresponding Markdown file without the file suffix `.md`:
 
 ```
 /user/posts/example.md           # Markdown file

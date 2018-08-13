@@ -6,6 +6,7 @@ You do not have to use `blogophon` to generate your blog. All operations can be 
 ## Create a new article
 
 1. Create a new Markdown file in `user/posts`, e.g. `user/posts/TITLE.md`. The file name `TITLE` will be used as URL slug for your published article.
+   Alternatively put your new article in `user/posts/TITLE/index.md`. The directory name `TITLE` will be used as URL slug for your published article. This pattern is helpful if you plan on adding images to your article, as your images will be in the same directory as your article.
 1. Edit your new files (see below).
 
 ## Edit existing markdown files
