@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :bomb: Move timestamp conversion into templates, freeing models of converted timestamps
 * :bomb: Switch unit tests to use [Mocha](https://mochajs.org/) instead of Nodeunit
 * :bomb: Change Geo-JSON properties to match JSON-Feed, add `atom:update` to RSS & JSON-RSS, fix date format in feeds
+* :bomb: Replace `_language` in JSON feed with more general `_rss`
 * :bomb: Switching Markdown file structure from `post/TITLE.md` to `post/TITLE/index.md`
 * :pill: Fix `browserconfig.xml` and the way configuration is handled
 * :pill: Fix timezone for ICS files
