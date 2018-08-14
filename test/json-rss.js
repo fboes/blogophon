@@ -24,17 +24,18 @@ describe('JSON-RSS', function() {
     assert.ok(jsonRss.channel.link !== undefined);
     assert.ok(jsonRss.channel.description !== undefined);
     assert.ok(jsonRss.channel.language !== undefined);
-    assert.ok(jsonRss.channel.atomUpdated !== undefined);
+    assert.ok(jsonRss.channel.atom_updated !== undefined);
     assert.ok(jsonRss.channel.items[0] !== undefined);
     assert.ok(jsonRss.channel.items[0].title !== undefined);
     assert.ok(jsonRss.channel.items[0].link !== undefined);
     assert.ok(jsonRss.channel.items[0].description !== undefined);
+    assert.ok(jsonRss.channel.items[0].content_encoded !== undefined);
   });
 
   it('should have date properties', function() {
     assert.ok(jsonRss.channel.items[0].pubDate !== undefined);
     assert.ok(jsonRss.channel.items[0].pubDate.match(/Sat, 31 Dec 2016/));
-    assert.ok(jsonRss.channel.items[0].atomUpdated !== undefined);
-    assert.ok(jsonRss.channel.items[0].atomPublished !== undefined);
+    assert.ok(jsonRss.channel.items[0].atom_updated !== undefined);
+    assert.ok(jsonRss.channel.items[0].atom_published !== undefined);
   });
 });

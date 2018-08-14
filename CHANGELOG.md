@@ -7,7 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :bomb: Switch unit tests to use [Mocha](https://mochajs.org/) instead of Nodeunit
 * :bomb: Change Geo-JSON properties to match JSON-Feed, add `atom:update` to RSS & JSON-RSS, fix date format in feeds
 * :bomb: Replace `_language` in JSON feed with more general `_rss`
-* :bomb: Replace proprietary date properties in JSON-RSS with Atom-properties
+* :bomb: Replace proprietary date properties in JSON-RSS with Atom-properties and change JSON-RSS to have proper XMLNS
 * :pill: Fix `browserconfig.xml` and the way configuration is handled
 * :pill: Fix timezone for ICS files
 * :gift: Add tracking pixel to newsfeeds, with `%url` and `%title` as replacements
