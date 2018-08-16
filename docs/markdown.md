@@ -263,7 +263,7 @@ The following identifiers are supported:
 
 * `abc` to output [abc music notation](http://abcnotation.com/wiki/abc:standard:v2.1) examples
 * `apacheconf`
-* `axiom` for [Exapunk AXIOM](http://www.zachtronics.com/exapunks/)
+* `axiom` for [EXAPUNK's AXIOM](http://www.zachtronics.com/exapunks/)
 * `css`
 * `html`
 * `ini`

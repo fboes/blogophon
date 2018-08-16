@@ -556,9 +556,14 @@ LINK -1
 DROP
 
 NOTE DONE
+
+@REP 3
+  TEST X = @{0,5}
+  TJMP CASE@{0,1}
+@END
 </code></pre>`,
         hasComments: true,
-        expected: 124
+        expected: 124 + 16
       }
     ];
 
