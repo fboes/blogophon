@@ -519,6 +519,46 @@ g2gf g2Bd|g2f2 e2d2|c2ec B2dB|A2F2 G4:|
 DEF [r:and this is a remark with a | or so] FED:|]
 </code></pre>`,
         expected: 56
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Axiom for Exapunk',
+        snippet: `<pre><code class="lang-axiom">GRAB 200
+SEEK 9999
+SEEK -2
+COPY F X
+COPY F T
+SEEK -9999
+
+NOTE READ FILE TO OTHER EXA
+MARK READING
+  COPY F M
+  TEST EOF
+FJMP READING
+WIPE
+
+NOTE GET STUFF FROM API
+COPY #SYS X
+ADDI X 1 X
+SUBI X 1 X
+MULI X 1 X
+DIVI X 1 X
+TEST X = 1
+TJMP WRITING
+HALT
+
+NOTE WRITE API TO FILE
+MARK WRITING
+MAKE
+COPY X F
+
+LINK -1
+DROP
+
+NOTE DONE
+</code></pre>`,
+        hasComments: true,
+        expected: 124
       }
     ];
 
@@ -536,6 +576,9 @@ DEF [r:and this is a remark with a | or so] FED:|]
           assert.equal(tagsFound, test.expected, 'Markup added');
         } else {
           assert.ok(tagsFound > 0, 'Markup added with ' + tagsFound + ' tags');
+        }
+        if (test.output) {
+          console.log('Markup added with ' + tagsFound + ' tags');
         }
         if (test.hasComments) {
           assert.ok(m.match(/<u>/), 'Comments found');
