@@ -261,15 +261,17 @@ You can add an optional language identifier to enable syntax highlighting in you
 
 The following identifiers are supported:
 
-* `css`
-* `html` & `xml`
-* `yaml`
-* `ini`
-* `apacheconf`
-* `markdown` to output Markdown examples.
-* `shell`, `dos` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
-* `sql`
 * `abc` to output [abc music notation](http://abcnotation.com/wiki/abc:standard:v2.1) examples
+* `apacheconf`
+* `axiom` for [Exapunk AXIOM](http://www.zachtronics.com/exapunks/)
+* `css`
+* `html`
+* `ini`
+* `markdown` to output Markdown examples.
+* `shell`, `dos`, `bash` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
+* `sql`
+* `xml`
+* `yaml`
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
 
