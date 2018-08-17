@@ -522,7 +522,7 @@ DEF [r:and this is a remark with a | or so] FED:|]
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Axiom for Exapunk',
+        language: 'Axiom for Exapunks',
         snippet: `<pre><code class="lang-axiom">GRAB 200
 SEEK 9999
 SEEK -2
