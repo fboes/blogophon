@@ -522,7 +522,7 @@ DEF [r:and this is a remark with a | or so] FED:|]
       },
       // -----------------------------------------------------------------------
       {
-        language: 'Axiom for Exapunk',
+        language: 'Axiom for Exapunks',
         snippet: `<pre><code class="lang-axiom">GRAB 200
 SEEK 9999
 SEEK -2
@@ -556,9 +556,14 @@ LINK -1
 DROP
 
 NOTE DONE
+
+@REP 3
+  TEST X = @{0,5}
+  TJMP CASE@{0,1}
+@END
 </code></pre>`,
         hasComments: true,
-        expected: 124
+        expected: 124 + 16
       }
     ];
 
