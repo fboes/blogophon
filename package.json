@@ -78,6 +78,8 @@
     },
     "globals": {},
     "rules": {
+      "arrow-parens": ["error", "always"],
+      "arrow-body-style": ["error", "always"],
       "brace-style": 2,
       "comma-dangle": [
         2,
