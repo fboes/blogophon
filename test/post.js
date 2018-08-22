@@ -144,12 +144,12 @@ describe('Post', function() {
   });
 
   it('should test Links', function() {
-    const markdown = 'www.1test.com _will_ be found as of `marked@0.3.15` '
-    + 'And [this link](http://www.2test.com) will be found.'
-    + 'As will be [this link](https://www.3test.com).'
-    + 'An ![image](https://www.4test.com) should not be found.'
-    + 'As will be [this link](https://www.5test.com/some-compilcated-foo?a#b).'
-    + 'But not example.6test.com or 7test.com (URLs with subdomains without proper links)'
+    const markdown = `www.1test.com _will_ be found as of \`marked@0.3.15\`
+And [this link](http://www.2test.com) will be found.
+As will be [this link](https://www.3test.com).
+An ![image](https://www.4test.com) should not be found.
+As will be [this link](https://www.5test.com/some-compilcated-foo?a#b).
+But not example.6test.com or 7test.com (URLs with subdomains without proper links)`
   ;
     const html = post('test.md', markdown, {
       Description: 'None',
@@ -166,22 +166,19 @@ describe('Post', function() {
     assert.equal(testLinks[3],    'https://www.5test.com/some-compilcated-foo?a#b');
   });
 
-
-/*
-  it('should test SpecialProperties', function() {
-    var testPost = post('test.md', 'Test', {
+  it('should convert internal links', function() {
+    const markdown = `This is an [internal link](internal-link.md), as is [this](internal-link2/index.md) and [this](../internal-link3/index.md).`;
+    const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()
     });
+    const testLinks = testPost.getAllExternalLinks();
+    //console.log(testPost.html);
 
-    if (config.specialFeatures.acceleratedmobilepages) {
-      assert.ok(testPost.safeHtmlTeaser);
-      assert.ok(testPost.safeHtmlTeaser === '<p>Description</p>');
-    }
-    if (config.specialFeatures.jsonrss || config.specialFeatures.atom || config.specialFeatures.rss) {
-      assert.ok(testPost.ampHtml);
-      assert.ok(testPost.ampHtmlTeaser === '<p>Description</p>');
-    }
+    assert.equal(testLinks.length, 0);
+    assert.ok(testPost.html.match(/\/posts\/internal-link\//));
+    assert.ok(testPost.html.match(/\/posts\/internal-link2\//));
+    assert.ok(testPost.html.match(/\/posts\/internal-link3\//));
   });
-*/
+
 });
