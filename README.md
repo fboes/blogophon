@@ -53,6 +53,11 @@ Update
 1. To find out if your Blogophon needs updating, run `npm outdated -g blogophon`.
 2. Run `npm update -g blogophon` to update your local Blogophon installation to the latest stable release.
 
+Feedback
+--------
+
+In case of issues or suggestions for the Blogophon consider using [Blogophon's issue board](https://github.com/fboes/blogophon/issues).
+
 Status
 -------
 
