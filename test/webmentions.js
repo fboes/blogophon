@@ -3,8 +3,8 @@
 const assert = require('assert');
 const webmentions = require('../lib/helpers/webmentions')();
 
-describe('Webmentions', function() {
-  it('should find external URLs', function() {
+describe('Webmentions', () => {
+  it('should find external URLs', () => {
     let externalUrls;
 
     externalUrls = webmentions.findExternalLinks({});
@@ -68,7 +68,7 @@ describe('Webmentions', function() {
     //console.log(externalUrls);
   });
 
-  it('should ignore some external URLs', function() {
+  it('should ignore some external URLs', () => {
     let externalUrls;
 
     externalUrls = webmentions.findExternalLinks({
@@ -90,6 +90,19 @@ describe('Webmentions', function() {
     });
     assert.equal(externalUrls.length, 1);
     assert.equal(externalUrls[0], 'https://www.example.com/');
+  });
+
+  it('should ignore external URLs from the black list', () => {
+    let externalUrls;
+
+    externalUrls = webmentions.findExternalLinks({
+      meta: {
+        hasExternalLink: true,
+        Link: 'https://example.wikipedia.org/external2'
+      },
+      html: `I am a <a href="https://example.wikipedia.org/external">Link</a>.`
+    });
+    assert.equal(externalUrls.length, 0);
   });
 
   const discoverUrls = [
@@ -122,7 +135,7 @@ describe('Webmentions', function() {
       this.timeout(10000);
       webmentions
         .sendMentions('https://3960.org/sandbox/webmention.php', [url])
-        .then(function() {
+        .then(() => {
           // if (result >= 400) {
           //   result.forEach(function(r) {
           //     console.log(r, url);
@@ -130,7 +143,7 @@ describe('Webmentions', function() {
           // }
           assert.ok(true);
         })
-        .catch(function() {
+        .catch(() => {
           assert.ok(false);
         })
         .then(done, done)
