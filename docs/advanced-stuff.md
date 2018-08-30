@@ -100,8 +100,7 @@ If you are not able to globally install the Blogophon
 
 In certain environments you may not be able to install the Blogophon globally. Thankfully there is a way to locally install the Blogophon.
 
-1. Optional: If you do not need the development tools, call `export NODE_ENV=production` (Linux / MacOSX) or `SET NODE_ENV=production` (Windows) to set Node to production state.
-1. Run `npm init && npm install blogophon` in a folder you have access to.
+1. Run `npm init && npm install blogophon --production` in a folder you have access to.
 
 * All commands relating to `blogophon` may now be called by executing `node node_modules/.bin/blogophon`
 * All commands relating to `blogophon-generate` may now be called by executing `node node_modules/.bin/blogophon-generate`

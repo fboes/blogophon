@@ -1,25 +1,25 @@
 'use strict';
 
 // Include gulp
-let gulp = require('gulp');
-let pkg  = require('./package.json');
-let beep = require('beepbeep');
-let onError = function() {
+const gulp = require('gulp');
+const pkg  = require('./package.json');
+const beep = require('beeper');
+const onError = function() {
   beep();
   return true;
 };
 
 // Include Our Plugins
-let eslint     = require('gulp-eslint');
-let mocha      = require('gulp-mocha');
-let gls        = require('gulp-live-server');
-let plumber    = require('gulp-plumber');
-let sass       = require('gulp-sass');
-let rename     = require("gulp-rename");
-let uglify     = require('gulp-uglify');
-let postcss    = require('gulp-postcss');
-let replace    = require('gulp-replace');
-let autoprefixer = require('autoprefixer');
+const eslint     = require('gulp-eslint');
+const mocha      = require('gulp-mocha');
+const gls        = require('gulp-live-server');
+const plumber    = require('gulp-plumber');
+const sass       = require('gulp-sass');
+const rename     = require("gulp-rename");
+const uglify     = require('gulp-uglify');
+const postcss    = require('gulp-postcss');
+const replace    = require('gulp-replace');
+const autoprefixer = require('autoprefixer');
 
 // Lint Task
 gulp.task('eslint', function() {

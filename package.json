@@ -29,7 +29,7 @@
   ],
   "devDependencies": {
     "autoprefixer": "^9.1.3",
-    "beepbeep": "^1.2.2",
+    "beeper": "^1.1.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^5.0.0",
     "gulp-live-server": "0.0.31",
