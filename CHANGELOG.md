@@ -22,6 +22,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Add new properties to `manifest.json`
 * :gift: Add [abc music notation](http://abcnotation.com/wiki/abc:standard:v2.1) syntax highlighter
 * :gift: Add [Exapunks' AXIOM](http://www.zachtronics.com/exapunks/) syntax highlighter
+* :gift: Add more information to `opensearch.xml`
 
 1.5.0
 -----
