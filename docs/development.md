@@ -75,9 +75,11 @@ Last but not least have a look at [`lib/helpers/blogophon-handlebars-quoters.js`
 <!-- Test if two strings are equal -->
 {{#ifEquals tag 'new'}}It's new!{{/ifEquals}}
 
-<!--  Test if first string matches against rgeular expression -->
+<!--  Test if first string matches against regular expression -->
 {{#ifMatches tag '[Nn]ew'}}It's new!{{/ifMatches}}
 
+<!-- Export template variables to Javascript (e.g. for Google Tag Manager) -->
+<script>{{{dataLayer post.meta}}}</script>
 ```
 
 ### Favicons
