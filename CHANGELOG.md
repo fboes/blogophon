@@ -3,6 +3,11 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :gift: Add definition lists for Markdown
+
+2.0.1
+-----
+
 * :bomb: Move timestamp conversion into templates, freeing models of converted timestamps
 * :bomb: Switch unit tests to use [Mocha](https://mochajs.org/) instead of Nodeunit
 * :bomb: Change Geo-JSON properties to match JSON-Feed, add `atom:update` to RSS & JSON-RSS, fix date format in feeds

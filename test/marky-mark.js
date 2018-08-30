@@ -603,4 +603,37 @@ NOTE DONE
       assert.equal(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
     });
   });
+
+  describe('Lists', function() {
+
+    it('should convert some lists to definition lists', function() {
+      let m, x = `<ul>
+        <li><strong>Blubb</strong>: Blögh</li>
+        <li><strong>Blubb</strong>: Blögh</li>
+        <li>Blubb: Blögh</li>
+      </ul>`;
+      m = markyMark(x);
+
+      assert.ok(m.match(/<ul>/));
+      assert.ok(!m.match(/<dl>/));
+
+      x = `<ul>
+        <li><strong>Blubb</strong>: Blögh</li>
+        <li><strong>Blubb</strong>: Blögh</li>
+        <li><strong>Blubb</strong>: Blögh</li>
+      </ul>`;
+      m = markyMark(x);
+      assert.ok(!m.match(/<ul>/));
+      assert.ok(m.match(/<dl>/));
+
+      x = `<ul>
+        <li><strong>Blubb:</strong> Blögh</li>
+        <li><strong>Blubb:</strong> Blögh</li>
+        <li><strong>Blubb:</strong> Blögh</li>
+      </ul>`;
+      m = markyMark(x);
+      assert.ok(m.match(/<ul>/));
+      assert.ok(!m.match(/<dl>/));
+    });
+  });
 });

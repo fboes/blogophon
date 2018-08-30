@@ -283,13 +283,26 @@ The following identifiers are supported:
 
 All other languages will be converted with a catch-all code highlighter, which works well enough for `php` and `javascript`, as well as most other programming languages.
 
-Checkboxes
+Lists
 -----------
+
+Markdown offers ordered and unordered lists by default. The Blogophon adds some extra lists:
+
+### Checkbox lists
 
 ```markdown
 
 * [ ] _Produces an empty checkbox_
 * [X] _Produces a checked checkbox_
+
+```
+
+### Definition lists
+
+```markdown
+
+* **Term**: Definition of this term
+* **Another term**: Definition of _this_ term
 
 ```
 
