@@ -8,6 +8,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :bomb: Change Geo-JSON properties to match JSON-Feed, add `atom:update` to RSS & JSON-RSS, fix date format in feeds
 * :bomb: Replace `_language` in JSON feed with more general `_rss`
 * :bomb: Replace proprietary date properties in JSON-RSS with Atom-properties and change JSON-RSS to have proper XMLNS
+* :bomb: Switching Markdown file structure from `post/TITLE.md` to `post/TITLE/index.md` (see documentation on [how to move articles into new structure](advanced-stuff.md))
 * :pill: Fix `browserconfig.xml` and the way configuration is handled
 * :pill: Fix timezone for ICS files
 * :gift: Add tracking pixel to newsfeeds, with `%url` and `%title` as replacements

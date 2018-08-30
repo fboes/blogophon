@@ -62,6 +62,24 @@ If you use [Microsoft Visual Studio Code](https://code.visualstudio.com/) you ca
 
 If you use [Github Atom](https://atom.io/) you can toggle the built-in Markdown preview by pressing `Ctrl + Shift + M`.
 
+Migrating to new article structure
+----------------------------------
+
+In case you want to move articles from the old file structure (`user/posts/TITLE.md`) to the new file structure (`user/posts/TITLE/index.md`) here is a little bash script which will do this for all articles which already have an existing folder to move to:
+
+```bash
+#!/bin/bash
+
+# Exectute in `user/posts`
+for DIRECTORY in `find . -type d`; do
+  OLD_FILE="$DIRECTORY.md"
+  NEW_FILE="$DIRECTORY/index.md"
+  if [ -f $OLD_FILE ]; then
+    mv $OLD_FILE $NEW_FILE
+  fi
+done
+```
+
 Server setup
 ------------
 
