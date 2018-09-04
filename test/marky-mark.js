@@ -11,6 +11,7 @@ describe('MarkyMark', function() {
 
       m = markyMark('<p><a href="test">Test 12x24</a> - &quot;Test&quot;</p>');
       assert.ok(m.match(/Test 12/));
+      assert.ok(!m.match(/Test 12x24/));
       assert.ok(m !== undefined, 'String is not undefined');
 
       m = markyMark(
@@ -25,6 +26,9 @@ describe('MarkyMark', function() {
 
       m = markyMark('<p><img src="http://www.example.com" alt="" /></p>');
       assert.ok(m.match(/src="http:\/\/www\.example\.com/));
+
+      m = markyMark('<p>&lt;= &lt;-&gt; =&gt; &gt;= -&lt;</p>');
+      assert.equal(m.match(/&\S+;/g).length, 2);
     });
 
     it('should use proper quotes', function() {
@@ -83,6 +87,20 @@ describe('MarkyMark', function() {
       m = markyMark(x);
       assert.ok(!m.match(/class/));
       assert.ok(m.match(/title/));
+    });
+    it('should make nice fractions', () => {
+      let m, x = `(1/2)<br />
+(1/3)  (2/3)<br />
+(1/4)  (2/4)  (3/4)<br />
+(1/5)  (2/5)  (3/5)  (4/5)<br />
+(1/6)  (2/6)  (3/6)  (4/6)  (5/6)<br />
+(1/7)  (2/7)  (3/7)  (4/7)  (5/7)  (6/7)<br />
+(1/8)  (2/8)  (3/8)  (4/8)  (5/8)  (6/8)  (7/8)<br />
+(1/9)  (2/9)  (3/9)  (4/9)  (5/9)  (6/9)  (7/9)  (8/9)<br />
+(1/10) (2/10) (3/10) (4/10) (5/10) (6/10) (7/10) (8/10) (9/10)`;
+      m = markyMark(x);
+      assert.equal(m.match(/&\S+;/g).length, 18);
+      assert.ok(!m.match(/\(\d+\/\d+\)/));
     });
   });
 
@@ -634,6 +652,23 @@ NOTE DONE
       m = markyMark(x);
       assert.ok(m.match(/<ul>/));
       assert.ok(!m.match(/<dl>/));
+
+      x = `<ul>
+<li><strong><code>{}</code></strong>: Genereller Programmierer, Spezialisierung auf Backend-Programmierung.</li>
+<li><strong><code>{{}}</code></strong>: Programmierer für Templates.</li>
+<li><strong><code>&lt;&gt;</code></strong>: <em>Entweder</em> ein HTML-Programmierer, <em>oder</em> jemand aus dem XML-Bereich.</li>
+<li><strong><code>&lt;/&gt;</code></strong>: Wie zuvor, aber mit einem besonderen Fokus auf Validität.</li>
+<li><strong><code>//</code></strong>: Ein Meister der regulären Ausdrücke. Äußerst selten. Auch die Zeichen <code>^</code>, <code>$</code>, <code>|</code> oder ein <code>\\</code> inmitten einer Zeichenkette können Hinweise darauf sein. <em>Alternativ</em>: Schreibt Inline-Kommentare.</li>
+<li><strong><code>/* */</code></strong>: Schreibt gute Kommentare oder sogar Dokumentation. <em>Alternativ:</em> Ist sich seiner Sache nicht immer sicher.</li>
+<li><strong><code>++</code> bzw. <code>--</code></strong>: Meisterschaft im Umgang mit VCS&#39; wie Git oder SVN. <code>--</code> bedeutet, dass der Träger gerne Sachen im Repo löscht.</li>
+<li><strong><code>&gt;</code></strong>: Shell-Artist. Kann einen Einzeiler schreiben, der alle Dateien findet, deren Dateigröße ein Vielfaches von Pi sind.</li>
+<li><strong><code>.</code></strong>: Objektorientierung, wahrscheinlich mit JavaScript oder Java.</li>
+<li><strong><code>#</code></strong>: “Irgendetwas mit Social Media”.</li>
+</ul>`;
+      m = markyMark(x);
+      //console.log(m);
+      assert.ok(!m.match(/<ul>/));
+      assert.ok(m.match(/<dl>/));
     });
   });
 });

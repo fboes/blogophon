@@ -220,6 +220,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `(R)`    | ®           | Registered sign                                                                                                    |
 | `(TM)`   | ™           | Trade mark sign                                                                                                    |
 | `(+-)`   | ±           | Plus-minus sign                                                                                                    |
+| `(1/2)`  | ½           | Fraction, works for most common fractions                                                                          |
 
 For more Emojis and special characters refer to the [ASCII Emojii conversion table](emojis.md), or consult a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode) and convert a code like `U+1F680` into `&#x1F680;`.
 

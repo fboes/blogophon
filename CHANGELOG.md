@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * :gift: Add definition lists for Markdown
+* :gift: Add more fractions like `(2/3)` to be converted in Markdown
 
 2.0.1
 -----
