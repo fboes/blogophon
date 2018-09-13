@@ -15,7 +15,7 @@ Special post types change the way your article behaves. You can choose a post ty
 Regular post types
 ------------------
 
-Some post types give you the ability to add special styling, but do not alter the structure of the post. Examples are `Video`, `Link`, `Quote`, `Review`, `Location`.
+Some post types give you the ability to add special styling, but do not alter the structure of the post. Examples are `Video`, `Link`, `Quote`, `Review`, `Location`, `Conversation`.
 
 `Images`
 --------

@@ -50,6 +50,10 @@ article + article { margin-top: 2em; border-top: 1px solid #eee; }
 article ul li, article ol li { left: 2em; position: relative; margin-left: 0; }
 article ul.task-list, article ol.task-list { list-style: none; }
 article blockquote { color: #666666; margin-left: 1em; }
+article .conversation { overflow: hidden; }
+article .conversation cite { border: none; }
+article .conversation blockquote { margin-top: 1em; background: #eee; width: 70%; padding: 0.5em 0.5 0 !important; -webkit-border-radius: 0.5em; -moz-border-radius: 0.5em; border-radius: 0.5em; border: none; }
+article .conversation blockquote:nth-child(even) { margin-left: 30%; }
 article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }
 article .table-wrapper { max-width: 100%; overflow: auto; }
 article table { margin-bottom: 1em; }

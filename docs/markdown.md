@@ -307,6 +307,19 @@ Markdown offers ordered and unordered lists by default. The Blogophon adds some 
 
 ```
 
+Conversation
+------------
+
+```markdown
+-- First Witch
+> When shall we three meet again
+> In thunder, lightning, or in rain?
+
+--  Second Witch 
+> When the hurlyburly's done,
+> When the battle's lost and won.
+```
+
 ---
 
 Return to [table of contents](README.md).

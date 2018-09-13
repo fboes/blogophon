@@ -102,6 +102,27 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/&\S+;/g).length, 18);
       assert.ok(!m.match(/\(\d+\/\d+\)/));
     });
+    it('should do make conversation', () => {
+      let m, x = `<p>Some text before</p>
+<p>-- Foo</p>
+<blockquote>
+<p>This is rad</p>
+</blockquote>
+<p>-- Bar</p>
+<blockquote>
+<p>This is even more rad</p>
+</blockquote>
+<p>-- Foo</p>
+<blockquote>
+<p>This is least rad</p>
+</blockquote>
+<p>Some text after</p>`;
+      m = markyMark(x);
+      assert.equal(m.match(/<div class="conversation">/g).length, 1);
+      assert.equal(m.match(/<cite>/g).length, 3);
+      assert.equal(m.match(/<blockquote>/g).length, 3);
+      assert.equal(m.match(/<p>/g).length, 5);
+    });
   });
 
   describe('Tables', function() {
