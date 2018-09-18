@@ -85,6 +85,11 @@ For every article there will be a corresponding [Accelerated Mobile Page](https:
 
 All required links will be added to your page.
 
+Progressive Web App
+-------------------
+
+Add HTML and JavaScript for Progressive Web Apps, which allows for offline page usage.
+
 Microsoft tiles
 ----------------
 
