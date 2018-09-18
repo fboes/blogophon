@@ -121,8 +121,8 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/<div class="conversation">/g).length, 1);
       assert.equal(m.match(/<cite>/g).length, 3);
       assert.equal(m.match(/<blockquote[^>]*>/g).length, 3);
-      assert.equal(m.match(/conversation--participant-0/g).length, 2);
-      assert.equal(m.match(/conversation--participant-1/g).length, 1);
+      assert.equal(m.match(/conversation__participant--0/g).length, 2);
+      assert.equal(m.match(/conversation__participant--1/g).length, 1);
       assert.equal(m.match(/<p>/g).length, 5);
       console.log(m);
     });
