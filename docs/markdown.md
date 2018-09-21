@@ -195,6 +195,17 @@ See [instructions for attachments](#attachments) on how to upload files.
 
 For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
 
+```markdown
+This will be rendered as Youtube player
+
+https://www.youtube.com/watch?v=pTCROLZLhDM
+
+As will this:
+
+[Introduction To Markdown Using Visual Studio Code](https://www.youtube.com/watch?v=pTCROLZLhDM)
+
+```
+
 Embedding other services
 --------------
 

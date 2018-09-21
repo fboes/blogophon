@@ -240,20 +240,25 @@ describe('MarkyMark', function() {
 
       m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg">Dunkirk</a></p>');
       assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
+      assert.ok(m.match(/title="Dunkirk"/));
 
       m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg?t=2m19s">Dunkirk</a></p>');
       assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
       assert.ok(!m.match(/t=2m19s/));
+      assert.ok(m.match(/title="Dunkirk"/));
 
       m = markyMark('<p><a href="http://codepen.io/larsenwork/pen/MpjXrb">Codepen</a></p>');
       assert.ok(m.match(/codepen\.io\/larsenwork\/embed\/MpjXrb\//));
       assert.ok(m.match(/<iframe/));
+      assert.ok(m.match(/title="Codepen"/));
 
       m = markyMark('<p><a href="https://gist.github.com/defunkt/2059">Github Gist</a></p>');
       assert.ok(m.match(/<script async="async" src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
+      assert.ok(m.match(/title="Github Gist"/));
 
       m = markyMark('<p><a href="https://jsfiddle.net/6cLkvdag/">Github Gist</a></p>');
       assert.ok(m.match(/<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/));
+      assert.ok(m.match(/title="Github Gist"/));
     });
   });
 
