@@ -4,6 +4,58 @@ const assert = require('assert');
 
 describe('Manifest', function() {
   const config = require('../lib/config')(__dirname);
+  config.themeConf.icons = [
+    {
+      "src": "https://cdn.3960.org/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.3960.org/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.3960.org/images/tile-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.3960.org/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "img/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.3960.org/images/tile-270x270.png",
+      "sizes": "270x270",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.3960.org/images/tile-558x270.png",
+      "sizes": "558x270",
+      "type": "image/png"
+    },
+    {
+      "src": config.baseUrl + "/images/tile-558x558.png",
+      "sizes": "558x558",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.3960.org/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ];
   const manifest = require('../lib/models/manifest')(config);
   // console.log(manifest);
 
@@ -16,6 +68,7 @@ describe('Manifest', function() {
     assert.ok(manifest.theme_color !== undefined, 'Theme color is defined');
     assert.ok(manifest.start_url !== undefined,   'Start URL is defined');
     assert.ok(manifest.icons !== undefined,       'Icons are defined');
+    assert.equal(manifest.icons.length, 3);
   });
 
   it('should have extra properties', function() {
