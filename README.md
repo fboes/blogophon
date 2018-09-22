@@ -12,7 +12,7 @@ A live example of this blog generator can be found at [3960! Journal](http://jou
 * Generates a bunch of way to find your articles: Regular index pages, tag pages, author pages.
 * The Blogophon comes with a built-in image-scaler for responsive images.
 * The default theme puts all relevant meta stuff into `<head>` for SEO and social sharing (via schema.org and OpenGraph) as well as the [IndieWeb](https://indieweb.org/).
-* A ton of [special features](docs/special-features.md) like RSS/ATOM newsfeeds, Accelerated Mobile Pages (AMP), Facebook Instant Articles, sending Webmentions, etc.
+* A ton of [special features](docs/special-features.md) like RSS/ATOM newsfeeds, Accelerated Mobile Pages (AMP), Progressive Web App (PWA), Facebook Instant Articles, sending Webmentions, etc.
 * As the Blogophon only consists of static pages, there is no personal data (cookies, etc.) aggregated by your blog - therefore it is easy to comply with any form of privacy protection law (like the [GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)).
 
 Requirements
@@ -20,7 +20,7 @@ Requirements
 
 The _Blogophon generator_ works on every platform with [NodeJs](https://nodejs.org/en/). This includes Windows, Mac OSX and Linux. The Blogophon can also be installed directly on your web host, as long as you have [NodeJs](https://nodejs.org/en/) installed on your web host and SSH access. The Blogophon generators generates your blog pages.
 
-Your _blog pages_ can be hosted on any web hosting service - it only consists of static files. You will need no PHP, MySQL or anything like that.
+Your _generated blog pages_ are independent of the Blogophon software, and can be hosted on any web hosting service - it only consists of static files. You will need no PHP, MySQL or anything like that.
 
 Installation
 ------------
