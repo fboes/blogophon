@@ -85,11 +85,13 @@ Server setup
 
 ### Apache installation
 
-The Blogophon will generate a `.htaccess` file initially. If possible, move the contents of this file to your server configuration file. If you cannot modify your server configuration, but Apache executes `.htaccess`, Blogophon's `.htaccess` should be all you need.
+You will find a sample Apache configuration in your `user` directory after finishing setup.
+
+If you are not allowed to edit the Apache configuration, there is also a `.htaccess` file in your `user` directory after finishing setup. This file can be moved to your document root folder `htdocs`.
 
 ### nginx installation
 
-There is a [sample nginx configuration](nginx.conf) to use for your server.
+You will find a sample nginx configuration in your `user` directory after finishing setup.
 
 Automatically publish to external services
 ------------------------------------------

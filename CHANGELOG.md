@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :pill: Generate Apache configuration file, Nginx configuration file, `.htaccess` to `user` directory
 * :gift: Add definition lists for Markdown
 * :gift: Add more fractions like `(2/3)` to be converted in Markdown
 * :gift: Add [Markdown for conversations](docs/markdown.md)

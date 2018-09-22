@@ -1,24 +1,11 @@
-#<VirtualHost *:80>
 # See https://github.com/h5bp/server-configs-apache
-# ServerName {{config.domain}}
 {{#if config.isHttps}}
   <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{HTTPS} off
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   </IfModule>
-#</VirtualHost>
-
-#<VirtualHost *:443>
-# ServerName {{config.domain}}
-
-# SSLEngine on
-# SSLCertificateFile      /etc/apache2/certificates/{{config.domain}}/cert.pem
-# SSLCertificateKeyFile   /etc/apache2/certificates/{{config.domain}}/privkey.pem
-# SSLCertificateChainFile /etc/apache2/certificates/{{config.domain}}/chain.pem
 {{/if}}
-
-# DocumentRoot /var/www; # Replace with actual doc root
 
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
@@ -78,5 +65,3 @@ RedirectMatch 301 "^/(posts|\d+(/\d+(/\d+)?)?)/?$" "/"
 RedirectMatch 301 "^/category/?$" "/"
 
 # Add your stuff here
-
-#</VirtualHost>
