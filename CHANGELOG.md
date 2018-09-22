@@ -3,7 +3,8 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
-* :fix: Improve `manifest.json` by ignoring illegal image URLs and adding proper `short_name`
+* :pill: Generate Apache configuration file, Nginx configuration file, `.htaccess` to `user` directory
+* :pill: Improve `manifest.json` by ignoring illegal image URLs and adding proper `short_name`
 * :gift: Add definition lists for Markdown
 * :gift: Add more fractions like `(2/3)` to be converted in Markdown
 * :gift: Add [Markdown for conversations](docs/markdown.md)
