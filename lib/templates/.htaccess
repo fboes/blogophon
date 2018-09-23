@@ -1,3 +1,6 @@
+# Copy this file to your `/htdocs` folder if you are using Apache web server and
+# can not change the host configuration.
+
 # See https://github.com/h5bp/server-configs-apache
 {{#if config.isHttps}}
   <IfModule mod_rewrite.c>
@@ -45,19 +48,19 @@ ErrorDocument 410 /404.html
   </IfModule>
 {{/if}}
 
-#<IfModule mod_expires.c>
-#  ExpiresActive on
-#  ExpiresDefault                          "access plus 1 hour"
-#  ExpiresByType application/javascript    "access plus 2 weeks"
-#  ExpiresByType image/jpeg                "access plus 2 weeks"
-#  ExpiresByType image/jpg                 "access plus 2 weeks"
-#  ExpiresByType image/png                 "access plus 2 weeks"
-#  ExpiresByType image/svg+xml             "access plus 2 weeks"
-#  ExpiresByType image/vnd.microsoft.icon  "access plus 2 weeks"
-#  ExpiresByType text/css                  "access plus 2 weeks"
-#  ExpiresByType text/javascript           "access plus 2 weeks"
-#  ExpiresByType text/x-html               "access plus 2 weeks"
-#</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresDefault                          "access plus 1 hour"
+  ExpiresByType application/javascript    "access plus 2 weeks"
+  ExpiresByType image/jpeg                "access plus 2 weeks"
+  ExpiresByType image/jpg                 "access plus 2 weeks"
+  ExpiresByType image/png                 "access plus 2 weeks"
+  ExpiresByType image/svg+xml             "access plus 2 weeks"
+  ExpiresByType image/vnd.microsoft.icon  "access plus 2 weeks"
+  ExpiresByType text/css                  "access plus 2 weeks"
+  ExpiresByType text/javascript           "access plus 2 weeks"
+  ExpiresByType text/x-html               "access plus 2 weeks"
+</IfModule>
 
 # General Blogophon redirects
 RedirectMatch 301 "^/htdocs/(.*)$" "/$1"
