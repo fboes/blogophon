@@ -41,8 +41,9 @@ describe('Config', function() {
     }
     if (dirname === __dirname) {
       describe('with dummy config file', function() {
-        it('should have vaölues of given config file', function() {
-          assert.equal(config.baseUrl, 'https://www.example.com');
+        it('should have values of given config file', function() {
+          assert.equal(config.baseUrl, 'https://www.example.com:8080');
+          assert.equal(config.domain,  'www.example.com');
         });
       });
     }
