@@ -1,6 +1,6 @@
 {
   "name": "This is a very long title for your blog",
-  "baseUrl": "https://www.example.com",
+  "baseUrl": "https://www.example.com:8080",
   "basePath": "/",
   "description": "This is a test",
   "locale": {

@@ -103,7 +103,7 @@ gulp.task('build-css', function() {
 });
 
 gulp.task('serve', function() {
-  let server = gls.static(pkg.directories.htdocs);
+  let server = gls.static(pkg.directories.htdocs, 8080);
   server.start();
   gulp.watch(pkg.directories.htdocs + '/**/*', function(file) {
     /* eslint-disable */
