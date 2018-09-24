@@ -21,7 +21,7 @@ Afterwards these commands become available:
 | Command      | Description                                           |
 | ------------ | ----------------------------------------------------- |
 | `gulp`       | Starts `gulp watch` and `gulp serve`                  |
-| `gulp serve` | Starts webserver at http://localhost:3000/            |
+| `gulp serve` | Starts webserver at http://localhost:8080/            |
 | `gulp watch` | Executes `gulp test` and `gulp build` on file changes |
 | `gulp test`  | Executes linters and tests                            |
 | `gulp build` | Build compressed Javascript and CSS                   |
@@ -29,7 +29,7 @@ Afterwards these commands become available:
 Webserver
 ---------
 
-After starting `gulp` or `gulp serve`, a webserver will be spawned on your computer. It will be reachable via http://localhost:3000/.
+After starting `gulp` or `gulp serve`, a webserver will be spawned on your computer. It will be reachable via http://localhost:8080/.
 
 This webserver will also spawn a [LiveReload](http://livereload.com/) service. Given there is a LiveReload plugin installed and activated in your browser, the page will reload all resources in your browsers which have been changed while you are looking at the page.
 
