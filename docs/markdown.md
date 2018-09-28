@@ -318,8 +318,28 @@ Markdown offers ordered and unordered lists by default. The Blogophon adds some 
 
 ```
 
-Conversation
-------------
+Blockquotes
+-----------
+
+For citing quotes there is a Markdown element called "blockquote". It will display as indented text:
+
+```markdown
+> When shall we three meet again
+> In thunder, lightning, or in rain?
+> <cite>First Witch</cite>
+```
+
+### Call-outs
+
+A special form of quote is a call-out. This is often used to show a witty sentence of your article for quick readers to grab their attention, without breaking the flow of text.
+
+```markdown
+>! Get started with Markdown!
+```
+
+### Conversation
+
+Conversations between multiple persons are like a collection of quotes, introduced by the person speaking / writing:
 
 ```markdown
 -- First Witch

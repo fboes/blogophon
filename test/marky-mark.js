@@ -126,6 +126,17 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/<p>/g).length, 5);
       //console.log(m);
     });
+    it('should make call-outs', () => {
+      let m, x = `<p>Some normal paragraph.</p>
+<blockquote>
+<p>! This paragraph has an exclamation mark in front of it.</p>
+<p>Which leads to some proper call-outs.</p>
+</blockquote>`;
+      m = markyMark(x);
+      assert.ok(!m.match(/<blockquote[^>]*>/g));
+      assert.equal(m.match(/<aside[^>]*>/g).length, 1);
+      assert.equal(m.match(/<p[^>]*>/g).length, 3);
+    });
   });
 
   describe('Tables', function() {

@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * :pill: Add PWA and SEO fixes to AMP templates
+* :gift: Add Markdown for call-outs
 
 2.1.0
 -----
