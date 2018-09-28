@@ -3,6 +3,11 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* :pill: Add PWA and SEO fixes to AMP templates
+
+2.1.0
+-----
+
 * :pill: Generate Apache configuration file, Nginx configuration file, `.htaccess` to `user` directory
 * :pill: Improve `manifest.json` by ignoring illegal image URLs and adding proper `short_name`
 * :gift: Add definition lists for Markdown
@@ -21,7 +26,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :bomb: Replace proprietary date properties in JSON-RSS with Atom-properties and change JSON-RSS to have proper XMLNS
 * :bomb: Switching Markdown file structure from `post/TITLE.md` to `post/TITLE/index.md` (see documentation on [how to move articles into new structure](advanced-stuff.md))
 * :pill: Fix `browserconfig.xml` and the way configuration is handled
-* :pill: Fix timezone for ICS files
+* :pill: Fix time zone for ICS files
 * :gift: Add tracking pixel to newsfeeds, with `%url` and `%title` as replacements
 * :gift: Add and improve SQL syntax highlighting in Markdown articles
 * :gift: Add more Handlebar helpers like `asciify` and `niceShorten`

@@ -1,1 +1,4 @@
 {{{ config.htmlAnalyticsAmp }}}
+{{#if config.specialFeatures.progressivewebapp}}
+  <amp-install-serviceworker src="{{config.absoluteBasePath}}sw.js" layout="nodisplay"></amp-install-serviceworker>
+{{/if}}

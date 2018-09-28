@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html ⚡ lang="{{config.locale.language}}" dir="{{config.locale.direction}}">
 <head>
   <meta charset="utf-8" />
   <title>{{#if meta.title}}{{meta.title}}{{#if meta.subtitle}}, {{meta.subtitle}}{{/if}} | {{/if}}{{config.name}}</title>
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
+  {{#if meta.isHomepage}}
+    <meta name="description" content="{{config.description}}" />
+  {{else}}
+    <meta name="description" content="{{meta.title}} - {{config.description}}" />
+  {{/if}}
   {{>ampMetaHtml}}
   {{#if consolidatedProperties.ampPropertiesTeaser.hasAudio}}
     <script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>

@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html ⚡ lang="{{config.locale.language}}" dir="{{config.locale.direction}}">
 <head>
   <meta charset="utf-8" />
   <title>{{post.meta.Title}} | {{config.name}}</title>
   <link rel="canonical" href="{{post.meta.AbsoluteUrl}}" />
+  <meta name="description" content="{{#noNewline}}{{post.meta.Description}}{{/noNewline}}" />
   {{>ampMetaHtml}}
   <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
   {{#if post.ampProperties.hasAudio}}
