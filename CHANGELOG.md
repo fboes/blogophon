@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * :pill: Add PWA and SEO fixes to AMP templates
+* :pill: Fix handling of locales like `de-DE` or `en-US` in dates
 * :gift: Add Markdown for call-outs
 
 2.1.0
