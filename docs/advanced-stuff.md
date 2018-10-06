@@ -56,7 +56,7 @@ echo \"Publishing...\" && rsync -az --delete user HOST:PATH_TO_YOUR_BLOG && echo
 Editor
 ------
 
-If you use [Sublime Text](https://www.sublimetext.com/) for editing your Markdown files, consider installing [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended). It supports YAML frontmatter and code block syntax highlighting in Markdown files. Also [Markdown​Live​Preview](https://packagecontrol.io/packages/MarkdownLivePreview) will show ow your Markdown will finally look like.
+If you use [Sublime Text](https://www.sublimetext.com/) for editing your Markdown files, consider installing [Markdown Extended](https://github.com/jonschlinkert/sublime-markdown-extended). It supports YAML frontmatter and code block syntax highlighting in Markdown files. Also [Markdown​Live​Preview](https://packagecontrol.io/packages/MarkdownLivePreview) will show how your Markdown will finally look like.
 
 If you use [Microsoft Visual Studio Code](https://code.visualstudio.com/) you can toggle the built-in Markdown preview by pressing `Ctrl + K`, followed by a `V`.
 

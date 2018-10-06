@@ -87,7 +87,7 @@ Some paragraph with **bold** text, linking to [an example](https://www.example.c
 
 Another paragraph with some _italic_ text. And there is also `typewriter-style code`.
 
-This [example](https://www.example.com/ "nomention") will not be mentioned used for Webmentions.
+This [example](https://www.example.com/ "nomention") will not be mentioned by Webmentions.
 
 This [example](https://www.example.com/ "nofollow") will not followed by search engine robots.
 

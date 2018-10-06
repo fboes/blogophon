@@ -48,18 +48,12 @@ describe('MarkyMark', function() {
           secondary: ['‚', '‘']
         }
       }), 'Quotation changed');
-      assert.ok(!m.match(/<h1>/), '<h1> removal happened');
-      assert.ok(!m.match(/<h2>/), 'Headline downgraded happened');
-      assert.ok(m.match(/<h3>/), 'Headline downgraded happened');
       assert.ok(m.match(/«/));
       assert.ok(m.match(/“/));
 
       m = markyMark(x, {
         headline: 1
       });
-      assert.ok(!m.match(/<h1>/), '<h1> removal did not happen');
-      assert.ok(m.match(/<h2>/), 'No headline downgraded happened');
-      assert.ok(!m.match(/<h3>/), 'No headline downgraded happened');
 
       x = "<p>Yesterday, upon the stair,<br>I met a man who wasn't there.<br>He wasn't there again today.<br>I wish, I wish he'd go away.<br><cite>Hughes Mearns</cite> <img href=\"example.jpg\"><hr></p>";
       m = markyMark(x, {
@@ -71,6 +65,26 @@ describe('MarkyMark', function() {
       //console.log(m);
       assert.ok(!m.match(/%/));
     });
+
+    it('should do proper headline', function() {
+      let m, x = `<h1>Delete me</h1>
+<h2>Downgrade me</h2>
+<p>Dpo not touch me</p>`;
+
+      m = markyMark(x);
+      assert.ok(!m.match(/<h1>/), '<h1> removal happened');
+      assert.ok(!m.match(/<h2>/), 'Headline downgrade happened');
+      assert.ok(m.match(/<h3>/), 'Headline downgrade happened');
+
+      m = markyMark(x, {
+        headline: 1
+      });
+      assert.ok(!m.match(/<h1>/), '<h1> removal did not happen');
+      assert.ok(m.match(/<h2>/), 'No headline downgrade happened');
+      assert.ok(!m.match(/<h3>/), 'No headline downgrade happened');
+    });
+
+
     it('should have some class(es)', function() {
       let m, x = '<a href="https://www.example.com" title="nomention">Test</a>';
       m = markyMark(x);
