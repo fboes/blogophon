@@ -69,7 +69,7 @@ describe('MarkyMark', function() {
     it('should do proper headline', function() {
       let m, x = `<h1>Delete me</h1>
 <h2>Downgrade me</h2>
-<p>Dpo not touch me</p>`;
+<p>Do not touch me</p>`;
 
       m = markyMark(x);
       assert.ok(!m.match(/<h1>/), '<h1> removal happened');

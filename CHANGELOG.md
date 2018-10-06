@@ -5,6 +5,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 
 * :pill: Add PWA and SEO fixes to AMP templates
 * :pill: Fix handling of locales like `de-DE` or `en-US` in dates
+* :pill: Fix broken <table> alignment HTML from GFM specs
 * :gift: Add Markdown for call-outs
 
 2.1.0

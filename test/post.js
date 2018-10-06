@@ -181,4 +181,63 @@ But not example.6test.com or 7test.com (URLs with subdomains without proper link
     assert.ok(testPost.html.match(/\/posts\/internal-link3\//));
   });
 
+  it('should do proper headlining', function() {
+    const markdown = `Title
+=======
+
+Title 2
+-------
+
+## Title 2 too
+
+### More Tütle 2
+
+#### More Title 3!
+
+##### More T#tle 4
+`;
+    const testPost = post('test.md', markdown, {
+      Description: 'Description',
+      Date: new Date()
+    });
+
+    assert.ok(!testPost.html.match(/<h1/g), 'Removes <h1> from article');
+    assert.equal(testPost.html.match(/<h2 id="/g).length,               2);
+    assert.equal(testPost.html.match(/<h3 id="more-t-tle-2"/g).length,  1);
+    assert.equal(testPost.html.match(/<h4 id="more-title-3-"/g).length, 1);
+    assert.equal(testPost.html.match(/<h5 id="more-t-tle-4"/g).length,  1);
+  });
+
+  it('should test for proper tables', function() {
+    const markdown = `##### Tic Tac Toe
+
+| \\    | A   | B   | C   |
+| ----- | --- | --- | --- |
+| **1** | X   | X   | X   |
+| **2** | O   | X   |     |
+| **3** |     | O   | O   |
+
+
+##### Centred tables
+
+| \\    | A   | B   | C   |
+| ----- |:--- |:---:| ---:|
+| **1** | X   | X   | X   |
+| **2** | O   | X   |     |
+| **3** |     | O   | O   |
+`;
+    const testPost = post('test.md', markdown, {
+      Description: 'Description',
+      Date: new Date()
+    });
+    //console.log(testPost.html);
+
+    assert.equal(testPost.html.match(/<caption id="/g).length, 2);
+    assert.equal(testPost.html.match(/<th>/g).length,          5);
+    assert.equal(testPost.html.match(/<th(?:>|\s)/g).length,   14);
+    assert.equal(testPost.html.match(/<thead/g).length,        2);
+    assert.equal(testPost.html.match(/<tbody/g).length,        2);
+    assert.equal(testPost.html.match(/text-align/g).length,    12);
+    assert.equal(testPost.html.match(/table-cell--/g).length,  12);
+  });
 });
