@@ -157,7 +157,9 @@ describe('MarkyMark', function() {
     it('must make HTML tables even nicer', function() {
       let m, x = `<table>
   <thead>
-    <tr><th>Model</th><th style="text-align:right">Pathfinder</th><th style="text-align:right">Hauler</th><th style="text-align:right">Diamondback Scout</th></tr></thead><tbody>
+    <tr><th><strong>Model</strong></th><th style="text-align:right">Pathfinder</th><th style="text-align:right">Hauler</th><th style="text-align:right">Diamondback Scout</th></tr>
+  </thead>
+  <tbody>
     <tr><td><strong>Manufacturer</strong></td><td style="text-align:right">Zorgon Peterson</td><td style="text-align:right">Zorgon Peterson</td><td style="text-align:right">Lakon Spaceways</td></tr>
     <tr><td><strong>Type</strong></td><td style="text-align:right">Light Explorer</td><td style="text-align:right">Light Freighter</td><td style="text-align:right">Light Combat Explorer</td></tr>
     <tr><td><strong>Cost</strong></td><td style="text-align:right">~460,000 CR</td><td style="text-align:right">52,720 Cr</td><td style="text-align:right">564,320 Cr</td></tr>
@@ -184,13 +186,14 @@ describe('MarkyMark', function() {
   </tbody>
 </table>`;
       m = markyMark(x);
-      //console.log(m, m.match(/<th[> ]/g).length);
+      //console.log(m);
       assert.ok(m,                                      'Got output');
       assert.equal(m.match(/<th[> ]/g).length, 27,      'Markup added');
       assert.ok(m.match(/<div class="table-wrapper"/),  'Table wrapper added');
       assert.ok(m.match(/ class="table-cell--right"/g), 'Table cell class added');
       assert.equal(m.match(/<col class="table-cell--right"/g).length, 3);
-      assert.ok(!m.match(/<td><strong>/),               'Markup removed');
+      assert.ok(!m.match(/<tr><td><strong>/),           'Markup removed');
+      assert.equal(m.match(/scope="row"/g).length,      23);
     });
 
     it('must do col spanning in tables if asked to do so', function() {
