@@ -6,7 +6,7 @@ const markyMark = require('../lib/helpers/marky-mark');
 describe('MarkyMark', function() {
   describe('Simple HTML improvement', function() {
 
-    it('should convert simple strings', function() {
+    it('must convert simple strings', function() {
       let m;
 
       m = markyMark('<p><a href="test">Test 12x24</a> - &quot;Test&quot;</p>');
@@ -31,7 +31,7 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/&\S+;/g).length, 2);
     });
 
-    it('should use proper quotes', function() {
+    it('must use proper quotes', function() {
       let m, x = '<h1>Delete me</h1><h2>Downgrade me</h2><p>&quot;Ah, there you are. As you said: \'Quotation is important\'&quot;.</p>';
 
       m = markyMark(x, {
@@ -66,7 +66,7 @@ describe('MarkyMark', function() {
       assert.ok(!m.match(/%/));
     });
 
-    it('should do proper headline', function() {
+    it('must do proper headline', function() {
       let m, x = `<h1>Delete me</h1>
 <h2>Downgrade me</h2>
 <p>Do not touch me</p>`;
@@ -85,7 +85,7 @@ describe('MarkyMark', function() {
     });
 
 
-    it('should have some class(es)', function() {
+    it('must have some class(es)', function() {
       let m, x = '<a href="https://www.example.com" title="nomention">Test</a>';
       m = markyMark(x);
       assert.ok(m.match(/class/));
@@ -102,7 +102,7 @@ describe('MarkyMark', function() {
       assert.ok(!m.match(/class/));
       assert.ok(m.match(/title/));
     });
-    it('should make nice fractions', () => {
+    it('must make nice fractions', () => {
       let m, x = `(1/2)<br />
 (1/3)  (2/3)<br />
 (1/4)  (2/4)  (3/4)<br />
@@ -116,7 +116,7 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/&\S+;/g).length, 18);
       assert.ok(!m.match(/\(\d+\/\d+\)/));
     });
-    it('should do make conversation', () => {
+    it('must make conversation', () => {
       let m, x = `<p>Some text before</p>
 <p>-- Foo</p>
 <blockquote>
@@ -140,7 +140,7 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/<p>/g).length, 5);
       //console.log(m);
     });
-    it('should make call-outs', () => {
+    it('must make call-outs', () => {
       let m, x = `<p>Some normal paragraph.</p>
 <blockquote>
 <p>! This paragraph has an exclamation mark in front of it.</p>
@@ -154,7 +154,7 @@ describe('MarkyMark', function() {
   });
 
   describe('Tables', function() {
-    it('should make HTML tables even nicer', function() {
+    it('must make HTML tables even nicer', function() {
       let m, x = `<table>
   <thead>
     <tr><th>Model</th><th style="text-align:right">Pathfinder</th><th style="text-align:right">Hauler</th><th style="text-align:right">Diamondback Scout</th></tr></thead><tbody>
@@ -185,14 +185,15 @@ describe('MarkyMark', function() {
 </table>`;
       m = markyMark(x);
       //console.log(m, m.match(/<th[> ]/g).length);
-      assert.ok(m, 'Got output');
-      assert.equal(m.match(/<th[> ]/g).length, 27, 'Markup added');
-      assert.ok(m.match(/<div class="table-wrapper"/), 'Table wrapper added');
+      assert.ok(m,                                      'Got output');
+      assert.equal(m.match(/<th[> ]/g).length, 27,      'Markup added');
+      assert.ok(m.match(/<div class="table-wrapper"/),  'Table wrapper added');
       assert.ok(m.match(/ class="table-cell--right"/g), 'Table cell class added');
-      assert.ok(!m.match(/<td><strong>/), 'Markup removed');
+      assert.equal(m.match(/<col class="table-cell--right"/g).length, 3);
+      assert.ok(!m.match(/<td><strong>/),               'Markup removed');
     });
 
-    it('should do col spanning in tables if asked to do so', function() {
+    it('must do col spanning in tables if asked to do so', function() {
       const x = `<table>
   <caption id="test">Test</caption>
   <thead>
@@ -213,11 +214,13 @@ describe('MarkyMark', function() {
       let m = markyMark(x);
       assert.ok(m, 'Got output');
       assert.equal(m.match(/colspan="\d"/g).length, 1, 'Colspan added');
+      assert.equal(m.match(/<col class="table-cell--right"/g).length, 1);
+      assert.equal(m.match(/<col class="table-cell--left"/g).length, 1);
     });
   });
 
   describe('Audio, video, images', function() {
-    it('should convert video, audio and image tags', function() {
+    it('must convert video, audio and image tags', function() {
       let m;
 
       m = markyMark('<img src="video.jpg" alt="Description" />');
@@ -260,7 +263,7 @@ describe('MarkyMark', function() {
       //console.log(m);
     });
 
-    it('should do embedding of Youtube, Vimeo & co', function() {
+    it('must do embedding of Youtube, Vimeo & co', function() {
       let m;
 
       m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg">Dunkirk</a></p>');
@@ -288,7 +291,7 @@ describe('MarkyMark', function() {
   });
 
   describe('Syntax highlighting', function() {
-    it('should do code highlighting for Javascript', function() {
+    it('must do code highlighting for Javascript', function() {
       let m;
 
       m = markyMark(`
@@ -313,7 +316,7 @@ describe('MarkyMark', function() {
       assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
     });
 
-    it('should do code highlighting for HTML', function() {
+    it('must do code highlighting for HTML', function() {
       let m;
 
       m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
@@ -321,7 +324,7 @@ describe('MarkyMark', function() {
       assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
     });
 
-    it('should do code highlighting for Markdown', function() {
+    it('must do code highlighting for Markdown', function() {
       let m = markyMark(`<pre><code class="lang-markdown">
 H1
 =====
@@ -347,7 +350,7 @@ And some \`code\` or stuff * like * that, and an http://www.example.com URL
       assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 16 * 2);
     });
 
-    it('should do code highlighting for Diffs', function() {
+    it('must do code highlighting for Diffs', function() {
       let m = markyMark(
         `<pre><code class="lang-javascript">'+
 - var test = 1;
@@ -640,14 +643,14 @@ NOTE DONE
     ];
 
     tests.forEach(function(test) {
-      it('should do code highlighting for ' + test.language, function() {
+      it('must do code highlighting for ' + test.language, function() {
         const m = markyMark(test.snippet);
         if (test.output) {
           console.log(m);
         }
         assert.ok(m, 'Got output');
-        assert.ok(!m.match(/<(tt)>/), 'Should contain no <tt>');
-        assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'Should not do double quoting');
+        assert.ok(!m.match(/<(tt)>/), 'must contain no <tt>');
+        assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'must not do double quoting');
         let tagsFound = m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length;
         if (test.expected) {
           assert.equal(tagsFound, test.expected, 'Markup added');
@@ -667,7 +670,7 @@ NOTE DONE
 
   describe('Emojis', function() {
 
-    it('should convert ASCII art to Emojis', function() {
+    it('must convert ASCII art to Emojis', function() {
       let m, x = ':) and ;) and \\o/ ';
       m = markyMark(x);
 
@@ -678,7 +681,7 @@ NOTE DONE
 
   describe('Lists', function() {
 
-    it('should convert some lists to definition lists', function() {
+    it('must convert some lists to definition lists', function() {
       let m, x = `<ul>
         <li><strong>Blubb</strong>: Blögh</li>
         <li><strong>Blubb</strong>: Blögh</li>

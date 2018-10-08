@@ -5,8 +5,7 @@ const post = require('../lib/models/post');
 const config = require('../lib/config')(__dirname);
 
 describe('Post', function() {
-  it('should test Errors', function() {
-
+  it('must thor errors on broken posts', function() {
     assert.throws(function() {
       post();
     }, Error);
@@ -27,7 +26,7 @@ describe('Post', function() {
     }, Error);
   });
 
-  it('should test Structure', function() {
+  it('must have a bunch of properties', function() {
     let testPost = post('test.md', 'Test', {
       Description: 'Description',
       Date: new Date()
@@ -56,7 +55,7 @@ describe('Post', function() {
     assert.equal(testPost.meta.AbsoluteUrl, testPost.meta.AbsoluteLink);
   });
 
-  it('should test ReplacingMarkdown', function() {
+  it('must convert Markdown into HTML', function() {
     let testMarkdown = 'Text ![](some-image.jpg) and [some internal link](internal.md).';
     let testMarkdownDescription = 'Description ![](some-image.jpg) and [some internal link](internal.md).';
     let testMeta = {
@@ -79,7 +78,7 @@ describe('Post', function() {
     assert.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');
   });
 
-  it('should test ImageParser', function() {
+  it('must find images', function() {
     let testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
       Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
       Date: new Date()
@@ -106,7 +105,7 @@ describe('Post', function() {
     assert.ok(testPost.html.match(/src="http:\/\/www\.example\.com\/remote\.jpg"/));
   });
 
-  it('should test Gallery', function() {
+  it('must also build proper galleries', function() {
     let filename = 'test.md';
     let markdown;
     let testPost;
@@ -143,11 +142,11 @@ describe('Post', function() {
     assert.ok(!testPost.html.match(/<div class="gallery/));
   });
 
-  it('should test Links', function() {
+  it('must find external links', function() {
     const markdown = `www.1test.com _will_ be found as of \`marked@0.3.15\`
 And [this link](http://www.2test.com) will be found.
 As will be [this link](https://www.3test.com).
-An ![image](https://www.4test.com) should not be found.
+An ![image](https://www.4test.com) must not be found.
 As will be [this link](https://www.5test.com/some-compilcated-foo?a#b).
 But not example.6test.com or 7test.com (URLs with subdomains without proper links)`
   ;
@@ -166,7 +165,7 @@ But not example.6test.com or 7test.com (URLs with subdomains without proper link
     assert.equal(testLinks[3],    'https://www.5test.com/some-compilcated-foo?a#b');
   });
 
-  it('should convert internal links', function() {
+  it('must convert internal links', function() {
     const markdown = `This is an [internal link](internal-link.md), as is [this](internal-link2/index.md) and [this](../internal-link3/index.md).`;
     const testPost = post('test.md', markdown, {
       Description: 'Description',
@@ -181,7 +180,7 @@ But not example.6test.com or 7test.com (URLs with subdomains without proper link
     assert.ok(testPost.html.match(/\/posts\/internal-link3\//));
   });
 
-  it('should do proper headlining', function() {
+  it('must do proper headlining', function() {
     const markdown = `Title
 =======
 
@@ -208,7 +207,7 @@ Title 2
     assert.equal(testPost.html.match(/<h5 id="more-t-tle-4"/g).length,  1);
   });
 
-  it('should test for proper tables', function() {
+  it('must properly convert Markdown tables into HTML', function() {
     const markdown = `##### Tic Tac Toe
 
 | \\    | A   | B   | C   |
@@ -238,6 +237,6 @@ Title 2
     assert.equal(testPost.html.match(/<thead/g).length,        2);
     assert.equal(testPost.html.match(/<tbody/g).length,        2);
     assert.equal(testPost.html.match(/text-align/g).length,    12);
-    assert.equal(testPost.html.match(/table-cell--/g).length,  12);
+    assert.equal(testPost.html.match(/table-cell--/g).length,  3);
   });
 });
