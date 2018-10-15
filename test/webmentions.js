@@ -103,6 +103,15 @@ describe('Webmentions', () => {
       html: `I am a <a href="https://example.wikipedia.org/external">Link</a>.`
     });
     assert.equal(externalUrls.length, 0);
+
+    externalUrls = webmentions.findExternalLinks({
+      meta: {
+        hasExternalLink: true,
+        Link: 'http://localhost/'
+      },
+      html: `I am a <a href="http://fritz.box/">internal link</a>.`
+    });
+    assert.equal(externalUrls.length, 0);
   });
 
   const discoverUrls = [
