@@ -20,10 +20,11 @@
 <meta name="msapplication-config" content="{{config.absoluteBasePath}}browserconfig.xml" />
 <link rel="stylesheet" href="{{config.absoluteBasePath}}{{config.htdocs.theme}}/css/styles.css?v=1.0.0" />
 {{#each config.themeConf.icons}}
-  {{#ifMatches sizes 'x[5-9]\d\d$'}}
-  {{else}}
-    <link rel="icon{{#ifMatches src 'apple-touch-icon'}} apple-touch-icon{{/ifMatches}}" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
-  {{/ifMatches}}
+  {{#ifHasAspectRatio src 1 1}}
+    {{#ifHasMaxDimensions src 256 256}}
+      <link rel="icon{{#ifMatches src 'apple-touch-icon'}} apple-touch-icon{{/ifMatches}}" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
+    {{/ifHasMaxDimensions}}
+  {{/ifHasAspectRatio}}
 {{/each}}
 <link rel="manifest" href="{{config.absoluteBasePath}}manifest.json" />
 <link rel="search" href="{{config.absoluteBasePath}}opensearch.xml" type="application/opensearchdescription+xml" title="{{config.name}}" />

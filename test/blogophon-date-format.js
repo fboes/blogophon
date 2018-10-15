@@ -39,12 +39,12 @@ describe('Blogophon Date Format', function() {
 
   it('should do timestamps', function() {
     formattedDate = blogophonDateFormat(date, 'timestamp');
-    assert.equal(formattedDate, 1483183972);
+    assert.strictEqual(formattedDate, 1483183972);
     assert.ok(formattedDate > 1483183900);
   });
 
   it('should work like https://github.com/felixge/node-dateformat', function() {
     formattedDate = blogophonDateFormat(date, 'yymd');
-    assert.equal(formattedDate, '161231');
+    assert.strictEqual(formattedDate, '161231');
   });
 });

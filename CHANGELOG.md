@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :pill: Fix handling of locales like `de-DE` or `en-US` in dates
 * :pill: Fix broken <table> alignment HTML from GFM specs
 * :gift: Add Markdown for call-outs
+* :gift: Add Handlebar tests `ifHasAspectRatio`, `ifHasMinDimensions` & `ifHasMaxDimensions`
 
 2.1.0
 -----
