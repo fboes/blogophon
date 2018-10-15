@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="{{config.absoluteBasePath}}{{config.htdocs.theme}}/css/styles.css?v=1.0.0" />
 {{#each config.themeConf.icons}}
   {{#ifHasAspectRatio src 1 1}}
-    {{#ifHasMaxDimensions src 256 256}}
+    {{#ifHasMaxDimensions src 270 270}}
       <link rel="icon{{#ifMatches src 'apple-touch-icon'}} apple-touch-icon{{/ifMatches}}" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
     {{/ifHasMaxDimensions}}
   {{/ifHasAspectRatio}}
