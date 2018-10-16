@@ -78,6 +78,14 @@ Last but not least have a look at [`lib/helpers/blogophon-handlebars-quoters.js`
 <!--  Test if first string matches against regular expression -->
 {{#ifMatches tag '[Nn]ew'}}It's new!{{/ifMatches}}
 
+{{#ifHasAspectRatio img.src 16 9}}
+  <img src="{{img.src}}" alt="" /><!-- has an aspect ratio of 16:9 -->
+{{/ifHasAspectRatio}}
+
+{{#ifHasMaxDimensions img.src 270 270}}
+  <img src="{{img.src}}" alt="" /><!-- is not bigger than 270×270 px -->
+{{/ifHasMaxDimensions}}
+
 <!-- Export template variables to Javascript (e.g. for Google Tag Manager) -->
 <script>{{{dataLayer post.meta}}}</script>
 ```

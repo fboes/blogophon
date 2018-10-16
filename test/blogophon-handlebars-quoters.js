@@ -21,5 +21,17 @@ describe('Blogophon Handlebars Quoters', function() {
     assert.ok(tested);
     assert.strictEqual(tested.width,  0);
     assert.strictEqual(tested.height, 0);
+
+    tested = blogophonHandlebarsQuoter._getRatio(16, 9);
+    assert.strictEqual(tested,  1.78);
+
+    tested = blogophonHandlebarsQuoter._getRatio(1920, 1080);
+    assert.strictEqual(tested,  1.78);
+
+    tested = blogophonHandlebarsQuoter._getRatio(4, 3);
+    assert.strictEqual(tested,  1.33);
+
+    tested = blogophonHandlebarsQuoter._getRatio(640, 480);
+    assert.strictEqual(tested,  1.33);
   });
 });
