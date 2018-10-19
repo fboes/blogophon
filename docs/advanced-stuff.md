@@ -128,9 +128,9 @@ In certain environments you may not be able to install the Blogophon globally. T
 Configuring your site search
 ----------------------------
 
-As the Blogophon is a _static_ site generator, there is no built-in site-search funcitionality. Luckily you can use a regular search engine, by submitting a search term, prepended by `site:YOUDOMAIN`.
+As the Blogophon is a _static_ site generator, there is no built-in site-search functionality. Luckily you can search your site with any regular search engine by submitting a search term, prepended by `site:YOURDOMAIN`.
 
-The Blogophon supports this method. When configuring your blog, you will be asked for a search URL. This may be one of the follwing URLs, or any other search engine you can think of:
+The Blogophon uses this method to supply a site-search. When configuring your blog, you will be asked for a search URL. This may be one of the following URLs…
 
 * https://www.google.de/search?q=
 * https://www.bing.com/search?q=
@@ -138,9 +138,9 @@ The Blogophon supports this method. When configuring your blog, you will be aske
 * https://www.yandex.ru/search/?text=
 * https://duckduckgo.com/?q=
 
-If you want to integrate your own search engine you will have to supply all relevant parameters of that URL, where your search term will be appended to.
+…or if you want to integrate your own search engine you will have to paste the URL of your search engine. Anyway, the search term will be appended to the supplied search engine URL.
 
-Anyway, this mechanism will automatically generate a search form and a matching `opensearch.xml`.
+This mechanism will automatically generate a search form and a matching `opensearch.xml`.
 
 Google Webmaster search console
 -------------------------------
