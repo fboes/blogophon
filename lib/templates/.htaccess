@@ -25,6 +25,7 @@ ErrorDocument 410 /404.html
   AddType audio/mpeg           mp3
   AddType audio/ogg            ogg oga
   AddType image/svg+xml        svg svgz
+  AddType image/webp           webp
   AddType text/calendar        ics
   AddType text/markdown        md
   AddType text/x-html          _html
@@ -57,6 +58,7 @@ ErrorDocument 410 /404.html
   ExpiresByType image/png                 "access plus 2 weeks"
   ExpiresByType image/svg+xml             "access plus 2 weeks"
   ExpiresByType image/vnd.microsoft.icon  "access plus 2 weeks"
+  ExpiresByType image/webp                "access plus 2 weeks"
   ExpiresByType text/css                  "access plus 2 weeks"
   ExpiresByType text/javascript           "access plus 2 weeks"
   ExpiresByType text/x-html               "access plus 2 weeks"
