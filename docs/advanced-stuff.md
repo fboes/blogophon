@@ -142,11 +142,17 @@ The Blogophon uses this method to supply a site-search. When configuring your bl
 
 This mechanism will automatically generate a search form and a matching `opensearch.xml`.
 
-Google Webmaster search console
--------------------------------
+Search engine management consoles
+---------------------------------
 
-1. Register for Google Webmaster search console at https://www.google.com/webmasters/
-1. Put verification HTML page into your `/htdocs` folder.
+To check on how your blog is performing on search engines, register for the appropriate search management consoles:
+
+* Google Webmaster search console at https://www.google.com/webmasters/
+* Bing Webmastertools at https://www.bing.com/toolbox/webmaster
+
+The steps for setup are identical for all search consoles:
+
+1. Put verification HTML / XML page into your `/htdocs` folder.
 1. Submit sitemap located at `/sitemap.xml`.
 1. Add URL parameter `utm_source` and mark it as "does not alter site content".
 
