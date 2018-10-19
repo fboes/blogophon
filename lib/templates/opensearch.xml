@@ -3,7 +3,7 @@
   <ShortName>{{config.name}}</ShortName>
   <Description>Search {{config.name}}</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Url method="get" type="text/html" template="http://www.google.com/search?q=site%3A{{config.domain}}+{searchTerms}"/>
+  <Url method="get" type="text/html" template="{{config.searchUrl}}site%3A{{config.domain}}+{searchTerms}"/>
   {{#if config.themeConf.icon128.src}}
     <Image type="{{config.themeConf.icon128.type}}">{{config.themeConf.icon128.src}}</Image>
   {{/if}}

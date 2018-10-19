@@ -10,10 +10,12 @@
   </ul>
 </section>
 
-<section>
-  <h3><label for="search">{{#i18n}}Search{{/i18n}}</label></h3>
-  <form onsubmit="window.location.href=this.action+'?q='+encodeURIComponent('site:{{config.domain}} '+this.q.value);return false;" method="get" action="https://www.google.de/search">
-    <input type="search" id="search" name="q" title="{{#i18n}}Enter search query{{/i18n}}" placeholder="{{#i18n}}Search term…{{/i18n}}">
-    <input type="submit" value="{{#i18n}}Search{{/i18n}}">
-  </form>
-</section>
+{{#if config.searchUrl}}
+  <section>
+    <h3><label for="search">{{#i18n}}Search{{/i18n}}</label></h3>
+    <form method="get" action="{{config.searchTarget}}" onsubmit="window.location.href='{{config.searchUrl}}'+encodeURIComponent('site:{{config.domain}} '+this.{{config.searchParam}}.value);return false;">
+      <input type="search" name="{{config.searchParam}}" title="{{#i18n}}Enter search query{{/i18n}}" placeholder="{{#i18n}}Search term…{{/i18n}}">
+      <input type="submit" value="{{#i18n}}Search{{/i18n}}">
+    </form>
+  </section>
+{{/if}}

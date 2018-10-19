@@ -125,6 +125,23 @@ In certain environments you may not be able to install the Blogophon globally. T
 * All commands relating to `blogophon` may now be called by executing `node node_modules/.bin/blogophon`
 * All commands relating to `blogophon-generate` may now be called by executing `node node_modules/.bin/blogophon-generate`
 
+Configuring your site search
+----------------------------
+
+As the Blogophon is a _static_ site generator, there is no built-in site-search funcitionality. Luckily you can use a regular search engine, by submitting a search term, prepended by `site:YOUDOMAIN`.
+
+The Blogophon supports this method. When configuring your blog, you will be asked for a search URL. This may be one of the follwing URLs, or any other search engine you can think of:
+
+* https://www.google.de/search?q=
+* https://www.bing.com/search?q=
+* https://search.yahoo.com/search?p=
+* https://www.yandex.ru/search/?text=
+* https://duckduckgo.com/?q=
+
+If you want to integrate your own search engine you will have to supply all relevant parameters of that URL, where your search term will be appended to.
+
+Anyway, this mechanism will automatically generate a search form and a matching `opensearch.xml`.
+
 Google Webmaster search console
 -------------------------------
 
