@@ -46,6 +46,7 @@ article blockquote { color: #666666; margin-left: 1em; }
 article aside[role="note"] { float: right; margin: 0 1em 1em; padding: 0.5em 1em; max-width: 33%; font-style: italic; background-color: #dddddd; }
 article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }
 article .table-wrapper { max-width: 100%; overflow: auto; }
+article hr { border: none; border-top: 1px dashed #dddddd; margin: 1.5em 25%; }
 article table { margin-bottom: 1em; }
 article table caption { font-weight: bold; }
 article table tr, article table thead, article table tbody, article table caption { border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
@@ -57,6 +58,14 @@ article .location, article .permalink { display: none; }
 article input[type="checkbox"] { vertical-align: -0.15em; }
 article footer { color: #666666; overflow: hidden; font-size: 0.8em; }
 article footer a { text-decoration: none; }
-article address img { width: 2em; }
-article iframe { width: 100%; overflow: hidden; border: none; }
+article address { display: none; }
 .teasers .modified { display: none; }
+pre.code, pre > code { font: 1em/1.3 "Courier New", monospace; color: white; margin-bottom: 1em; padding: 0.5em; background: rgba(0, 0, 0, 0.1); display: block; overflow: auto; background: #272822; }
+pre.code b, pre.code i, pre.code var, pre.code tt, pre.code em, pre.code kbd, pre.code samp, pre.code u, pre > code b, pre > code i, pre > code var, pre > code tt, pre > code em, pre > code kbd, pre > code samp, pre > code u { text-decoration: none; font-style: normal; font-family: inherit; }
+pre.code .c1, pre.code b, pre > code .c1, pre > code b { color: #66D9EF; }
+pre.code .c2, pre.code i, pre > code .c2, pre > code i { color: #F92672; }
+pre.code .c3, pre.code var, pre > code .c3, pre > code var { color: #A6E22E; }
+pre.code .c4, pre.code tt, pre.code em, pre > code .c4, pre > code tt, pre > code em { color: #FD971F; }
+pre.code .c5, pre.code kbd, pre > code .c5, pre > code kbd { color: #E6DB74; }
+pre.code .c6, pre.code samp, pre > code .c6, pre > code samp { color: #AE81FF; }
+pre.code .comment, pre.code .comment *, pre.code u, pre.code u *, pre > code .comment, pre > code .comment *, pre > code u, pre > code u * { color: #75715E !important; }

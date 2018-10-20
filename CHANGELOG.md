@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :pill: Enable translations in templates
 * :gift: Make site search URL configurable
 * :gift: Enable image scaler for WebP
+* :gift: Enhance default theme
 
 2.1.1
 -----
