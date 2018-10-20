@@ -9,13 +9,3 @@
     {{/if}}
   </ul>
 </section>
-
-{{#if config.searchUrl}}
-  <section>
-    <h3><label for="search">{{#i18n}}Search{{/i18n}}</label></h3>
-    <form method="get" action="{{config.searchTarget}}" onsubmit="window.location.href='{{config.searchUrl}}'+encodeURIComponent('site:{{config.domain}} '+this.{{config.searchParam}}.value);return false;">
-      <input type="search" name="{{config.searchParam}}" title="{{#i18n}}Enter search query{{/i18n}}" placeholder="{{#i18n}}Search term…{{/i18n}}">
-      <input type="submit" value="{{#i18n}}Search{{/i18n}}">
-    </form>
-  </section>
-{{/if}}

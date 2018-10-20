@@ -1,6 +1,10 @@
 * {
-  margin: 0;
-  padding: 0;
+  margin:0;
+  padding:0;
+  // see http://css-tricks.com/international-box-sizing-awareness-day/
+  &, &:before, &:after {
+    box-sizing: border-box;
+  }
 }
 
 body {
@@ -8,10 +12,10 @@ body {
     line-height: 1.5;
 }
 * + h1, * + h2, * + article, * + section {
-  margin-top: 1em;
+  margin-top: 2em;
 }
-* + p, * + h3 {
-  margin-top: 0.5em;
+* + p, * + h3, * + .video-player, * + pre, * + blockquote, * + ul, * + dl, * + dt {
+  margin-top: 1em;
 }
 li {
   margin-left: 1.5em;
@@ -93,18 +97,6 @@ a {
   }
 }
 
-#prevnext {
-  text-align:center;
-  padding: 2em 0;
-  a {
-    display:inline-block;
-    padding:0 1em;
-    span {
-      display: none;
-    }
-  }
-}
-
 #header,
 #sidebar,
 #footer {
@@ -112,11 +104,25 @@ a {
   padding-bottom: 1em;
 }
 
+#header {
+  @include no-amp {
+    form {
+      position:absolute;
+      right: calc(50vw - (#{$width-container / 2}) + 0.5em);
+      top: 1em;
+      input {
+        padding: 0.2em;
+      }
+    }
+  }
+}
+
 #navigation {
   background-color: $color-grey;
   border-bottom:1px dashed $color-grey-dark;
   margin-bottom: 1em;
   padding: 0.2em 0;
+  text-align: center;
   ul {
     list-style: none;
     display: block;
@@ -130,14 +136,34 @@ a {
   }
 }
 
+#prevnext {
+  text-align:center;
+  padding: 2em 0;
+  a {
+    display:inline-block;
+    padding:0 1em;
+    span {
+      display: none;
+    }
+  }
+}
+
 #sidebar {
   background-color: $color-grey;
-  border-top:1px dashed $color-grey-dark;
+  border-top: 1px dashed $color-grey-dark;
+  font-size: 0.8em;
+  @extend %clearfix;
 
   h2 {
     display: none;
-    & + section {
-      margin-top: 0;
+  }
+  @include no-amp {
+    @media (min-width: 35em) {
+      section {
+        width: 50%;
+        padding-right: 2em;
+        float: left;
+      }
     }
   }
 }
