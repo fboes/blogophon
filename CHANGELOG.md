@@ -3,8 +3,9 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
-* :pill: Make site search URL configurable
-* :pill: Enable image scaler for WebP
+* :pill: Enable translations in templates
+* :gift: Make site search URL configurable
+* :gift: Enable image scaler for WebP
 
 2.1.1
 -----
