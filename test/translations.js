@@ -1,19 +1,24 @@
 'use strict';
 
 const assert = require('assert');
+const translations = require('../lib/helpers/translations');
 
 describe('Translations', function() {
-  it('should translate stuff', function() {
-    const translations = require('../lib/helpers/translations');
+  it('should throw execeptions on wrong handling', function() {
 
     assert.throws(function() {
       translations('xx');
     }, Error);
+  });
 
+  it('should translate stuff', function() {
     // Fallback on unknown string
     assert.equal(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');
 
     // No fallback on known string
-    assert.ok(translations('ru').getString('Home') !== 'Home');
+    assert.notEqual(translations('ru').getString('Home'), 'Home');
+
+    // Ignore sub strings
+    assert.equal(translations('ru').getString('Home'), translations('ru-RU').getString('Home'));
   });
 });
