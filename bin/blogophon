@@ -2,6 +2,7 @@
 
 'use strict';
 
+// Blogophon internal
 const application = require('../lib/helpers/application')();
 application.changeDirectory();
 
