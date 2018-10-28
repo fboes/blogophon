@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * :pill: Enable translations in templates
+* :pill: Update WhatsApp sharing link, ditch protocol links
 * :gift: Make site search URL configurable
 * :gift: Enable image scaler for WebP
 * :gift: Enhance default theme
