@@ -8,6 +8,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Make site search URL configurable
 * :gift: Enable image scaler for WebP
 * :gift: Enhance default theme
+* :gift: Enhance conversion of fractions like `(2/10)`
 
 2.1.1
 -----

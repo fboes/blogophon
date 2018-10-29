@@ -102,7 +102,7 @@ describe('MarkyMark', function() {
       assert.ok(!m.match(/class/));
       assert.ok(m.match(/title/));
     });
-    it('must make nice fractions', () => {
+    it('must make nicer fractions', () => {
       let m, x = `(1/2)<br />
 (1/3)  (2/3)<br />
 (1/4)  (2/4)  (3/4)<br />
@@ -111,9 +111,11 @@ describe('MarkyMark', function() {
 (1/7)  (2/7)  (3/7)  (4/7)  (5/7)  (6/7)<br />
 (1/8)  (2/8)  (3/8)  (4/8)  (5/8)  (6/8)  (7/8)<br />
 (1/9)  (2/9)  (3/9)  (4/9)  (5/9)  (6/9)  (7/9)  (8/9)<br />
-(1/10) (2/10) (3/10) (4/10) (5/10) (6/10) (7/10) (8/10) (9/10)`;
+(1/10) (2/10) (3/10) (4/10) (5/10) (6/10) (7/10) (8/10) (9/10)
+(99/100)`;
       m = markyMark(x);
-      assert.equal(m.match(/&\S+;/g).length, 18);
+      //console.log(m);
+      assert.equal(m.match(/\d+⁄\d+/g).length, 36); // String.fromCharCode(8260)
       assert.ok(!m.match(/\(\d+\/\d+\)/));
     });
     it('must make conversation', () => {
