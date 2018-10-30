@@ -9,6 +9,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Enable image scaler for WebP
 * :gift: Enhance default theme
 * :gift: Enhance conversion of fractions like `(2/10)`
+* :gift: Streamline Nginx configuration
 
 2.1.1
 -----
