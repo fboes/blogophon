@@ -30,9 +30,9 @@ a:hover { color: #0240a5; }
 #navigation ul { list-style: none; display: block; }
 #navigation ul li { display: inline-block; margin: 0 1em 0 0; }
 #navigation a { text-decoration: none; }
-#prevnext { text-align: center; padding: 2em 0; }
-#prevnext a { display: inline-block; padding: 0 1em; }
-#prevnext a span { display: none; }
+.prevnext { text-align: center; padding: 2em 0; }
+.prevnext a { display: inline-block; padding: 0 1em; }
+.prevnext a span { display: none; }
 #sidebar { background-color: #dddddd; border-top: 1px dashed #666666; font-size: 0.8em; }
 #sidebar h2 { display: none; }
 @media (min-width: 35em) { #sidebar section { width: 50%; padding-right: 2em; float: left; } }

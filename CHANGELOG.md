@@ -10,6 +10,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Enhance default theme
 * :gift: Enhance conversion of fractions like `(2/10)`
 * :gift: Streamline Nginx configuration
+* :gift: Enhance accessibility by adding new attributes to HTML
 
 2.1.1
 -----

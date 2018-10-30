@@ -61,7 +61,7 @@
                 <p><a href="{{meta.AbsoluteUrlAmp}}" title="{{meta.Title}}">{{#i18n}}Read on…{{/i18n}}</a></p>
               {{/if}}
 
-              <footer class="meta">
+              <footer class="meta" aria-hidden="true">
                 {{#if meta.AuthorName}}
                   <address class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
                     <link itemprop="image" href="{{meta.AuthorImage}}" />
@@ -78,17 +78,17 @@
         </div>
       {{/if}}
 
-      <p class="back">
-        {{#if prevUrl}}
-          <a href="{{prevUrl}}" rel="prev" class="prev" aria-label="{{#i18n}}Previous page{{/i18n}}">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
+      <nav class="prevnext">
+        {{#if navevUrl}}
+          <a href="{{prevUrl}}" rel="prev" class="prev" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
         {{/if}}
         {{#if title}}
           <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
         {{/if}}
         {{#if nextUrl}}
-          <a href="{{nextUrl}}" rel="next" class="next" aria-label="{{#i18n}}Next page{{/i18n}}"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
+          <a href="{{nextUrl}}" rel="next" class="next" aria-label="{{#i18n}}Next page{{/i18n}}" accesskey="k"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
         {{/if}}
-      </p>
+      </nav>
     </main>
     {{>footerHtml}}
   </div>

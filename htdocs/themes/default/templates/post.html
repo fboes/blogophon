@@ -141,17 +141,17 @@
               </span>
             </footer>
           </article>
-          <div id="prevnext">
+          <nav class="prevnext">
             {{#if prev.Url}}
-              <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
+              <a href="{{prev.Url}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
             {{/if}}
             <span style="display:inline-block;">
               <a href="{{../config.basePath}}" rel="contents" id="up">{{#i18n}}Back to article listing{{/i18n}}</a>
             </span>
             {{#if next.Url}}
-              <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
+              <a href="{{next.Url}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}" accesskey="k"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
             {{/if}}
-          </div>
+          </nav>
         {{/with}}
       </main>
       <aside id="sidebar">

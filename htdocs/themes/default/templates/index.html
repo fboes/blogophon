@@ -101,7 +101,7 @@
                   <p><a href="{{meta.Url}}" title="{{meta.Title}}">{{#i18n}}Read on…{{/i18n}}</a></p>
                 {{/if}}
                 {{#if meta.Tags}}
-                  <footer class="meta">
+                  <footer class="meta" aria-hidden="true">
                     {{#if meta.AuthorName}}
                       <address class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
                         <img itemprop="image" class="u-photo" src="{{meta.AuthorImage}}" alt="{{meta.AuthorName}}" />
@@ -127,9 +127,9 @@
           </div>
         {{/if}}
 
-        <div id="prevnext">
+        <nav class="prevnext">
           {{#if prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
+            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
           {{/if}}
           <span>
             {{#if currentPage}}
@@ -140,9 +140,9 @@
             {{/if}}
           </span>
           {{#if nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}" aria-label="{{#i18n}}Next page{{/i18n}}"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
+            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}" aria-label="{{#i18n}}Next page{{/i18n}}" accesskey="k"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
           {{/if}}
-        </div>
+        </nav>
 
       </main>
       <aside id="sidebar">
