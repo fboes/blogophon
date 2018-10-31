@@ -55,7 +55,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Add favicons to feeds
 * :gift: Add new properties to `manifest.json`
 * :gift: Add [abc music notation](http://abcnotation.com/wiki/abc:standard:v2.1) syntax highlighter
-* :gift: Add [Exapunks' AXIOM](http://www.zachtronics.com/exapunks/) syntax highlighter
+* :gift: Add [Exapunks AXIOM](http://www.zachtronics.com/exapunks/) syntax highlighter
 * :gift: Add more information to `opensearch.xml`
 * :gift: Add Handlebar helpers to export Google Tag Manager Datalayer
 * :gift: Add Handlebar helpers for data dumping
