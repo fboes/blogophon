@@ -13,6 +13,7 @@ const config      = require('../lib/config')();
 if (args.help) {
   console.log('Usage: node generate.js [OPTIONS]');
   console.log('Generate Blogophon articles in current directory.');
+  console.log('For more information see https://github.com/fboes/blogophon/.');
   console.log('');
   console.log('Options:');
   console.log('  -f, --force                Generate all articles anew, even if they have not changed');
@@ -26,7 +27,7 @@ if (args.help) {
 } else if (args.log) {
   console.log('---- ' + new Date() + ' -----');
 } else if(args.version) {
-  console.log(require('../lib/config').generator);
+  console.log(require('../lib/config')().generatorVersion);
   process.exit(0);
 }
 
