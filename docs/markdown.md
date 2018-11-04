@@ -191,9 +191,9 @@ Enclosure: audio.mp3
 
 See [instructions for attachments](#attachments) on how to upload files.
 
-### Youtube & Vimeo
+### YouTube & Vimeo
 
-For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
+For displaying a embedded video player for YouTube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
 
 ```markdown
 This will be rendered as Youtube player
@@ -213,9 +213,9 @@ Embedding other services
 
 For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
 
-### Codepen, Github Gist and JSFiddle
+### CodePen, Github Gist and JSFiddle
 
-For displaying code examples from Codepen, Github Gist or JSFiddle, just put a link to the page into a single line. This will be converted to the corresponding example script.
+For displaying code examples from CodePen, Github Gist or JSFiddle, just put a link to the page into a single line. This will be converted to the corresponding example script.
 
 Special characters
 ------------------
