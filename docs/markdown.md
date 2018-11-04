@@ -191,9 +191,9 @@ Enclosure: audio.mp3
 
 See [instructions for attachments](#attachments) on how to upload files.
 
-### Youtube & Vimeo
+### YouTube & Vimeo
 
-For displaying a embedded video player for Youtube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
+For displaying a embedded video player for YouTube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
 
 ```markdown
 This will be rendered as Youtube player
@@ -213,9 +213,9 @@ Embedding other services
 
 For displaying a Giphy image, just put a link to the Giphy page into a single line. This will be converted to the corresponding image.
 
-### Codepen, Github Gist and JSFiddle
+### CodePen, Github Gist and JSFiddle
 
-For displaying code examples from Codepen, Github Gist or JSFiddle, just put a link to the page into a single line. This will be converted to the corresponding example script.
+For displaying code examples from CodePen, Github Gist or JSFiddle, just put a link to the page into a single line. This will be converted to the corresponding example script.
 
 Special characters
 ------------------
@@ -233,7 +233,7 @@ There are some Markdown codes in the Blogophon to add special characters like Em
 | `(+-)`   | ±           | Plus-minus sign                                                                                                    |
 | `(1/2)`  | ½           | Fraction, works for most common fractions                                                                          |
 
-For more Emojis and special characters refer to the [ASCII Emojii conversion table](emojis.md), or consult a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode) and convert a code like `U+1F680` into `&#x1F680;`.
+For more Emojis and special characters refer to the [ASCII Emoji conversion table](emojis.md), or consult a [Emoji UTF-8 table](http://apps.timwhitlock.info/emoji/tables/unicode) and convert a code like `U+1F680` into `&#x1F680;`.
 
 Tables
 ------
