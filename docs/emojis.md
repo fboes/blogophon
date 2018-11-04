@@ -27,6 +27,8 @@ Emojis
 | `8<`         | &#x2702;  | Scissors         |
 | `:+1:`       | &#x1F44D; | Thumbs up sign   |
 | `:-1:`       | &#x1F44E; | Thumbs down sign |
+| `:yes:`      | &#x2705;  | White Heavy Check Mark |
+| `:no:`       | &#x26D4;  | No Entry         |
 | `<3`         | &#x2764;  | Heart            |
 | `</3`        | &#x1F494; | Broken heart     |
 | `(!)`        | &#x26A0;  | Warning sign     |
