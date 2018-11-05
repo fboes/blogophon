@@ -13,6 +13,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Streamline Nginx configuration
 * :gift: Enhance accessibility by adding new attributes to HTML
 * :gift: Add `:yes:` and `:no:`
+* :gift: Add new way to add row headers to `<table>`
 
 2.1.1
 -----

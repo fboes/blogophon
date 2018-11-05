@@ -262,7 +262,23 @@ To add a table caption simply put a headline level 5 in front of your table:
 
 ```
 
-[Colons can be used to align columns](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables).
+[Colons can be used to align columns](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables):
+
+```markdown
+##### Tic Tac Toe
+
+| \   | A   | B   | C   |
+|:--- | ---:|:---:|:--- |
+| 1   | X   | X   | X   |
+| 2   | O   | X   |     |
+| 3   |     | O   | O   |
+
+```
+
+* If the header separator is prepended by a `:`, the column content will be left-aligned.
+* If the header separator is appended by a `:`, the column content will be right-aligned.
+* If the header separator is enclosed by `:`, the column content will be centred.
+* If the first column is aligned to the left, the cells in this column will be used as row headers for their respective rows.
 
 Fenced code blocks
 ------------------

@@ -239,4 +239,27 @@ Title 2
     assert.equal(testPost.html.match(/text-align/g).length,    12);
     assert.equal(testPost.html.match(/table-cell--/g).length,  3);
   });
+
+  it('must properly convert Markdown tables into HTML', function() {
+    const markdown = `##### Row header
+| \\  | A   | B   | C   |
+|:--- | ---:|:---:|:--- |
+| 1   | X   | X   | X   |
+| 2   | O   | X   |     |
+| 3   |     | O   | O   |
+`;
+    const testPost = post('test.md', markdown, {
+      Description: 'Description',
+      Date: new Date()
+    });
+    //console.log(testPost.html);
+
+    assert.equal(testPost.html.match(/<caption id="/g).length, 1,  'Has <caption>');
+    assert.equal(testPost.html.match(/<th(?:>|\s)/g).length,   7,  'Has <th>');
+    assert.equal(testPost.html.match(/<thead/g).length,        1,  'Has <thead>');
+    assert.equal(testPost.html.match(/<tbody/g).length,        1,  'Has <tbody>');
+    assert.equal(testPost.html.match(/text-align/g).length,    16);
+    assert.equal(testPost.html.match(/scope="row"/g).length,   3);
+    assert.equal(testPost.html.match(/table-cell--/g).length,  4);
+  });
 });
