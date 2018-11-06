@@ -367,6 +367,20 @@ Conversations between multiple persons are like a collection of quotes, introduc
 > When the battle's lost and won.
 ```
 
+Adding relations to links
+-------------------------
+
+```markdown
+* [This link will have a bubble help "Title goes here"](https://www.example.com "Title goes here").
+* [This link leads to an alternative version of this article](https://www.example.com "alternate").
+* [This link leads to an external URL](https://www.example.com "external").
+* [This link should not be followed by search engines](https://www.example.com "nofollow").
+* [This link should not be pinged by webmentions](https://www.example.com "nomention").
+* [This link leads to a tag page](https://www.example.com "tag").
+```
+
+See also [`rel` link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).
+
 ---
 
 Return to [table of contents](README.md).

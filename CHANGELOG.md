@@ -14,6 +14,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Enhance accessibility by adding new attributes to HTML
 * :gift: Add `:yes:` and `:no:`
 * :gift: Add new way to add row headers to `<table>`
+* :pill: Add more `rel`-attributes to links
 
 2.1.1
 -----

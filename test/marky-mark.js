@@ -88,7 +88,7 @@ describe('MarkyMark', function() {
     it('must have some class(es)', function() {
       let m, x = '<a href="https://www.example.com" title="nomention">Test</a>';
       m = markyMark(x);
-      assert.ok(m.match(/class/));
+      assert.ok(m.match(/rel/));
       assert.ok(!m.match(/title/));
 
       x = '<a href="https://www.example.com" title="nofollow">Test</a>';
@@ -101,6 +101,18 @@ describe('MarkyMark', function() {
       m = markyMark(x);
       assert.ok(!m.match(/class/));
       assert.ok(m.match(/title/));
+
+      x = '<a href="https://www.example.com" title="alternate">Test</a>';
+      m = markyMark(x);
+      assert.ok(m.match(/rel/));
+      assert.ok(!m.match(/class/));
+      assert.ok(!m.match(/title/));
+
+      x = '<a href="https://www.example.com" title="external">Test</a>';
+      m = markyMark(x);
+      assert.ok(m.match(/rel/));
+      assert.ok(!m.match(/class/));
+      assert.ok(!m.match(/title/));
     });
     it('must make nicer fractions', () => {
       let m, x = `(1/2)<br />
