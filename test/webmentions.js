@@ -49,7 +49,8 @@ describe('Webmentions', () => {
     assert.equal(externalUrls[1], 'https://www.example.com/external');
 
     externalUrls = webmentions.findExternalLinks({
-      html: `I am a <a href="https://www.example.com/external">Link</a> and <a href="https://www.example.com/external2">so am I</a>.`
+      html: `I am a <a href="https://www.example.com/external">Link</a>
+      and <a href="https://www.example.com/external2">so am I</a>.`
     });
     assert.equal(externalUrls.length, 2);
     assert.equal(externalUrls[0], 'https://www.example.com/external');

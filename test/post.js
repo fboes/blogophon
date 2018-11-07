@@ -68,7 +68,11 @@ describe('Post', function() {
 
     assert.equal(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
     assert.equal(testPost.meta.Description, 'Description  and some internal link.', 'Description has no markdown');
-    assert.equal(testPost.meta.MarkdownDescription, testMarkdownDescription, '...but there is a description with markdown');
+    assert.equal(
+      testPost.meta.MarkdownDescription,
+      testMarkdownDescription,
+      '...but there is a description with markdown'
+    );
     assert.ok(testPost.meta.Image.match(/some-image.jpg/));
     assert.ok(testPost.meta.ProperImage.match(/some-image.jpg/));
     assert.ok(testPost.html.match(/test\/some-image.jpg/), 'Image has path added');
@@ -79,10 +83,15 @@ describe('Post', function() {
   });
 
   it('must find images', function() {
-    let testPost = post('test.md', 'Single image with style: ![](markdown.jpg#default) - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)', {
-      Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
-      Date: new Date()
-    });
+    let testPost = post(
+      'test.md',
+      'Single image with style: ![](markdown.jpg#default)'
+      +' - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)',
+      {
+        Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
+        Date: new Date()
+      }
+    );
 
     assert.ok(testPost.markdown);
     assert.ok(testPost.meta.MarkdownDescription);
@@ -166,7 +175,8 @@ But not example.6test.com or 7test.com (URLs with subdomains without proper link
   });
 
   it('must convert internal links', function() {
-    const markdown = `This is an [internal link](internal-link.md), as is [this](internal-link2/index.md) and [this](../internal-link3/index.md).`;
+    const markdown = `This is an [internal link](internal-link.md),
+as is [this](internal-link2/index.md) and [this](../internal-link3/index.md).`;
     const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()

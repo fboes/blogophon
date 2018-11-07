@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable max-len */
+
 const assert = require('assert');
 const markyMark = require('../lib/helpers/marky-mark');
 

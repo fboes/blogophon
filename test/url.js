@@ -59,7 +59,10 @@ describe('URL', function() {
     url = PostUrl('Ich-ünd-Dü.md');
     assert.ok(url.relativeUrl().match(/^\S*\/posts\/ich-uend-due\/$/));
     assert.ok(url.absoluteUrl().match(/^\S*\/posts\/ich-uend-due\/$/));
-    assert.ok(url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-uend-due(\/|\\)index\.html$/), 'Filename matching Umlauts');
+    assert.ok(
+      url.filename().match(/^\S+(\/|\\)posts(\/|\\)ich-uend-due(\/|\\)index\.html$/),
+      'Filename matching Umlauts'
+    );
 
     url = TagUrl('Ich bin ein merkwürdiges Tag');
     assert.ok(url.relativeUrl().match(/^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/));

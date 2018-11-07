@@ -122,6 +122,10 @@
         2,
         "unix"
       ],
+      "max-len": [
+        1,
+        { "code": 120, "ignoreStrings": true, "ignoreRegExpLiterals": true }
+      ],
       "no-console": 0,
       "no-undef": 2,
       "no-unused-vars": 2,

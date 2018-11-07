@@ -11,7 +11,10 @@ describe('Ampify', function() {
     assert.equal(editor.titleForFilename('Foo and Bar', { postFileMode: null }, '2018-08-07'), 'Foo and Bar');
     assert.equal(editor.titleForFilename('Foo and Bar', { postFileMode: '' }, '2018-08-07'), 'Foo and Bar');
     assert.equal(editor.titleForFilename('Foo and Bar', { postFileMode: 'Title' }, '2018-08-07'), 'Foo and Bar');
-    assert.equal(editor.titleForFilename('Foo and Bar', { postFileMode: 'Title-Date' }, '2018-08-07'), 'Foo and Bar-2018-08-07');
+    assert.equal(
+      editor.titleForFilename('Foo and Bar', { postFileMode: 'Title-Date' }, '2018-08-07'),
+      'Foo and Bar-2018-08-07'
+    );
   });
 
   it('should do filenameFromTitle', function() {
