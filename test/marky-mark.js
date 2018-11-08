@@ -658,6 +658,40 @@ NOTE DONE
 </code></pre>`,
         hasComments: true,
         expected: 124 + 16
+      },
+      {
+        language: 'JSON',
+        snippet: `<pre><code class="language-json">{
+          &quot;editor.fontSize&quot;: 13,
+          &quot;editor.formatOnPaste&quot;: false,
+          &quot;editor.formatOnSave&quot;: false,
+          &quot;editor.largeFileOptimizations&quot;: false,
+          &quot;editor.multiCursorModifier&quot;: &quot;ctrlCmd&quot;,
+          &quot;editor.renderWhitespace&quot;: &quot;boundary&quot;,
+          &quot;editor.rulers&quot;: [80, 120],
+          &quot;editor.snippetSuggestions&quot;: &quot;top&quot;,
+          &quot;editor.tabSize&quot;: 2,
+          &quot;editor.useTabStops&quot;: false,
+          &quot;editor.wordWrap&quot;: &quot;on&quot;,
+          &quot;explorer.confirmDelete&quot;: false,
+          &quot;files.autoSave&quot;: &quot;onFocusChange&quot;,
+          &quot;files.eol&quot;: &quot;\n&quot;,
+          &quot;files.exclude&quot;: {
+              &quot;.idea&quot;: true,
+              &quot;.vscode&quot;: true
+          },
+          &quot;git.autofetch&quot;: true, &quot;git.enableSmartCommit&quot;: true,
+          &quot;git.path&quot;: &quot;C:\\Program Files\\Git\\bin\\git.exe&quot;,
+          &quot;npm.enableScriptExplorer&quot;: true,
+          &quot;spellright.documentTypes&quot;: [
+              &quot;markdown&quot;,
+              &quot;latex&quot;,
+              &quot;plaintext&quot;
+          ],
+          &quot;terminal.integrated.shell.windows&quot;: &quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;,
+          &quot;workbench.colorTheme&quot;: &quot;Monokai&quot;
+        }</code></pre>`,
+        expected: 98
       }
     ];
 
