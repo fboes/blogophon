@@ -86,7 +86,7 @@ describe('Post', function() {
     let testPost = post(
       'test.md',
       'Single image with style: ![](markdown.jpg#default)'
-      +' - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)',
+      + ' - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)',
       {
         Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
         Date: new Date()

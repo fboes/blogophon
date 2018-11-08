@@ -26,9 +26,9 @@ gulp.task('eslint', function() {
   return gulp.src(
     [
       '*.js',
-      pkg.directories.bin+'/**/*',
-      pkg.directories.lib+'/**/*.js',
-      pkg.directories.test+'/**/*.js'
+      pkg.directories.bin + '/**/*',
+      pkg.directories.lib + '/**/*.js',
+      pkg.directories.test + '/**/*.js'
     ])
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint())
@@ -115,7 +115,7 @@ gulp.task('serve', function() {
 // Watch Files For Changes
 gulp.task('watch', function() {
   gulp.watch(['gulpfile.js', 'package.json'], process.exit);
-  gulp.watch(['*.js', pkg.directories.bin+'/**/*', pkg.directories.lib+'/**/*.js', pkg.directories.test+'/**/*.js'], ['test']);
+  gulp.watch(['*.js', pkg.directories.bin + '/**/*', pkg.directories.lib + '/**/*.js', pkg.directories.test + '/**/*.js'], ['test']);
   gulp.watch(pkg.directories.theme + '/**/*.js',   ['build-js']);
   gulp.watch(pkg.directories.theme + '/**/*.scss', ['build-css']);
 });
