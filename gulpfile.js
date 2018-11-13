@@ -10,15 +10,15 @@ const onError = function() {
 };
 
 // Include Our Plugins
-const eslint     = require('gulp-eslint');
-const mocha      = require('gulp-mocha');
-const gls        = require('gulp-live-server');
-const plumber    = require('gulp-plumber');
-const sass       = require('gulp-sass');
-const rename     = require("gulp-rename");
-const uglify     = require('gulp-uglify');
-const postcss    = require('gulp-postcss');
-const replace    = require('gulp-replace');
+const eslint       = require('gulp-eslint');
+const mocha        = require('gulp-mocha');
+const browserSync  = require('browser-sync').create();
+const plumber      = require('gulp-plumber');
+const sass         = require('gulp-sass');
+const rename       = require("gulp-rename");
+const uglify       = require('gulp-uglify');
+const postcss      = require('gulp-postcss');
+const replace      = require('gulp-replace');
 const autoprefixer = require('autoprefixer');
 
 // Lint Task
@@ -103,13 +103,11 @@ gulp.task('build-css', function() {
 });
 
 gulp.task('serve', function() {
-  let server = gls.static(pkg.directories.htdocs, 8080);
-  server.start();
-  gulp.watch(pkg.directories.htdocs + '/**/*', function(file) {
-    /* eslint-disable */
-    server.notify.apply(server, [file]);
-    /* eslint-enable */
+  browserSync.init({
+    server: pkg.directories.htdocs,
+    port: 8080
   });
+  gulp.watch(pkg.directories.htdocs + '/**/*').on('change', browserSync.reload);
 });
 
 // Watch Files For Changes
