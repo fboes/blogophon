@@ -6,7 +6,7 @@ The Blogophon supports the building of custom themes and frontend functionality.
 Gulp
 ----
 
-The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new Javascript functionality. It will check and compress your files while you are editing.
+The Blogophon sports [Gulp](http://gulpjs.com/), which will support you if you plan to build themes or new JavaScript functionality. It will check and compress your files while you are editing.
 
 To install all tools required for Gulp execute these commands from the project root directory:
 
@@ -24,14 +24,12 @@ Afterwards these commands become available:
 | `gulp serve` | Starts webserver at http://localhost:8080/            |
 | `gulp watch` | Executes `gulp test` and `gulp build` on file changes |
 | `gulp test`  | Executes linters and tests                            |
-| `gulp build` | Build compressed Javascript and CSS                   |
+| `gulp build` | Build compressed JavaScript and CSS                   |
 
 Webserver
 ---------
 
-After starting `gulp` or `gulp serve`, a webserver will be spawned on your computer. It will be reachable via http://localhost:8080/.
-
-This webserver will also spawn a [LiveReload](http://livereload.com/) service. Given there is a LiveReload plugin installed and activated in your browser, the page will reload all resources in your browsers which have been changed while you are looking at the page.
+After starting `gulp` or `gulp serve`, a [development webserver](https://www.browsersync.io/) will be spawned on your computer. It will be reachable via http://localhost:8080/.
 
 Theming
 -------
@@ -86,7 +84,7 @@ Last but not least have a look at [`lib/helpers/blogophon-handlebars-quoters.js`
   <img src="{{img.src}}" alt="" /><!-- is not bigger than 270×270 px -->
 {{/ifHasMaxDimensions}}
 
-<!-- Export template variables to Javascript (e.g. for Google Tag Manager) -->
+<!-- Export template variables to S (e.g. for Google Tag Manager) -->
 <script>{{{dataLayer post.meta}}}</script>
 ```
 
@@ -96,7 +94,7 @@ The Blogophon uses special icon sizes defined in your `theme.json` for special p
 
 | Size    | Purpose |
 | ------- | ------- |
-| 128×128 | Will be used as icon for RSS feeds, ATOM feeds, JSON-RSS, Feed-Json and `browserconfig.xml` |
+| 128×128 | Will be used as icon for RSS feeds, ATOM feeds, JSON-RSS, JSON-Feed and `browserconfig.xml` |
 | 270×270 | Will be used in `browserconfig.xml` |
 | 558×270 | Will be used in `browserconfig.xml` |
 | 558×558 | Will be used in `browserconfig.xml` |
