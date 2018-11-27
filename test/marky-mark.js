@@ -692,6 +692,21 @@ NOTE DONE
           &quot;workbench.colorTheme&quot;: &quot;Monokai&quot;
         }</code></pre>`,
         expected: 98
+      },
+      {
+        language: 'YAML',
+        snippet: `<pre><code class="language-yaml">men: [John Smith, Bill Jones]
+women:
+  - Mary Smith
+  - Susan Williams
+--- # Block
+name: John Smith
+age: 33
+
+en-GB: https://www.example.co.uk/
+fr-FR: https://www.example.fr/
+de-DE: https://www.example.de/</code></pre>`,
+        expected: 18
       }
     ];
 
