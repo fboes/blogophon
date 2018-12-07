@@ -127,22 +127,24 @@
           </div>
         {{/if}}
 
-        <nav class="pager">
-          {{#if prevUrl}}
-            <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
-          {{/if}}
-          <span>
-            {{#if currentPage}}
-                <span>{{#i18n}}Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}{{/i18n}}</span>
+        {{#if needsPager}}
+          <nav class="pager">
+            {{#if prevUrl}}
+              <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
             {{/if}}
-            {{#if title}}
-              <br /><a href="{{config.basePath}}" rel="home">{{#i18n}}Back to home page{{/i18n}}</a>
+            <span>
+              {{#if currentPage}}
+                  <span>{{#i18n}}Page {{currentPage}}&nbsp;/&nbsp;{{maxPages}}{{/i18n}}</span>
+              {{/if}}
+              {{#if title}}
+                <br /><a href="{{config.basePath}}" rel="home">{{#i18n}}Back to home page{{/i18n}}</a>
+              {{/if}}
+            </span>
+            {{#if nextUrl}}
+              <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}" aria-label="{{#i18n}}Next page{{/i18n}}" accesskey="k"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
             {{/if}}
-          </span>
-          {{#if nextUrl}}
-            <a href="{{nextUrl}}" rel="next" class="next" title="{{#i18n}}Next page{{/i18n}}" aria-label="{{#i18n}}Next page{{/i18n}}" accesskey="k"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
-          {{/if}}
-        </nav>
+          </nav>
+        {{/if}}
 
       </main>
       <aside id="sidebar">

@@ -78,17 +78,19 @@
         </div>
       {{/if}}
 
-      <nav class="pager">
-        {{#if navevUrl}}
-          <a href="{{prevUrl}}" rel="prev" class="prev" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
-        {{/if}}
-        {{#if title}}
-          <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
-        {{/if}}
-        {{#if nextUrl}}
-          <a href="{{nextUrl}}" rel="next" class="next" aria-label="{{#i18n}}Next page{{/i18n}}" accesskey="k"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
-        {{/if}}
-      </nav>
+      {{#if needsPager}}
+        <nav class="pager">
+          {{#if navevUrl}}
+            <a href="{{prevUrl}}" rel="prev" class="prev" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
+          {{/if}}
+          {{#if title}}
+            <a href="{{config.basePath}}" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
+          {{/if}}
+          {{#if nextUrl}}
+            <a href="{{nextUrl}}" rel="next" class="next" aria-label="{{#i18n}}Next page{{/i18n}}" accesskey="k"><span>{{#i18n}}Next page{{/i18n}}</span> &raquo;</a>
+          {{/if}}
+        </nav>
+      {{/if}}
     </main>
     {{>footerHtml}}
   </div>

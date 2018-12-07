@@ -74,15 +74,17 @@
             </span>
           </footer>
         </article>
-        <nav class="pager">
-          {{#if prev.AbsoluteUrlAmp}}
-            <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
-          {{/if}}
-          <a href="{{../config.basePath}}amp.html" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
-          {{#if next.AbsoluteUrlAmp}}
-            <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}" accesskey="k"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
-          {{/if}}
-        </nav>
+        {{#if needsPager}}
+          <nav class="pager">
+            {{#if prev.AbsoluteUrlAmp}}
+              <a href="{{prev.AbsoluteUrlAmp}}" rel="prev" class="prev" title="{{prev.Title}}" aria-label="{{#i18n}}Previous article{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous article{{/i18n}}</span></a>
+            {{/if}}
+            <a href="{{../config.basePath}}amp.html" rel="contents" id="up">{{#i18n}}To article listing{{/i18n}}</a>
+            {{#if next.AbsoluteUrlAmp}}
+              <a href="{{next.AbsoluteUrlAmp}}" rel="next" class="next" title="{{next.Title}}" aria-label="{{#i18n}}Next article{{/i18n}}" accesskey="k"><span>{{#i18n}}Next article{{/i18n}}</span> &raquo;</a>
+            {{/if}}
+          </nav>
+        {{/if}}
       {{/with}}
     </main>
     {{>footerHtml}}
