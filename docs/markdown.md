@@ -345,9 +345,9 @@ For citing quotes there is a Markdown element called "blockquote". It will displ
 > <cite>First Witch</cite>
 ```
 
-### Call-outs
+### Pull-quote
 
-A special form of quote is a call-out. This is often used to show a witty sentence of your article for quick readers to grab their attention, without breaking the flow of text.
+A special form of quote is a pull-quote. This is often used to show a witty sentence of your article for quick readers to grab their attention, without breaking the flow of text.
 
 ```markdown
 >! Get started with Markdown!
