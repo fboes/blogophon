@@ -31,7 +31,7 @@
     "autoprefixer": "^9.3.1",
     "beeper": "^1.1.1",
     "browser-sync": "^2.26.3",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-eslint": "^5.0.0",
     "gulp-mocha": "^6.0.0",
     "gulp-plumber": "^1.2.0",

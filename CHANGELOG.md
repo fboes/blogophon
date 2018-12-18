@@ -16,6 +16,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :gift: Add new way to add row headers to `<table>`
 * :gift: Add more `rel`-attributes to links
 * :gift: Add Handlebar helpers `removeImages` & `lazyloadImages`
+* :wrench: Update development tools to Gulp@4.0.0
 
 2.1.1
 -----
