@@ -77,7 +77,7 @@ There are also [special post types](special-post-types.md), which are activated 
 Basic Markdown example
 ----------------------
 
-To get you started quickly, here is a small Markdown example. For more information check out the full [Markdown documentation](https://daringfireball.net/projects/markdown/syntax).
+To get you started quickly, here is a small Markdown example. For more information check out the full [Markdown documentation](https://daringfireball.net/projects/markdown/syntax). There is also a small guide on [how to use `_` and `<i>` for meaningful italics](https://logrocket.com/blog/youre-using-em-wrong).
 
 ```markdown
 Title of your document
@@ -85,11 +85,13 @@ Title of your document
 
 Some paragraph with **bold** text, linking to [an example](https://www.example.com/).
 
-Another paragraph with some _italic_ text. And there is also `typewriter-style code`.
+Another paragraph with some _emphasized_ and <i>emphasized</i> text.
 
-This [example](https://www.example.com/ "nomention") will not be mentioned by Webmentions.
+And there is also `typewriter-style code`.
 
-This [example](https://www.example.com/ "nofollow") will not followed by search engine robots.
+* This is a unordered list.
+* This [example](https://www.example.com/ "nomention") will not be mentioned by Webmentions.
+* This [example](https://www.example.com/ "nofollow") will not followed by search engine robots.
 
 ```
 
