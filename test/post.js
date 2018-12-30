@@ -290,7 +290,7 @@ Title 2
       Description: 'Description',
       Date: new Date()
     });
-    console.log(testPost.html);
+    //console.log(testPost.html);
 
     assert.ok(!testPost.html.match(/dl/g));
     assert.equal(testPost.html.match(/<ul/g).length,  2);
