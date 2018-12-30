@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :pill: Enable translations in templates
 * :pill: Update WhatsApp sharing link, ditch protocol links
 * :pill: Fix CLI output for `--help` and `--version`
+* :pill: Fix HTML for checkbox lists and definition lists
 * :gift: Make site search URL configurable
 * :gift: Enable image scaler for WebP
 * :gift: Enhance default theme

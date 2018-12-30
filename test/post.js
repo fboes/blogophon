@@ -272,4 +272,30 @@ Title 2
     assert.equal(testPost.html.match(/scope="row"/g).length,   3);
     assert.equal(testPost.html.match(/table-cell--/g).length,  4);
   });
+
+  it('must properly convert checkbox lists', function() {
+    const markdown = `### Charaktere
+
+* [ ] Interessante und einzigartige Charaktere mit Tiefgang, mit denen man mitfühlt
+* [x] Spannende und/oder witzige Interaktion zwischen den Charakteren
+* [x] Verzicht auf aufgepfropfte Romanzen oder Fehden
+
+### Ambiente
+
+* [x] Technik im Stil der alten Filme - kein Hochglanz, kein High-Tech, sondern gutes altes LoFi-SciFi
+* [x] Coole, charakteristische Fahrzeuge bzw. Raumschiffe, gerne auch etwas abgewetzt
+* [x] Orte, an denen man sich zuhause fühlt, und nicht aus dem Prospekt kommen
+`;
+    const testPost = post('test.md', markdown, {
+      Description: 'Description',
+      Date: new Date()
+    });
+    console.log(testPost.html);
+
+    assert.ok(!testPost.html.match(/dl/g));
+    assert.equal(testPost.html.match(/<ul/g).length,  2);
+    assert.ok(!testPost.html.match(/<ul>/g));
+    assert.equal(testPost.html.match(/<li/g).length,   6);
+    assert.ok(!testPost.html.match(/<li>/g));
+  });
 });
