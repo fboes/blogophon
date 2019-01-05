@@ -212,9 +212,9 @@ Title 2
 
     assert.ok(!testPost.html.match(/<h1/g), 'Removes <h1> from article');
     assert.equal(testPost.html.match(/<h2 id="/g).length,               2);
-    assert.equal(testPost.html.match(/<h3 id="more-t-tle-2"/g).length,  1);
-    assert.equal(testPost.html.match(/<h4 id="more-title-3-"/g).length, 1);
-    assert.equal(testPost.html.match(/<h5 id="more-t-tle-4"/g).length,  1);
+    assert.equal(testPost.html.match(/<h3 id="more-tütle-2"/g).length,  1);
+    assert.equal(testPost.html.match(/<h4 id="more-title-3"/g).length, 1);
+    assert.equal(testPost.html.match(/<h5 id="more-ttle-4"/g).length,  1);
   });
 
   it('must properly convert Markdown tables into HTML', function() {

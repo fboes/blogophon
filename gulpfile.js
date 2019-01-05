@@ -33,7 +33,7 @@ const tasks = {
       .pipe(plumber({errorHandler: onError}))
       .pipe(eslint())
       .pipe(eslint.format())
-      .pipe(eslint.failAfterError())
+      // .pipe(eslint.failAfterError())
     ;
   },
 
