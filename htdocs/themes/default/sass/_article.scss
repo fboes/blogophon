@@ -6,7 +6,7 @@ article {
     .date {
       float: right;
       font-size: 0.8em;
-      body[dir="rtl"] & {
+      &:dir(rtl) {
         float: left;
       }
     }
@@ -16,7 +16,7 @@ article {
   }
   img, amp-img, .figure {
     float:left;
-    body[dir="rtl"] & {
+    &:dir(rtl) {
       float:right;
     }
     margin:0 1em 1em 0;

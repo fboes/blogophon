@@ -19,7 +19,7 @@ body {
 }
 li {
   margin-left: 1.5em;
-  body[dir="rtl"] & {
+  &:dir(rtl) {
     margin-right: 1.5em;
     margin-left: 0;
   }

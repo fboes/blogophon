@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node ./bin/blogophon",
     "generate": "node ./bin/blogophon-generate",
-    "precommit": "npm test",
+    "precommit": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha",
     "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && npm outdated"
   },
   "homepage": "https://github.com/fboes/blogophon",
