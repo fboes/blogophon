@@ -8,6 +8,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * :pill: Fix CLI output for `--help` and `--version`
 * :pill: Fix HTML for checkbox lists and definition lists
 * :pill: Improve handling of RTL layout
+* 🎁 Add more Markdown syntax highlighting to better support C++ code blocks
 * 🎁 Add Handlebar helper `lazyloadAttributes`
 * :gift: Make site search URL configurable
 * :gift: Enable image scaler for WebP
