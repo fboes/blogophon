@@ -69,6 +69,6 @@ Status
 Legal stuff
 -----------
 
-Author: [Frank Boës](http://3960.org)
+Author: [Frank Boës](https://3960.org)
 
 Copyright & license: See [LICENSE.txt](LICENSE.txt)

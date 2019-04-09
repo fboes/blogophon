@@ -34,4 +34,14 @@ describe('Blogophon Handlebars Quoters', function() {
     tested = blogophonHandlebarsQuoter._getRatio(640, 480);
     assert.strictEqual(tested,  1.33);
   });
+
+  it('must add lazy loading to images and iframes', function() {
+    const inputHtml = `<img src="celebration.jpg" alt="..." />
+<iframe src="video-player.html"></iframe>`;
+    let outputHtml = blogophonHandlebarsQuoter.lazyloadAttributes(inputHtml);
+    assert.strictEqual(outputHtml.match(/ loading="lazy"/g).length,  2);
+
+    outputHtml = blogophonHandlebarsQuoter.lazyloadAttributes(inputHtml, 'eager');
+    assert.strictEqual(outputHtml.match(/ loading="eager"/g).length,  2);
+  });
 });
