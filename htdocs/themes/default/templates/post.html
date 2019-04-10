@@ -85,7 +85,7 @@
               </h1>
             </header>
             <div{{#ifEquals meta.Schema 'http://schema.org/BlogPosting'}} itemprop="articleBody"{{/ifEquals}} class="e-content">
-              {{{html}}}
+              {{{lazyloadAttributes html "lazy"}}}
 
               {{#if meta.RatingObj}}
                   <p itemscope itemtype="http://schema.org/Rating">
