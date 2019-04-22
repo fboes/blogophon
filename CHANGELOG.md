@@ -3,25 +3,30 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
-* :pill: Enable translations in templates
-* :pill: Update WhatsApp sharing link, ditch protocol links
-* :pill: Fix CLI output for `--help` and `--version`
-* :pill: Fix HTML for checkbox lists and definition lists
-* :pill: Improve handling of RTL layout
+* 💊 Fix Markdown conversion for XML comments
+
+2.1.2
+-----
+
+* 💊 Enable translations in templates
+* 💊 Update WhatsApp sharing link, ditch protocol links
+* 💊 Fix CLI output for `--help` and `--version`
+* 💊 Fix HTML for checkbox lists and definition lists
+* 💊 Improve handling of RTL layout
 * 🎁 Add more Markdown syntax highlighting to better support C++ code blocks
 * 🎁 Add Handlebar helper `lazyloadAttributes`
-* :gift: Make site search URL configurable
-* :gift: Enable image scaler for WebP
-* :gift: Enhance default theme
-* :gift: Enhance conversion of fractions like `(2/10)`
-* :gift: Streamline Nginx configuration
-* :gift: Enhance accessibility by adding new attributes to HTML
-* :gift: Add `:yes:` and `:no:`
-* :gift: Add new way to add row headers to `<table>`
-* :gift: Add more `rel`-attributes to links
-* :gift: Add Handlebar helpers `removeImages` & `lazyloadImages`
-* :gift: Add `csvQuote` to Handlebar templating
-* :wrench: Update development tools to Gulp@4.0.0
+* 🎁 Make site search URL configurable
+* 🎁 Enable image scaler for WebP
+* 🎁 Enhance default theme
+* 🎁 Enhance conversion of fractions like `(2/10)`
+* 🎁 Streamline Nginx configuration
+* 🎁 Enhance accessibility by adding new attributes to HTML
+* 🎁 Add `:yes:` and `:no:`
+* 🎁 Add new way to add row headers to `<table>`
+* 🎁 Add more `rel`-attributes to links
+* 🎁 Add Handlebar helpers `removeImages` & `lazyloadImages`
+* 🎁 Add `csvQuote` to Handlebar templating
+* 🔧 Update development tools to Gulp@4.0.0
 
 2.1.1
 -----
