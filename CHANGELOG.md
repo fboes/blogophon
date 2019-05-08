@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * 💊 Fix Markdown conversion for XML comments
+* 🎁 Improve HTML for blockquotes
 
 2.1.2
 -----

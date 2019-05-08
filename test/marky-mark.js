@@ -167,6 +167,20 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/<aside[^>]*>/g).length, 1);
       assert.equal(m.match(/<p[^>]*>/g).length, 3);
     });
+    it('must reorder <cite> next to <blockquote> and add classes', () => {
+      let m, x = `<blockquote>
+  <p>„As for me, I am tormented with an everlasting itch for things remote. I love to sail forbidden seas, and land on barbarous coasts.“</p>
+</blockquote>
+<p>
+  <cite><a href="https://www.example.com">Herman Melville, Moby-Dick</a></cite>
+</p>
+`;
+      m = markyMark(x);
+      assert.equal(m.match(/<p[^>]*>/g).length, 1);
+      assert.ok(m.match(/blockquote[^>]+class="with-cite"/g));
+      assert.ok(m.match(/blockquote[^>]+cite="https:\/\/www\.example\.com"/g));
+      assert.ok(m.match(/cite[^>]+class="blockquote"/g));
+    });
   });
 
   describe('Tables', function() {
