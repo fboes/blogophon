@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* 💊 Fix shortening of article descriptions to max. ~320 characters
 * 💊 Fix Markdown conversion for XML comments
 * 💊 Fix Markdown conversion for titles and description, adding `htmlTitle`
 * 🎁 Improve HTML for blockquotes

@@ -82,6 +82,33 @@ describe('Post', function() {
     assert.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');
   });
 
+  it('must shorten descriptions', function() {
+    let testMarkdown = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+    sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+    sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+    clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+    tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+    vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+    no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+    consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+    dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+    duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+    Lorem ipsum dolor sit amet.`;
+    let testMeta = {
+      Date: new Date()
+    };
+    let testPost = post('test.md', testMarkdown, testMeta);
+    assert.ok(testPost.meta.Description.length < 350, 'Description must be shortened to somewhat like 320 characters.');
+
+    testMarkdown = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr.`;
+    testMeta = {
+      Date: new Date()
+    };
+    testPost = post('test.md', testMarkdown, testMeta);
+    assert.equal(testPost.meta.Description.length, 56, 'Description must not be shortened when to short anyway.');
+  });
+
   it('must find images', function() {
     let testPost = post(
       'test.md',
