@@ -5,7 +5,7 @@ const post = require('../lib/models/post');
 const config = require('../lib/config')(__dirname);
 
 describe('Post', function() {
-  it('must thor errors on broken posts', function() {
+  it('must throw errors on broken posts', function() {
     assert.throws(function() {
       post();
     }, Error);
