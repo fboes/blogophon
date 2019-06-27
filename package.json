@@ -10,8 +10,8 @@
   "scripts": {
     "start": "node ./bin/blogophon",
     "generate": "node ./bin/blogophon-generate",
-    "precommit": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha",
-    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && npm outdated"
+    "precommit": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss",
+    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss && npm outdated"
   },
   "homepage": "https://github.com/fboes/blogophon",
   "bugs": {
@@ -31,6 +31,7 @@
     "autoprefixer": "^9.3.1",
     "beeper": "^2.0.0",
     "browser-sync": "^2.26.3",
+    "eslint": "^6.0.1",
     "gulp": "^4.0.0",
     "gulp-eslint": "^5.0.0",
     "gulp-mocha": "^6.0.0",
@@ -39,9 +40,13 @@
     "gulp-rename": "^1.4.0",
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
+    "gulp-stylelint": "^9.0.0",
     "gulp-uglify": "^3.0.1",
     "husky": "^2.2.0",
-    "mocha": "^6.0.1"
+    "mocha": "^6.0.1",
+    "stylelint": "^10.1.0",
+    "stylelint-config-recommended-scss": "^3.3.0",
+    "stylelint-scss": "^3.8.0"
   },
   "directories": {
     "doc": "docs",
@@ -73,5 +78,12 @@
     "hooks": {
       "pre-commit": "npm run precommit"
     }
+  },
+  "stylelint": {
+    "extends": "stylelint-config-recommended-scss",
+    "rules": {
+      "no-descending-specificity": null
+    },
+    "ignoreFiles": "**/*.css"
   }
 }

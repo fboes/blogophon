@@ -20,6 +20,7 @@ const uglify       = require('gulp-uglify');
 const postcss      = require('gulp-postcss');
 const replace      = require('gulp-replace');
 const autoprefixer = require('autoprefixer');
+const gulpStylelint = require('gulp-stylelint');
 
 const tasks = {
   doEslint: function() {
@@ -85,6 +86,11 @@ const tasks = {
   buildCss: function() {
     return gulp.src(pkg.directories.theme + '/**/*.scss')
       .pipe(plumber({errorHandler: onError}))
+      .pipe(gulpStylelint({
+        reporters: [
+          {formatter: 'string', console: true}
+        ]
+      }))
       .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
       .pipe(postcss([
         autoprefixer({
