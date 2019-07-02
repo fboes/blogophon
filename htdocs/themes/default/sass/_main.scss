@@ -19,7 +19,9 @@ body {
 }
 li {
   margin-left: 1.5em;
-  &:dir(rtl) {
+
+  // @see https://developer.mozilla.org/en-US/docs/Web/CSS/:dir
+  [dir="rtl"] & {
     margin-right: 1.5em;
     margin-left: 0;
   }

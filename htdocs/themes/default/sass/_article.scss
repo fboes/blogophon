@@ -8,7 +8,8 @@ article {
     .date {
       float: right;
       font-size: 0.8em;
-      &:dir(rtl) {
+      // @see https://developer.mozilla.org/en-US/docs/Web/CSS/:dir
+      [dir="rtl"] & {
         float: left;
       }
     }
@@ -18,7 +19,8 @@ article {
   }
   img, amp-img, .figure {
     float:left;
-    &:dir(rtl) {
+  // @see https://developer.mozilla.org/en-US/docs/Web/CSS/:dir
+    [dir="rtl"] & {
       float:right;
     }
     margin:0 1em 1em 0;

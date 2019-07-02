@@ -6,7 +6,7 @@ body { font-family: Arial, sans-serif; line-height: 1.5; }
 * + h1, * + h2, * + article, * + section { margin-top: 2em; }
 * + p, * + h3, * + .video-player, * + pre, * + blockquote, * + ul, * + dl, * + dt { margin-top: 1em; }
 li { margin-left: 1.5em; }
-li:dir(rtl) { margin-right: 1.5em; margin-left: 0; }
+[dir="rtl"] li { margin-right: 1.5em; margin-left: 0; }
 a { color: #116bfc; }
 a:hover { color: #0240a5; }
 @media print { @page { margin: 0.5cm; }
@@ -40,10 +40,10 @@ a:hover { color: #0240a5; }
 /* stylelint-disable selector-type-no-unknown */
 article header h1 { font-size: 2em; }
 article header .date { float: right; font-size: 0.8em; }
-article header .date:dir(rtl) { float: left; }
+[dir="rtl"] article header .date { float: left; }
 article header + div { margin-top: 0.5em; }
 article img, article amp-img, article .figure { float: left; margin: 0 1em 1em 0; max-width: 100%; height: auto; }
-article img:dir(rtl), article amp-img:dir(rtl), article .figure:dir(rtl) { float: right; }
+[dir="rtl"] article img, [dir="rtl"] article amp-img, [dir="rtl"] article .figure { float: right; }
 article img.default, article amp-img.default, article .figure.default { width: 100%; margin: 0 0 1em; float: none; }
 article img.quad, article amp-img.quad, article .figure.quad { max-width: 37.5%; }
 article .figure { display: inline-block; font-size: 0.8em; }

@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Fix shortening of article descriptions to max. ~320 characters
 * 💊 Fix Markdown conversion for XML comments
 * 💊 Fix Markdown conversion for titles and description, adding `htmlTitle`
+* 💊 Remove unsupported `dir()` from CSS
 * 🔧 Add Stylelint for testing
 * 🎁 Improve HTML for blockquotes
 

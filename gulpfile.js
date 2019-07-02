@@ -93,9 +93,7 @@ const tasks = {
       }))
       .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
       .pipe(postcss([
-        autoprefixer({
-          browsers: ['cover 97%']
-        })
+        autoprefixer()
       ]))
       .pipe(rename(function(path){
         path.dirname = path.dirname.replace(/sass/, 'css');
