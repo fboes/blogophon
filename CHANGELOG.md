@@ -9,6 +9,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Remove unsupported `dir()` from CSS
 * 🔧 Add Stylelint for testing
 * 🎁 Improve HTML for blockquotes
+* 🎁 Adding [maskable icons to `manifest.json`](https://css-tricks.com/maskable-icons-android-adaptive-icons-for-your-pwa/)
 
 2.1.2
 -----
