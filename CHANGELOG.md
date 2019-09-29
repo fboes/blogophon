@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Fix Markdown conversion for XML comments
 * 💊 Fix Markdown conversion for titles and description, adding `htmlTitle`
 * 💊 Remove unsupported `dir()` from CSS
+* 💊 Fix output of HTML entities in non-HTML strings
 * 🔧 Add Stylelint for testing
 * 🎁 Improve HTML for blockquotes
 * 🎁 Adding [maskable icons to `manifest.json`](https://css-tricks.com/maskable-icons-android-adaptive-icons-for-your-pwa/)

@@ -325,4 +325,21 @@ Title 2
     assert.equal(testPost.html.match(/<li/g).length,   6);
     assert.ok(!testPost.html.match(/<li>/g));
   });
+
+  it('must do proper HTML', function() {
+    const markdown = `It's complicated
+-----------------
+
+It <i>always</i> is and \`<em>\` is not a stranger to this story.`;
+    const testPost = post('test.md', markdown, {
+      Description: 'HTML\'s - a Bo&euml;s disaster waiting to happen',
+      Date: new Date()
+    });
+    //console.log(testPost.meta);
+
+    assert.ok(!testPost.html.match(/<em>/g));
+    assert.equal(testPost.html.match(/<i>/g).length,  1);
+    assert.ok(!testPost.meta.Title.match(/&#/g));
+
+  });
 });
