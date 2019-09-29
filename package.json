@@ -43,7 +43,7 @@
     "gulp-stylelint": "^9.0.0",
     "gulp-uglify": "^3.0.2",
     "husky": "^3.0.7",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.1",
     "stylelint": "^11.0.0",
     "stylelint-config-recommended-scss": "^4.0.0",
     "stylelint-scss": "^3.11.1"
@@ -64,7 +64,7 @@
     "fs-extra-promise": "^1.0.1",
     "glob": "^7.1.4",
     "gm": "^1.23.1",
-    "handlebars": "^4.3.4",
+    "handlebars": "^4.4.0",
     "inquirer": "^7.0.0",
     "inquirer-datepicker-prompt": "^0.4.2",
     "js-yaml": "^3.13.1",
