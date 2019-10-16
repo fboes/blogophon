@@ -169,6 +169,10 @@ describe('MarkyMark', function() {
     });
     it('must reorder <cite> next to <blockquote> and add classes', () => {
       let m, x = `<blockquote>
+      <p>First without</p>
+    </blockquote>
+    <p>Without cite...</p>
+    <blockquote>
   <p>„As for me, I am tormented with an everlasting itch for things remote. I love to sail forbidden seas, and land on barbarous coasts.“</p>
 </blockquote>
 <p>
@@ -176,7 +180,8 @@ describe('MarkyMark', function() {
 </p>
 `;
       m = markyMark(x);
-      assert.equal(m.match(/<p[^>]*>/g).length, 1);
+      assert.equal(m.match(/<p[^>]*>/g).length, 3);
+      assert.ok(m.match(/<blockquote>\s*<p>\s*First/g));
       assert.ok(m.match(/blockquote[^>]+class="with-cite"/g));
       assert.ok(m.match(/blockquote[^>]+cite="https:\/\/www\.example\.com"/g));
       assert.ok(m.match(/cite[^>]+class="blockquote"/g));
