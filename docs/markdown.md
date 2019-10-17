@@ -344,6 +344,7 @@ For citing quotes there is a Markdown element called "blockquote". It will displ
 ```markdown
 > When shall we three meet again  
 > In thunder, lightning, or in rain?
+
 -- <cite>Macbeth</cite>, William Shakespeare
 ```
 
