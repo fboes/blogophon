@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* 💣 Major overhaul of `<blockquote>` HTML
 * 💊 Fix blockquotes with `cite`
 
 2.1.3

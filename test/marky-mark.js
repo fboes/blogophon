@@ -148,13 +148,13 @@ describe('MarkyMark', function() {
 </blockquote>
 <p>Some text after</p>`;
       m = markyMark(x);
+      //console.log(m);
       assert.equal(m.match(/<div class="conversation">/g).length, 1);
-      assert.equal(m.match(/<cite>/g).length, 3);
+      assert.equal(m.match(/<header>/g).length, 3);
       assert.equal(m.match(/<blockquote[^>]*>/g).length, 3);
       assert.equal(m.match(/conversation__participant--0/g).length, 2);
       assert.equal(m.match(/conversation__participant--1/g).length, 1);
       assert.equal(m.match(/<p>/g).length, 5);
-      //console.log(m);
     });
     it('must make call-outs', () => {
       let m, x = `<p>Some normal paragraph.</p>
@@ -167,7 +167,7 @@ describe('MarkyMark', function() {
       assert.equal(m.match(/<aside[^>]*>/g).length, 1);
       assert.equal(m.match(/<p[^>]*>/g).length, 3);
     });
-    it('must reorder <cite> next to <blockquote> and add classes', () => {
+    it('must reorder `--` next to <blockquote> and add classes', () => {
       let m, x = `<blockquote>
       <p>First without</p>
     </blockquote>
@@ -176,15 +176,15 @@ describe('MarkyMark', function() {
   <p>„As for me, I am tormented with an everlasting itch for things remote. I love to sail forbidden seas, and land on barbarous coasts.“</p>
 </blockquote>
 <p>
-  <cite><a href="https://www.example.com">Herman Melville, Moby-Dick</a></cite>
+  -- <a href="https://www.example.com">Herman Melville, <cite>Moby-Dick</cite></a></cite>
 </p>
 `;
       m = markyMark(x);
+      //console.log(m);
       assert.equal(m.match(/<p[^>]*>/g).length, 3);
       assert.ok(m.match(/<blockquote>\s*<p>\s*First/g));
-      assert.ok(m.match(/blockquote[^>]+class="with-cite"/g));
       assert.ok(m.match(/blockquote[^>]+cite="https:\/\/www\.example\.com"/g));
-      assert.ok(m.match(/cite[^>]+class="blockquote"/g));
+      assert.ok(m.match(/<footer>\s*<a href="https:\/\/www.example.com">Herman Melville, <cite>Moby-Dick<\/cite><\/a>/g));
     });
   });
 

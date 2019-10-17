@@ -342,14 +342,12 @@ Blockquotes
 For citing quotes there is a Markdown element called "blockquote". It will display as indented text:
 
 ```markdown
-> When shall we three meet again
+> When shall we three meet again  
 > In thunder, lightning, or in rain?
-
-<cite>Macbeth, William Shakespeare</cite>
+-- <cite>Macbeth</cite>, William Shakespeare
 ```
 
-…with `<cite>` being the optional source of the quote. If the source is linked, some extra HTML will be generated to properly attribute your quote.
-
+…with the appended paragraph beginning with `--` being the optional source of the quote. If the source is linked, some extra HTML will be generated to properly attribute your quote.
 
 ### Pull-quote
 
