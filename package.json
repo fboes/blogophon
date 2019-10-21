@@ -43,7 +43,7 @@
     "gulp-stylelint": "^10.0.0",
     "gulp-uglify": "^3.0.2",
     "husky": "^3.0.9",
-    "mocha": "^6.2.1",
+    "mocha": "^6.2.2",
     "stylelint": "^11.1.1",
     "stylelint-config-recommended-scss": "^4.0.0",
     "stylelint-scss": "^3.11.1"
@@ -62,9 +62,9 @@
   "dependencies": {
     "dateformat": "^3.0.3",
     "fs-extra-promise": "^1.0.1",
-    "glob": "^7.1.4",
+    "glob": "^7.1.5",
     "gm": "^1.23.1",
-    "handlebars": "^4.4.3",
+    "handlebars": "^4.4.5",
     "inquirer": "^7.0.0",
     "inquirer-datepicker-prompt": "^0.4.2",
     "js-yaml": "^3.13.1",
