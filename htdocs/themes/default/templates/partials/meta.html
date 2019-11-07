@@ -22,7 +22,10 @@
 {{#each config.themeConf.icons}}
   {{#ifHasAspectRatio src 1 1}}
     {{#ifHasMaxDimensions src 270 270}}
-      <link rel="icon{{#ifMatches src 'apple-touch-icon'}} apple-touch-icon{{/ifMatches}}" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
+      <link rel="icon" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
+      {{#ifMatches src 'apple-touch-icon'}}
+        <link rel="apple-touch-icon" href="{{src}}" sizes="{{sizes}}" type="{{type}}" />
+      {{/ifMatches}}
     {{/ifHasMaxDimensions}}
   {{/ifHasAspectRatio}}
 {{/each}}

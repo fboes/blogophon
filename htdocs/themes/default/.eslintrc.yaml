@@ -1,0 +1,14 @@
+root: true
+extends:
+  - eslint:recommended
+env:
+  browser: true
+rules:
+  strict:
+    - error
+    - always
+  curly: error
+  semi:
+    - error
+    - always
+  no-undef: error

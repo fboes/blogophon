@@ -15,30 +15,31 @@
   {{else}}
     <meta property="og:description" name="description" content="{{meta.title}} - {{config.description}}" />
   {{/if}}
+  <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="{{meta.absoluteUrl}}" />
   {{#if config.specialFeatures.rss}}
-    <link rel="alternate" type="application/rss+xml" title="{{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
+    <link rel="alternate" type="application/rss+xml" title="{{config.name}}: {{meta.title}} RSS" href="{{meta.absoluteUrlDirname}}/posts.rss" />
   {{/if}}
   {{#if config.specialFeatures.atom}}
-    <link rel="alternate" type="application/atom+xml" title="{{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
+    <link rel="alternate" type="application/atom+xml" title="{{config.name}}: {{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
   {{/if}}
   {{#if config.specialFeatures.jsonfeed}}
-    <link rel="alternate" type="application/json" title="{{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
+    <link rel="alternate" type="application/json" title="{{config.name}}: {{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
   {{/if}}
   {{#if config.specialFeatures.jsonrss}}
-    <link rel="alternate" type="application/rss+json" title="{{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
+    <link rel="alternate" type="application/rss+json" title="{{config.name}}: {{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
   {{/if}}
   {{#if config.specialFeatures.jsonforslack}}
-    <link rel="alternate" type="application/json" title="{{meta.title}} Slack-JSON" href="{{meta.absoluteUrlDirname}}/slack.json" />
+    <link rel="alternate" type="application/json" title="{{config.name}}: {{meta.title}} Slack-JSON" href="{{meta.absoluteUrlDirname}}/slack.json" />
   {{/if}}
   {{#if config.specialFeatures.geojson}}
-    <link rel="alternate" type="application/vnd.geo+json" title="{{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
+    <link rel="alternate" type="application/vnd.geo+json" title="{{config.name}}: {{meta.title}} GeoJSON" href="{{meta.absoluteUrlDirname}}/geo.json" />
   {{/if}}
   {{#if config.specialFeatures.kml}}
-    <link rel="alternate" type="application/vnd.google-earth.kml+xml" title="{{meta.title}} KML" href="{{meta.absoluteUrlDirname}}/network.kml" />
+    <link rel="alternate" type="application/vnd.google-earth.kml+xml" title="{{config.name}}: {{meta.title}} KML" href="{{meta.absoluteUrlDirname}}/network.kml" />
   {{/if}}
   {{#if config.specialFeatures.icscalendar}}
-    <link rel="alternate" type="text/calendar" title="{{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
+    <link rel="alternate" type="text/calendar" title="{{config.name}}: {{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
   {{/if}}
   {{#if config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}" />
