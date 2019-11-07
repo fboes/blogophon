@@ -1,7 +1,8 @@
 ![Blogophon -](blogophon.png) Markdown
 ========
 
-All Blogophon articles are written in [Markdown](https://daringfireball.net/projects/markdown/syntax). For creating a new article use the `blogophon` command menu or see the [instructions for manual operations](manual.md).
+All Blogophon articles are written in [Github Flavored Markdown](https://github.github.com/gfm/)
+. For creating a new article use the `blogophon` command menu or see the [instructions for manual operations](manual.md).
 
 At the beginning of each Markdown file you can add an optional [YAML front matter](https://jekyllrb.com/docs/frontmatter/) section for meta information. A typical Blogophon-Markdown document may look like this:
 
@@ -60,6 +61,7 @@ Rating:       1/5                       # Rating given in a review, with `x` out
 Draft:        true                      # If set to `true` this will prevent the article from being published.
                                         # Use this for drafts.
 NoWebmention: true                      # If set to `true` no Webmentions will be sent.
+Schema:       https://schema.org/TechArticle # Change schema.org `itemtype` of this article, default is http://schema.org/BlogPosting
 ```
 
 Because the teaser text uses Markdown (see below), you may also use multiline description field for YAML frontmatter like this:
@@ -72,12 +74,12 @@ Description: |
 
 ```
 
-There are also [special post types](special-post-types.md), which are activated by choosing a special `Classes` value.
+There are also [special post types](special-post-types.md), which are activated by choosing a special `Classes` value. These may also alter `Schema` if you have not chosen to do so manually (see above).
 
 Basic Markdown example
 ----------------------
 
-To get you started quickly, here is a small Markdown example. For more information check out the full [Markdown documentation](https://daringfireball.net/projects/markdown/syntax). There is also a small guide on [how to use `_` and `<i>` for meaningful italics](https://logrocket.com/blog/youre-using-em-wrong).
+To get you started quickly, here is a small Markdown example. For more information check out the full [documentation for "Github Flavored Markdown"](https://github.github.com/gfm/). There is also a small guide on [how to use `_` and `<i>` for meaningful italics](https://logrocket.com/blog/youre-using-em-wrong).
 
 ```markdown
 Title of your document
@@ -163,7 +165,7 @@ Link images from your attachment directory into your Markdown file like this:
 
 ```
 
-It is always wise to use image styles for JPGs, GIFs, PNGs and SVGs. These styles scale your images to a sensible size. For bitmap images using styles will also produce responsive image variants.
+It is always wise to use image styles for JPGs, GIFs, PNGs, WEBPs and SVGs. These styles scale your images to a sensible size. For bitmap images using styles will also produce responsive image variants. If you want to use WebP, be sure to check if the local version of ImageMagick is capable of handling WebP conversion.
 
 If you do not use image styles, consider to at least state the size of the image. This will tell the browser what size of image to expect and speed up the rendering of the whole page while the image has not yet loaded.
 

@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Fix blockquotes with `cite`
 * 💊 Improve `aria` attributes in HTML
 * 💊 Lots of small HTML and JavaScript fixes
+* 🎁 Improve documentation for WebP and custom schema.org properties
 
 2.1.3
 -----
