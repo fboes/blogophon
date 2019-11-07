@@ -116,7 +116,8 @@
                       <span class="tags">
                         Tags:
                         {{#each meta.Tags}}
-                          · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &ldquo;{{title}}&rdquo;{{/i18n}}">„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                          · <a rel="tag" href="{{url}}" title="{{#i18n}}More articles with &ldquo;{{title}}&rdquo;{{/i18n}}" tabindex='-1'>„<span itemprop="keywords" class="p-category">{{title}}</span>”</a>
+                          {{/each}}
                         {{/each}}
                       </span>
                     {{/if}}
@@ -128,7 +129,7 @@
         {{/if}}
 
         {{#if needsPager}}
-          <nav class="pager">
+          <nav class="pager" aria-label="{{#i18n}}Pages{{/i18n}}">
             {{#if prevUrl}}
               <a href="{{prevUrl}}" rel="prev" class="prev" title="{{#i18n}}Previous page{{/i18n}}" aria-label="{{#i18n}}Previous page{{/i18n}}" accesskey="j">&laquo; <span>{{#i18n}}Previous page{{/i18n}}</span></a>
             {{/if}}

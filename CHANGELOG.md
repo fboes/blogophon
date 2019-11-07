@@ -5,6 +5,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 
 * 💣 Major overhaul of `<blockquote>` HTML
 * 💊 Fix blockquotes with `cite`
+* 💊 Improve `aria` attributes in HTML
 
 2.1.3
 -----
