@@ -8,6 +8,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Improve `aria` attributes in HTML
 * 💊 Lots of small HTML and JavaScript fixes
 * 🎁 Improve documentation for WebP and custom schema.org properties
+* 🎁 Add `gzip` to Apache configuration stub
 
 2.1.3
 -----
