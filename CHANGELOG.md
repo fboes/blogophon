@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Fix blockquotes with `cite`
 * 💊 Improve `aria` attributes in HTML
 * 💊 Lots of small HTML and JavaScript fixes
+* 💊 Fixing [maskable icons to `manifest.json`](https://css-tricks.com/maskable-icons-android-adaptive-icons-for-your-pwa/)
 * 🎁 Improve documentation for WebP and custom schema.org properties
 * 🎁 Add `gzip` to Apache configuration stub
 
