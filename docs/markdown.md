@@ -52,6 +52,8 @@ Language:     en                        # Language of current article, given in 
                                         # If not set will default to blog's language.
 Author:       Name <email@example.org>  # Author name and email. 
                                         # If not set will default to blog's main author.
+AuthorTwitter: example                  # Author's Twitter acount name.
+                                        # If not set will default to blog's main Twitter account.
 Image:        /post/image/image.png     # Image URL used for sharing. It is best to make this URL absolute.
                                         # If not set the first image found in the article text will be used.
 Link:         http://www.example.com/   # If given clicking on links to this article redirects to this URL

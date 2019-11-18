@@ -10,6 +10,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Fixing [maskable icons to `manifest.json`](https://css-tricks.com/maskable-icons-android-adaptive-icons-for-your-pwa/)
 * 🎁 Improve documentation for WebP and custom schema.org properties
 * 🎁 Add `gzip` to Apache configuration stub
+* 🎁 Add Twitter author for articles
 
 2.1.3
 -----

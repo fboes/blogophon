@@ -5,13 +5,15 @@
   {{/if}}
 {{/unless}}
 {{#if config.twitterAccount}}
+  <meta name="twitter:site" content="@{{config.twitterAccount}}" />
   {{#if post.meta.ProperImage}}
     <meta name="twitter:card" content="summary_large_image" />
   {{else}}
     <meta name="twitter:card" content="summary" />
   {{/if}}
-  <meta name="twitter:site" content="@{{config.twitterAccount}}" />
-  <meta name="twitter:creator" content="@{{config.twitterAccount}}" />
+  {{#if post.meta.AuthorTwitter}}
+    <meta name="twitter:creator" content="@{{post.meta.AuthorTwitter}}" />
+  {{/if}}
 {{/if}}
 {{#if config.themeConf.themeColor}}
   <meta name="theme-color" content="{{config.themeConf.themeColor}}" />
