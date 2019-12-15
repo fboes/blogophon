@@ -110,7 +110,9 @@
                       </address>
                     {{/if}}
                     <address class="publisher" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-                      <img src="{{../config.themeConf.ogImage}}" alt="" itemprop="logo" />
+                      <span itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+                        <link itemprop="url" href="{{../config.themeConf.ogImage}}" />
+                      </span>
                       <span itemprop="name">{{../config.name}}</span>
                     </address>
                     {{#if meta.Tags}}

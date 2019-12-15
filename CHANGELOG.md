@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * 💣 Major overhaul of `<blockquote>` HTML
+* 💊 Improve schema.org HTML for publisher property
 * 💊 Fix blockquotes with `cite`
 * 💊 Improve `aria` attributes in HTML
 * 💊 Lots of small HTML and JavaScript fixes
