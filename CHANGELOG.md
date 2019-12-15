@@ -12,6 +12,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Improve documentation for WebP and custom schema.org properties
 * 🎁 Add `gzip` to Apache configuration stub
 * 🎁 Add Twitter author for articles
+* 🎁 Add more compact YouTube embedding HTML by using `srcdoc` on `iframe`
 
 2.1.3
 -----
