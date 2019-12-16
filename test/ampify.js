@@ -35,6 +35,9 @@ describe('Ampify', function() {
     it('should replace iframes with <amp-iframe>', function() {
       assert.ok(ampHtml.match(/<amp-iframe/));
     });
+    it('should have no `srcdoc`', function() {
+      assert.ok(!ampHtml.match(/srcdoc="/));
+    });
     it('should have properties if some feature was used in HTML', function() {
       assert.ok(ampProperties);
       assert.ok(ampProperties.hasIframe);
