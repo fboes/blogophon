@@ -310,6 +310,7 @@ The following identifiers are supported:
 * `html`
 * `ini`
 * `markdown` to output Markdown examples.
+* `nginx`
 * `shell`, `dos`, `bash` for shell examples. Lines starting with `$` are interpreted as shell input, all other lines as shell output.
 * `sql`
 * `xml`

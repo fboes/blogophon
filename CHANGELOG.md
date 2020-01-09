@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * 💊 Updating Service Worker for PWA
+* 🎁 Add syntax highlighting for nginx configuration code
 
 2.1.4
 -----
