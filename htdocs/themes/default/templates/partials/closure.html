@@ -2,10 +2,8 @@
 {{{ config.htmlAnalytics }}}
 {{#if config.specialFeatures.progressivewebapp}}
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('{{config.absoluteBasePath}}sw.js');
-      });
+    if ('serviceWorker' in navigator && !navigator.serviceWorker.controller) {
+      navigator.serviceWorker.register('{{config.absoluteBasePath}}sw.js');
     }
   </script>
 {{/if}}
