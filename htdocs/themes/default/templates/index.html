@@ -24,7 +24,7 @@
     <link rel="alternate" type="application/atom+xml" title="{{config.name}}: {{meta.title}} ATOM" href="{{meta.absoluteUrlDirname}}/posts.atom" />
   {{/if}}
   {{#if config.specialFeatures.jsonfeed}}
-    <link rel="alternate" type="application/json" title="{{config.name}}: {{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
+    <link rel="alternate" type="application/feed+json" title="{{config.name}}: {{meta.title}} JSON Feed" href="{{meta.absoluteUrlDirname}}/feed.json" />
   {{/if}}
   {{#if config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/rss+json" title="{{config.name}}: {{meta.title}} JSON-RSS" href="{{meta.absoluteUrlDirname}}/rss.json" />
@@ -164,7 +164,7 @@
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteUrlDirname}}posts.atom">ATOM-Feed: {{meta.title}}</a></li>
             {{/if}}
             {{#if config.specialFeatures.jsonfeed}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteUrlDirname}}feed.json">JSON Feed: {{meta.title}}</a></li>
+              <li><a type="application/feed+json" rel="alternate" href="{{config.absoluteUrlDirname}}feed.json">JSON Feed: {{meta.title}}</a></li>
             {{/if}}
             {{#if config.specialFeatures.jsonrss}}
               <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteUrlDirname}}rss.json">JSON-RSS: {{meta.title}}</a></li>
