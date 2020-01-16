@@ -3,6 +3,10 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+2.1.5
+-----
+
+* 💊 Limit meta description to 160 characters 
 * 💊 Updating Service Worker for PWA
 * 🎁 Add syntax highlighting for nginx configuration code
 
