@@ -540,7 +540,18 @@ $ mysqldump -h $HOSTNAME -u $USERNAME -p$PASSWORD --skip-comments --add-drop-tab
       {
         language: 'Bash (with `...`)',
         snippet: `<pre><code class="language-bash">npm install glob --save-dev   # Installiert das Paket \`glob\`</code></pre>`,
-        expected: 4
+        expected: 4,
+        hasComments: true
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'Shell (variables)',
+        snippet: `<pre><code class="lang-shell">
+HOSTNAME=&quot;localhost&quot;
+mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-drop-table --single-transaction --quick \${DATABASE} \${TABLE1} \${TABLE2} &gt;&gt; dbdump.sql # Dump structure of TABLE1 and TABLE2, append it to dbdump.sql
+</code></pre>`,
+        expected: 34,
+        hasComments: true
       },
       // -----------------------------------------------------------------------
       {
