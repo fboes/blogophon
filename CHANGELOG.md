@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* 💊 Improve general syntax highlighting
 * 🎁 Improve syntax highlighting for shell variables
 
 2.1.5
