@@ -737,6 +737,11 @@ en-GB: https://www.example.co.uk/
 fr-FR: https://www.example.fr/
 de-DE: https://www.example.de/</code></pre>`,
         expected: 18
+      },
+      {
+        language: 'PHP',
+        snippet: `<pre><code class="language-php">function getCoordinates(string $address): array</code></pre>`,
+        expected: 8
       }
     ];
 
