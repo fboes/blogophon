@@ -738,10 +738,25 @@ fr-FR: https://www.example.fr/
 de-DE: https://www.example.de/</code></pre>`,
         expected: 18
       },
+      // -----------------------------------------------------------------------
       {
         language: 'PHP',
         snippet: `<pre><code class="language-php">function getCoordinates(string $address): array</code></pre>`,
         expected: 8
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'METAR (EHAM)',
+        snippet: `<pre><code class="lang-metar">EHAM 091725Z 20037G51KT 170V230 9999 FEW011 BKN014 BKN025 11/09 Q0986 RE/RA TEMPO 7000</code></pre>`,
+        expected: 7
+      },
+      // -----------------------------------------------------------------------
+      {
+        language: 'METAR (KEYW)',
+        snippet: `<pre><code class="lang-metar">
+METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 10233 20222 53012
+</code></pre>`,
+        expected: 5
       }
     ];
 
