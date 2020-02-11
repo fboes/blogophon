@@ -44,9 +44,9 @@
     "gulp-uglify": "^3.0.2",
     "husky": "^4.2.1",
     "mocha": "^7.0.1",
-    "stylelint": "^13.0.0",
-    "stylelint-config-recommended-scss": "^4.1.0",
-    "stylelint-scss": "^3.14.0"
+    "stylelint": "^13.1.0",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-scss": "^3.14.2"
   },
   "directories": {
     "doc": "docs",
@@ -64,7 +64,7 @@
     "fs-extra-promise": "^1.0.1",
     "glob": "^7.1.6",
     "gm": "^1.23.1",
-    "handlebars": "^4.7.2",
+    "handlebars": "^4.7.3",
     "inquirer": "^7.0.4",
     "inquirer-datepicker-prompt": "^0.4.2",
     "js-yaml": "^3.13.1",
