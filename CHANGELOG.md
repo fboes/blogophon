@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Add syntax highlighting for METAR codes
 * 🎁 Improve syntax highlighting for shell variables
 * 🎁 Add syntax highlighting for `batch`
+* 🎁 Improve image compression
 
 2.1.5
 -----
