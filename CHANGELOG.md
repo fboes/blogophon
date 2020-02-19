@@ -6,6 +6,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Improve general syntax highlighting
 * 🎁 Add syntax highlighting for METAR codes
 * 🎁 Improve syntax highlighting for shell variables
+* 🎁 Add syntax highlighting for `batch`
 
 2.1.5
 -----
