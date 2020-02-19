@@ -42,9 +42,9 @@
     "gulp-sass": "^4.0.2",
     "gulp-stylelint": "^13.0.0",
     "gulp-uglify": "^3.0.2",
-    "husky": "^4.2.1",
+    "husky": "^4.2.3",
     "mocha": "^7.0.1",
-    "stylelint": "^13.1.0",
+    "stylelint": "^13.2.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.14.2"
   },
