@@ -26,7 +26,9 @@ describe('JsonFeed', function() {
     assert.ok(jsonFeed.title);
     assert.ok(jsonFeed.home_page_url);
     assert.ok(jsonFeed.feed_url);
+    assert.ok(jsonFeed.authors);
     assert.ok(jsonFeed.description);
+    assert.ok(jsonFeed.language);
   });
 
   it('should have items with properties', function() {
@@ -35,6 +37,8 @@ describe('JsonFeed', function() {
     assert.ok(jsonFeed.items[0].url);
     assert.ok(jsonFeed.items[0].title);
     assert.ok(jsonFeed.items[0].summary);
+    assert.ok(jsonFeed.items[0].language);
+    assert.ok(jsonFeed.items[0].authors);
     assert.ok(jsonFeed.items[0].date_published);
     assert.ok(jsonFeed.items[0].date_modified);
   });

@@ -32,7 +32,7 @@
     <link rel="alternate" type="application/atom+xml" title="{{config.name}} ATOM" href="{{config.absoluteBasePath}}posts.atom" />
   {{/if}}
   {{#if config.specialFeatures.jsonfeed}}
-    <link rel="alternate" type="application/json" title="{{config.name}} JSON Feed" href="{{config.absoluteBasePath}}feed.json" />
+    <link rel="alternate" type="application/feed+json" title="{{config.name}} JSON Feed" href="{{config.absoluteBasePath}}feed.json" />
   {{/if}}
   {{#if config.specialFeatures.jsonrss}}
     <link rel="alternate" type="application/rss+json" title="{{config.name}} JSON" href="{{config.absoluteBasePath}}rss.json" />
@@ -206,7 +206,7 @@
               <li><a type="application/atom+xml" rel="alternate" href="{{config.absoluteBasePath}}posts.atom">ATOM-Feed</a></li>
             {{/if}}
             {{#if config.specialFeatures.jsonfeed}}
-              <li><a type="application/json" rel="alternate" href="{{config.absoluteBasePath}}feed.json">JSON Feed</a></li>
+              <li><a type="application/feed+json" rel="alternate" href="{{config.absoluteBasePath}}feed.json">JSON Feed</a></li>
             {{/if}}
             {{#if config.specialFeatures.jsonrss}}
               <li><a type="application/rss+json" rel="alternate" href="{{config.absoluteBasePath}}rss.json">RSS-JS / JSON</a></li>
