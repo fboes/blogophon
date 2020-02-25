@@ -489,7 +489,7 @@ if [ ! -d /vagrant ]; then
   else
   [ -d node_modules ] || sudo npm install --no-bin-links
 fi</code></pre>`,
-        expected: 87 * 2,
+        expected: 88 * 2,
         hasComments: true
       },
       // -----------------------------------------------------------------------
@@ -532,9 +532,9 @@ npm publish</code></pre>`,
       {
         language: 'Shell (mysql)',
         snippet: `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
-$ mysqldump -h $HOSTNAME -u $USERNAME -p$PASSWORD --skip-comments --add-drop-table --single-transaction --quick $DATABASE &lt; dbdump-$(date "+%Y-%m-%d-%H-%M").sql
+$ mysqldump -h $HOSTNAME -u $USERNAME -p$PASSWORD --skip-comments --add-drop-table --single-transaction --quick $DATABASE &lt; dbdump-$(date &quot;+%Y-%m-%d-%H-%M&quot;).sql
 </code></pre>`,
-        expected: 42
+        expected: 46
       },
       // -----------------------------------------------------------------------
       {
