@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * 💊 Improve general syntax highlighting
+* 💊 Improve HTML stripping from meta text
 * 🎁 Add syntax highlighting for METAR codes
 * 🎁 Improve syntax highlighting for shell variables
 * 🎁 Add syntax highlighting for `batch`

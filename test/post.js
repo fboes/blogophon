@@ -99,7 +99,7 @@ describe('Post', function() {
       Date: new Date()
     };
     let testPost = post('test.md', testMarkdown, testMeta);
-    assert.ok(testPost.meta.Description.length < 350, 'Description must be shortened to somewhat like 320 characters.');
+    assert.ok(testPost.meta.Description.length < 180, 'Description must be shortened to somewhat like 160 characters.');
 
     testMarkdown = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr.`;
     testMeta = {
@@ -332,7 +332,7 @@ Title 2
 
 It <i>always</i> is and \`<em>\` is not a stranger to this story.`;
     const testPost = post('test.md', markdown, {
-      Description: 'HTML\'s - a Bo&euml;s disaster waiting to happen',
+      Description: 'HTML\'s - a &quot;disaster&quot; <em>waiting</em> to happen',
       Date: new Date()
     });
     //console.log(testPost.meta);
@@ -340,6 +340,7 @@ It <i>always</i> is and \`<em>\` is not a stranger to this story.`;
     assert.ok(!testPost.html.match(/<em>/g));
     assert.equal(testPost.html.match(/<i>/g).length,  1);
     assert.ok(!testPost.meta.Title.match(/&#/g));
-
+    assert.ok(!testPost.meta.Description.match(/&quot;/g));
+    assert.ok(!testPost.meta.Description.match(/<em>/g));
   });
 });
