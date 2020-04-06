@@ -585,8 +585,30 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
 .class {
   margin-top: 0.2em;
 }
+
+:host {
+  --background-color: black;
+  --foreground-color: white;
+  --heading-select-color: cyan;
+  --stroke-width: 0.5;
+}
+/*…und verwende diese CSS-Custom-Properties dann später in Variablen - bei mir z.B. als SVG-CSS-Eigenschaften:*/
+
+#background {
+  fill: var(--background-color);
+}
+* {
+  fill: var(--foreground-color);
+}
+*[stroke] {
+  stroke-width: var(--stroke-width);
+}
+
+#heading-select {
+  fill: var(--heading-select-color);
+}
 </code></pre>`,
-        expected: 20
+        expected: 26
       },
       // -----------------------------------------------------------------------
       {
