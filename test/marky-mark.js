@@ -329,31 +329,6 @@ describe('MarkyMark', function() {
   });
 
   describe('Syntax highlighting', function() {
-    it('must do code highlighting for Javascript', function() {
-      let m;
-
-      m = markyMark(`
-<p id="more">Mein Anwendungsfall: Ich warte auf eine bestimmte Anzahl von Events, und löse mein eigenes Event aus, wenn alle meine Sub-Events erfolgreich abgeschlossen haben. Bisher sah das so aus (schon mit der Kraft von <a href="/posts/nodejs-pattern-array-foreach/"><code>Array.forEach</code></a>):</p>
-<pre><code class="lang-javascript">
-  var files = ['a.txt','b.txt','c.txt'];
-  /*var processed = 0;*/
-  var checkProcessed  = function(err) {
-    if (err) {
-      console.log("Error!");
-    }
-    if (++processed === files.length) {
-      console.log("Done!");
-    }
-  };
-  files.forEach(function(file) {
-    fs.writeFile(file, "Test test test", checkProcessed
-  }); // Comment
-</code></pre>
-        `);
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
-    });
-
     it('must do code highlighting for Markdown', function() {
       let m = markyMark(`<pre><code class="lang-markdown">
 H1
@@ -394,6 +369,42 @@ And some \`code\` or stuff * like * that, and an http://www.example.com URL
     });
 
     const tests = [
+      {
+        language: 'JavaScript',
+        snippet: `<pre><code class="lang-javascript">
+  var files = ['a.txt','b.txt','c.txt'];
+  /*var processed = 0;*/
+  var checkProcessed  = function(err) {
+    if (err) {
+      console.log("Error!");
+    }
+    if (++processed === files.length) {
+      console.log("Done!");
+    }
+  };
+  files.forEach(function(file) {
+    fs.writeFile(file, "Test test test", checkProcessed
+  }); // Comment
+</code></pre>`,
+        expected: 26
+      },
+      {
+        language: 'JavaScript Browser',
+        snippet: `<pre><code class="lang-javascript">const el = document.getElementById('hsi');
+el.getAttribute('heading'); // "45.0"
+el.heading; // "45.0"
+
+el.setAttribute('heading', '60.0');
+el.getAttribute('heading'); // "60.0"
+el.heading; // "60.0"
+
+el.heading = '135.0';
+el.getAttribute('heading'); // "135.0"
+el.heading; // "135.0"
+</code></pre>`,
+        expected: 40,
+        output: true
+      },
       {
         language: 'HTML',
         snippet: `<pre><code class="lang-html">
