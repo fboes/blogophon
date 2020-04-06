@@ -402,8 +402,7 @@ el.heading = '135.0';
 el.getAttribute('heading'); // "135.0"
 el.heading; // "135.0"
 </code></pre>`,
-        expected: 40,
-        output: true
+        expected: 40
       },
       {
         language: 'HTML',
