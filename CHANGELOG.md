@@ -9,6 +9,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Improve syntax highlighting for shell variables
 * 🎁 Add syntax highlighting for `batch`
 * 🎁 Improve image compression
+* 🎁 Don't send webmention for  `developer.mozilla.org`
 
 2.1.5
 -----
