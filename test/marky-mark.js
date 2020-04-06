@@ -354,14 +354,6 @@ describe('MarkyMark', function() {
       assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
     });
 
-    it('must do code highlighting for HTML', function() {
-      let m;
-
-      m = markyMark('<pre><code class="lang-html">&lt;-- Comment --&gt;&lt;a href=&quot;#&quot;&gt;Test &amp;amp; Fest&lt;/a&gt;</code></pre>');
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.ok(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/));
-    });
-
     it('must do code highlighting for Markdown', function() {
       let m = markyMark(`<pre><code class="lang-markdown">
 H1
@@ -402,6 +394,18 @@ And some \`code\` or stuff * like * that, and an http://www.example.com URL
     });
 
     const tests = [
+      {
+        language: 'HTML',
+        snippet: `<pre><code class="lang-html">
+&lt;!-- Comment --&gt;
+&lt;a href=&quot;#&quot;&gt;
+  Test &amp;amp; Fest
+&lt;/a&gt;
+&lt;i&gt;Dinge&lt;/i&gt;
+&lt;horizontal-situation-indicator&gt;&lt;/horizontal-situation-indicator&gt;
+</code></pre>`,
+        expected: 20
+      },
       {
         language: 'PHP',
         snippet: `<p>Autoloading ist in PHP eine feine Sache. Statt jede einzelne Klasse mittels eigenem <code>require_once</code> einzubinden, kann man bei existierendem Autoloader einfach durch Aufruf der Klasse diese Laden.</p>
