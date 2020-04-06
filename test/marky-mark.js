@@ -571,7 +571,6 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
       {
         language: 'CSS',
         snippet: `<pre><code class="lang-css">
-    }
 * {
   margin: 0;
   padding: 0;
@@ -608,7 +607,7 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
   fill: var(--heading-select-color);
 }
 </code></pre>`,
-        expected: 26
+        expected: 50
       },
       // -----------------------------------------------------------------------
       {
