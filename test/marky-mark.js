@@ -357,7 +357,7 @@ H2
 ### Headline
 
 There is also _italic_ and __bold__ but not _ unbold _.
-And some \`code\` or stuff like that, but it's only one \` on some places.
+And some \`code\` or stuff like that, but it's only one \` on &lt;i&gt;some&lt;/i&gt; places.
 
 * And some \`code\` or stuff like that
 
@@ -368,7 +368,7 @@ And some \`code\` or stuff * like * that, and an http://www.example.com URL
 a { color: red; }
 \\\`\`\`
 </code></pre>`,
-        expected: 34
+        expected: 38
       },
       {
         language: 'JavaScript',
