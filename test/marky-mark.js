@@ -329,8 +329,23 @@ describe('MarkyMark', function() {
   });
 
   describe('Syntax highlighting', function() {
-    it('must do code highlighting for Markdown', function() {
-      let m = markyMark(`<pre><code class="lang-markdown">
+    it('must do code highlighting for Diffs', function() {
+      let m = markyMark(
+        `<pre><code class="lang-javascript">'+
+- var test = 1;
++ var test = 2;
+</code></pre>`
+      );
+      //console.log(m);
+      assert.ok(m !== undefined, 'String is not undefined');
+      assert.ok(m.match(/<ins>/));
+      assert.ok(m.match(/<del>/));
+    });
+
+    const tests = [
+      {
+        language: 'Markdown',
+        snippet: `<pre><code class="lang-markdown">
 H1
 =====
 
@@ -348,27 +363,13 @@ And some \`code\` or stuff like that, but it's only one \` on some places.
 
 Add CSS variable \`--gallery-count\` to gallery HTML.
 And some \`code\` or stuff * like * that, and an http://www.example.com URL
-</code></pre>`
-      );
-      //console.log(m);
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.equal(m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length, 16 * 2);
-    });
 
-    it('must do code highlighting for Diffs', function() {
-      let m = markyMark(
-        `<pre><code class="lang-javascript">'+
-- var test = 1;
-+ var test = 2;
-</code></pre>`
-      );
-      //console.log(m);
-      assert.ok(m !== undefined, 'String is not undefined');
-      assert.ok(m.match(/<ins>/));
-      assert.ok(m.match(/<del>/));
-    });
-
-    const tests = [
+\\\`\`\`css
+a { color: red; }
+\\\`\`\`
+</code></pre>`,
+        expected: 34
+      },
       {
         language: 'JavaScript',
         snippet: `<pre><code class="lang-javascript">
