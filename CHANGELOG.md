@@ -3,6 +3,9 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+2.1.6
+-----
+
 * 💊 Improve general syntax highlighting
 * 💊 Improve HTML stripping from meta text
 * 🎁 Add syntax highlighting for METAR codes
