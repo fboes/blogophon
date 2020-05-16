@@ -41,6 +41,9 @@
   {{#if config.specialFeatures.icscalendar}}
     <link rel="alternate" type="text/calendar" title="{{config.name}}: {{meta.title}} Calendar" href="{{meta.absoluteUrlDirname}}/posts.ics" />
   {{/if}}
+  {{#if config.specialFeatures.icsJournal}}
+    <link rel="alternate" type="text/calendar" title="{{config.name}}: {{meta.title}} Journal" href="{{meta.absoluteUrlDirname}}/journal.ics" />
+  {{/if}}
   {{#if config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}" />
   {{/if}}

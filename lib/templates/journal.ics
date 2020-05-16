@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//3960.org//BLOGOPHON//DE
+X-WR-CALNAME;CHARSET=UTF-8:{{#icsQuote}}{{{config.name}}} | {{{title}}}{{/icsQuote}}
+X-WR-TIMEZONE;VALUE=TEXT:{{#icsQuote}}{{{config.timeZone}}}{{/icsQuote}}
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+{{#each index}}
+BEGIN:VJOURNAL
+DTSTART;VALUE=DATE:{{{dateFormat meta.Created 'ics'}}}
+URL:{{#icsQuote}}{{{meta.AbsoluteLink}}}{{/icsQuote}}
+SUMMARY;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Title}}}{{/icsQuote}}
+DESCRIPTION;CHARSET=UTF-8:{{#icsQuote}}{{{meta.Description}}}{{/icsQuote}}
+DTSTAMP:{{{../pubDate}}}
+{{#if meta.Keywords}}
+CATEGORIES;CHARSET=UTF-8:{{#icsQuote}}{{meta.Keywords}}{{/icsQuote}}
+{{/if}}
+UID:{{#icsQuote}}{{{meta.Id}}}{{/icsQuote}}
+END:VJOURNAL
+{{/each}}
+END:VCALENDAR
