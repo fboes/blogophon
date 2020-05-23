@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* 💊 Improve schema.org syntax for recipes
 * 🎁 Add ICS journal output of articles
 
 2.1.6
