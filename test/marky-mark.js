@@ -606,9 +606,24 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
 
 #heading-select {
   fill: var(--heading-select-color);
+  border: 1px solid #ddd;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: white;
+    background: #ccc;
+  }
+
+  a {
+    color: orange;
+    @if $a {
+      color: $a;
+    }
+  }
 }
 </code></pre>`,
-        expected: 50
+        expected: 88
       },
       // -----------------------------------------------------------------------
       {
