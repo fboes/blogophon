@@ -571,7 +571,7 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
       // -----------------------------------------------------------------------
       {
         language: 'CSS',
-        snippet: `<pre><code class="lang-css">
+        snippet: `<pre><code class="lang-css">@media screen {
 * {
   margin: 0;
   padding: 0;
@@ -585,7 +585,7 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
 .class {
   margin-top: 0.2em;
 }
-
+}
 :host {
   --background-color: black;
   --foreground-color: white;
@@ -623,7 +623,7 @@ mysqldump -h \${HOSTNAME} -u \${USERNAME} -p\${PASSWORD} --skip-comments --add-d
   }
 }
 </code></pre>`,
-        expected: 88
+        expected: 90
       },
       // -----------------------------------------------------------------------
       {
