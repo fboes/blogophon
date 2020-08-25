@@ -797,6 +797,14 @@ de-DE: https://www.example.de/</code></pre>`,
       },
       // -----------------------------------------------------------------------
       {
+        language: 'XML Processing Instructions',
+        snippet: `<pre><code class="language-xml">
+          &lt;div&gt;&lt;?= $title ?&gt;&lt;/div&gt;
+        </code></pre>`,
+        expected: 6
+      },
+      // -----------------------------------------------------------------------
+      {
         language: 'METAR (EHAM)',
         snippet: `<pre><code class="lang-metar">EHAM 091725Z 20037G51KT 170V230 9999 FEW011 BKN014 BKN025 11/09 Q0986 RE/RA TEMPO 7000</code></pre>`,
         expected: 7
