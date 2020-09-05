@@ -7,6 +7,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Improve CSS syntax highlighting
 * 💊 Improve HTML / XML syntax highlighting
 * 🎁 Add ICS journal output of articles
+* 🎁 Add support for `<amp-twitter>`
 
 2.1.6
 -----
