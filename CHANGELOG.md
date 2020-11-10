@@ -6,8 +6,10 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💊 Improve schema.org syntax for recipes
 * 💊 Improve CSS syntax highlighting
 * 💊 Improve HTML / XML syntax highlighting
+* 💊 Fixed JSON syntax highlighting
 * 🎁 Add ICS journal output of articles
 * 🎁 Add support for `<amp-twitter>`
+* 🎁 Improve `manifest.json` builder
 
 2.1.6
 -----

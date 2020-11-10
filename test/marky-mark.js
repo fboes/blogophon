@@ -775,6 +775,21 @@ NOTE DONE
         expected: 98
       },
       {
+        language: 'JSON configuration',
+        snippet: `<pre><code class="language-json">[
+          { &quot;key&quot;: &quot;ctrl+g&quot;,          &quot;command&quot;: &quot;editor.action.nextMatchFindAction&quot; },
+          { &quot;key&quot;: &quot;ctrl+7&quot;,          &quot;command&quot;: &quot;editor.action.commentLine&quot;, &quot;when&quot;: &quot;editorTextFocus && !editorReadonly&quot; },
+          { &quot;key&quot;: &quot;ctrl+shift+7&quot;,    &quot;command&quot;: &quot;editor.action.blockComment&quot;, &quot;when&quot;: &quot;editorFocus&quot; },
+          { &quot;key&quot;: &quot;ctrl+shift+d&quot;,    &quot;command&quot;: &quot;editor.action.copyLinesDownAction&quot;, &quot;when&quot;: &quot;editorFocus&quot; },
+          { &quot;key&quot;: &quot;ctrl+d&quot;,          &quot;command&quot;: &quot;editor.action.addSelectionToNextFindMatch&quot;, &quot;when&quot;: &quot;editorFocus&quot; },
+          { &quot;key&quot;: &quot;ctrl+h&quot;,          &quot;command&quot;: &quot;editor.action.startFindReplaceAction&quot; },
+          { &quot;key&quot;: &quot;ctrl+shift+up&quot;,   &quot;command&quot;: &quot;editor.action.moveLinesUpAction&quot; },
+          { &quot;key&quot;: &quot;ctrl+shift+down&quot;, &quot;command&quot;: &quot;editor.action.moveLinesDownAction&quot; }
+        ]</code></pre>`,
+        expected: 80,
+        exactMatch: '<b>&quot;key&quot;</b>: <kbd>&quot;ctrl+d&quot;</kbd>'
+      },
+      {
         language: 'YAML',
         snippet: `<pre><code class="language-yaml">men: [John Smith, Bill Jones]
 women:
@@ -830,9 +845,12 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
         assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'must not do double quoting');
         let tagsFound = m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length;
         if (test.expected) {
-          assert.equal(tagsFound, test.expected, 'Markup added');
+          assert.strictEqual(tagsFound, test.expected, 'Markup added');
         } else {
           assert.ok(tagsFound > 0, 'Markup added with ' + tagsFound + ' tags');
+        }
+        if (test.exactMatch) {
+          assert.ok( m.indexOf(test.exactMatch) >= 0, 'Exact string match: ' + test.exactMatch);
         }
         if (test.output) {
           console.log('Markup added with ' + tagsFound + ' tags');
