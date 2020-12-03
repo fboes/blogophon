@@ -9,7 +9,7 @@ describe('Ampify', function() {
     let ampHtml = ampify.ampifyHtml(html);
 
     it('should replace <img> with <amp-img>', function() {
-      assert.equal(ampHtml, '<amp-img layout="responsive" src="#" alt=""></amp-img>');
+      assert.equal(ampHtml, '<amp-img layout="intrinsic" src="#" alt=""></amp-img>');
     });
   });
 
