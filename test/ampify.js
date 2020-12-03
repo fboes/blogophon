@@ -5,11 +5,17 @@ const ampify = require('../lib/helpers/ampify')();
 
 describe('Ampify', function() {
   describe('Images', function() {
-    let html    = '<img src="#" alt="" />';
-    let ampHtml = ampify.ampifyHtml(html);
-
     it('should replace <img> with <amp-img>', function() {
-      assert.equal(ampHtml, '<amp-img layout="intrinsic" src="#" alt=""></amp-img>');
+      let html    = '<img src="#" alt="" />';
+      let ampHtml = ampify.ampifyHtml(html);
+      assert.strictEqual(ampHtml, '<amp-img layout="responsive" src="#" alt=""></amp-img>');
+    });
+
+
+    it('should replace treat SVGs differently', function() {
+      let html    = '<img src="test.svg" alt="" />';
+      let ampHtml = ampify.ampifyHtml(html);
+      assert.strictEqual(ampHtml, '<amp-img layout="intrinsic" src="test.svg" alt=""></amp-img>');
     });
   });
 

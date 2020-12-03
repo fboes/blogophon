@@ -10,7 +10,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Add ICS journal output of articles
 * 🎁 Add support for `<amp-twitter>`
 * 🎁 Improve `manifest.json` builder
-* 💣 Change `<amp-img>` to be `intrinsic`
+* 🎁 Change `<amp-img>` for SVGs to be `intrinsic`
 
 2.1.6
 -----
