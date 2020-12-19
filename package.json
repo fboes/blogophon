@@ -28,10 +28,10 @@
     "static site generator"
   ],
   "devDependencies": {
-    "autoprefixer": "^10.0.4",
+    "autoprefixer": "^10.1.0",
     "beeper": "^2.0.0",
     "browser-sync": "^2.26.13",
-    "eslint": "^7.14.0",
+    "eslint": "^7.16.0",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-mocha": "^7.0.2",
@@ -42,7 +42,7 @@
     "gulp-sass": "^4.1.0",
     "gulp-stylelint": "^13.0.0",
     "gulp-uglify": "^3.0.2",
-    "husky": "^4.3.0",
+    "husky": "^4.3.6",
     "mocha": "^8.2.1",
     "stylelint": "^13.8.0",
     "stylelint-config-recommended-scss": "^4.2.0",
@@ -60,15 +60,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dateformat": "4.0.0",
+    "dateformat": "^4.3.1",
     "fs-extra-promise": "^1.0.1",
     "glob": "^7.1.6",
     "gm": "^1.23.1",
     "handlebars": "^4.7.6",
     "inquirer": "^7.3.3",
     "inquirer-datepicker-prompt": "^0.4.2",
-    "js-yaml": "^3.14.0",
-    "marked": "^1.2.5",
+    "js-yaml": "^3.14.1",
+    "marked": "^1.2.7",
     "shelljs": "^0.8.4"
   },
   "engine": {
