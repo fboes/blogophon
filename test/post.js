@@ -47,12 +47,12 @@ describe('Post', function() {
     assert.ok(testPost.hash);
     assert.ok(testPost.hash.match(/^[a-z0-9]+$/));
     assert.ok(testPost.html);
-    assert.equal(testPost.html, '<p>Test</p>');
+    assert.strictEqual(testPost.html, '<p>Test</p>');
     assert.ok(testPost.htmlTeaser);
-    assert.equal(testPost.htmlTeaser, '<p>Description</p>');
-    assert.equal(String(testPost), testPost.hash);
-    assert.equal(testPost.meta.Url, testPost.meta.Link);
-    assert.equal(testPost.meta.AbsoluteUrl, testPost.meta.AbsoluteLink);
+    assert.strictEqual(testPost.htmlTeaser, '<p>Description</p>');
+    assert.strictEqual(String(testPost), testPost.hash);
+    assert.strictEqual(testPost.meta.Url, testPost.meta.Link);
+    assert.strictEqual(testPost.meta.AbsoluteUrl, testPost.meta.AbsoluteLink);
   });
 
   it('must convert Markdown into HTML', function() {
@@ -66,17 +66,18 @@ describe('Post', function() {
 
     //console.log(testPost);
 
-    assert.equal(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
-    assert.equal(testPost.meta.Description, 'Description  and some internal link.', 'Description has no markdown');
-    assert.equal(
+    assert.strictEqual(testPost.markdown, testMarkdown, 'Input markdown equals output markdown');
+    assert.strictEqual(testPost.meta.Description, 'Description  and some internal link.', 'Description has no markdown');
+    assert.strictEqual(
       testPost.meta.MarkdownDescription,
       testMarkdownDescription,
       '...but there is a description with markdown'
     );
-    assert.ok(testPost.meta.Image.match(/some-image.jpg/));
-    assert.ok(testPost.meta.ProperImage.match(/some-image.jpg/));
-    assert.ok(testPost.html.match(/test\/some-image.jpg/), 'Image has path added');
-    assert.ok(testPost.htmlTeaser.match(/test\/some-image.jpg/), 'Image has path added');
+    assert.ok(testPost.meta.Image.match(/some-image\.jpg/));
+    assert.ok(testPost.meta.ProperImage.match(/some-image\.jpg/));
+    assert.ok(!testPost.meta.ImageAlt);
+    assert.ok(testPost.html.match(/test\/some-image\.jpg/), 'Image has path added');
+    assert.ok(testPost.htmlTeaser.match(/test\/some-image\.jpg/), 'Image has path added');
     assert.ok(!testPost.html.match(/internal\.md/), 'Internal links are converted');
     assert.ok(!testPost.htmlTeaser.match(/internal\.md/), 'Internal links are converted');
     assert.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');
@@ -106,14 +107,14 @@ describe('Post', function() {
       Date: new Date()
     };
     testPost = post('test.md', testMarkdown, testMeta);
-    assert.equal(testPost.meta.Description.length, 56, 'Description must not be shortened when to short anyway.');
+    assert.strictEqual(testPost.meta.Description.length, 56, 'Description must not be shortened when to short anyway.');
   });
 
   it('must find images', function() {
     let testPost = post(
       'test.md',
-      'Single image with style: ![](markdown.jpg#default)'
-      + ' - and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)',
+      `Single image with style: ![(C) by Mutti](markdown.jpg#default)
+- and without style: ![](markdown.jpg) - and remote image ![](http://www.example.com/remote.jpg)`,
       {
         Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
         Date: new Date()
@@ -122,17 +123,21 @@ describe('Post', function() {
 
     assert.ok(testPost.markdown);
     assert.ok(testPost.meta.MarkdownDescription);
+    assert.ok(testPost.meta.Image.match(/markdown\.jpg/));
+    assert.ok(testPost.meta.ProperImage.match(/markdown\.jpg/));
+    //console.log(testPost.meta);
+    assert.ok(testPost.meta.ImageAlt.match(/by Mutti/));
 
     let imageStyles = testPost.getAllImagesWithStyle();
     //console.log(imageStyles);
-    assert.equal(imageStyles[0].filename, 'description.jpg');
-    assert.equal(imageStyles[0].style,    'default');
-    assert.equal(imageStyles[1].filename, 'description.jpg');
-    assert.equal(imageStyles[1].style,    null);
-    assert.equal(imageStyles[2].filename, 'markdown.jpg');
-    assert.equal(imageStyles[2].style,    'default');
-    assert.equal(imageStyles[3].filename, 'markdown.jpg');
-    assert.equal(imageStyles[3].style,    null);
+    assert.strictEqual(imageStyles[0].filename, 'description.jpg');
+    assert.strictEqual(imageStyles[0].style,    'default');
+    assert.strictEqual(imageStyles[1].filename, 'description.jpg');
+    assert.strictEqual(imageStyles[1].style,    null);
+    assert.strictEqual(imageStyles[2].filename, 'markdown.jpg');
+    assert.strictEqual(imageStyles[2].style,    'default');
+    assert.strictEqual(imageStyles[3].filename, 'markdown.jpg');
+    assert.strictEqual(imageStyles[3].style,    null);
 
     imageStyles = testPost.getAllImagesWithStyleObject();
     //console.log(imageStyles);
@@ -194,11 +199,11 @@ But not example.6test.com or 7test.com (URLs with subdomains without proper link
 
     //console.log(testLinks);
 
-    assert.equal(testLinks.length, 4);
-    assert.equal(testLinks[0],    'http://www.1test.com');
-    assert.equal(testLinks[1],    'http://www.2test.com');
-    assert.equal(testLinks[2],    'https://www.3test.com');
-    assert.equal(testLinks[3],    'https://www.5test.com/some-compilcated-foo?a#b');
+    assert.strictEqual(testLinks.length, 4);
+    assert.strictEqual(testLinks[0],    'http://www.1test.com');
+    assert.strictEqual(testLinks[1],    'http://www.2test.com');
+    assert.strictEqual(testLinks[2],    'https://www.3test.com');
+    assert.strictEqual(testLinks[3],    'https://www.5test.com/some-compilcated-foo?a#b');
   });
 
   it('must convert internal links', function() {
@@ -211,7 +216,7 @@ as is [this](internal-link2/index.md) and [this](../internal-link3/index.md).`;
     const testLinks = testPost.getAllExternalLinks();
     //console.log(testPost.html);
 
-    assert.equal(testLinks.length, 0);
+    assert.strictEqual(testLinks.length, 0);
     assert.ok(testPost.html.match(/\/posts\/internal-link\//));
     assert.ok(testPost.html.match(/\/posts\/internal-link2\//));
     assert.ok(testPost.html.match(/\/posts\/internal-link3\//));
@@ -238,10 +243,10 @@ Title 2
     });
 
     assert.ok(!testPost.html.match(/<h1/g), 'Removes <h1> from article');
-    assert.equal(testPost.html.match(/<h2 id="/g).length,               2);
-    assert.equal(testPost.html.match(/<h3 id="more-tütle-2"/g).length,  1);
-    assert.equal(testPost.html.match(/<h4 id="more-title-3"/g).length, 1);
-    assert.equal(testPost.html.match(/<h5 id="more-ttle-4"/g).length,  1);
+    assert.strictEqual(testPost.html.match(/<h2 id="/g).length,               2);
+    assert.strictEqual(testPost.html.match(/<h3 id="more-tütle-2"/g).length,  1);
+    assert.strictEqual(testPost.html.match(/<h4 id="more-title-3"/g).length, 1);
+    assert.strictEqual(testPost.html.match(/<h5 id="more-ttle-4"/g).length,  1);
   });
 
   it('must properly convert Markdown tables into HTML', function() {
@@ -268,13 +273,13 @@ Title 2
     });
     //console.log(testPost.html);
 
-    assert.equal(testPost.html.match(/<caption id="/g).length, 2);
-    assert.equal(testPost.html.match(/<th>/g).length,          5);
-    assert.equal(testPost.html.match(/<th(?:>|\s)/g).length,   14);
-    assert.equal(testPost.html.match(/<thead/g).length,        2);
-    assert.equal(testPost.html.match(/<tbody/g).length,        2);
-    assert.equal(testPost.html.match(/text-align/g).length,    12);
-    assert.equal(testPost.html.match(/table-cell--/g).length,  3);
+    assert.strictEqual(testPost.html.match(/<caption id="/g).length, 2);
+    assert.strictEqual(testPost.html.match(/<th>/g).length,          5);
+    assert.strictEqual(testPost.html.match(/<th(?:>|\s)/g).length,   14);
+    assert.strictEqual(testPost.html.match(/<thead/g).length,        2);
+    assert.strictEqual(testPost.html.match(/<tbody/g).length,        2);
+    assert.strictEqual(testPost.html.match(/text-align/g).length,    12);
+    assert.strictEqual(testPost.html.match(/table-cell--/g).length,  3);
   });
 
   it('must properly convert Markdown tables into HTML', function() {
@@ -291,13 +296,13 @@ Title 2
     });
     //console.log(testPost.html);
 
-    assert.equal(testPost.html.match(/<caption id="/g).length, 1,  'Has <caption>');
-    assert.equal(testPost.html.match(/<th(?:>|\s)/g).length,   7,  'Has <th>');
-    assert.equal(testPost.html.match(/<thead/g).length,        1,  'Has <thead>');
-    assert.equal(testPost.html.match(/<tbody/g).length,        1,  'Has <tbody>');
-    assert.equal(testPost.html.match(/text-align/g).length,    16);
-    assert.equal(testPost.html.match(/scope="row"/g).length,   3);
-    assert.equal(testPost.html.match(/table-cell--/g).length,  4);
+    assert.strictEqual(testPost.html.match(/<caption id="/g).length, 1,  'Has <caption>');
+    assert.strictEqual(testPost.html.match(/<th(?:>|\s)/g).length,   7,  'Has <th>');
+    assert.strictEqual(testPost.html.match(/<thead/g).length,        1,  'Has <thead>');
+    assert.strictEqual(testPost.html.match(/<tbody/g).length,        1,  'Has <tbody>');
+    assert.strictEqual(testPost.html.match(/text-align/g).length,    16);
+    assert.strictEqual(testPost.html.match(/scope="row"/g).length,   3);
+    assert.strictEqual(testPost.html.match(/table-cell--/g).length,  4);
   });
 
   it('must properly convert checkbox lists', function() {
@@ -320,9 +325,9 @@ Title 2
     //console.log(testPost.html);
 
     assert.ok(!testPost.html.match(/dl/g));
-    assert.equal(testPost.html.match(/<ul/g).length,  2);
+    assert.strictEqual(testPost.html.match(/<ul/g).length,  2);
     assert.ok(!testPost.html.match(/<ul>/g));
-    assert.equal(testPost.html.match(/<li/g).length,   6);
+    assert.strictEqual(testPost.html.match(/<li/g).length,   6);
     assert.ok(!testPost.html.match(/<li>/g));
   });
 
@@ -338,7 +343,7 @@ It <i>always</i> is and \`<em>\` is not a stranger to this story.`;
     //console.log(testPost.meta);
 
     assert.ok(!testPost.html.match(/<em>/g));
-    assert.equal(testPost.html.match(/<i>/g).length,  1);
+    assert.strictEqual(testPost.html.match(/<i>/g).length,  1);
     assert.ok(!testPost.meta.Title.match(/&#/g));
     assert.ok(!testPost.meta.Description.match(/&quot;/g));
     assert.ok(!testPost.meta.Description.match(/<em>/g));

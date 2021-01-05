@@ -10,6 +10,9 @@
   {{#if post.meta.Image}}
     <meta property="og:image" content="{{post.meta.Image}}" />
   {{/if}}
+  {{#if post.meta.ImageAlt}}
+    <meta property="og:image:alt" content="{{post.meta.ImageAlt}}" />
+  {{/if}}
   <meta property="article:published_time" content="{{dateFormat post.meta.Created 'iso'}}" />
   <meta property="article:modified_time" content="{{dateFormat post.meta.Modified 'iso'}}" />
   {{#if post.meta.Keywords.length}}

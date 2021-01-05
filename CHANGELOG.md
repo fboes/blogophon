@@ -11,6 +11,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Add support for `<amp-twitter>`
 * 🎁 Improve `manifest.json` builder
 * 🎁 Change `<amp-img>` for SVGs to be `intrinsic`
+* 🎁 Add image description for shareable image
 
 2.1.6
 -----

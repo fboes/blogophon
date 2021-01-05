@@ -11,6 +11,9 @@
   {{else}}
     <meta name="twitter:card" content="summary" />
   {{/if}}
+  {{#if post.meta.ImageAlt}}
+    <meta property="twitter:image:alt" content="{{post.meta.ImageAlt}}" />
+  {{/if}}
   {{#if post.meta.AuthorTwitter}}
     <meta name="twitter:creator" content="@{{post.meta.AuthorTwitter}}" />
   {{/if}}
