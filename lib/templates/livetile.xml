@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 {{#with post}}
   <tile>
-    <visual lang="{{post.meta.Language}}" version="2">
+    <visual lang="{{meta.Language}}" version="2">
       <binding template="TileSquare150x150Text04">
         <text id="1">{{meta.Title}}</text>
       </binding>
