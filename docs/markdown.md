@@ -387,6 +387,7 @@ Adding relations to links
 * [This link should not be followed by search engines](https://www.example.com "nofollow").
 * [This link should not be pinged by webmentions](https://www.example.com "nomention").
 * [This link leads to a tag page](https://www.example.com "tag").
+* [This link leads to a downloadable file](https://www.example.com "download").
 ```
 
 See also [`rel` link types](https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types).

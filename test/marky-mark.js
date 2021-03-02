@@ -115,6 +115,13 @@ describe('MarkyMark', function() {
       assert.ok(m.match(/rel/));
       assert.ok(!m.match(/class/));
       assert.ok(!m.match(/title/));
+
+      x = '<a href="https://www.example.com" title="download">Test</a>';
+      m = markyMark(x);
+      assert.ok(m.match(/ download/));
+      assert.ok(!m.match(/rel/));
+      assert.ok(!m.match(/class/));
+      assert.ok(!m.match(/title/));
     });
     it('must make nicer fractions', () => {
       let m, x = `(1/2)<br />

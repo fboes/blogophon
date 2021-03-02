@@ -12,6 +12,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Improve `manifest.json` builder
 * 🎁 Change `<amp-img>` for SVGs to be `intrinsic`
 * 🎁 Add image description for shareable image
+* 🎁 Add download links to Markdown syntax
 
 2.1.6
 -----
