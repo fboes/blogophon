@@ -13,6 +13,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Change `<amp-img>` for SVGs to be `intrinsic`
 * 🎁 Add image description for shareable image
 * 🎁 Add download links to Markdown syntax
+* 🎁 Add Gopher server support
 
 2.1.6
 -----

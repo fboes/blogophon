@@ -134,6 +134,11 @@ Server Side Includes
 
 Check this option if your web server supports [Server Side Includes](https://en.wikipedia.org/wiki/Server_Side_Includes). This improves browser and search engine performance by replacing all AJAX snippets with Server Side Includes. These snippets are used for generating related links etc.
 
+Gopher
+------
+
+This will generate `gophermap` files which in turn will enable hosting your blog on a [Gopher server](https://en.wikipedia.org/wiki/Gopher_%28protocol%29).
+
 ---
 
 Return to [table of contents](README.md).

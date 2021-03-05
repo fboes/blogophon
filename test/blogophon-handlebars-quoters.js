@@ -44,4 +44,24 @@ describe('Blogophon Handlebars Quoters', function() {
     outputHtml = blogophonHandlebarsQuoter.lazyloadAttributes(inputHtml, 'eager');
     assert.strictEqual(outputHtml.match(/ loading="eager"/g).length,  2);
   });
+
+  it('must properly modify Gopher text', function() {
+    const inputPlainText = `![](image.jpg) Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+
+At vero eos et accusam et justo duo dolores et
+ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.`;
+    let outputPlainText = blogophonHandlebarsQuoter.gophermapQuote({
+      fn: () => {
+        return inputPlainText;
+      }
+    });
+
+    assert.strictEqual(outputPlainText.match(/!\[\]\(image\.jpg\)/g), null, 'Removed image');
+    assert.strictEqual(outputPlainText.match(/\n/g).length, 11, 'Added line breaks');
+
+  });
 });

@@ -1,0 +1,33 @@
+!{{{config.name}}}{{#if title}} | {{{title}}}{{/if}}
+{{#if config.description}}
+
+{{config.description}}
+{{/if}}
+
+{{#if index}}
+{{#each index}}
+i---------------------------------------------------- {{dateFormat meta.Created 'locale' meta.Language}} --	/
+0{{{meta.Title}}}	{{{meta.markdownUrl}}}
+{{#gophermapQuote}}{{{meta.MarkdownDescription}}}{{/gophermapQuote}}
+{{#if meta.Modified}}{{#i18n}}Updated:{{/i18n}} {{dateFormat meta.Modified 'locale' meta.Language}}{{/if}}
+
+{{/each}}
+{{/if}}
+i==================================================================	/
+
+{{#i18n}}Sidebar{{/i18n}}
+
+1{{#i18n}}All categories{{/i18n}}	/category/
+{{#each config.categoriesUrls}}
+1→{{{title}}}	{{{url}}}
+{{/each}}
+
+1{{#i18n}}All tags{{/i18n}}	/tagged/
+
+1{{#i18n}}All posts{{/i18n}}	/posts/
+
+i==================================================================	/
+
+{{config.copyright}}
+
+hPowered by Blogophon	URL:https://github.com/fboes/blogophon
