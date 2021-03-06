@@ -75,5 +75,6 @@ ErrorDocument 410 /404.html
 RedirectMatch 301 "^/htdocs/(.*)$" "/$1"
 RedirectMatch 301 "^/(posts|\d+(/\d+(/\d+)?)?)/?$" "/"
 RedirectMatch 301 "^/category/?$" "/"
+RedirectMatch 301 "^(.*/)gophermap$" "$1"
 
 # Add your stuff here
