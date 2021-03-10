@@ -45,8 +45,19 @@ describe('Blogophon Handlebars Quoters', function() {
     assert.strictEqual(outputHtml.match(/ loading="eager"/g).length,  2);
   });
 
+  it('must properly identify Gopher links', function() {
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('https://www.example.com'), 'h');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test'), '9');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test/'), '1');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test/index.txt'), '0');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test/index.md'), '0');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test/index.gif'), 'g');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test/index.jpg'), 'I');
+    assert.strictEqual(blogophonHandlebarsQuoter._getGopherUrlType('/test/index.pdf'), 'd');
+  });
+
   it('must properly modify Gopher text', function() {
-    const inputPlainText = `![](image.jpg) Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+    let inputPlainText = `![](image.jpg) Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
 
 At vero eos et accusam et justo duo dolores et
@@ -60,8 +71,30 @@ no sea takimata sanctus est Lorem ipsum dolor sit amet.`;
       }
     });
 
-    assert.strictEqual(outputPlainText.match(/!\[\]\(image\.jpg\)/g), null, 'Removed image');
-    assert.strictEqual(outputPlainText.match(/\n/g).length, 11, 'Added line breaks');
 
+    assert.strictEqual(outputPlainText.match(/!\[\]\(image\.jpg\)/g), null, 'Removed image');
+    assert.strictEqual(outputPlainText.match(/\n/g).length, 10, 'Added line breaks');
+
+    inputPlainText = `SpaceX hat einen kleinen Andock-Simulator für die
+[Internationale Raum Station](https://iss-sim.spacex.com/ "nomention") veröffentlicht. In diesem Simulator
+darf man versuchen, einen "<i>Space Dragon</i>"-Transporter an der ISS anzudocken. Dieser Simulator läuft direkt
+im Browser, und lässt sich mit Maus oder Tastatur (undokumentiert) steuern.
+
+Falls Ihr lieber auf dem Trockenen üben wollt: Es gibt
+ein [fantastisches Lego-Modell der ISS](https://www.lego.com/de-de/product/international-space-station-21321) -
+die dort mitgelieferten Teile für das inzwischen ausgemusterte <i>Space Shuttle</i> kann man wahrscheinlich
+für den Bau einer [<i>Space Dragon</i>-](gopher://baud.baby/0/phlog/fs20181102.txt)
+oder [<i>Soyuz</i>-Kapsel](../internal/index.md) verwenden, die tatsächlich an der ISS im Betrieb sind.
+
+Mehr dazu gibt es in der [Raumfahrt-Sektion](/tagged/raumfahrt/).`;
+    outputPlainText = blogophonHandlebarsQuoter.gophermapQuote({
+      fn: () => {
+        return inputPlainText;
+      }
+    });
+
+    assert.strictEqual(outputPlainText.match(/\n/g).length, 17, 'Added line breaks');
+    assert.strictEqual(outputPlainText.match(/\nh/g).length, 2, 'Added h links');
+    assert.strictEqual(outputPlainText.match(/\n9/g).length, 1, 'Added "9" links');
   });
 });

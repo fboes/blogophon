@@ -137,7 +137,11 @@ Check this option if your web server supports [Server Side Includes](https://en.
 Gopher
 ------
 
-This will generate `gophermap` files which in turn will enable hosting your blog on a [Gopher server](https://en.wikipedia.org/wiki/Gopher_%28protocol%29).
+This will generate `gophermap` files which in turn will enable hosting your blog on a [Gopher server](https://en.wikipedia.org/wiki/Gopher_%28protocol%29). The Gophermaps should at least work with:
+
+* [Gophernicus](https://github.com/gophernicus/gophernicus)
+* [pygopherd](https://github.com/jgoerzen/pygopherd)
+* [Bucktooth](gopher://gopher.floodgap.com/1/buck)
 
 ---
 

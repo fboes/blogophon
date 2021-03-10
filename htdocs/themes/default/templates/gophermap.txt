@@ -1,15 +1,19 @@
 !{{{config.name}}}{{#if title}} | {{{title}}}{{/if}}
 {{#if config.description}}
 
-{{{config.description}}}
+{{#gophermapQuote}}{{{config.description}}}{{/gophermapQuote}}
 {{/if}}
 
 {{#if index}}
 {{#each index}}
 i---------------------------------------------------- {{{dateFormat meta.Created 'locale' meta.Language}}} --	/
 0{{{meta.Title}}}	{{{meta.markdownUrl}}}
+
 {{#gophermapQuote}}{{{meta.MarkdownDescription}}}{{/gophermapQuote}}
-{{#if meta.Modified}}{{#i18n}}Updated:{{/i18n}} {{{dateFormat meta.Modified 'locale' meta.Language}}}{{/if}}
+{{#if meta.hasExternalLink}}h> {{#i18n}}Go to website…{{/i18n}}	URL:{{{meta.Link}}}
+{{/if}}
+
+{{#if meta.Modified}}{{#gophermapQuote}}{{#i18n}}Updated:{{/i18n}} {{{dateFormat meta.Modified 'locale' meta.Language}}}{{/gophermapQuote}}{{/if}}
 
 {{/each}}
 {{/if}}
@@ -26,6 +30,6 @@ i==================================================================	/
 
 i==================================================================	/
 
-{{{config.copyright}}}
+{{#gophermapQuote}}{{{config.copyright}}}{{/gophermapQuote}}
 
 hPowered by Blogophon	URL:https://github.com/fboes/blogophon
