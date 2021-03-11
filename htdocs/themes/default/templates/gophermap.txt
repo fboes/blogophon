@@ -1,6 +1,8 @@
 !{{{config.name}}}{{#if title}} | {{{title}}}{{/if}}
 {{#if config.description}}
 
+i==================================================================	/
+
 {{#gophermapQuote}}{{{config.description}}}{{/gophermapQuote}}
 {{/if}}
 
@@ -8,10 +10,10 @@
 {{#each index}}
 i---------------------------------------------------- {{{dateFormat meta.Created 'locale' meta.Language}}} --	/
 0{{{meta.Title}}}	{{{meta.markdownUrl}}}
-
-{{#gophermapQuote}}{{{meta.MarkdownDescription}}}{{/gophermapQuote}}
 {{#if meta.hasExternalLink}}h> {{#i18n}}Go to website…{{/i18n}}	URL:{{{meta.Link}}}
 {{/if}}
+
+{{#gophermapQuote}}{{{meta.MarkdownDescription}}}{{/gophermapQuote}}
 
 {{#if meta.Modified}}{{#gophermapQuote}}{{#i18n}}Updated:{{/i18n}} {{{dateFormat meta.Modified 'locale' meta.Language}}}{{/gophermapQuote}}{{/if}}
 
