@@ -3,6 +3,9 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+2.1.7
+-----
+
 * 💊 Improve schema.org syntax for recipes
 * 💊 Improve CSS syntax highlighting
 * 💊 Improve HTML / XML syntax highlighting
