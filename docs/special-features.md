@@ -52,6 +52,12 @@ For every index page (start page, tag pages, author pages) there will be a corre
 
 This JSON is understood by [Slack's slash command](https://slack.com/apps/A0F82E8CA-slash-commands), so you can have a Slack bot telling you about current articles.
 
+JSON-LD
+-------
+
+For every article there will be a corresponding `index.jsonld` [JSON-LD](https://json-ld.org/) file. For linking / including the content of this file into your article you may need to modifiy the template of your articles.
+
+
 Webmentions
 -----------
 

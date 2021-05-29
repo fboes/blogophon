@@ -18,6 +18,7 @@ ErrorDocument 410 /404.html
   AddCharset utf-8 html _html css js rss atom xml ics md json txt kml webmanifest
   AddType application/atom+xml atom
   AddType application/json     json
+  AddType application/ld+json  jsonld
   AddType application/manifest+json webmanifest
   AddType application/rss+xml  rss
   AddType application/vnd.google-earth.kml+xml kml

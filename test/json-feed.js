@@ -6,16 +6,17 @@ describe('JsonFeed', function() {
   const config = require('../lib/config')(__dirname);
 
   const item = {
-    htmlTeaser: 1,
-    html: 33,
+    htmlTeaser: '1',
+    html: '33',
     meta: {
-      AbsoluteUrl: 2,
-      Title: 3,
+      AbsoluteUrl: '2',
+      Title: '3',
       Created: new Date('2017-05-18'),
       Modified: new Date('2017-05-28'),
-      tags: [6, 7],
-      Description: 8,
-      Language: 'en'
+      tags: ['6', '7'],
+      Description: '8',
+      Language: 'en',
+      Schema: 'http://schema.org/BlogPosting'
     }
   };
   const jsonFeed = require('../lib/models/json-feed')([item], '2016-12-31', config, 'title', 'url');
