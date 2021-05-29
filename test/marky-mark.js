@@ -457,7 +457,7 @@ $ cd %USERPROFILE%
 echo $DING
 x files have been deleted
 </code></pre>`,
-        expected: 12 * 2
+        expected: 12 * 2 - 3
       },
       // -----------------------------------------------------------------------
       {
@@ -556,7 +556,7 @@ npm publish</code></pre>`,
         snippet: `<pre><code class="lang-shell">$ mysql -h $HOSTNAME -u $USERNAME -p$PASSWORD $DATABASE &lt; MYSCRIPT.sql
 $ mysqldump -h $HOSTNAME -u $USERNAME -p$PASSWORD --skip-comments --add-drop-table --single-transaction --quick $DATABASE &lt; dbdump-$(date &quot;+%Y-%m-%d-%H-%M&quot;).sql
 </code></pre>`,
-        expected: 46
+        expected: 46 - 2
       },
       // -----------------------------------------------------------------------
       {
