@@ -5,6 +5,8 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 
 * 🎁 Add Gopher server support
 * 🎁 Add Spotify embedding
+* 🎁 JSON-LD added
+* 🎁 Changed code highlighting for Bash prompt
 
 2.1.7
 -----
