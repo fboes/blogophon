@@ -3,17 +3,11 @@
 // Include gulp
 const gulp = require('gulp');
 const pkg  = require('./package.json');
-const beep = require('beeper');
-const onError = function() {
-  beep();
-  return true;
-};
 
 // Include Our Plugins
 const eslint       = require('gulp-eslint');
 const mocha        = require('gulp-mocha');
 const browserSync  = require('browser-sync').create();
-const plumber      = require('gulp-plumber');
 const sass         = require('gulp-sass');
 const rename       = require("gulp-rename");
 const uglify       = require('gulp-uglify');
@@ -31,7 +25,6 @@ const tasks = {
         pkg.directories.lib + '/**/*.js',
         pkg.directories.test + '/**/*.js'
       ])
-      .pipe(plumber({errorHandler: onError}))
       .pipe(eslint())
       .pipe(eslint.format())
       // .pipe(eslint.failAfterError())
@@ -40,7 +33,6 @@ const tasks = {
 
   doMocha: function() {
     return gulp.src(pkg.directories.test + '/**/*.js', {read: false})
-      .pipe(plumber({errorHandler: onError}))
       .pipe(mocha({
         reporter: 'dot'
       }))
@@ -49,7 +41,6 @@ const tasks = {
 
   buildJs: function() {
     return gulp.src(pkg.directories.theme + '/**/js-src/*.js')
-      .pipe(plumber({errorHandler: onError}))
       .pipe(eslint({
         'useEslintrc': false,
         'rules': {
@@ -85,7 +76,6 @@ const tasks = {
 
   buildCss: function() {
     return gulp.src(pkg.directories.theme + '/**/*.scss')
-      .pipe(plumber({errorHandler: onError}))
       .pipe(gulpStylelint({
         reporters: [
           {formatter: 'string', console: true}
