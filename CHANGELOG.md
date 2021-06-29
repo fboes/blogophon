@@ -4,6 +4,7 @@ Change log
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
 * 🎁 Add Gopher server support
+* 🎁 Add Spotify embedding
 
 2.1.7
 -----

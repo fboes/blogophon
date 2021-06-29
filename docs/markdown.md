@@ -197,9 +197,9 @@ Enclosure: audio.mp3
 
 See [instructions for attachments](#attachments) on how to upload files.
 
-### YouTube & Vimeo
+### YouTube, Vimeo, Spotify
 
-For displaying a embedded video player for YouTube or Vimeo, just put a link to the given video into a single line. This will be converted to a full blown video player.
+For displaying a embedded video player for YouTube, Vimeo or Spotify, just put a link to the given video into a single line. This will be converted to a full blown video / audio player.
 
 ```markdown
 This will be rendered as Youtube player

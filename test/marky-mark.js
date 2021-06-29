@@ -332,6 +332,10 @@ describe('MarkyMark', function() {
       m = markyMark('<p><a href="https://jsfiddle.net/6cLkvdag/">Github Gist</a></p>');
       assert.ok(m.match(/<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/));
       assert.ok(m.match(/title="Github Gist"/));
+
+      m = markyMark('<p><a href=https://open.spotify.com/track/6M5TeMPPzw4Xlve2n3ApSR?si=abbf68460f2f4d8a">Music</a></p>');
+      assert.ok(m.match(/https:\/\/embed\.spotify\.com/));
+      assert.ok(m.match(/title="Music"/));
     });
   });
 
