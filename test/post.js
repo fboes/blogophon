@@ -348,4 +348,27 @@ It <i>always</i> is and \`<em>\` is not a stranger to this story.`;
     assert.ok(!testPost.meta.Description.match(/&quot;/g));
     assert.ok(!testPost.meta.Description.match(/<em>/g));
   });
+
+  it('must handle galleries', function() {
+    const markdown = `Flugnavigation mittels Rechenscheibe zum Selberbau
+=========
+
+![Eine Rechenscheibe zur Berechnung von Distanzen und Geschwindigkeiten.](distanz-geraet.jpg#quad) Da ich mich
+in letzter Zeit verstärkt mit
+der [Jagd-Fliegerei des Zweiten Weltkriegs](../2021-01-31-einsteiger-tutorial-fuer-il-2-sturmovik/index.md)
+beschäftigt habe, musste ich mich wohl oder übel verstärkt mit Flug-Navigation ohne GPS oder sonstige technische
+Unterstützung auseinandersetzen. Dabei hilft es enorm, den Zusammenhang zwischen Fluggeschwindigkeit und zurückgelegter
+Strecke zu kennen.
+
+![](distanz-geraet-detail.jpg#default)
+`;
+    const testPost = post('test.md', markdown, {
+      Date: new Date(),
+      Classes: 'Images'
+    });
+    //console.log(testPost.html);
+
+    assert.strictEqual(testPost.html.match(/"gallery__link"/g).length,  2);
+    assert.ok(testPost.html.match(/title="/g).length >= 2);
+  });
 });
