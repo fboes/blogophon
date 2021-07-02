@@ -125,7 +125,7 @@ describe('Post', function() {
     assert.ok(testPost.meta.MarkdownDescription);
     assert.ok(testPost.meta.Image.match(/markdown\.jpg/));
     assert.ok(testPost.meta.ProperImage.match(/markdown\.jpg/));
-    //console.log(testPost.meta);
+    //console.log(testPost.html);
     assert.ok(testPost.meta.ImageAlt.match(/by Mutti/));
 
     let imageStyles = testPost.getAllImagesWithStyle();
@@ -144,6 +144,7 @@ describe('Post', function() {
     assert.ok(imageStyles['description.jpg']);
     assert.ok(imageStyles['markdown.jpg']);
     assert.ok(testPost.html.match(/src="http:\/\/www\.example\.com\/remote\.jpg"/));
+    assert.strictEqual(testPost.html.match(/srcset/).length, 1);
   });
 
   it('must also build proper galleries', function() {
@@ -370,5 +371,26 @@ Strecke zu kennen.
 
     assert.strictEqual(testPost.html.match(/"gallery__link"/g).length,  2);
     assert.ok(testPost.html.match(/title="/g).length >= 2);
+  });
+  it('must handle download links', function() {
+    const markdown = `Vector-Art für "Hardspace: Shipbreakers"
+=========
+
+![](lynx-salvage.svg#quad) Das Spiel [Hardspace: Shipbreakers](https://hardspace-shipbreaker.com/) hat es
+ mir sehr angetan. Neben dem gelungenen Spielprinzip zieht mich vor allen Dingen die Atmosphäre in den Bann.
+
+Zur Atmosphäre gehört das allgegenwärtige Branding des Arbeitgebers des Protagonisten, "Lynx Salvage". Für die
+private Verwendung habe ich daher das [Logo der Firma "Lynx Salvage" als SVG-Vektor-Art](lynx-salvage.svg) vektorisiert.
+
+Diese Datei besteht aus überschneidungsfreien Außenlinien des Logos und des Schriftzugs - und eignet
+sich daher zum Bedrucken oder Besticken von Kleidung.`;
+    const testPost = post('test.md', markdown, {
+      Date: new Date()
+    });
+
+    assert.strictEqual(testPost.html.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
+    assert.strictEqual(testPost.htmlTeaser.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
+    assert.strictEqual(testPost.safeHtml.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
+    assert.strictEqual(testPost.safeHtmlTeaser.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
   });
 });
