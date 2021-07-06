@@ -253,14 +253,24 @@ describe('MarkyMark', function() {
       <td style="text-align:right"></td>
       <td style="text-align:left">Das bist du und so    ⁴</td>
     </tr>
+    <tr>
+      <td style="text-align:left"><strong>Das bist du und so</strong></td>
+      <td style="text-align:left"><em>Das bist du und so</em></td>
+      <td style="text-align:right"><strong>Test</strong></td>
+      <td style="text-align:left"><a>Das bist du und so</a></td>
+    </tr>
   </tbody>
 </table>`;
 
       let m = markyMark(x);
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/colspan="\d"/g).length, 1, 'Colspan added');
-      assert.equal(m.match(/<col class="table-cell--right"/g).length, 1);
-      assert.equal(m.match(/<col class="table-cell--left"/g).length, 1);
+      assert.strictEqual(m.match(/colspan="\d"/g).length, 1, 'Colspan added');
+      assert.strictEqual(m.match(/<col class="table-cell--right"/g).length, 1);
+      assert.strictEqual(m.match(/<col class="table-cell--left"/g).length, 1);
+      assert.strictEqual(m.match(/class="tag-strong"/g).length, 1);
+      assert.strictEqual(m.match(/class="tag-em"/g).length, 1);
+      assert.strictEqual(m.match(/class="tag-a"/g).length, 1);
+      assert.strictEqual(m.match(/<th/g).length, 5);
     });
   });
 
