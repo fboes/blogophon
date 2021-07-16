@@ -43,6 +43,12 @@ describe('Blogophon Handlebars Quoters', function() {
 
     outputHtml = blogophonHandlebarsQuoter.lazyloadAttributes(inputHtml, 'eager');
     assert.strictEqual(outputHtml.match(/ loading="eager"/g).length,  2);
+
+    outputHtml = blogophonHandlebarsQuoter.lazyloadAttributes(inputHtml, 'lazy', true);
+    assert.strictEqual(outputHtml.match(/ loading="lazy"/g).length,  1);
+
+    outputHtml = blogophonHandlebarsQuoter.lazyloadAttributes(inputHtml, 'lazy', 1);
+    assert.strictEqual(outputHtml.match(/ loading="lazy"/g).length,  1);
   });
 
   it('must properly identify Gopher links', function() {

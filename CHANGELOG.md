@@ -11,6 +11,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 Changed code highlighting for Bash prompt
 * 🎁 Add additional `class` to `td` with a tag inside
 * 🎁 Improve accessibility
+* 🎁 Disable lazy loading for first image/iFrame on page
 
 2.1.7
 -----

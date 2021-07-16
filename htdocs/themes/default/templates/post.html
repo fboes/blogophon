@@ -90,7 +90,7 @@
               </h1>
             </header>
             <div{{#ifEquals meta.Schema 'http://schema.org/BlogPosting'}} itemprop="articleBody"{{/ifEquals}} class="e-content">
-              {{{lazyloadAttributes html "lazy"}}}
+              {{{lazyloadAttributes htmlTeaser "lazy" 1}}}
 
               {{#if meta.RatingObj}}
                   <p itemscope itemtype="http://schema.org/Rating">
