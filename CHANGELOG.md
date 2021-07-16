@@ -10,6 +10,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 🎁 JSON-LD added
 * 🎁 Changed code highlighting for Bash prompt
 * 🎁 Add additional `class` to `td` with a tag inside
+* 🎁 Improve accessibility
 
 2.1.7
 -----

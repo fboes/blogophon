@@ -55,20 +55,22 @@
       <main id="content">
         {{#with post}}
           {{#if meta.CategoryObj}}
-            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="{{../config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
-                <meta itemprop="position" content="1" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name" class="p-category">{{meta.CategoryObj.title}}</span></a>
-                <meta itemprop="position" content="2" />
-              </li>
-              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" href="{{meta.Url}}"><span itemprop="name">{{meta.Title}}</span></a>
-                <meta itemprop="position" content="3" />
-              </li>
-            </ol>
+            <nav aria-label="{{#i18n}}Breadcrumbs{{/i18n}}">
+              <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                  <a itemprop="item" href="{{../config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
+                  <meta itemprop="position" content="1" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                  <a itemprop="item" href="{{meta.CategoryObj.url}}"><span itemprop="name" class="p-category">{{meta.CategoryObj.title}}</span></a>
+                  <meta itemprop="position" content="2" />
+                </li>
+                <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                  <a itemprop="item" href="{{meta.Url}}" aria-current="location"><span itemprop="name">{{meta.Title}}</span></a>
+                  <meta itemprop="position" content="3" />
+                </li>
+              </ol>
+            </nav>
           {{/if}}
 
           <article class="{{meta.Classes}} h-entry"{{#unless meta.isDefaultLanguage}} lang="{{meta.Language}}" dir="{{meta.Direction}}"{{/unless}} itemscope itemtype="{{meta.Schema}}">

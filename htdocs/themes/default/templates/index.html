@@ -55,16 +55,18 @@
     <div id="main">
       <main id="content" class="h-feed">
         {{#unless meta.isHomepage}}
-          <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
-            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <a itemprop="item" href="{{config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
-              <meta itemprop="position" content="1" />
-            </li>
-            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <a itemprop="item" href="{{firstUrl}}" class="u-url"><span itemprop="name">{{meta.title}}</span></a>
-              <meta itemprop="position" content="2" />
-            </li>
-          </ol>
+          <nav aria-label="{{#i18n}}Breadcrumbs{{/i18n}}">
+            <ol itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb">
+              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{config.basePath}}"><span itemprop="name">{{#i18n}}Home page{{/i18n}}</span></a>
+                <meta itemprop="position" content="1" />
+              </li>
+              <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{firstUrl}}" class="u-url" aria-current="location"><span itemprop="name">{{meta.title}}</span></a>
+                <meta itemprop="position" content="2" />
+              </li>
+            </ol>
+          </nav>
         {{/unless}}
 
         {{#if meta.title}}
