@@ -127,6 +127,7 @@ describe('Post', function() {
     assert.ok(testPost.meta.ProperImage.match(/markdown\.jpg/));
     //console.log(testPost.html);
     assert.ok(testPost.meta.ImageAlt.match(/by Mutti/));
+    assert.ok(testPost.componentScripts);
 
     let imageStyles = testPost.getAllImagesWithStyle();
     //console.log(imageStyles);
@@ -392,5 +393,23 @@ sich daher zum Bedrucken oder Besticken von Kleidung.`;
     assert.strictEqual(testPost.htmlTeaser.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
     assert.strictEqual(testPost.safeHtml.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
     assert.strictEqual(testPost.safeHtmlTeaser.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
+  });
+
+  it('must handle Web Components (at least for AMP pages)', function() {
+    const markdown = `Vector-Art für "Hardspace: Shipbreakers"
+=========
+
+<amp-youtube>A B C</amp-youtube>
+
+`;
+    const testPost = post('test.md', markdown, {
+      Date: new Date()
+    });
+
+    assert.ok(testPost.html);
+    assert.ok(testPost.ampHtml);
+    assert.ok(testPost.componentScripts, 'Found Web Component scripts');
+    assert.ok(testPost.componentScripts.html, 'Found Web Component scripts in regular HTML');
+    assert.ok(testPost.componentScripts.ampHtml, 'Found Web Component scripts in AMP HTML');
   });
 });

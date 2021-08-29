@@ -7,24 +7,9 @@
   <meta name="description" content="{{#noNewline}}{{post.meta.Description}}{{/noNewline}}" />
   {{>ampMetaHtml}}
   <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
-  {{#if post.ampProperties.hasAudio}}
-    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
-  {{/if}}
-  {{#if post.ampProperties.hasIframe}}
-    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-  {{/if}}
-  {{#if post.ampProperties.hasYoutube}}
-    <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
-  {{/if}}
-  {{#if post.ampProperties.hasVimeo}}
-    <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
-  {{/if}}
-  {{#if post.ampProperties.hasCarousel}}
-    <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
-  {{/if}}
-  {{#if post.ampProperties.hasTwitter}}
-    <script async custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js"></script>
-  {{/if}}
+  {{#each post.componentScripts.ampHtml}}
+    <script async custom-element="{{@key}}" src="{{.}}"></script>
+  {{/each}}
 </head>
 <body>
   <div id="container">

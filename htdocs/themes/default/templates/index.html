@@ -47,6 +47,9 @@
   {{#if config.specialFeatures.acceleratedmobilepages}}
     <link rel="amphtml" href="{{meta.AbsoluteUrlAmp}}" />
   {{/if}}
+  {{#each componentScripts.htmlTeaser}}
+    <script async custom-element="{{@key}}" src="{{.}}"></script>
+  {{/each}}
   {{>metaHtml}}
 </head>
 <body class="index">

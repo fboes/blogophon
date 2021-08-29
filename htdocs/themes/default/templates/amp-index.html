@@ -9,19 +9,10 @@
   {{else}}
     <meta name="description" content="{{meta.title}} - {{config.description}}" />
   {{/if}}
+  {{#each componentScripts.ampHtmlTeaser}}
+    <script async custom-element="{{@key}}" src="{{.}}"></script>
+  {{/each}}
   {{>ampMetaHtml}}
-  {{#if consolidatedProperties.ampPropertiesTeaser.hasAudio}}
-    <script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
-  {{/if}}
-  {{#if consolidatedProperties.ampPropertiesTeaser.hasIframe}}
-    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-  {{/if}}
-  {{#if consolidatedProperties.ampPropertiesTeaser.hasYoutube}}
-    <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
-  {{/if}}
-  {{#if consolidatedProperties.ampPropertiesTeaser.hasVimeo}}
-    <script async custom-element="amp-vimeo" src="https://cdn.ampproject.org/v0/amp-vimeo-0.1.js"></script>
-  {{/if}}
 </head>
 <body>
   <div id="container">

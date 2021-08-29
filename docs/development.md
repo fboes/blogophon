@@ -104,3 +104,29 @@ The base template will als use any icon's filename containing `apple-touch-icon`
 ---
 
 Return to [table of contents](README.md).
+
+Web Components
+--------------
+
+The Blogophon contains a clever mechanism to use [Web Components in Markdown files](https://journal.3960.org/posts/2020-04-10-web-components-mit-markdown-verwenden/). Simply use Web Component Tags in your Markdown:
+
+```markdown
+<word-count>
+  Lorem ipsum _dolor_ sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et _dolore magna_ aliquyam erat, sed diam voluptua.
+</word-count>
+```
+
+You will need to edit your `user/config.json` and add the required JavaScript library to a object property called `componentScripts`, using the Web Component name as property name and the JavaScript URL as property value:
+
+```json
+{
+  "name": "Your blog",
+  "componentScripts": {
+    "word-count": "https://unpkg.com/@lrnwebcomponents/word-count@2.6.5/word-count.js?module"
+  }
+}
+```
+
+(If this property does not exists, simply create it or rerun the setup process.)
+
+Whenever the Blogophon encounters a Web Component tag, it will load the corresponding JavaScript automatically.

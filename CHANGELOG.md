@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* 💣 Changed handling of AMP scripts, allowing for better Web Component handling
 * 💊 Fix ARIA handling of gallery links
 * 💊 Fix internal download links for teasers
 * 🎁 Add Gopher server support
