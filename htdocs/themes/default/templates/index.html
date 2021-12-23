@@ -10,6 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{meta.absoluteUrl}}" />
   <meta property="og:title" name="title" content="{{meta.title}}{{#if meta.subtitle}}, {{meta.subtitle}}{{/if}}" />
+  <meta property="og:locale" content="{{config.locale.languagePosix}}" />
   {{#if meta.isHomepage}}
     <meta property="og:description" name="description" content="{{config.description}}" />
   {{else}}

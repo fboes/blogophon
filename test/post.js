@@ -38,6 +38,7 @@ describe('Post', function() {
     assert.ok(testPost.meta);
     assert.ok(testPost.meta.Description);
     assert.ok(testPost.meta.Language);
+    assert.ok(testPost.meta.LanguagePosix);
     assert.ok(testPost.meta.Date);
     assert.ok(testPost.meta.DateModified);
     assert.ok(testPost.meta.Url);

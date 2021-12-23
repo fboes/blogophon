@@ -8,9 +8,10 @@ describe('Config', function() {
     //console.log(config);
     describe('for all config files in `' + dirname + '`', function() {
       it('should have locale properties', function() {
-        assert.ok(config.locale,      'config.locale is present');
-        assert.ok(config.locale.language,   'config.locale.language is present');
-        assert.ok(config.locale.direction,  'config.locale.direction is present');
+        assert.ok(config.locale,               'config.locale is present');
+        assert.ok(config.locale.language,      'config.locale.language is present');
+        assert.ok(config.locale.languagePosix, 'config.locale.languagePosix is present');
+        assert.ok(config.locale.direction,     'config.locale.direction is present');
       });
       it('should have URL properties', function() {
         assert.ok(config.baseUrl,       'config.baseUrl is present');
