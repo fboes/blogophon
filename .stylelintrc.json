@@ -1,0 +1,21 @@
+{
+  "extends": ["stylelint-config-recommended"],
+  "rules": {
+    "property-no-vendor-prefix": null,
+    "no-descending-specificity": null
+  },
+  "overrides": [
+    {
+      "extends": [
+        "stylelint-config-recommended-scss"
+      ],
+      "files": ["**/*.scss"],
+      "customSyntax": "postcss-scss",
+      "rules": {
+        "no-empty-source": null
+      }
+    }
+  ],
+
+  "ignoreFiles": "**/*.css"
+}

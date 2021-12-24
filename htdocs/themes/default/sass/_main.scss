@@ -1,3 +1,8 @@
+@use "sass:color";
+@use "sass:math";
+
+$width-container-half: math.div($width-container, 2);
+
 * {
   margin:0;
   padding:0;
@@ -29,7 +34,7 @@ li {
 a {
   color: $color-theme;
   &:hover {
-    color: darken($color-theme, 20%);
+    color: color.adjust($color-theme, $lightness: -20%);
   }
 }
 
@@ -63,8 +68,8 @@ a {
     padding-right: 0.5em;
 
     @include bigger-as-container {
-      padding-left: calc(50vw - (#{$width-container / 2}) + 0.5em);
-      padding-right: calc(50vw - (#{$width-container / 2}) + 0.5em);
+      padding-left: calc(50vw - $width-container-half + 0.5em);
+      padding-right: calc(50vw - $width-container-half + 0.5em);
     }
   }
 
@@ -110,7 +115,7 @@ a {
   @include no-amp {
     form {
       position:absolute;
-      right: calc(50vw - (#{$width-container / 2}) + 0.5em);
+      right: calc(50vw - $width-container-half + 0.5em);
       top: 1em;
       input {
         padding: 0.2em;

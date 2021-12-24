@@ -1,75 +1,332 @@
-#sidebar:after { content: ""; display: table; clear: both; }
-* { margin: 0; padding: 0; }
-*, *:before, *:after { box-sizing: border-box; }
-body { font-family: Arial, sans-serif; line-height: 1.5; }
-* + h1, * + h2, * + article, * + section { margin-top: 2em; }
-* + p, * + h3, * + .video-player, * + pre, * + blockquote, * + ul, * + dl, * + dt { margin-top: 1em; }
-li { margin-left: 1.5em; }
-[dir="rtl"] li { margin-right: 1.5em; margin-left: 0; }
-a { color: #116bfc; }
-a:hover { color: #0240a5; }
-#container > header, #container > #navigation, #container > div > main, #container > div > aside, #container > footer { padding-left: 0.5em; padding-right: 0.5em; }
-@media screen and (min-width: 640px) { #container > header, #container > #navigation, #container > div > main, #container > div > aside, #container > footer { padding-left: -webkit-calc(50vw - (320px) + 0.5em); padding-left: calc(50vw - (320px) + 0.5em); padding-right: -webkit-calc(50vw - (320px) + 0.5em); padding-right: calc(50vw - (320px) + 0.5em); } }
-#container > header { background-color: #116bfc; font-size: 1em; }
-#container > header a { color: white; text-decoration: none; }
-#container > aside { border-top: 1px dashed #666666; }
-.breadcrumb { list-style: none; display: block; font-size: 0.8em; margin-bottom: -1em; }
-.breadcrumb li { display: inline-block; margin: 0; }
-.breadcrumb li:after { content: "\00BB"; }
-.breadcrumb li:last-child { display: none; }
-#header, #sidebar, #footer { padding-top: 1em; padding-bottom: 1em; }
-#navigation { background-color: #dddddd; border-bottom: 1px dashed #666666; margin-bottom: 1em; padding: 0.2em 0; text-align: center; }
-#navigation ul { list-style: none; display: block; }
-#navigation ul li { display: inline-block; margin: 0 1em 0 0; }
-#navigation a { text-decoration: none; }
-.prevnext { text-align: center; padding: 2em 0; }
-.prevnext a { display: inline-block; padding: 0 1em; }
-.prevnext a span { display: none; }
-#sidebar { background-color: #dddddd; border-top: 1px dashed #666666; font-size: 0.8em; }
-#sidebar h2 { display: none; }
-#footer { background-color: #dddddd; color: #666666; font-size: 0.7em; text-align: center; }
+@charset "UTF-8";
+#sidebar:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+* + h1, * + h2, * + article, * + section {
+  margin-top: 2em;
+}
+* + p, * + h3, * + .video-player, * + pre, * + blockquote, * + ul, * + dl, * + dt {
+  margin-top: 1em;
+}
+li {
+  margin-left: 1.5em;
+}
+[dir=rtl] li {
+  margin-right: 1.5em;
+  margin-left: 0;
+}
+a {
+  color: #116bfc;
+}
+a:hover {
+  color: #0240a5;
+}
+#container > header,
+#container > #navigation,
+#container > div > main,
+#container > div > aside,
+#container > footer {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+@media screen and (min-width: 640px) {
+  #container > header,
+#container > #navigation,
+#container > div > main,
+#container > div > aside,
+#container > footer {
+    padding-left: -webkit-calc(50vw - 320px + 0.5em);
+    padding-left: calc(50vw - 320px + 0.5em);
+    padding-right: -webkit-calc(50vw - 320px + 0.5em);
+    padding-right: calc(50vw - 320px + 0.5em);
+  }
+}
+#container > header {
+  background-color: #116bfc;
+  font-size: 1em;
+}
+#container > header a {
+  color: white;
+  text-decoration: none;
+}
+#container > aside {
+  border-top: 1px dashed #666666;
+}
+.breadcrumb {
+  list-style: none;
+  display: block;
+  font-size: 0.8em;
+  margin-bottom: -1em;
+}
+.breadcrumb li {
+  display: inline-block;
+  margin: 0;
+}
+.breadcrumb li:after {
+  content: "»";
+}
+.breadcrumb li:last-child {
+  display: none;
+}
+#header,
+#sidebar,
+#footer {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+#navigation {
+  background-color: #dddddd;
+  border-bottom: 1px dashed #666666;
+  margin-bottom: 1em;
+  padding: 0.2em 0;
+  text-align: center;
+}
+#navigation ul {
+  list-style: none;
+  display: block;
+}
+#navigation ul li {
+  display: inline-block;
+  margin: 0 1em 0 0;
+}
+#navigation a {
+  text-decoration: none;
+}
+.prevnext {
+  text-align: center;
+  padding: 2em 0;
+}
+.prevnext a {
+  display: inline-block;
+  padding: 0 1em;
+}
+.prevnext a span {
+  display: none;
+}
+#sidebar {
+  background-color: #dddddd;
+  border-top: 1px dashed #666666;
+  font-size: 0.8em;
+}
+#sidebar h2 {
+  display: none;
+}
+#footer {
+  background-color: #dddddd;
+  color: #666666;
+  font-size: 0.7em;
+  text-align: center;
+}
 /* stylelint-disable selector-type-no-unknown */
-article header h1 { font-size: 2em; }
-article header .date { float: right; font-size: 0.8em; }
-[dir="rtl"] article header .date { float: left; }
-article header + div { margin-top: 0.5em; }
-article img, article amp-img, article .figure { float: left; margin: 0 1em 1em 0; max-width: 100%; height: auto; }
-[dir="rtl"] article img, [dir="rtl"] article amp-img, [dir="rtl"] article .figure { float: right; }
-article img.default, article amp-img.default, article .figure.default { width: 100%; margin: 0 0 1em; float: none; }
-article img.quad, article amp-img.quad, article .figure.quad { max-width: 37.5%; }
-article .figure { display: inline-block; font-size: 0.8em; }
-article .figure img { margin: 0; width: 100%; max-width: 100%; }
-article .figure .figcaption { display: block; padding: 0.5em 0; border-bottom: 1px solid; color: #666666; }
-article .gallery img.portrait { max-width: -webkit-calc(50% - 1em); max-width: calc(50% - 1em); margin: 0 0.5em 1em; }
-article + article { margin-top: 2em; border-top: 1px solid #eee; }
-article ul li, article ol li { left: 2em; position: relative; margin-left: 0; }
-article ul.task-list, article ol.task-list { list-style: none; }
-article dl dt { font-weight: bold; }
-article blockquote { color: #666666; }
-article dl dd, article blockquote { border-left: 1px solid; margin-left: 1em; padding-left: 0.5em; }
-article aside[role="note"] { float: right; margin: 0 1em 1em; padding: 0.5em 1em; max-width: 33%; font-style: italic; background-color: #dddddd; }
-article code { font-family: "Courier New", monospace; background-color: #eee; padding: 0.2em 0.3em; }
-article .table-wrapper { max-width: 100%; overflow: auto; }
-article hr { border: none; border-top: 1px dashed #dddddd; margin: 1.5em 25%; }
-article table { margin-bottom: 1em; }
-article table caption { font-weight: bold; }
-article table tr, article table thead, article table tbody, article table caption { border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
-article table tr:last-child, article table thead:last-child, article table tbody:last-child, article table caption:last-child { border: none; }
-article table td, article table th { padding: 0.1em 1em 0.1em 0; }
-article table td:last-child, article table th:last-child { padding-right: 0; }
-article table .table-cell--left, article table .table-cell--right, article table .table-cell--center { white-space: nowrap; }
-article .location, article .permalink { display: none; }
-article input[type="checkbox"] { vertical-align: -0.15em; }
-article footer { color: #666666; overflow: hidden; font-size: 0.8em; }
-article footer a { text-decoration: none; }
-article address { display: none; }
-.teasers .modified { display: none; }
-pre.code, pre > code { font: 1em/1.3 "Courier New", monospace; color: white; margin-bottom: 1em; padding: 0.5em; background: rgba(0, 0, 0, 0.1); display: block; overflow: auto; }
-pre.code b, pre.code i, pre.code var, pre.code tt, pre.code em, pre.code kbd, pre.code samp, pre.code u, pre > code b, pre > code i, pre > code var, pre > code tt, pre > code em, pre > code kbd, pre > code samp, pre > code u { text-decoration: none; font-style: normal; font-family: inherit; }
-pre.code .c1, pre.code b, pre > code .c1, pre > code b { color: #66D9EF; }
-pre.code .c2, pre.code i, pre > code .c2, pre > code i { color: #F92672; }
-pre.code .c3, pre.code var, pre > code .c3, pre > code var { color: #A6E22E; }
-pre.code .c4, pre.code tt, pre.code em, pre > code .c4, pre > code tt, pre > code em { color: #FD971F; }
-pre.code .c5, pre.code kbd, pre > code .c5, pre > code kbd { color: #E6DB74; }
-pre.code .c6, pre.code samp, pre > code .c6, pre > code samp { color: #AE81FF; }
-pre.code .comment, pre.code .comment *, pre.code u, pre.code u *, pre > code .comment, pre > code .comment *, pre > code u, pre > code u * { color: #75715E !important; }
+article header h1 {
+  font-size: 2em;
+}
+article header .date {
+  float: right;
+  font-size: 0.8em;
+}
+[dir=rtl] article header .date {
+  float: left;
+}
+article header + div {
+  margin-top: 0.5em;
+}
+article img, article amp-img, article .figure {
+  float: left;
+  margin: 0 1em 1em 0;
+  max-width: 100%;
+  height: auto;
+}
+[dir=rtl] article img, [dir=rtl] article amp-img, [dir=rtl] article .figure {
+  float: right;
+}
+article img.default, article amp-img.default, article .figure.default {
+  width: 100%;
+  margin: 0 0 1em;
+  float: none;
+}
+article img.quad, article amp-img.quad, article .figure.quad {
+  max-width: 37.5%;
+}
+article .figure {
+  display: inline-block;
+  font-size: 0.8em;
+}
+article .figure img {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+}
+article .figure .figcaption {
+  display: block;
+  padding: 0.5em 0;
+  border-bottom: 1px solid;
+  color: #666666;
+}
+article .gallery img.portrait {
+  max-width: -webkit-calc(50% - 1em);
+  max-width: calc(50% - 1em);
+  margin: 0 0.5em 1em;
+}
+article + article {
+  margin-top: 2em;
+  border-top: 1px solid #eee;
+}
+article ul li, article ol li {
+  left: 2em;
+  position: relative;
+  margin-left: 0;
+}
+article ul.task-list, article ol.task-list {
+  list-style: none;
+}
+article dl dt {
+  font-weight: bold;
+}
+article blockquote {
+  color: #666666;
+}
+article dl dd, article blockquote {
+  border-left: 1px solid;
+  margin-left: 1em;
+  padding-left: 0.5em;
+}
+article aside[role=note] {
+  float: right;
+  margin: 0 1em 1em;
+  padding: 0.5em 1em;
+  max-width: 33%;
+  font-style: italic;
+  background-color: #dddddd;
+}
+article code {
+  font-family: "Courier New", monospace;
+  background-color: #eee;
+  padding: 0.2em 0.3em;
+}
+article .table-wrapper {
+  max-width: 100%;
+  overflow: auto;
+}
+article hr {
+  border: none;
+  border-top: 1px dashed #dddddd;
+  margin: 1.5em 25%;
+}
+article table {
+  margin-bottom: 1em;
+}
+article table caption {
+  font-weight: bold;
+}
+article table tr, article table thead, article table tbody, article table caption {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+article table tr:last-child, article table thead:last-child, article table tbody:last-child, article table caption:last-child {
+  border: none;
+}
+article table td, article table th {
+  padding: 0.1em 1em 0.1em 0;
+}
+article table td:last-child, article table th:last-child {
+  padding-right: 0;
+}
+article table .table-cell--left,
+article table .table-cell--right,
+article table .table-cell--center {
+  white-space: nowrap;
+}
+article .location, article .permalink {
+  display: none;
+}
+article input[type=checkbox] {
+  vertical-align: -0.15em;
+}
+article footer {
+  color: #666666;
+  overflow: hidden;
+  font-size: 0.8em;
+}
+article footer a {
+  text-decoration: none;
+}
+article address {
+  display: none;
+}
+.teasers .modified {
+  display: none;
+}
+pre.code,
+pre > code {
+  font: 1em/1.3 "Courier New", monospace;
+  color: white;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  background: rgba(0, 0, 0, 0.1);
+  display: block;
+  overflow: auto;
+}
+pre.code b, pre.code i, pre.code var, pre.code tt, pre.code em, pre.code kbd, pre.code samp, pre.code u,
+pre > code b,
+pre > code i,
+pre > code var,
+pre > code tt,
+pre > code em,
+pre > code kbd,
+pre > code samp,
+pre > code u {
+  text-decoration: none;
+  font-style: normal;
+  font-family: inherit;
+}
+pre.code .c1, pre.code b,
+pre > code .c1,
+pre > code b {
+  color: #66D9EF;
+}
+pre.code .c2, pre.code i,
+pre > code .c2,
+pre > code i {
+  color: #F92672;
+}
+pre.code .c3, pre.code var,
+pre > code .c3,
+pre > code var {
+  color: #A6E22E;
+}
+pre.code .c4, pre.code tt, pre.code em,
+pre > code .c4,
+pre > code tt,
+pre > code em {
+  color: #FD971F;
+}
+pre.code .c5, pre.code kbd,
+pre > code .c5,
+pre > code kbd {
+  color: #E6DB74;
+}
+pre.code .c6, pre.code samp,
+pre > code .c6,
+pre > code samp {
+  color: #AE81FF;
+}
+pre.code .comment, pre.code .comment *, pre.code u, pre.code u *,
+pre > code .comment,
+pre > code .comment *,
+pre > code u,
+pre > code u * {
+  color: #75715E !important;
+}

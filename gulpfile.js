@@ -7,7 +7,7 @@ import eslint        from 'gulp-eslint';
 import mocha         from 'gulp-mocha';
 import browserSyncJs from 'browser-sync';
 import sassJs        from 'gulp-sass';
-import sassCompiler  from 'node-sass';
+import sassCompiler  from 'sass';
 import rename        from "gulp-rename";
 import uglify        from 'gulp-uglify';
 import postcss       from 'gulp-postcss';
@@ -43,27 +43,7 @@ const doMocha = function() {
 
 const buildJs = function() {
   return gulp.src(pkg.directories.theme + '/**/js-src/*.js')
-    .pipe(eslint({
-      'useEslintrc': false,
-      'rules': {
-        'strict': [
-          2,
-          'safe'
-        ],
-        'curly': 2,
-        "semi": [
-          2,
-          "always"
-        ],
-        'no-undef': 2
-      },
-      'envs': [
-        'browser'
-      ],
-      "extends": [
-        "eslint:recommended"
-      ]
-    }))
+    .pipe(eslint())
     .pipe(eslint.format())
     //.pipe(eslint.failAfterError())
     .pipe(rename(function(path){
@@ -83,7 +63,7 @@ const buildCss = function() {
         {formatter: 'string', console: true}
       ]
     }))
-    .pipe(sass({outputStyle: 'compact'}).on('error', sass.logError))
+    .pipe(sass().on('error', sass.logError))
     .pipe(postcss([
       autoprefixer()
     ]))
