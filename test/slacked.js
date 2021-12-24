@@ -1,9 +1,9 @@
-'use strict';
-
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import slackedJs from '../lib/models/slacked.js';
 
 describe('Slacked', function() {
-  const config = require('../lib/config')(__dirname);
+  const config = configJs( process.cwd() + '/test');
   const pubDate = '2016-12-31';
 
   const item = {
@@ -16,7 +16,7 @@ describe('Slacked', function() {
       tags: [6, 7]
     }
   };
-  const slacked = require('../lib/models/slacked')([item], pubDate, config);
+  const slacked = slackedJs([item], pubDate, config);
 
   //console.log(slacked);
 

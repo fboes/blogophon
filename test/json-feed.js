@@ -1,9 +1,10 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import jsonFeedJs from '../lib/models/json-feed.js';
 
 describe('JsonFeed', function() {
-  const config = require('../lib/config')(__dirname);
+  const config = configJs( process.cwd() + '/test');
 
   const item = {
     htmlTeaser: '1',
@@ -19,7 +20,7 @@ describe('JsonFeed', function() {
       Schema: 'http://schema.org/BlogPosting'
     }
   };
-  const jsonFeed = require('../lib/models/json-feed')([item], '2016-12-31', config, 'title', 'url');
+  const jsonFeed = jsonFeedJs([item], '2016-12-31', config, 'title', 'url');
   //console.log(jsonFeed);
 
   it('should have basic properties', function() {

@@ -1,9 +1,8 @@
-'use strict';
 
 /* eslint-disable max-len */
 
-const assert = require('assert');
-const markyMark = require('../lib/helpers/marky-mark');
+import assert from 'assert';
+import markyMark from '../lib/helpers/marky-mark.js';
 
 describe('MarkyMark', function() {
   describe('Simple HTML improvement', function() {

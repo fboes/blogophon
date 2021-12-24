@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const application = require('../lib/helpers/application')();
+import assert from 'assert';
+import application from '../lib/helpers/application.js';
 
 describe('Application', function() {
   it('should find the application directory', function() {

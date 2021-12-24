@@ -1,11 +1,12 @@
-'use strict';
 
-const assert = require('assert');
-const path   = require('path');
+import assert from 'assert';
+import path from 'path';
+import configJs from '../lib/config.js';
+import editorJs from '../lib/editor.js';
 
 describe('Ampify', function() {
-  const config = require('../lib/config')(__dirname);
-  const editor = require('../lib/editor')(config);
+  const config = configJs( process.cwd() + '/test');
+  const editor = editorJs(config);
 
   it('should do titleForFilename', function() {
     assert.equal(editor.titleForFilename('Foo and Bar', { postFileMode: null }, '2018-08-07'), 'Foo and Bar');

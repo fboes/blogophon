@@ -1,9 +1,10 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import jsonRssJs from '../lib/models/json-rss.js';
 
 describe('JSON-RSS', function() {
-  const config = require('../lib/config')(__dirname);
+  const config = configJs( process.cwd() + '/test');
 
   const item = {
     htmlTeaser: 1,
@@ -15,7 +16,7 @@ describe('JSON-RSS', function() {
       tags: [6, 7]
     }
   };
-  const jsonRss = require('../lib/models/json-rss')([item], '2016-12-31', config);
+  const jsonRss = jsonRssJs([item], '2016-12-31', config);
 
   it('should have basic properties', function() {
     assert.ok(jsonRss.version !== undefined);

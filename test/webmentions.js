@@ -1,9 +1,8 @@
-'use strict';
-
-const assert = require('assert');
-const webmentions = require('../lib/helpers/webmentions')();
+import assert from 'assert';
+import webmentionsJs from '../lib/helpers/webmentions.js';
 
 describe('Webmentions', () => {
+  const webmentions = webmentionsJs();
   it('should find external URLs', () => {
     let externalUrls;
 

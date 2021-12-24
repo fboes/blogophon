@@ -1,10 +1,12 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
 
 describe('Config', function() {
+  const __dirname = process.cwd() + '/test';
+
   ['', '/', __dirname].forEach(function(dirname) {
-    let config = require('../lib/config')(dirname);
+    let config = configJs(dirname);
     //console.log(config);
     describe('for all config files in `' + dirname + '`', function() {
       it('should have locale properties', function() {

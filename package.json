@@ -2,16 +2,21 @@
   "name": "blogophon",
   "version": "2.2.0",
   "description": "A Static Site Generator supporting Markdown, responsive images, RSS and other RESTable files. Built with Node.js and minimal dependencies.",
-  "main": "./bin/blogophon",
+  "main": "./bin/blogophon.js",
+  "type":"module",
   "repository": {
     "type": "git",
     "url": "git@github.com:fboes/blogophon.git"
   },
   "scripts": {
-    "start": "node ./bin/blogophon",
-    "generate": "node ./bin/blogophon-generate",
+    "start": "node ./bin/blogophon.js",
+    "generate": "node ./bin/blogophon-generate.js",
     "precommit": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss",
     "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss && npm outdated"
+  },
+  "bin": {
+    "blogophon": "./bin/blogophon.js",
+    "blogophon-generate": "./bin/blogophon-generate.js"
   },
   "homepage": "https://github.com/fboes/blogophon",
   "bugs": {
@@ -58,7 +63,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "dateformat": "^4.5.1",
+    "dateformat": "^5.0.2",
     "fs-extra-promise": "^1.0.1",
     "glob": "^7.1.6",
     "gm": "^1.23.1",
@@ -70,7 +75,7 @@
     "shelljs": "^0.8.4"
   },
   "engine": {
-    "node": ">=6"
+    "node": ">=14"
   },
   "husky": {
     "hooks": {

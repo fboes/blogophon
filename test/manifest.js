@@ -1,9 +1,10 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import manifestJs from '../lib/models/manifest.js';
 
 describe('Manifest', function() {
-  const config = require('../lib/config')(__dirname);
+  const config = configJs( process.cwd() + '/test');
   config.themeConf.icons = [
     {
       "src": "https://cdn.3960.org/favicon-16x16.png",
@@ -56,7 +57,7 @@ describe('Manifest', function() {
       "type": "image/svg+xml"
     }
   ];
-  const manifest = require('../lib/models/manifest')(config);
+  const manifest = manifestJs(config);
   // console.log(manifest);
 
   it('should have basic properties', function() {

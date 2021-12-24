@@ -1,10 +1,11 @@
-'use strict';
 
-const assert = require('assert');
-const post = require('../lib/models/post');
-const config = require('../lib/config')(__dirname);
+import assert from 'assert';
+import post from '../lib/models/post.js';
+import configJs from '../lib/config.js';
 
 describe('Post', function() {
+  const config = configJs( process.cwd() + '/test');
+
   it('must throw errors on broken posts', function() {
     assert.throws(function() {
       post();

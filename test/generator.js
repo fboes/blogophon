@@ -1,10 +1,9 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import generator from '../lib/generator.js';
 
 describe('Generator', function() {
   it('should have no syntax errors', function() {
-    const generator = require('../lib/generator');
 
     assert.throws(function() {
       generator();

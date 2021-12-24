@@ -1,12 +1,13 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import imageStylesJs from '../lib/helpers/image-styles.js';
 
 describe('Image Styles', function() {
-  it('should test GeneralFunctionality', function() {
-    const config      = require('../lib/config')();
-    const imageStyles = require('../lib/helpers/image-styles')(config);
+  const config = configJs();
+  const imageStyles = imageStylesJs(config);
 
+  it('should test GeneralFunctionality', function() {
     assert.ok(imageStyles !== undefined, 'imageStyles is defined');
     assert.ok(
       imageStyles.getFilename('test.jpg').match(/test-\d+x\d+\.jpg/),
@@ -23,8 +24,6 @@ describe('Image Styles', function() {
   });
 
   it('should test HtmlConversion', function() {
-    const config      = require('../lib/config')();
-    const imageStyles = require('../lib/helpers/image-styles')(config);
     let html;
 
     html = imageStyles.replaceImgHtml('<img src="test.jpg" alt="Example image"/>');

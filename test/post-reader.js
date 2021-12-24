@@ -1,7 +1,6 @@
-'use strict';
 
-const assert = require('assert');
-const PostReader = require('../lib/post-reader');
+import assert from 'assert';
+import PostReader from '../lib/post-reader.js';
 
 describe('Post-Reader', function() {
   it('should test Errors', function() {

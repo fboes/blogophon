@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const trackReplace = require('../lib/helpers/track-replace');
+import assert from 'assert';
+import trackReplace from '../lib/helpers/track-replace.js';
 
 describe('Track Replace', function() {
   it('should replace an URL', function() {

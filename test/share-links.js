@@ -1,7 +1,6 @@
-'use strict';
 
-const assert = require('assert');
-const shareLink = require('../lib/helpers/share-links');
+import assert from 'assert';
+import shareLink from '../lib/helpers/share-links.js';
 
 describe('Share-Links', function() {
   it('should have basic properties', function() {

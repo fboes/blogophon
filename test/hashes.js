@@ -1,10 +1,10 @@
-'use strict';
 
-const assert = require('assert');
-const hashes = require('../lib/models/hashes')('test.json');
+import assert from 'assert';
+import hashesJs from '../lib/models/hashes.js';
 
 describe('Hashes', function() {
   it('should have hashes', function() {
+    const hashes = hashesJs('test.json');
     assert.ok(hashes, 'Hashes loaded on empty file');
     assert.ok(!hashes.matchesHash('Test Key', 'Test Hash'), 'No hash present');
     assert.ok(hashes.update('Test Key', 'Test Hash'),       'Setting hash');

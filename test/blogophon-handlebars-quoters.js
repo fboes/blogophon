@@ -1,7 +1,6 @@
-'use strict';
 
-const assert = require('assert');
-const blogophonHandlebarsQuoter = require('../lib/helpers/blogophon-handlebars-quoters');
+import assert from 'assert';
+import blogophonHandlebarsQuoter from '../lib/helpers/blogophon-handlebars-quoters.js';
 
 describe('Blogophon Handlebars Quoters', function() {
   it('must not have any syntax errors', function() {

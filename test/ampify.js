@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const ampify = require('../lib/helpers/ampify')();
+import assert from 'assert';
+import ampify from '../lib/helpers/ampify.js';
 
 describe('Ampify', function() {
   describe('Images', function() {

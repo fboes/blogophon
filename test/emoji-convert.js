@@ -1,7 +1,6 @@
-'use strict';
 
-const assert = require('assert');
-const emojiConvert = require('../lib/helpers/emoji-convert');
+import assert from 'assert';
+import emojiConvert from '../lib/helpers/emoji-convert.js';
 
 
 describe('Generator', function() {

@@ -1,9 +1,10 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import geojsonJs from '../lib/models/geo-json.js';
 
 describe('GeoJson', function() {
-  const config = require('../lib/config')(__dirname);
+  const config = configJs( process.cwd() + '/test');
   const item = {
     htmlTeaser: 1,
     meta: {
@@ -17,7 +18,7 @@ describe('GeoJson', function() {
       Description: 'Lorem ipsum'
     }
   };
-  const geojson = require('../lib/models/geo-json')([item], new Date(), config);
+  const geojson = geojsonJs([item], new Date(), config);
 
   it('should have basic properties', function() {
     assert.ok(geojson.type);

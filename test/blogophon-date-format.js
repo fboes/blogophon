@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const blogophonDateFormat = require('../lib/helpers/blogophon-date-format');
+import assert from 'assert';
+import blogophonDateFormat from '../lib/helpers/blogophon-date-format.js';
 
 describe('Blogophon Date Format', function() {
   const date = '2016-12-31 13:32:52+02:00';

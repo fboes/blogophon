@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-'use strict';
-
 // Blogophon internal
-const application = require('../lib/helpers/application')();
+import application from '../lib/helpers/application.js';
 application.changeDirectory();
 
-const blogophonConsole = require('../lib/blogophon-console');
-const args             = require('../lib/helpers/arguments')();
+import blogophonConsole from '../lib/blogophon-console.js';
+import argsJs from '../lib/helpers/arguments.js';
 
+const args = argsJs();
 if (args.help) {
   console.log('Usage: node index.js [OPTIONS]');
   console.log('Start interactive Blogophon interface in current directory.');

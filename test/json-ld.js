@@ -1,9 +1,10 @@
-'use strict';
 
-const assert = require('assert');
+import assert from 'assert';
+import configJs from '../lib/config.js';
+import jsonLdJs from '../lib/models/json-ld.js';
 
 describe('jsonLd', function() {
-  const config = require('../lib/config')(__dirname);
+  const config = configJs( process.cwd() + '/test');
 
   const item = {
     htmlTeaser: '1',
@@ -19,7 +20,7 @@ describe('jsonLd', function() {
       Schema: 'http://schema.org/BlogPosting'
     }
   };
-  const jsonLd = require('../lib/models/json-ld')(item, config);
+  const jsonLd = jsonLdJs(item, config);
   // console.log(jsonLd);
 
   it('should have basic properties', function() {

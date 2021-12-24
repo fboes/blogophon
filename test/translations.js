@@ -1,7 +1,5 @@
-'use strict';
-
-const assert = require('assert');
-const translations = require('../lib/helpers/translations');
+import assert from 'assert';
+import translations from '../lib/helpers/translations.js';
 
 describe('Translations', function() {
   it('should throw execeptions on wrong handling', function() {

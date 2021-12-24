@@ -1,7 +1,5 @@
-'use strict';
-
-const assert                = require('assert');
-const WebcomponentsFromHtml = require('../lib/helpers/webcomponents-from-html.js');
+import assert from 'assert';
+import WebcomponentsFromHtml from '../lib/helpers/webcomponents-from-html.js';
 
 describe('WebcomponentsFromHtml', function() {
   const testCase = `<div>

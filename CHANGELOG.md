@@ -3,6 +3,7 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+* 💣 Switched to Nodejs12 `import`
 * 🎁 Add `{{post.meta.languagePosix}}` to post object for Opengraph
 
 2.2.0

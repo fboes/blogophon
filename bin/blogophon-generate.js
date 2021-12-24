@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
-'use strict';
-
 // Blogophon internal
-const application = require('../lib/helpers/application')();
+import application from '../lib/helpers/application.js';
 application.changeDirectory();
 
-const Generator   = require('../lib/generator');
-const args        = require('../lib/helpers/arguments')();
-const config      = require('../lib/config')();
+import Generator from '../lib/generator.js';
+import argsJs from '../lib/helpers/arguments.js';
+import configJs from '../lib/config.js';
+
+const args = argsJs();
+const config = configJs();
 
 if (args.help) {
   console.log('Usage: node generate.js [OPTIONS]');

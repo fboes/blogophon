@@ -1,11 +1,9 @@
-'use strict';
-
-const assert    = require('assert');
-const Url       = require('../lib/helpers/url');
-const PostUrl   = require('../lib/helpers/post-url');
-const AuthorUrl = require('../lib/helpers/author-url');
-const TagUrl    = require('../lib/helpers/tag-url');
-const IndexUrl  = require('../lib/helpers/index-url');
+import assert from 'assert';
+import Url from '../lib/helpers/url.js';
+import PostUrl from '../lib/helpers/post-url.js';
+import AuthorUrl from '../lib/helpers/author-url.js';
+import TagUrl from '../lib/helpers/tag-url.js';
+import IndexUrl from '../lib/helpers/index-url.js';
 
 
 describe('URL', function() {
