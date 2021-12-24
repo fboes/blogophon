@@ -3,7 +3,7 @@
   "version": "2.2.0",
   "description": "A Static Site Generator supporting Markdown, responsive images, RSS and other RESTable files. Built with Node.js and minimal dependencies.",
   "main": "./bin/blogophon.js",
-  "type":"module",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git@github.com:fboes/blogophon.git"
@@ -12,7 +12,8 @@
     "start": "node ./bin/blogophon.js",
     "generate": "node ./bin/blogophon-generate.js",
     "precommit": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss",
-    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss && npm outdated"
+    "test": "eslint *.js bin/* lib/**/*.js test/**/*.js && mocha && stylelint htdocs/**/*.scss && npm outdated",
+    "prepare": "husky install"
   },
   "bin": {
     "blogophon": "./bin/blogophon.js",
@@ -76,11 +77,6 @@
   },
   "engine": {
     "node": ">=14"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run precommit"
-    }
   },
   "stylelint": {
     "extends": "stylelint-config-recommended-scss",

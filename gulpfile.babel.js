@@ -1,21 +1,21 @@
-'use strict';
-
 // Include gulp
-const gulp = require('gulp');
-const pkg  = require('./package.json');
+import gulp from 'gulp';
+import fs   from 'fs';
 
 // Include Our Plugins
-const eslint       = require('gulp-eslint');
-const mocha        = require('gulp-mocha');
-const browserSync  = require('browser-sync').create();
-const sass         = require('gulp-sass');
-const rename       = require("gulp-rename");
-const uglify       = require('gulp-uglify');
-const postcss      = require('gulp-postcss');
-const replace      = require('gulp-replace');
-const autoprefixer = require('autoprefixer');
-const gulpStylelint = require('gulp-stylelint');
+import eslint        from 'gulp-eslint';
+import mocha         from 'gulp-mocha';
+import browserSyncJs from 'browser-sync';
+import sass          from 'gulp-sass';
+import rename        from "gulp-rename";
+import uglify        from 'gulp-uglify';
+import postcss       from 'gulp-postcss';
+import replace       from 'gulp-replace';
+import autoprefixer  from 'autoprefixer';
+import gulpStylelint from 'gulp-stylelint';
 
+const browserSync = browserSyncJs.create();
+const pkg = JSON.parse(fs.readFileSync('./package.json'));
 const tasks = {
   doEslint: function() {
     return gulp.src(
