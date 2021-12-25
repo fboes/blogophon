@@ -10,6 +10,17 @@
   "parserOptions": {
     "sourceType": "module"
   },
+  "rules":{
+    "curly": "error",
+    "eqeqeq": "error",
+    "no-else-return": "error",
+    "no-lonely-if": "error",
+    "no-loop-func": "error",
+    "no-multi-str": "error",
+    "no-undef": "error",
+    "no-unused-vars": "error",
+    "no-var": "error"
+  },
   "overrides": [
     {
       "files": "test/**/*.js",
