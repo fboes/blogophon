@@ -34,7 +34,7 @@ describe('JsonFeed', function() {
   });
 
   it('should have items with properties', function() {
-    assert.equal(jsonFeed.items.length, 1);
+    assert.strictEqual(jsonFeed.items.length, 1);
     assert.ok(jsonFeed.items[0]);
     assert.ok(jsonFeed.items[0].url);
     assert.ok(jsonFeed.items[0].title);

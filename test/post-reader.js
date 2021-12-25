@@ -9,11 +9,11 @@ describe('Post-Reader', function() {
         // console.log(testPost);
         assert.ok(testPost.markdown, 'Found Markdown');
         assert.ok(testPost.meta,     'Parsed YAML');
-        assert.equal(testPost.meta.Title,        'Title');
-        assert.equal(testPost.meta.Description,  'Some nice text');
-        assert.equal(testPost.meta.Twitter,      '#Hashtag and some text');
-        assert.equal(testPost.meta.Language,     'en');
-        assert.equal(testPost.meta.Link,         'http://www.example.com/');
+        assert.strictEqual(testPost.meta.Title,        'Title');
+        assert.strictEqual(testPost.meta.Description,  'Some nice text');
+        assert.strictEqual(testPost.meta.Twitter,      '#Hashtag and some text');
+        assert.strictEqual(testPost.meta.Language,     'en');
+        assert.strictEqual(testPost.meta.Link,         'http://www.example.com/');
       })
       .catch(function() {
         assert.ok(false, 'Parser should not fail');
@@ -26,10 +26,10 @@ describe('Post-Reader', function() {
       .then(function(testPost) {
         assert.ok(testPost.markdown, 'Found Markdown');
         assert.ok(testPost.meta,     'Parsed YAML');
-        assert.equal(testPost.meta.Title,  'Markdown title of your document, with <b> code');
-        assert.equal(testPost.htmlTitle,  '<em>Markdown</em> title of your <b>document</b>, with <code>&lt;b&gt;</code> code');
-        assert.equal(testPost.meta.Description, 'This part can be seen on index pages, and may contain links and any other form of Markdown, with <b> code.');
-        assert.equal(testPost.htmlTeaser, '<p><em>This</em> part can be seen on index pages, and may contain <a href="https://www.example.com/">links</a> and any other form of <b>Markdown</b>, with <code>&lt;b&gt;</code> code.</p>');
+        assert.strictEqual(testPost.meta.Title,  'Markdown title of your document, with <b> code');
+        assert.strictEqual(testPost.htmlTitle,  '<em>Markdown</em> title of your <b>document</b>, with <code>&lt;b&gt;</code> code');
+        assert.strictEqual(testPost.meta.Description, 'This part can be seen on index pages, and may contain links and any other form of Markdown, with <b> code.');
+        assert.strictEqual(testPost.htmlTeaser, '<p><em>This</em> part can be seen on index pages, and may contain <a href="https://www.example.com/">links</a> and any other form of <b>Markdown</b>, with <code>&lt;b&gt;</code> code.</p>');
         /*console.log([
           testPost.meta.Title,
           testPost.htmlTitle,

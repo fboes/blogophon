@@ -7,25 +7,14 @@
     "node": true,
     "es2017": true
   },
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "overrides": [
-    {
-      "files": ["lib/**/*.js", "bin/**/*.js", "test/**/*.js", "gulpfile.js"],
-      "parserOptions": {
-        "sourceType": "module"
-      }
-    },
     {
       "files": "test/**/*.js",
       "env": {
         "mocha": true
-      }
-    },
-    {
-      "files": "htdocs/**/*.js",
-      "env": {
-        "browser": true,
-        "node": false,
-        "es2017": false
       }
     }
   ]

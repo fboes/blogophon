@@ -29,7 +29,7 @@ describe('MarkyMark', function() {
       assert.ok(m.match(/src="http:\/\/www\.example\.com/));
 
       m = markyMark('<p>&lt;= &lt;-&gt; =&gt; &gt;= -&lt;</p>');
-      assert.equal(m.match(/&\S+;/g).length, 2);
+      assert.strictEqual(m.match(/&\S+;/g).length, 2);
     });
 
     it('must use proper quotes', function() {
@@ -135,7 +135,7 @@ describe('MarkyMark', function() {
 (99/100)`;
       m = markyMark(x);
       //console.log(m);
-      assert.equal(m.match(/\d+⁄\d+/g).length, 36); // String.fromCharCode(8260)
+      assert.strictEqual(m.match(/\d+⁄\d+/g).length, 36); // String.fromCharCode(8260)
       assert.ok(!m.match(/\(\d+\/\d+\)/));
     });
     it('must make conversation', () => {
@@ -155,12 +155,12 @@ describe('MarkyMark', function() {
 <p>Some text after</p>`;
       m = markyMark(x);
       //console.log(m);
-      assert.equal(m.match(/<div class="conversation">/g).length, 1);
-      assert.equal(m.match(/<figcaption>/g).length, 3);
-      assert.equal(m.match(/<blockquote[^>]*>/g).length, 3);
-      assert.equal(m.match(/conversation__participant--0/g).length, 2);
-      assert.equal(m.match(/conversation__participant--1/g).length, 1);
-      assert.equal(m.match(/<p>/g).length, 5);
+      assert.strictEqual(m.match(/<div class="conversation">/g).length, 1);
+      assert.strictEqual(m.match(/<figcaption>/g).length, 3);
+      assert.strictEqual(m.match(/<blockquote[^>]*>/g).length, 3);
+      assert.strictEqual(m.match(/conversation__participant--0/g).length, 2);
+      assert.strictEqual(m.match(/conversation__participant--1/g).length, 1);
+      assert.strictEqual(m.match(/<p>/g).length, 5);
     });
     it('must make call-outs', () => {
       let m, x = `<p>Some normal paragraph.</p>
@@ -170,8 +170,8 @@ describe('MarkyMark', function() {
 </blockquote>`;
       m = markyMark(x);
       assert.ok(!m.match(/<blockquote[^>]*>/g));
-      assert.equal(m.match(/<aside[^>]*>/g).length, 1);
-      assert.equal(m.match(/<p[^>]*>/g).length, 3);
+      assert.strictEqual(m.match(/<aside[^>]*>/g).length, 1);
+      assert.strictEqual(m.match(/<p[^>]*>/g).length, 3);
     });
     it('must reorder `--` next to <blockquote> and add classes', () => {
       let m, x = `<blockquote>
@@ -187,7 +187,7 @@ describe('MarkyMark', function() {
 `;
       m = markyMark(x);
       //console.log(m);
-      assert.equal(m.match(/<p[^>]*>/g).length, 3);
+      assert.strictEqual(m.match(/<p[^>]*>/g).length, 3);
       assert.ok(m.match(/<blockquote>\s*<p>\s*First/g));
       assert.ok(m.match(/blockquote[^>]+cite="https:\/\/www\.example\.com"/g));
       assert.ok(m.match(/<figcaption>\s*<a href="https:\/\/www.example.com">Herman Melville, <cite>Moby-Dick<\/cite><\/a>/g));
@@ -229,12 +229,12 @@ describe('MarkyMark', function() {
       m = markyMark(x);
       //console.log(m);
       assert.ok(m,                                      'Got output');
-      assert.equal(m.match(/<th[> ]/g).length, 27,      'Markup added');
+      assert.strictEqual(m.match(/<th[> ]/g).length, 27,      'Markup added');
       assert.ok(m.match(/<div class="table-wrapper"/),  'Table wrapper added');
       assert.ok(m.match(/ class="table-cell--right"/g), 'Table cell class added');
-      assert.equal(m.match(/<col class="table-cell--right"/g).length, 3);
+      assert.strictEqual(m.match(/<col class="table-cell--right"/g).length, 3);
       assert.ok(!m.match(/<tr><td><strong>/),           'Markup removed');
-      assert.equal(m.match(/scope="row"/g).length,      23);
+      assert.strictEqual(m.match(/scope="row"/g).length,      23);
     });
 
     it('must do col spanning in tables if asked to do so', function() {
@@ -890,7 +890,7 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
       m = markyMark(x);
 
       assert.ok(m, 'Got output');
-      assert.equal(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
+      assert.strictEqual(m.match(/&#x([\dA-Z]+);/g).length, 3, 'Emojis added');
     });
   });
 

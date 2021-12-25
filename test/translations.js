@@ -11,12 +11,12 @@ describe('Translations', function() {
 
   it('should translate stuff', function() {
     // Fallback on unknown string
-    assert.equal(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');
+    assert.strictEqual(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');
 
     // No fallback on known string
     assert.notEqual(translations('ru').getString('Home'), 'Home');
 
     // Ignore sub strings
-    assert.equal(translations('ru').getString('Home'), translations('ru-RU').getString('Home'));
+    assert.strictEqual(translations('ru').getString('Home'), translations('ru-RU').getString('Home'));
   });
 });

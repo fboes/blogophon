@@ -69,7 +69,7 @@ describe('Manifest', function() {
     assert.ok(manifest.theme_color !== undefined, 'Theme color is defined');
     assert.ok(manifest.start_url !== undefined,   'Start URL is defined');
     assert.ok(manifest.icons !== undefined,       'Icons are defined');
-    assert.equal(manifest.icons.length, 3);
+    assert.strictEqual(manifest.icons.length, 3);
   });
 
   it('should have extra properties', function() {

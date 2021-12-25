@@ -21,24 +21,24 @@ describe('Slacked', function() {
   //console.log(slacked);
 
   it('should have a text', function() {
-    assert.equal(true, slacked.text !== undefined);
+    assert.strictEqual(true, slacked.text !== undefined);
   });
   it('should have attachments', function() {
-    assert.equal(true, slacked.attachments !== undefined);
+    assert.strictEqual(true, slacked.attachments !== undefined);
   });
   it('should have a first attachment', function() {
-    assert.equal(true, slacked.attachments[0] !== undefined);
+    assert.strictEqual(true, slacked.attachments[0] !== undefined);
   });
   it('should have a title for the first attachment', function() {
-    assert.equal(true, slacked.attachments[0].title !== undefined);
+    assert.strictEqual(true, slacked.attachments[0].title !== undefined);
   });
   it('should have a title_link for the first attachment', function() {
-    assert.equal(true, slacked.attachments[0].title_link !== undefined);
+    assert.strictEqual(true, slacked.attachments[0].title_link !== undefined);
   });
   it('should have a text for the first attachment', function() {
-    assert.equal(true, slacked.attachments[0].text !== undefined);
+    assert.strictEqual(true, slacked.attachments[0].text !== undefined);
   });
   it('should have a timestamp for the first attachment', function() {
-    assert.equal(true, slacked.attachments[0].ts !== undefined);
+    assert.strictEqual(true, slacked.attachments[0].ts !== undefined);
   });
 });

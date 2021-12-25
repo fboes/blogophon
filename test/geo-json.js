@@ -22,7 +22,7 @@ describe('GeoJson', function() {
 
   it('should have basic properties', function() {
     assert.ok(geojson.type);
-    assert.equal(geojson.features.length, 1);
+    assert.strictEqual(geojson.features.length, 1);
     assert.ok(geojson.features[0]);
     assert.ok(geojson.features[0].properties);
     assert.ok(geojson.features[0].properties.title);

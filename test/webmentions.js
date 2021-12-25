@@ -7,7 +7,7 @@ describe('Webmentions', () => {
     let externalUrls;
 
     externalUrls = webmentions.findExternalLinks({});
-    assert.equal(externalUrls.length, 0);
+    assert.strictEqual(externalUrls.length, 0);
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -15,7 +15,7 @@ describe('Webmentions', () => {
         Link: '/internal'
       }
     });
-    assert.equal(externalUrls.length, 0);
+    assert.strictEqual(externalUrls.length, 0);
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -23,8 +23,8 @@ describe('Webmentions', () => {
         Link: 'https://www.example.com/'
       }
     });
-    assert.equal(externalUrls.length, 1);
-    assert.equal(externalUrls[0], 'https://www.example.com/');
+    assert.strictEqual(externalUrls.length, 1);
+    assert.strictEqual(externalUrls[0], 'https://www.example.com/');
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -33,8 +33,8 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="/internal">Link</a>.`
     });
-    assert.equal(externalUrls.length, 1);
-    assert.equal(externalUrls[0], 'https://www.example.com/');
+    assert.strictEqual(externalUrls.length, 1);
+    assert.strictEqual(externalUrls[0], 'https://www.example.com/');
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -43,17 +43,17 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="https://www.example.com/external">Link</a>.`
     });
-    assert.equal(externalUrls.length, 2);
-    assert.equal(externalUrls[0], 'https://www.example.com/');
-    assert.equal(externalUrls[1], 'https://www.example.com/external');
+    assert.strictEqual(externalUrls.length, 2);
+    assert.strictEqual(externalUrls[0], 'https://www.example.com/');
+    assert.strictEqual(externalUrls[1], 'https://www.example.com/external');
 
     externalUrls = webmentions.findExternalLinks({
       html: `I am a <a href="https://www.example.com/external">Link</a>
       and <a href="https://www.example.com/external2">so am I</a>.`
     });
-    assert.equal(externalUrls.length, 2);
-    assert.equal(externalUrls[0], 'https://www.example.com/external');
-    assert.equal(externalUrls[1], 'https://www.example.com/external2');
+    assert.strictEqual(externalUrls.length, 2);
+    assert.strictEqual(externalUrls[0], 'https://www.example.com/external');
+    assert.strictEqual(externalUrls[1], 'https://www.example.com/external2');
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -62,8 +62,8 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="https://www.example.com/identical">Link</a>.`
     });
-    assert.equal(externalUrls.length, 1);
-    assert.equal(externalUrls[0], 'https://www.example.com/identical');
+    assert.strictEqual(externalUrls.length, 1);
+    assert.strictEqual(externalUrls[0], 'https://www.example.com/identical');
 
     //console.log(externalUrls);
   });
@@ -79,7 +79,7 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="https://www.example.com/external">Link</a>.`
     });
-    assert.equal(externalUrls.length, 0);
+    assert.strictEqual(externalUrls.length, 0);
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -88,8 +88,8 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="https://www.example.com/external" class="nomention">Link</a>.`
     });
-    assert.equal(externalUrls.length, 1);
-    assert.equal(externalUrls[0], 'https://www.example.com/');
+    assert.strictEqual(externalUrls.length, 1);
+    assert.strictEqual(externalUrls[0], 'https://www.example.com/');
   });
 
   it('should ignore external URLs from the black list', () => {
@@ -102,7 +102,7 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="https://example.wikipedia.org/external">Link</a>.`
     });
-    assert.equal(externalUrls.length, 0);
+    assert.strictEqual(externalUrls.length, 0);
 
     externalUrls = webmentions.findExternalLinks({
       meta: {
@@ -111,7 +111,7 @@ describe('Webmentions', () => {
       },
       html: `I am a <a href="http://fritz.box/">internal link</a>.`
     });
-    assert.equal(externalUrls.length, 0);
+    assert.strictEqual(externalUrls.length, 0);
   });
 
   const discoverUrls = [
