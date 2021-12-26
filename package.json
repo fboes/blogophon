@@ -36,6 +36,7 @@
     "static site generator"
   ],
   "devDependencies": {
+    "@ronilaukkarinen/gulp-stylelint": "^14.0.5",
     "autoprefixer": "^10.4.0",
     "browser-sync": "^2.27.7",
     "eslint": "^8.5.0",

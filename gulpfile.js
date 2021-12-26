@@ -13,7 +13,7 @@ import uglify        from 'gulp-uglify';
 import postcss       from 'gulp-postcss';
 import replace       from 'gulp-replace';
 import autoprefixer  from 'autoprefixer';
-//import gulpStylelint from 'gulp-stylelint';
+import gulpStylelint from '@ronilaukkarinen/gulp-stylelint';
 
 const browserSync = browserSyncJs.create();
 const pkg = JSON.parse(fs.readFileSync('./package.json'));
@@ -58,11 +58,11 @@ const buildJs = function() {
 
 const buildCss = function() {
   return gulp.src(pkg.directories.theme + '/**/*.scss')
-    /*.pipe(gulpStylelint({
+    .pipe(gulpStylelint({
       reporters: [
         {formatter: 'string', console: true}
       ]
-    }))*/
+    }))
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss([
       autoprefixer()
