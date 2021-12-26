@@ -1,6 +1,3 @@
-
-/* eslint-disable max-len */
-
 import assert from 'assert';
 import markyMark from '../lib/helpers/marky-mark.js';
 

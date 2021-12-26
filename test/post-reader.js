@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import PostReader from '../lib/post-reader.js';
 

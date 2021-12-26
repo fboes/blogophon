@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// Blogophon internal
 import application from '../lib/helpers/application.js';
 application.changeDirectory();
 

@@ -1,7 +1,5 @@
-
 import assert from 'assert';
 import emojiConvert from '../lib/helpers/emoji-convert.js';
-
 
 describe('Generator', function() {
   let convertedHtml;

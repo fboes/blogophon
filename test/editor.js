@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import path from 'path';
 import configJs from '../lib/config.js';

@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import hashesJs from '../lib/models/hashes.js';
 

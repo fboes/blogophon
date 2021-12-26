@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import shareLink from '../lib/helpers/share-links.js';
 

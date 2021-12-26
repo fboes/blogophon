@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import configJs from '../lib/config.js';
 import geojsonJs from '../lib/models/geo-json.js';

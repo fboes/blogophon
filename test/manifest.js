@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import configJs from '../lib/config.js';
 import manifestJs from '../lib/models/manifest.js';

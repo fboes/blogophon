@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import configJs from '../lib/config.js';
 import jsonLdJs from '../lib/models/json-ld.js';

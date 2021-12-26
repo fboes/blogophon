@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import configJs from '../lib/config.js';
 import jsonRssJs from '../lib/models/json-rss.js';

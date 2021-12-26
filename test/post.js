@@ -1,4 +1,3 @@
-
 import assert from 'assert';
 import post from '../lib/models/post.js';
 import configJs from '../lib/config.js';

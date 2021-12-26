@@ -5,7 +5,6 @@ import AuthorUrl from '../lib/helpers/author-url.js';
 import TagUrl from '../lib/helpers/tag-url.js';
 import IndexUrl from '../lib/helpers/index-url.js';
 
-
 describe('URL', function() {
   it('should test Extender', function() {
     let url = Url('test');
