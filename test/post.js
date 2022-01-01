@@ -46,7 +46,7 @@ describe('Post', function() {
     assert.ok(testPost.meta.Link);
     assert.ok(testPost.meta.AbsoluteLink);
     assert.ok(testPost.hash);
-    assert.ok(testPost.hash.match(/^[a-z0-9]+$/));
+    assert.match(testPost.hash, /^[a-z0-9]+$/);
     assert.ok(testPost.html);
     assert.strictEqual(testPost.html, '<p>Test</p>');
     assert.ok(testPost.htmlTeaser);
@@ -74,14 +74,14 @@ describe('Post', function() {
       testMarkdownDescription,
       '...but there is a description with markdown'
     );
-    assert.ok(testPost.meta.Image.match(/some-image\.jpg/));
-    assert.ok(testPost.meta.ProperImage.match(/some-image\.jpg/));
+    assert.match(testPost.meta.Image, /some-image\.jpg/);
+    assert.match(testPost.meta.ProperImage, /some-image\.jpg/);
     assert.ok(!testPost.meta.ImageAlt);
-    assert.ok(testPost.html.match(/test\/some-image\.jpg/), 'Image has path added');
-    assert.ok(testPost.htmlTeaser.match(/test\/some-image\.jpg/), 'Image has path added');
-    assert.ok(!testPost.html.match(/internal\.md/), 'Internal links are converted');
-    assert.ok(!testPost.htmlTeaser.match(/internal\.md/), 'Internal links are converted');
-    assert.ok(!testPost.meta.Title.match(/\[/), 'Links are removed from title');
+    assert.match(testPost.html, /test\/some-image\.jpg/, 'Image has path added');
+    assert.match(testPost.htmlTeaser, /test\/some-image\.jpg/, 'Image has path added');
+    assert.doesNotMatch(testPost.html, /internal\.md/, 'Internal links are converted');
+    assert.doesNotMatch(testPost.htmlTeaser, /internal\.md/, 'Internal links are converted');
+    assert.doesNotMatch(testPost.meta.Title, /\[/, 'Links are removed from title');
   });
 
   it('must shorten descriptions', function() {
@@ -124,8 +124,8 @@ describe('Post', function() {
 
     assert.ok(testPost.markdown);
     assert.ok(testPost.meta.MarkdownDescription);
-    assert.ok(testPost.meta.Image.match(/markdown\.jpg/));
-    assert.ok(testPost.meta.ProperImage.match(/markdown\.jpg/));
+    assert.match(testPost.meta.Image, /markdown\.jpg/);
+    assert.match(testPost.meta.ProperImage, /markdown\.jpg/);
     //console.log(testPost.html);
     assert.ok(testPost.meta.ImageAlt.match(/by Mutti/));
     assert.ok(testPost.componentScripts);

@@ -31,16 +31,16 @@ describe('Ampify', function() {
     //console.log(ampProperties);
 
     it('should replace Youtube videos with <amp-youtube>', function() {
-      assert.ok(ampHtml.match(/<amp-youtube/));
+      assert.match(ampHtml, /<amp-youtube/);
     });
     it('should replace Vimeo videos with <amp-vimeo>', function() {
-      assert.ok(ampHtml.match(/<amp-vimeo/));
+      assert.match(ampHtml, /<amp-vimeo/);
     });
     it('should replace iframes with <amp-iframe>', function() {
-      assert.ok(ampHtml.match(/<amp-iframe/));
+      assert.match(ampHtml, /<amp-iframe/);
     });
     it('should have no `srcdoc`', function() {
-      assert.ok(!ampHtml.match(/srcdoc="/));
+      assert.doesNotMatch(ampHtml, /srcdoc="/);
     });
     it('should have properties if some feature was used in HTML', function() {
       assert.ok(ampProperties);

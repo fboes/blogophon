@@ -28,8 +28,8 @@ describe('GeoJson', function() {
     assert.ok(geojson.features[0].properties.summary);
   });
   it('should have proper dates', function() {
-    assert.ok(geojson.features[0].properties.date_published.match(/^2017-05-18T/));
-    assert.ok(geojson.features[0].properties.date_modified.match(/^2017-05-28T/));
+    assert.match(geojson.features[0].properties.date_published, /^2017-05-18T/);
+    assert.match(geojson.features[0].properties.date_modified, /^2017-05-28T/);
   });
   it('should have a geometry with coordinates', function() {
     assert.ok(geojson.features[0].geometry !== undefined);

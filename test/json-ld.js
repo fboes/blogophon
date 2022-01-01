@@ -34,7 +34,7 @@ describe('jsonLd', function() {
   });
 
   it('should have proper dates', function() {
-    assert.ok(jsonLd.datePublished.match(/^2017-05-18T/));
-    assert.ok(jsonLd.dateModified.match(/^2017-05-28T/));
+    assert.match(jsonLd.datePublished, /^2017-05-18T/);
+    assert.match(jsonLd.dateModified, /^2017-05-28T/);
   });
 });

@@ -8,8 +8,9 @@ describe('Image Styles', function() {
 
   it('should test GeneralFunctionality', function() {
     assert.ok(imageStyles !== undefined, 'imageStyles is defined');
-    assert.ok(
-      imageStyles.getFilename('test.jpg').match(/test-\d+x\d+\.jpg/),
+    assert.match(
+      imageStyles.getFilename('test.jpg'),
+      /test-\d+x\d+\.jpg/,
       'Converted filenames match nomenclatura of FILENAME-WIDTHxHEIGHT.SUFFIX'
     );
     assert.ok(

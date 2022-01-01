@@ -8,8 +8,8 @@ describe('MarkyMark', function() {
       let m;
 
       m = markyMark('<p><a href="test">Test 12x24</a> - &quot;Test&quot;</p>');
-      assert.ok(m.match(/Test 12/));
-      assert.ok(!m.match(/Test 12x24/));
+      assert.match(m, /Test 12/);
+      assert.doesNotMatch(m, /Test 12x24/);
       assert.ok(m !== undefined, 'String is not undefined');
 
       m = markyMark(
@@ -18,12 +18,12 @@ describe('MarkyMark', function() {
       );
       //console.log(m);
       assert.ok(m !== undefined, 'String is not undefined');
-      assert.ok(m.match(/Tochter hat gesagt/));
-      assert.ok(m.match(/dann gib ihr mal eine/));
-      assert.ok(m.match(/www\.fileformat\.info/));
+      assert.match(m, /Tochter hat gesagt/);
+      assert.match(m, /dann gib ihr mal eine/);
+      assert.match(m, /www\.fileformat\.info/);
 
       m = markyMark('<p><img src="http://www.example.com" alt="" /></p>');
-      assert.ok(m.match(/src="http:\/\/www\.example\.com/));
+      assert.match(m, /src="http:\/\/www\.example\.com/);
 
       m = markyMark('<p>&lt;= &lt;-&gt; =&gt; &gt;= -&lt;</p>');
       assert.strictEqual(m.match(/&\S+;/g).length, 2);
@@ -46,8 +46,8 @@ describe('MarkyMark', function() {
           secondary: ['‚', '‘']
         }
       }), 'Quotation changed');
-      assert.ok(m.match(/«/));
-      assert.ok(m.match(/“/));
+      assert.match(m, /«/);
+      assert.match(m, /“/);
 
       m = markyMark(x, {
         headline: 1
@@ -61,7 +61,7 @@ describe('MarkyMark', function() {
         }
       });
       //console.log(m);
-      assert.ok(!m.match(/%/));
+      assert.doesNotMatch(m, /%/);
     });
 
     it('must do proper headline', function() {
@@ -70,54 +70,54 @@ describe('MarkyMark', function() {
 <p>Do not touch me</p>`;
 
       m = markyMark(x);
-      assert.ok(!m.match(/<h1>/), '<h1> removal happened');
-      assert.ok(!m.match(/<h2>/), 'Headline downgrade happened');
-      assert.ok(m.match(/<h3>/), 'Headline downgrade happened');
+      assert.doesNotMatch(m, /<h1>/), '<h1> removal happened';
+      assert.doesNotMatch(m, /<h2>/), 'Headline downgrade happened';
+      assert.match(m, /<h3>/, 'Headline downgrade happened');
 
       m = markyMark(x, {
         headline: 1
       });
-      assert.ok(!m.match(/<h1>/), '<h1> removal did not happen');
-      assert.ok(m.match(/<h2>/), 'No headline downgrade happened');
-      assert.ok(!m.match(/<h3>/), 'No headline downgrade happened');
+      assert.doesNotMatch(m, /<h1>/), '<h1> removal did not happen';
+      assert.match(m, /<h2>/, 'No headline downgrade happened');
+      assert.doesNotMatch(m, /<h3>/), 'No headline downgrade happened';
     });
 
 
     it('must have some class(es)', function() {
       let m, x = '<a href="https://www.example.com" title="nomention">Test</a>';
       m = markyMark(x);
-      assert.ok(m.match(/rel/));
-      assert.ok(!m.match(/title/));
+      assert.match(m, /rel/);
+      assert.doesNotMatch(m, /title/);
 
       x = '<a href="https://www.example.com" title="nofollow">Test</a>';
       m = markyMark(x);
-      assert.ok(m.match(/rel/));
-      assert.ok(!m.match(/class/));
-      assert.ok(!m.match(/title/));
+      assert.match(m, /rel/);
+      assert.doesNotMatch(m, /class/);
+      assert.doesNotMatch(m, /title/);
 
       x = '<a href="https://www.example.com" title="nofun">Test</a>';
       m = markyMark(x);
-      assert.ok(!m.match(/class/));
-      assert.ok(m.match(/title/));
+      assert.doesNotMatch(m, /class/);
+      assert.match(m, /title/);
 
       x = '<a href="https://www.example.com" title="alternate">Test</a>';
       m = markyMark(x);
-      assert.ok(m.match(/rel/));
-      assert.ok(!m.match(/class/));
-      assert.ok(!m.match(/title/));
+      assert.match(m, /rel/);
+      assert.doesNotMatch(m, /class/);
+      assert.doesNotMatch(m, /title/);
 
       x = '<a href="https://www.example.com" title="external">Test</a>';
       m = markyMark(x);
-      assert.ok(m.match(/rel/));
-      assert.ok(!m.match(/class/));
-      assert.ok(!m.match(/title/));
+      assert.match(m, /rel/);
+      assert.doesNotMatch(m, /class/);
+      assert.doesNotMatch(m, /title/);
 
       x = '<a href="https://www.example.com" title="download">Test</a>';
       m = markyMark(x);
-      assert.ok(m.match(/ download/));
-      assert.ok(!m.match(/rel/));
-      assert.ok(!m.match(/class/));
-      assert.ok(!m.match(/title/));
+      assert.match(m, / download/);
+      assert.doesNotMatch(m, /rel/);
+      assert.doesNotMatch(m, /class/);
+      assert.doesNotMatch(m, /title/);
     });
     it('must make nicer fractions', () => {
       let m, x = `(1/2)<br />
@@ -133,7 +133,7 @@ describe('MarkyMark', function() {
       m = markyMark(x);
       //console.log(m);
       assert.strictEqual(m.match(/\d+⁄\d+/g).length, 36); // String.fromCharCode(8260)
-      assert.ok(!m.match(/\(\d+\/\d+\)/));
+      assert.doesNotMatch(m, /\(\d+\/\d+\)/);
     });
     it('must make conversation', () => {
       let m, x = `<p>Some text before</p>
@@ -166,7 +166,7 @@ describe('MarkyMark', function() {
 <p>Which leads to some proper call-outs.</p>
 </blockquote>`;
       m = markyMark(x);
-      assert.ok(!m.match(/<blockquote[^>]*>/g));
+      assert.doesNotMatch(m, /<blockquote[^>]*>/g);
       assert.strictEqual(m.match(/<aside[^>]*>/g).length, 1);
       assert.strictEqual(m.match(/<p[^>]*>/g).length, 3);
     });
@@ -185,9 +185,9 @@ describe('MarkyMark', function() {
       m = markyMark(x);
       //console.log(m);
       assert.strictEqual(m.match(/<p[^>]*>/g).length, 3);
-      assert.ok(m.match(/<blockquote>\s*<p>\s*First/g));
-      assert.ok(m.match(/blockquote[^>]+cite="https:\/\/www\.example\.com"/g));
-      assert.ok(m.match(/<figcaption>\s*<a href="https:\/\/www.example.com">Herman Melville, <cite>Moby-Dick<\/cite><\/a>/g));
+      assert.match(m, /<blockquote>\s*<p>\s*First/g);
+      assert.match(m, /blockquote[^>]+cite="https:\/\/www\.example\.com"/g);
+      assert.match(m, /<figcaption>\s*<a href="https:\/\/www.example.com">Herman Melville, <cite>Moby-Dick<\/cite><\/a>/g);
     });
   });
 
@@ -227,10 +227,10 @@ describe('MarkyMark', function() {
       //console.log(m);
       assert.ok(m,                                      'Got output');
       assert.strictEqual(m.match(/<th[> ]/g).length, 27,      'Markup added');
-      assert.ok(m.match(/<div class="table-wrapper"/),  'Table wrapper added');
-      assert.ok(m.match(/ class="table-cell--right"/g), 'Table cell class added');
+      assert.match(m, /<div class="table-wrapper"/),  'Table wrapper added';
+      assert.match(m, / class="table-cell--right"/g), 'Table cell class added';
       assert.strictEqual(m.match(/<col class="table-cell--right"/g).length, 3);
-      assert.ok(!m.match(/<tr><td><strong>/),           'Markup removed');
+      assert.doesNotMatch(m, /<tr><td><strong>/),           'Markup removed';
       assert.strictEqual(m.match(/scope="row"/g).length,      23);
     });
 
@@ -275,42 +275,42 @@ describe('MarkyMark', function() {
       let m;
 
       m = markyMark('<img src="video.jpg" alt="Description" />');
-      assert.ok(m.match(/<img/), 'Image tag still present');
-      assert.ok(!m.match(/<(video|audio)/), 'No audio/video tag present');
+      assert.match(m, /<img/), 'Image tag still present';
+      assert.doesNotMatch(m, /<(video|audio)/), 'No audio/video tag present';
 
       m = markyMark('<img src="video.mp4" alt="Description" />');
-      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-      assert.ok(m.match(/<video.+?>Description<\/video>/), 'Video tag with description is present');
+      assert.doesNotMatch(m, /<(img|audio)/), 'Image tag is gone';
+      assert.match(m, /<video.+?>Description<\/video>/), 'Video tag with description is present';
 
       m = markyMark('<img src="video.mp4#12x24" alt="" />');
-      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-      assert.ok(m.match(/<video/), 'Video tag is present');
+      assert.doesNotMatch(m, /<(img|audio)/), 'Image tag is gone';
+      assert.match(m, /<video/), 'Video tag is present';
 
       m = markyMark('<img src="video.mp3" alt="" />');
-      assert.ok(!m.match(/<(img|video)/), 'Image tag is gone');
-      assert.ok(m.match(/<audio/), 'Audio tag is present');
+      assert.doesNotMatch(m, /<(img|video)/), 'Image tag is gone';
+      assert.match(m, /<audio/), 'Audio tag is present';
 
       m = markyMark('<p><img src="video.mp4" alt="" /></p>');
-      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-      assert.ok(m.match(/<video/), 'Video tag is present');
-      assert.ok(m.match(/<div class="video/), 'Wrapper div tag is present');
-      assert.ok(!m.match(/<p/), 'P tag is gone');
+      assert.doesNotMatch(m, /<(img|audio)/), 'Image tag is gone';
+      assert.match(m, /<video/), 'Video tag is present';
+      assert.match(m, /<div class="video/), 'Wrapper div tag is present';
+      assert.doesNotMatch(m, /<p/), 'P tag is gone';
 
       m = markyMark('<p>Inline video: <img src="video.mp4" alt="" /></p>');
-      assert.ok(!m.match(/<(img|audio)/), 'Image tag is gone');
-      assert.ok(m.match(/<video/), 'Video tag is present');
-      assert.ok(!m.match(/<div class="video/), 'Wrapper div tag is not present');
-      assert.ok(m.match(/<p/), 'P tag is still there');
+      assert.doesNotMatch(m, /<(img|audio)/), 'Image tag is gone';
+      assert.match(m, /<video/), 'Video tag is present';
+      assert.doesNotMatch(m, /<div class="video/), 'Wrapper div tag is not present';
+      assert.match(m, /<p/), 'P tag is still there';
 
       m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
-      assert.ok(m.match(/<(img|video)/), 'Image tag is present');
-      assert.ok(m.match(/figure/), 'figure is present');
-      assert.ok(m.match(/figcaption/), 'figcaption is present');
+      assert.match(m, /<(img|video)/), 'Image tag is present';
+      assert.match(m, /figure/), 'figure is present';
+      assert.match(m, /figcaption/), 'figcaption is present';
 
       m = markyMark("<p><img src=\"img.png#default\" alt=\"&gt; Alt-Text\">\nJawoll</p>\n");
-      assert.ok(m.match(/<(img|video)/), 'Image tag is present');
-      assert.ok(m.match(/figure/), 'figure is present');
-      assert.ok(m.match(/"figure default"/), 'new class is present');
+      assert.match(m, /<(img|video)/), 'Image tag is present';
+      assert.match(m, /figure/), 'figure is present';
+      assert.match(m, /"figure default"/), 'new class is present';
       //console.log(m);
     });
 
@@ -318,30 +318,30 @@ describe('MarkyMark', function() {
       let m;
 
       m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg">Dunkirk</a></p>');
-      assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
-      assert.ok(m.match(/title="Dunkirk"/));
+      assert.match(m, /embed\/VQ01tJ4EWeg/);
+      assert.match(m, /title="Dunkirk"/);
 
       m = markyMark('<p><a href="https://youtu.be/VQ01tJ4EWeg?t=2m19s">Dunkirk</a></p>');
-      assert.ok(m.match(/embed\/VQ01tJ4EWeg/));
-      assert.ok(!m.match(/t=2m19s/));
-      assert.ok(m.match(/title="Dunkirk"/));
+      assert.match(m, /embed\/VQ01tJ4EWeg/);
+      assert.doesNotMatch(m, /t=2m19s/);
+      assert.match(m, /title="Dunkirk"/);
 
       m = markyMark('<p><a href="http://codepen.io/larsenwork/pen/MpjXrb">Codepen</a></p>');
-      assert.ok(m.match(/codepen\.io\/larsenwork\/embed\/MpjXrb\//));
-      assert.ok(m.match(/<iframe/));
-      assert.ok(m.match(/title="Codepen"/));
+      assert.match(m, /codepen\.io\/larsenwork\/embed\/MpjXrb\//);
+      assert.match(m, /<iframe/);
+      assert.match(m, /title="Codepen"/);
 
       m = markyMark('<p><a href="https://gist.github.com/defunkt/2059">Github Gist</a></p>');
-      assert.ok(m.match(/<script async="async" src="https:\/\/gist.github.com\/defunkt\/2059.js">/));
-      assert.ok(m.match(/title="Github Gist"/));
+      assert.match(m, /<script async="async" src="https:\/\/gist.github.com\/defunkt\/2059.js">/);
+      assert.match(m, /title="Github Gist"/);
 
       m = markyMark('<p><a href="https://jsfiddle.net/6cLkvdag/">Github Gist</a></p>');
-      assert.ok(m.match(/<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/));
-      assert.ok(m.match(/title="Github Gist"/));
+      assert.match(m, /<script async="async" src="https:\/\/jsfiddle.net\/6cLkvdag\/embed\/">/);
+      assert.match(m, /title="Github Gist"/);
 
       m = markyMark('<p><a href=https://open.spotify.com/track/6M5TeMPPzw4Xlve2n3ApSR?si=abbf68460f2f4d8a">Music</a></p>');
-      assert.ok(m.match(/https:\/\/embed\.spotify\.com/));
-      assert.ok(m.match(/title="Music"/));
+      assert.match(m, /https:\/\/embed\.spotify\.com/);
+      assert.match(m, /title="Music"/);
     });
   });
 
@@ -355,8 +355,8 @@ describe('MarkyMark', function() {
       );
       //console.log(m);
       assert.ok(m !== undefined, 'String is not undefined');
-      assert.ok(m.match(/<ins>/));
-      assert.ok(m.match(/<del>/));
+      assert.match(m, /<ins>/);
+      assert.match(m, /<del>/);
     });
 
     const tests = [
@@ -858,8 +858,8 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
           console.log(m);
         }
         assert.ok(m, 'Got output');
-        assert.ok(!m.match(/<(tt)>/), 'must contain no <tt>');
-        assert.ok(!m.match(/(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'must not do double quoting');
+        assert.doesNotMatch(m, /<(tt)>/), 'must contain no <tt>';
+        assert.doesNotMatch(m, /(<(?:b|i|var|em|kbd|samp|u)>){2}/), 'must not do double quoting';
         let tagsFound = m.match(/<\/?(b|i|var|em|kbd|samp|u)>/g).length;
         if (test.expected) {
           assert.strictEqual(tagsFound, test.expected, 'Markup added');
@@ -873,7 +873,7 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
           console.log('Markup added with ' + tagsFound + ' tags');
         }
         if (test.hasComments) {
-          assert.ok(m.match(/<u>/), 'Comments found');
+          assert.match(m, /<u>/), 'Comments found';
         }
       });
     });
@@ -901,8 +901,8 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
       </ul>`;
       m = markyMark(x);
 
-      assert.ok(m.match(/<ul>/));
-      assert.ok(!m.match(/<dl>/));
+      assert.match(m, /<ul>/);
+      assert.doesNotMatch(m, /<dl>/);
 
       x = `<ul>
         <li><strong>Blubb</strong>: Blögh</li>
@@ -910,8 +910,8 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
         <li><strong>Blubb</strong>: Blögh</li>
       </ul>`;
       m = markyMark(x);
-      assert.ok(!m.match(/<ul>/));
-      assert.ok(m.match(/<dl>/));
+      assert.doesNotMatch(m, /<ul>/);
+      assert.match(m, /<dl>/);
 
       x = `<ul>
         <li><strong>Blubb:</strong> Blögh</li>
@@ -919,8 +919,8 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
         <li><strong>Blubb:</strong> Blögh</li>
       </ul>`;
       m = markyMark(x);
-      assert.ok(m.match(/<ul>/));
-      assert.ok(!m.match(/<dl>/));
+      assert.match(m, /<ul>/);
+      assert.doesNotMatch(m, /<dl>/);
 
       x = `<ul>
 <li><strong><code>{}</code></strong>: Genereller Programmierer, Spezialisierung auf Backend-Programmierung.</li>
@@ -936,8 +936,8 @@ METAR KEYW 261153Z 36005KT 10SM FEW012 23/22 A3004 RMK AO2 SLP172 T02330217 1023
 </ul>`;
       m = markyMark(x);
       //console.log(m);
-      assert.ok(!m.match(/<ul>/));
-      assert.ok(m.match(/<dl>/));
+      assert.doesNotMatch(m, /<ul>/);
+      assert.match(m, /<dl>/);
     });
   });
 });

@@ -14,7 +14,7 @@ describe('Translations', function() {
     assert.strictEqual(translations('ru').getString('Unknown stuntman'), 'Unknown stuntman');
 
     // No fallback on known string
-    assert.notEqual(translations('ru').getString('Home'), 'Home');
+    assert.notStrictEqual(translations('ru').getString('Home'), 'Home');
 
     // Ignore sub strings
     assert.strictEqual(translations('ru').getString('Home'), translations('ru-RU').getString('Home'));

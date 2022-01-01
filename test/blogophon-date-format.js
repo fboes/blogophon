@@ -7,20 +7,20 @@ describe('Blogophon Date Format', function() {
 
   it('should convert ISO 8601 dates', function() {
     formattedDate = blogophonDateFormat(date, 'iso');
-    assert.ok(formattedDate.match(/2016-12-31T/));
+    assert.match(formattedDate, /2016-12-31T/);
     assert.strictEqual(formattedDate, blogophonDateFormat(date, 'iso8601'));
   });
 
   it('should convert RFC 2822 dates', function() {
     formattedDate = blogophonDateFormat(date, 'rfc');
-    assert.ok(formattedDate.match(/Sat, 31 Dec 2016/));
+    assert.match(formattedDate, /Sat, 31 Dec 2016/);
     assert.strictEqual(formattedDate, blogophonDateFormat(date, 'rfc2822'));
   });
 
   it('should convert format locale dates', function() {
     formattedDate = blogophonDateFormat(date, 'locale', 'de');
     assert.strictEqual(formattedDate, '31.12.2016');
-    assert.notEqual(formattedDate, blogophonDateFormat(date, 'locale', 'en'));
+    assert.notStrictEqual(formattedDate, blogophonDateFormat(date, 'locale', 'en'));
 
     formattedDate = blogophonDateFormat(date, 'locale', 'de-DE');
     assert.strictEqual(formattedDate, '31.12.2016');

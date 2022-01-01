@@ -45,7 +45,7 @@ describe('JsonFeed', function() {
   });
 
   it('should have proper dates', function() {
-    assert.ok(jsonFeed.items[0].date_published.match(/^2017-05-18T/));
-    assert.ok(jsonFeed.items[0].date_modified.match(/^2017-05-28T/));
+    assert.match(jsonFeed.items[0].date_published, /^2017-05-18T/);
+    assert.match(jsonFeed.items[0].date_modified, /^2017-05-28T/);
   });
 });
