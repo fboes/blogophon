@@ -27,54 +27,59 @@ describe('Image Styles', function() {
 
     html = imageStyles.replaceImgHtml('<img src="test.jpg" alt="Example image"/>');
     assert.ok(html, 'replaceImgHtml is returning something');
-    assert.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
-    assert.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
-    assert.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
-    assert.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+    assert.match(html, /test\.jpg"/,  'replaceImgHtml still contains image url');
+    assert.match(html, /src="/,       'replaceImgHtml has attribute src');
+    assert.match(html, /alt="/,       'replaceImgHtml has attribute alt');
+    assert.match(html, /Example image/, 'replaceImgHtml has alt text');
+    assert.doesNotMatch(html, /--aspect-ratio/,   'replaceImgHtml has no aspect ratio');
 
     html = imageStyles.replaceImgHtml('<img src="http://www.example.com/test.jpg" alt="Example image"/>');
     assert.ok(html, 'replaceImgHtml is returning something');
-    assert.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
-    assert.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
-    assert.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
-    assert.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
+    assert.match(html, /test\.jpg"/,  'replaceImgHtml still contains image url');
+    assert.match(html, /src="/,       'replaceImgHtml has attribute src');
+    assert.match(html, /alt="/,       'replaceImgHtml has attribute alt');
+    assert.match(html, /Example image/, 'replaceImgHtml has alt text');
+    assert.doesNotMatch(html, /--aspect-ratio/,   'replaceImgHtml has no aspect ratio');
 
     //console.log(html);
 
     html = imageStyles.replaceImgHtml('<img src="test.jpg#default" alt="Example image"/>');
     assert.ok(html, 'replaceImgHtml is returning something');
-    assert.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
-    assert.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
-    assert.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
-    assert.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
-    assert.ok(html.match(/srcset="/),    'replaceImgHtml has attribute srcset');
-    assert.ok(html.match(/sizes="/),     'replaceImgHtml has attribute sizes');
-    assert.ok(html.match(/width="/),     'replaceImgHtml has attribute width');
-    assert.ok(html.match(/height="/),    'replaceImgHtml has attribute height');
-    assert.ok(html.match(/test-[^"]+.jpg"/), 'replaceImgHtml has extra image urls');
+    assert.match(html, /test\.jpg"/,  'replaceImgHtml still contains image url');
+    assert.match(html, /src="/,       'replaceImgHtml has attribute src');
+    assert.match(html, /alt="/,       'replaceImgHtml has attribute alt');
+    assert.match(html, /Example image/, 'replaceImgHtml has alt text');
+    assert.match(html, /srcset="/,    'replaceImgHtml has attribute srcset');
+    assert.match(html, /sizes="/,     'replaceImgHtml has attribute sizes');
+    assert.match(html, /width="/,     'replaceImgHtml has attribute width');
+    assert.match(html, /height="/,    'replaceImgHtml has attribute height');
+    assert.match(html, /test-[^"]+.jpg"/, 'replaceImgHtml has extra image urls');
+    assert.match(html, /--aspect-ratio:/,   'replaceImgHtml has aspect ratio');
 
     html = imageStyles.replaceImgHtml('<img src="test.png#default" alt="Example image"/>');
     assert.ok(html, 'replaceImgHtml is returning something');
-    assert.ok(html.match(/test\.png"/),  'replaceImgHtml still contains image url');
-    assert.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
-    assert.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
-    assert.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
-    assert.ok(html.match(/srcset="/),    'replaceImgHtml has attribute srcset');
-    assert.ok(html.match(/sizes="/),     'replaceImgHtml has attribute sizes');
-    assert.ok(html.match(/width="/),     'replaceImgHtml has attribute width');
-    assert.ok(html.match(/height="/),    'replaceImgHtml has attribute height');
-    assert.ok(html.match(/test-[^"]+.png"/), 'replaceImgHtml has extra image urls');
+    assert.match(html, /test\.png"/,  'replaceImgHtml still contains image url');
+    assert.match(html, /src="/,       'replaceImgHtml has attribute src');
+    assert.match(html, /alt="/,       'replaceImgHtml has attribute alt');
+    assert.match(html, /Example image/, 'replaceImgHtml has alt text');
+    assert.match(html, /srcset="/,    'replaceImgHtml has attribute srcset');
+    assert.match(html, /sizes="/,     'replaceImgHtml has attribute sizes');
+    assert.match(html, /width="/,     'replaceImgHtml has attribute width');
+    assert.match(html, /height="/,    'replaceImgHtml has attribute height');
+    assert.match(html, /test-[^"]+.png"/, 'replaceImgHtml has extra image urls');
+    assert.match(html, /--aspect-ratio:/,   'replaceImgHtml has aspect ratio');
 
     //console.log(html);
 
     html = imageStyles.replaceImgHtml('<img src="test.jpg#320x240" alt="Example image"/>');
     assert.ok(html, 'replaceImgHtml is returning something');
-    assert.ok(html.match(/test\.jpg"/),  'replaceImgHtml still contains image url');
-    assert.ok(html.match(/src="/),       'replaceImgHtml has attribute src');
-    assert.ok(html.match(/alt="/),       'replaceImgHtml has attribute alt');
-    assert.ok(html.match(/Example image/), 'replaceImgHtml has alt text');
-    assert.ok(html.match(/width="320/),    'replaceImgHtml has attribute width');
-    assert.ok(html.match(/height="240/),   'replaceImgHtml has attribute height');
+    assert.match(html, /test\.jpg"/,  'replaceImgHtml still contains image url');
+    assert.match(html, /src="/,       'replaceImgHtml has attribute src');
+    assert.match(html, /alt="/,       'replaceImgHtml has attribute alt');
+    assert.match(html, /Example image/, 'replaceImgHtml has alt text');
+    assert.match(html, /width="320/,    'replaceImgHtml has attribute width');
+    assert.match(html, /height="240/,   'replaceImgHtml has attribute height');
+    assert.match(html, /--aspect-ratio: 4\/3/,   'replaceImgHtml has aspect ratio');
 
     //console.log(html);
   });
