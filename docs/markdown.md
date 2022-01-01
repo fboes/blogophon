@@ -377,6 +377,13 @@ Conversations between multiple persons are like a collection of quotes, introduc
 > When the battle's lost and won.
 ```
 
+Web Components
+--------------
+
+The Blogophon supports [Web Components in your Markdown](https://web.dev/how-we-build-webdev-and-use-web-components/). Web Components enhance your article with additional presentational effects. 
+
+The Blogophon comes with no integrated Web Components, but you can read the [development guide on how to add more Web Components](development.md).
+
 Adding relations to links
 -------------------------
 
