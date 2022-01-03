@@ -101,10 +101,6 @@ The Blogophon uses special icon sizes defined in your `theme.json` for special p
 
 The base template will als use any icon's filename containing `apple-touch-icon` as Apple Touch Icon.
 
----
-
-Return to [table of contents](README.md).
-
 Web Components
 --------------
 
@@ -130,3 +126,7 @@ You will need to edit your `user/config.json` and add the required JavaScript li
 (If this property does not exists, simply create it or rerun the setup process.)
 
 Whenever the Blogophon encounters a Web Component tag, it will load the corresponding JavaScript automatically.
+
+---
+
+Return to [table of contents](README.md).
