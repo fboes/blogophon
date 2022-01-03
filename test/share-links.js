@@ -22,16 +22,16 @@ describe('Share-Links', function() {
     let share = shareLink(testData.title, testData.link, testData.description, testData.siteName);
 
     let testMatch = {
-      title: function(str) {
+      title(str) {
         return str.match(new RegExp(testData.title));
       },
-      link: function(str) {
+      link(str) {
         return str.match(new RegExp(testData.link));
       },
-      description: function(str) {
+      description(str) {
         return str.match(new RegExp(testData.description));
       },
-      siteName: function(str) {
+      siteName(str) {
         return str.match(new RegExp(testData.siteName));
       }
     };

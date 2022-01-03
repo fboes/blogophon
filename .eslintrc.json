@@ -19,7 +19,8 @@
     "no-multi-str": "error",
     "no-undef": "error",
     "no-unused-vars": "error",
-    "no-var": "error"
+    "no-var": "error",
+    "object-shorthand": "error"
   },
   "overrides": [
     {
