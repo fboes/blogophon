@@ -1,9 +1,9 @@
 import assert from 'assert';
-import Url from '../lib/helpers/url.js';
-import PostUrl from '../lib/helpers/post-url.js';
-import AuthorUrl from '../lib/helpers/author-url.js';
-import TagUrl from '../lib/helpers/tag-url.js';
-import IndexUrl from '../lib/helpers/index-url.js';
+import Url from '../lib/helpers/Url.js';
+import PostUrl from '../lib/helpers/PostUrl.js';
+import AuthorUrl from '../lib/helpers/AuthorUrl.js';
+import TagUrl from '../lib/helpers/TagUrl.js';
+import IndexUrl from '../lib/helpers/IndexUrl.js';
 
 describe('URL', function() {
   it('should test Extender', function() {

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import ampify from '../lib/helpers/ampify.js';
+import ampify from '../lib/helpers/Ampify.js';
 
 describe('Ampify', function() {
   describe('Images', function() {

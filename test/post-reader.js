@@ -1,9 +1,11 @@
 import assert from 'assert';
 import PostReader from '../lib/post-reader.js';
+import configJs from '../lib/config.js';
 
 describe('Post-Reader', function() {
+  const config = configJs( process.cwd() + '/test');
   it('should test Errors', function() {
-    PostReader('./test/test-1.md')
+    PostReader('./test/test-1.md', config)
       .then(function(testPost) {
         // console.log(testPost);
         assert.ok(testPost.markdown, 'Found Markdown');
@@ -21,7 +23,7 @@ describe('Post-Reader', function() {
   });
 
   it('should handle Markdown in certain parts', function() {
-    PostReader('./test/test-2.md')
+    PostReader('./test/test-2.md', config)
       .then(function(testPost) {
         assert.ok(testPost.markdown, 'Found Markdown');
         assert.ok(testPost.meta,     'Parsed YAML');

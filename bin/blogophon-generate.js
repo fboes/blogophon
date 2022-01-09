@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import application from '../lib/helpers/application.js';
+import application from '../lib/helpers/Application.js';
 application.changeDirectory();
 
 import Generator from '../lib/generator.js';

@@ -30,7 +30,7 @@ describe('Post', function() {
     let testPost = post('test.md', 'Test', {
       Description: 'Description',
       Date: new Date()
-    });
+    }, config);
 
     assert.ok(testPost.markdown);
     assert.ok(testPost.share);
@@ -63,7 +63,7 @@ describe('Post', function() {
       Description: testMarkdownDescription,
       Date: new Date()
     };
-    let testPost = post('test.md', testMarkdown, testMeta);
+    let testPost = post('test.md', testMarkdown, testMeta, config);
 
     //console.log(testPost);
 
@@ -100,14 +100,14 @@ describe('Post', function() {
     let testMeta = {
       Date: new Date()
     };
-    let testPost = post('test.md', testMarkdown, testMeta);
+    let testPost = post('test.md', testMarkdown, testMeta, config);
     assert.ok(testPost.meta.Description.length < 180, 'Description must be shortened to somewhat like 160 characters.');
 
     testMarkdown = `Lorem ipsum dolor sit amet, consetetur sadipscing elitr.`;
     testMeta = {
       Date: new Date()
     };
-    testPost = post('test.md', testMarkdown, testMeta);
+    testPost = post('test.md', testMarkdown, testMeta, config);
     assert.strictEqual(testPost.meta.Description.length, 56, 'Description must not be shortened when to short anyway.');
   });
 
@@ -119,7 +119,8 @@ describe('Post', function() {
       {
         Description: 'Single image with style: ![](description.jpg#default) - and without style: ![](description.jpg)',
         Date: new Date()
-      }
+      },
+      config
     );
 
     assert.ok(testPost.markdown);
@@ -159,7 +160,7 @@ describe('Post', function() {
       Description: 'None',
       Date: new Date(),
       Classes: 'images'
-    });
+    }, config);
     assert.ok(!testPost.html.match(/<div class="gallery/));
 
     markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-64x48.jpg) ![alt3](img3-64x48.jpg)';
@@ -167,7 +168,7 @@ describe('Post', function() {
       Description: 'None',
       Date: new Date(),
       Classes: 'images'
-    });
+    }, config);
     assert.ok(testPost.html.match(/<div class="gallery/));
 
     markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-32x24.jpg) ![alt3](img3-64x48.jpg)';
@@ -175,16 +176,16 @@ describe('Post', function() {
       Description: 'None',
       Date: new Date(),
       Classes: 'images'
-    });
+    }, config);
     assert.ok(testPost.html.match(/<div class="gallery/));
 
     markdown = '![alt1](img1-64x48.jpg) ![alt2](img2-32x24.jpg) ![alt3](img3-64x48.jpg)';
     testPost = post(filename, markdown, {
       Description: 'None',
       Date: new Date()
-    });
+    }, config);
     assert.ok(!testPost.html.match(/<div class="gallery/));
-  });
+  }, config);
 
   it('must find external links', function() {
     const markdown = `www.1test.com _will_ be found as of \`marked@0.3.15\`
@@ -197,7 +198,7 @@ But not example.6test.com or 7test.com (URLs with subdomains without proper link
     const html = post('test.md', markdown, {
       Description: 'None',
       Date: new Date()
-    });
+    }, config);
     const testLinks = html.getAllExternalLinks();
 
     //console.log(testLinks);
@@ -215,7 +216,7 @@ as is [this](internal-link2/index.md) and [this](../internal-link3/index.md).`;
     const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()
-    });
+    }, config);
     const testLinks = testPost.getAllExternalLinks();
     //console.log(testPost.html);
 
@@ -243,7 +244,7 @@ Title 2
     const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()
-    });
+    }, config);
 
     assert.ok(!testPost.html.match(/<h1/g), 'Removes <h1> from article');
     assert.strictEqual(testPost.html.match(/<h2 id="/g).length,               2);
@@ -273,7 +274,7 @@ Title 2
     const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()
-    });
+    }, config);
     //console.log(testPost.html);
 
     assert.strictEqual(testPost.html.match(/<caption id="/g).length, 2);
@@ -296,7 +297,7 @@ Title 2
     const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()
-    });
+    }, config);
     //console.log(testPost.html);
 
     assert.strictEqual(testPost.html.match(/<caption id="/g).length, 1,  'Has <caption>');
@@ -324,7 +325,7 @@ Title 2
     const testPost = post('test.md', markdown, {
       Description: 'Description',
       Date: new Date()
-    });
+    }, config);
     //console.log(testPost.html);
 
     assert.ok(!testPost.html.match(/dl/g));
@@ -342,7 +343,7 @@ It <i>always</i> is and \`<em>\` is not a stranger to this story.`;
     const testPost = post('test.md', markdown, {
       Description: 'HTML\'s - a &quot;disaster&quot; <em>waiting</em> to happen',
       Date: new Date()
-    });
+    }, config);
     //console.log(testPost.meta);
 
     assert.ok(!testPost.html.match(/<em>/g));
@@ -368,7 +369,7 @@ Strecke zu kennen.
     const testPost = post('test.md', markdown, {
       Date: new Date(),
       Classes: 'Images'
-    });
+    }, config);
     //console.log(testPost.html);
 
     assert.strictEqual(testPost.html.match(/"gallery__link"/g).length,  2);
@@ -388,7 +389,7 @@ Diese Datei besteht aus überschneidungsfreien Außenlinien des Logos und des Sc
 sich daher zum Bedrucken oder Besticken von Kleidung.`;
     const testPost = post('test.md', markdown, {
       Date: new Date()
-    });
+    }, config);
 
     assert.strictEqual(testPost.html.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
     assert.strictEqual(testPost.htmlTeaser.match(/[^"]+\/lynx-salvage\.svg/g).length,  2);
@@ -405,7 +406,7 @@ sich daher zum Bedrucken oder Besticken von Kleidung.`;
 `;
     const testPost = post('test.md', markdown, {
       Date: new Date()
-    });
+    }, config);
 
     assert.ok(testPost.html);
     assert.ok(testPost.ampHtml);

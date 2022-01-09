@@ -1,5 +1,5 @@
 import assert from 'assert';
-import application from '../lib/helpers/application.js';
+import application from '../lib/helpers/Application.js';
 
 describe('Application', function() {
   it('should find the application directory', function() {
