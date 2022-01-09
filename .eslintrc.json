@@ -20,7 +20,8 @@
     "no-undef": "error",
     "no-unused-vars": "error",
     "no-var": "error",
-    "object-shorthand": "error"
+    "object-shorthand": "error",
+    "indent": ["error", 2, {"SwitchCase": 1}]
   },
   "overrides": [
     {
