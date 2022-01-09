@@ -7,7 +7,7 @@ import IndexUrl from '../lib/helpers/index-url.js';
 
 describe('URL', function() {
   it('should test Extender', function() {
-    let url = Url('test');
+    let url = new Url('test');
 
     assert.ok(url.relativeUrl());
     assert.ok(url.absoluteUrl());
@@ -29,22 +29,22 @@ describe('URL', function() {
   it('should test BasicTransformation', function() {
     let url;
 
-    url = PostUrl('ich-und-du.md');
+    url = new PostUrl('ich-und-du.md');
     assert.match(url.relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
     assert.match(url.absoluteUrl(), /^\S*\/posts\/ich-und-du\/$/);
     assert.match(url.filename(), /^\S+(\/|\\)posts(\/|\\)ich-und-du(\/|\\)index\.html$/, 'Filename matching');
 
-    url = IndexUrl('Tag');
+    url = new IndexUrl('Tag');
     assert.match(url.relativeUrl(), /^\S*\/tag$/);
     assert.match(url.absoluteUrl(), /^\S*\/tag$/);
     assert.match(url.filename(), /^\S+(\/|\\)tag$/);
 
-    url = TagUrl('Tag');
+    url = new TagUrl('Tag');
     assert.match(url.relativeUrl(), /^\S*\/tagged\/tag\/$/);
     assert.match(url.absoluteUrl(), /^\S*\/tagged\/tag\/$/);
     assert.match(url.filename(), /^\S+(\/|\\)tagged(\/|\\)tag(\/|\\)index\.html$/);
 
-    url = AuthorUrl('Paul Wischwedel');
+    url = new AuthorUrl('Paul Wischwedel');
     assert.match(url.relativeUrl(), /^\S*\/authored-by\/paul-wischwedel\/$/);
     assert.match(url.absoluteUrl(), /^\S*\/authored-by\/paul-wischwedel\/$/);
     assert.match(url.filename(), /^\S+(\/|\\)authored-by(\/|\\)paul-wischwedel(\/|\\)index\.html$/);
@@ -53,7 +53,7 @@ describe('URL', function() {
   it('should test SpecialTransformation', function() {
     let url;
 
-    url = PostUrl('Ich-ünd-Dü.md');
+    url = new PostUrl('Ich-ünd-Dü.md');
     assert.match(url.relativeUrl(), /^\S*\/posts\/ich-uend-due\/$/);
     assert.match(url.absoluteUrl(), /^\S*\/posts\/ich-uend-due\/$/);
     assert.match(
@@ -61,41 +61,41 @@ describe('URL', function() {
       'Filename matching Umlauts'
     );
 
-    url = TagUrl('Ich bin ein merkwürdiges Tag');
+    url = new TagUrl('Ich bin ein merkwürdiges Tag');
     assert.match(url.relativeUrl(), /^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/);
     assert.match(url.absoluteUrl(), /^\S*\/tagged\/ich-bin-ein-merkwuerdiges-tag\/$/);
     assert.match(url.filename(), /^\S+(\/|\\)tagged(\/|\\)ich-bin-ein-merkwuerdiges-tag(\/|\\)index\.html$/);
 
-    url = IndexUrl('/Tag');
+    url = new IndexUrl('/Tag');
     assert.match(url.relativeUrl(), /^\S*\/tag$/);
     assert.match(url.absoluteUrl(), /^\S*\/tag$/);
     assert.match(url.filename(), /^\S+(\/|\\)tag$/);
 
-    url = IndexUrl('////Tag');
+    url = new IndexUrl('////Tag');
     assert.match(url.relativeUrl(), /^\S*\/tag$/);
     assert.match(url.absoluteUrl(), /^\S*\/tag$/);
     assert.match(url.filename(), /^\S+(\/|\\)tag$/);
   });
 
   it('should test Posts', function() {
-    assert.match(PostUrl('users/posts/ich-und-du.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
-    assert.match(PostUrl('/users/posts/ich-und-du.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
-    assert.match(PostUrl('\\users\\posts\\ich-und-du.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
-    assert.match(PostUrl('/users/posts/ich-und-du/index.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
-    assert.match(PostUrl('\\users\\posts\\ich-und-du\\index.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
+    assert.match(new PostUrl('users/posts/ich-und-du.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
+    assert.match(new PostUrl('/users/posts/ich-und-du.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
+    assert.match(new PostUrl('\\users\\posts\\ich-und-du.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
+    assert.match(new PostUrl('/users/posts/ich-und-du/index.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
+    assert.match(new PostUrl('\\users\\posts\\ich-und-du\\index.md').relativeUrl(), /^\S*\/posts\/ich-und-du\/$/);
   });
 
   it('should test EmptyTransformation', function() {
-    assert.strictEqual(PostUrl(null).relativeUrl(), null);
-    assert.strictEqual(PostUrl(null).absoluteUrl(), null);
-    assert.strictEqual(PostUrl(null).filename(), null);
+    assert.strictEqual(new PostUrl(null).relativeUrl(), null);
+    assert.strictEqual(new PostUrl(null).absoluteUrl(), null);
+    assert.strictEqual(new PostUrl(null).filename(), null);
 
-    assert.strictEqual(IndexUrl(null).relativeUrl(), null);
-    assert.strictEqual(IndexUrl(null).absoluteUrl(), null);
-    assert.strictEqual(IndexUrl(null).filename(), null);
+    assert.strictEqual(new IndexUrl(null).relativeUrl(), null);
+    assert.strictEqual(new IndexUrl(null).absoluteUrl(), null);
+    assert.strictEqual(new IndexUrl(null).filename(), null);
 
-    assert.strictEqual(TagUrl(null).relativeUrl(), null);
-    assert.strictEqual(TagUrl(null).absoluteUrl(), null);
-    assert.strictEqual(TagUrl(null).filename(), null);
+    assert.strictEqual(new TagUrl(null).relativeUrl(), null);
+    assert.strictEqual(new TagUrl(null).absoluteUrl(), null);
+    assert.strictEqual(new TagUrl(null).filename(), null);
   });
 });
