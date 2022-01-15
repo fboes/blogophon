@@ -3,6 +3,9 @@ Change log
 
 For detailed information check [Blogophon's releases on Github](https://github.com/fboes/blogophon/releases).
 
+3.0.1
+-----
+
 * 💣 Switched to Nodejs12 `import`
 * 🎁 Add `{{post.meta.languagePosix}}` to post object for Opengraph
 * 🎁 Improved output of `aspect-ratio`
