@@ -9,6 +9,7 @@ For detailed information check [Blogophon's releases on Github](https://github.c
 * 💣 Switched to Nodejs12 `import`
 * 🎁 Add `{{post.meta.languagePosix}}` to post object for Opengraph
 * 🎁 Improved output of `aspect-ratio`
+* 💊 Fixed filename casing
 
 2.2.0
 -----
