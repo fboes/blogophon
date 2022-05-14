@@ -48,14 +48,14 @@
     "gulp-replace": "^1.1.3",
     "gulp-sass": "^5.0.0",
     "gulp-uglify": "^3.0.2",
-    "husky": "^7.0.0",
-    "mocha": "^9.0.1",
+    "husky": "^8.0.1",
+    "mocha": "^10.0.0",
     "postcss": "^8.4.5",
     "postcss-scss": "^4.0.2",
     "sass": "^1.45.1",
     "stylelint": "^14.2.0",
-    "stylelint-config-recommended": "^6.0.0",
-    "stylelint-config-recommended-scss": "^5.0.2"
+    "stylelint-config-recommended": "^7.0.0",
+    "stylelint-config-recommended-scss": "^6.0.0"
   },
   "directories": {
     "doc": "docs",
@@ -72,7 +72,7 @@
     "dateformat": "^5.0.2",
     "esm": "^3.2.25",
     "fs-extra-promise": "^1.0.1",
-    "glob": "^7.1.6",
+    "glob": "^8.0.3",
     "gm": "^1.23.1",
     "handlebars": "^4.7.7",
     "inquirer": "^8.0.0",
