@@ -1,6 +1,13 @@
 ![](docs/blogophon.png) Blogophon
 =========
 
+> [!WARNING]
+> **This package is deprecated and no longer maintained.**
+> 
+> Please do not install this package for new projects. No further updates, bug fixes, or security patches will be provided.
+> 
+> If you are currently using this package, we recommend migrating to [Jekyll](https://jekyllrb.com/).
+
 A [Static Site Generator](https://davidwalsh.name/introduction-static-site-generators) supporting [Markdown](docs/markdown.md), [responsive images](docs/markdown.md#images), [RSS and other RESTful files](docs/special-features.md). Built with Node.js and minimal dependencies.
 
 A live example of this blog generator can be found at [3960! Journal](http://journal.3960.org).
@@ -62,9 +69,7 @@ Status
 -------
 
 [![npm version](https://badge.fury.io/js/blogophon.svg)](https://badge.fury.io/js/blogophon)
-[![Build Status](https://travis-ci.org/fboes/blogophon.svg?branch=master)](https://travis-ci.org/fboes/blogophon)
-[![Dependency Status](https://david-dm.org/fboes/blogophon/status.svg)](https://david-dm.org/fboes/blogophon)
-[![devDependency Status](https://david-dm.org/fboes/blogophon/dev-status.svg)](https://david-dm.org/fboes/blogophon?type=dev)
+
 
 Legal stuff
 -----------
